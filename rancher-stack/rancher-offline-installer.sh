@@ -1,6 +1,9 @@
 #!/bin/bash
 
-# yum install -y vim && mkdir /opt/rancher && cd /opt/rancher && curl -#OL https://raw.githubusercontent.com/clemenko/rke_airgap_install/main/air_gap_all_the_things.sh && chmod 755 air_gap_all_the_things.sh
+# Rancher Offline Installer Setup (do this first on the build server machine)
+# mkdir /opt/rancher && cd /opt/rancher 
+# curl -#OL https://raw.githubusercontent.com/zackbradys/rancher-offline-install/main/rancher-stack/rancher-offline-installer.sh
+# chmod 755 rancher-offine-installer.sh
 
 set -ebpf
 
@@ -22,9 +25,10 @@ export NC='\x1b[0m'
 #better error checking
 #command -v skopeo >/dev/null 2>&1 || { echo "$RED" " ** skopeo was not found. Please install. ** " "$NORMAL" >&2; exit 1; }
 
+# Base Settings
 function base-settings () {
 
-echo -e "${BLUE}Rancher Installer:${NC} Updating to recommended kernel settings"
+echo -e "${BLUE}Rancher Installer:${NC}- Updating Kernel Settings"
 cat << EOF >> /etc/sysctl.conf
 
 # SWAP Settings
@@ -77,124 +81,110 @@ fs.inotify.max_user_watches=1048576
 EOF
 sysctl -p > /dev/null 2>&1
 
-  echo Install packages
+  echo -e "${BLUE}Rancher Installer:${NC}- Installing Base Packages"
   yum install -y zstd nfs-utils iptables skopeo container-selinux iptables libnetfilter_conntrack libnfnetlink libnftnl policycoreutils-python-utils cryptsetup iscsi-initiator-utils
   systemctl enable iscsid && systemctl start iscsid
   echo -e "[keyfile]\nunmanaged-devices=interface-name:cali*;interface-name:flannel*" > /etc/NetworkManager/conf.d/rke2-canal.conf
 }
 
-################################# build ################################
-function build () {
+# Build/Staging Setup
+function build-server () {
 
-  echo -e "${BLUE}Rancher Installer ${NC}- Installing packages"
+  echo -e "${BLUE}Rancher Installer ${NC}- Installing Skopeo and ZSTD"
   yum install zstd skopeo -y > /dev/null 2>&1
 
   mkdir -p /opt/rancher/rke2_$RKE_VERSION/
   cd /opt/rancher/rke2_$RKE_VERSION/
 
-  echo - download rke, rancher and longhorn
+  echo -e "${BLUE}Rancher Installer ${NC}- Downloading Rancher MCM, RKE2, and Longhorn"
   curl -#OL https://github.com/rancher/rke2/releases/download/v$RKE_VERSION%2Brke2r1/rke2-images.linux-amd64.tar.zst
   curl -#OL https://github.com/rancher/rke2/releases/download/v$RKE_VERSION%2Brke2r1/rke2.linux-amd64.tar.gz
   curl -#OL https://github.com/rancher/rke2/releases/download/v$RKE_VERSION%2Brke2r1/sha256sum-amd64.txt
   curl -#OL https://github.com/rancher/rke2-packaging/releases/download/v$RKE_VERSION%2Brke2r1.stable.0/rke2-common-$RKE_VERSION.rke2r1-0.x86_64.rpm
   curl -#OL https://github.com/rancher/rke2-selinux/releases/download/v0.9.stable.1/rke2-selinux-0.9-1.el8.noarch.rpm
-
-  echo - get the install script
   curl -sfL https://get.rke2.io -o install.sh
 
-  echo - Get Helm Charts
+  echo -e "${BLUE}Rancher Installer ${NC}- Setup Helm"
   mkdir -p /opt/rancher/helm/
   cd /opt/rancher/helm/
 
-  echo - get helm
+  echo -e "${BLUE}Rancher Installer ${NC}- Install Helm"
   curl -#LO https://get.helm.sh/helm-v3.10.2-linux-386.tar.gz > /dev/null 2>&1
   tar -zxvf helm-v3.10.2-linux-386.tar.gz > /dev/null 2>&1
   rsync -avP linux-386/helm /usr/local/bin/ > /dev/null 2>&1
   rm -rf linux-386 > /dev/null 2>&1
 
-  echo - add repos
-
+  echo -e "${BLUE}Rancher Installer ${NC}- Setup Repositories"
   helm repo add jetstack https://charts.jetstack.io > /dev/null 2>&1
   helm repo add rancher-latest https://releases.rancher.com/server-charts/latest > /dev/null 2>&1
   helm repo add longhorn https://charts.longhorn.io > /dev/null 2>&1
   helm repo add neuvector https://neuvector.github.io/neuvector-helm/ > /dev/null 2>&1
   helm repo update > /dev/null 2>&1
 
-  echo - get charts
+  echo -e "${BLUE}Rancher Installer ${NC}- Fetch Helm Charts"
   helm pull jetstack/cert-manager --version $CERT_VERSION > /dev/null 2>&1
   helm pull rancher-latest/rancher --version $RANCHER_VERSION > /dev/null 2>&1
   helm pull longhorn/longhorn --version $LONGHORN_VERSION > /dev/null 2>&1
   helm pull neuvector/core --version $NEUVECTOR_VERSION > /dev/null 2>&1
 
-  echo - Get Images - Rancher/Longhorn
-
-  echo - create image dir
+  echo -e "${BLUE}Rancher Installer ${NC}- Setup Image Directory"
   mkdir -p /opt/rancher/images/{cert,rancher,longhorn,registry,neuvector}
   cd /opt/rancher/images/
 
-  echo - rancher image list 
+  echo -e "${BLUE}Rancher Installer ${NC}- Fetch Rancher Images"
   curl -#L https://github.com/rancher/rancher/releases/download/$RANCHER_VERSION/rancher-images.txt -o rancher/orig_rancher-images.txt
 
-  echo - shorten rancher list with a sort
-  # fix library tags
+  echo -e "${BLUE}Rancher Installer ${NC}- Clean Up Rancher Images"
   sed -i -e '0,/busybox/s/busybox/library\/busybox/' -e 's/registry/library\/registry/g' rancher/orig_rancher-images.txt
-  
-  # remove things that are not needed and overlapped
   sed -i -E '/neuvector|minio|gke|aks|eks|sriov|harvester|mirrored|longhorn|thanos|tekton|istio|multus|hyper|jenkins|windows/d' rancher/orig_rancher-images.txt
-
-  # get latest version
   for i in $(cat rancher/orig_rancher-images.txt|awk -F: '{print $1}'); do 
     grep -w $i rancher/orig_rancher-images.txt | sort -Vr| head -1 >> rancher/version_unsorted.txt
   done
- 
-  # final sort
   cat rancher/version_unsorted.txt | sort -u >> rancher/rancher-images.txt
 
-  echo - Cert-manager image list
+  echo -e "${BLUE}Rancher Installer ${NC}- Clean Up Cert Manager Images"
   helm template /opt/rancher/helm/cert-manager-$CERT_VERSION.tgz | awk '$1 ~ /image:/ {print $2}' | sed s/\"//g > cert/cert-manager-images.txt
 
-  echo - longhorn image list
+  echo -e "${BLUE}Rancher Installer ${NC}- Clean Up Longhorn Images"
   curl -#L https://raw.githubusercontent.com/longhorn/longhorn/$LONGHORN_VERSION/deploy/longhorn-images.txt -o longhorn/longhorn-images.txt
 
-  echo - neuvector image list
+  echo -e "${BLUE}Rancher Installer ${NC}- Clean Up Neuvector Images"
   helm template /opt/rancher/helm/core-$NEUVECTOR_VERSION.tgz | awk '$1 ~ /image:/ {print $2}' | sed -e 's/\"//g' > neuvector/neuvector_images.txt
 
- # get images
-  echo - skopeo - cert-manager
+  echo -e "${BLUE}Rancher Installer ${NC}- Fetch Registry Images"
   for i in $(cat cert/cert-manager-images.txt); do 
     skopeo copy docker://$i docker-archive:cert/$(echo $i| awk -F/ '{print $3}'|sed 's/:/_/g').tar:$(echo $i| awk -F/ '{print $3}') > /dev/null 2>&1
   done
 
-  echo - skopeo - Neuvector
+  echo -e "${BLUE}Rancher Installer ${NC}- ... Neuvector Images"
   for i in $(cat neuvector/neuvector_images.txt); do 
     skopeo copy docker://$i docker-archive:neuvector/$(echo $i| awk -F/ '{print $3}'|sed 's/:/_/g').tar:$(echo $i| awk -F/ '{print $3}') > /dev/null 2>&1
   done
 
-  echo - skopeo - longhorn
+  echo -e "${BLUE}Rancher Installer ${NC}- ... Longhorn Images"
   for i in $(cat longhorn/longhorn-images.txt); do 
     skopeo copy docker://$i docker-archive:longhorn/$(echo $i| awk -F/ '{print $2}'|sed 's/:/_/g').tar:$(echo $i| awk -F/ '{print $2}') > /dev/null 2>&1
   done
 
-  echo - skopeo - Rancher - be patient...
+  echo -e "${BLUE}Rancher Installer ${NC}- ... Rancher Images"
   for i in $(cat rancher/rancher-images.txt); do 
     skopeo copy docker://$i docker-archive:rancher/$(echo $i| awk -F/ '{print $2}'|sed 's/:/_/g').tar:$(echo $i| awk -F/ '{print $2}') > /dev/null 2>&1
   done
 
-  curl -#L https://github.com/clemenko/rke_airgap_install/raw/main/registry.tar -o registry/registry_2.tar > /dev/null 2>&1
+  echo -e "${BLUE}Rancher Installer ${NC}- Fetch Registry"
+  curl -#L https://raw.githubusercontent.com/zackbradys/rancher-offline-install/main/rancher-stack/registry.tar -o registry/registry_2.tar > /dev/null 2>&1
 
+  echo -e "${BLUE}Rancher Installer ${NC}- Compress Everything"
   cd /opt/rancher/
-  echo - compress all the things
   tar -I zstd -vcf /opt/rke2_rancher_longhorn.zst $(ls) > /dev/null 2>&1
 
-  # look at adding encryption - https://medium.com/@lumjjb/encrypting-container-images-with-skopeo-f733afb1aed4  
-
-  echo "------------------------------------------------------------------"
-  echo " to uncompress : "
-  echo "   yum install -y zstd"
-  echo "   mkdir /opt/rancher"
-  echo "   tar -I zstd -vxf rke2_rancher_longhorn.zst -C /opt/rancher"
-  echo "------------------------------------------------------------------"
-
+  echo -e "${BLUE}Rancher Installer ${NC}- Mount or Copy to Control Node Server"
+  echo -e "  Mounting or coopying, depends on your environment."
+  echo -e "  Tip - To uncompress, run the following commands:"
+  echo -e "    yum install -y zstd"
+  echo -e "    mkdir /opt/rancher"
+  echo -e "    tar -I zstd -vxf rke2_rancher_longhorn.zst -C /opt/rancher"
+  
 }
 
 ################################# deploy control ################################
@@ -418,7 +408,7 @@ function usage () {
 }
 
 case "$1" in
-        build) build;;
+        build) build-server;;
         base) base-settings;;
         control) deploy_control;;
         worker) deploy_worker;;
