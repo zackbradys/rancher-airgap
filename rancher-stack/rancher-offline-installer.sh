@@ -23,7 +23,35 @@ export YELLOW='\x1b[33m'
 export NC='\x1b[0m'
 
 #better error checking
-#command -v skopeo >/dev/null 2>&1 || { echo "$RED" " ** skopeo was not found. Please install. ** " "$NORMAL" >&2; exit 1; }
+#command -v skopeo >/dev/null 2>&1 || { echo "$RED" " ** skopeo was not found. Please install. ** " "$NORMAL" >&2; exit 1; }''
+# Script Steps and Tips
+functions steps () {
+  echo -e "${BLUE}Rancher Installer ${NC}- Steps"
+  echo -e "  1) Build the offline installer on a machine with internet access."
+  echo -e "  2) Mount or Copy the installer files to the offline or airgapped server."
+  echo -e "  3) Install and deploy the control plane node to the first offline or airgapped server."
+  echo -e "  4) Install and deploy the worker "
+  echo -e "  ."
+  echo -e "  ."
+  echo -e "  ."
+  echo -e "  ."
+  echo -e "  ."
+  echo -e "  ."
+  exit 1
+}
+function usage () {
+  echo " - UNCLASS - $0 build"
+  echo " - Move the ZST file across the air gap"
+  echo " - Build 3 vms with 4cpu and 8gb of ram"
+  echo " - On 1st node ( Control Plane node ) run: mkdir /opt/rancher && tar -I zstd -vxf rek2-rancher-longhorn-neuvector.zst -C /opt/rancher"
+  echo " - On 1st node run cd /opt/rancher; $0 control"
+  echo " - Wait and watch for errors"
+  echo " - On 2nd, and 3rd nodes run mkdir /opt/rancher && mount \$IP:/opt/rancher /opt/rancher"
+  echo " - On 2nd, and 3rd nodes run $0 worker"
+  echo " - On 1st node install"
+  echo "   - Longhorn : $0 longhorn"
+  echo "   - Rancher : $0 rancher"
+}
 
 # Base Settings
 function base-settings () {
@@ -176,58 +204,50 @@ function build-server () {
 
   echo -e "${BLUE}Rancher Installer ${NC}- Compress Everything"
   cd /opt/rancher/
-  tar -I zstd -vcf /opt/rke2_rancher_longhorn.zst $(ls) > /dev/null 2>&1
+  tar -I zstd -vcf /opt/rek2-rancher-longhorn-neuvector.zst $(ls) > /dev/null 2>&1
 
   echo -e "${BLUE}Rancher Installer ${NC}- Mount or Copy to Control Node Server"
-  echo -e "  Mounting or coopying, depends on your environment."
+  echo -e "  Mounting or copying, depends on your environment."
   echo -e "  Tip - To uncompress, run the following commands:"
   echo -e "    yum install -y zstd"
   echo -e "    mkdir /opt/rancher"
-  echo -e "    tar -I zstd -vxf rke2_rancher_longhorn.zst -C /opt/rancher"
+  echo -e "    tar -I zstd -vxf rek2-rancher-longhorn-neuvector.zst -C /opt/rancher"
   
 }
 
-function deploy_control () {
-  # this is for the first node
-  # mkdir /opt/rancher
-  # tar -I zstd -vxf rke2_rancher_longhorn.zst -C /opt/rancher
+function deploy-control () {
+  echo -e "${BLUE}Rancher Installer ${NC}- Deploy Control Plane Node (RKE2)"
 
-  base
+  # Setup Base
+  base-settings
 
-  echo - Install rke2
+  echo -e "${BLUE}Rancher Installer ${NC}- Installing RKE2"
   cd /opt/rancher/rke2_$RKE_VERSION
   useradd -r -c "etcd user" -s /sbin/nologin -M etcd -U
   mkdir -p /etc/rancher/rke2/ /var/lib/rancher/rke2/server/manifests/
   echo -e "#profile: cis-1.6\nselinux: true\nsecrets-encryption: true\nwrite-kubeconfig-mode: 0640\nkube-controller-manager-arg:\n- bind-address=127.0.0.1\n- use-service-account-credentials=true\n- tls-min-version=VersionTLS12\n- tls-cipher-suites=TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305,TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305,TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384\nkube-scheduler-arg:\n- tls-min-version=VersionTLS12\n- tls-cipher-suites=TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305,TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305,TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384\nkube-apiserver-arg:\n- tls-min-version=VersionTLS12\n- tls-cipher-suites=TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305,TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305,TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384\n- authorization-mode=RBAC,Node\n- anonymous-auth=false\n- audit-policy-file=/etc/rancher/rke2/audit-policy.yaml\n- audit-log-mode=blocking-strict\n- audit-log-maxage=30\nkubelet-arg:\n- protect-kernel-defaults=true\n- read-only-port=0\n- authorization-mode=Webhook" > /etc/rancher/rke2/config.yaml
-
-  # set up audit policy file
   echo -e "apiVersion: audit.k8s.io/v1\nkind: Policy\nrules:\n- level: RequestResponse" > /etc/rancher/rke2/audit-policy.yaml
-
-  # set up ssl passthrough for nginx
   echo -e "---\napiVersion: helm.cattle.io/v1\nkind: HelmChartConfig\nmetadata:\n  name: rke2-ingress-nginx\n  namespace: kube-system\nspec:\n  valuesContent: |-\n    controller:\n      config:\n        use-forwarded-headers: true\n      extraArgs:\n        enable-ssl-passthrough: true" > /var/lib/rancher/rke2/server/manifests/rke2-ingress-nginx-config.yaml; 
 
-  # pre-load registry image
   mkdir -p /var/lib/rancher/rke2/agent/images
   rsync -avP /opt/rancher/images/registry/registry_2.tar /var/lib/rancher/rke2/agent/images/
 
- # insall rke2 - stig'd
   INSTALL_RKE2_ARTIFACT_PATH=/opt/rancher/rke2_$RKE_VERSION sh /opt/rancher/rke2_$RKE_VERSION/install.sh 
   yum install -y /opt/rancher/rke2_$RKE_VERSION/rke2-common-$RKE_VERSION.rke2r1-0.x86_64.rpm /opt/rancher/rke2_$RKE_VERSION/rke2-selinux-0.9-1.el8.noarch.rpm
   systemctl enable rke2-server.service && systemctl start rke2-server.service
 
-  sleep 30
+  echo -e "${BLUE}Rancher Installer ${NC}- Waiting for RKE2..."
+  sleep 60
 
-  # wait and add link
   echo "export KUBECONFIG=/etc/rancher/rke2/rke2.yaml CRI_CONFIG_FILE=/var/lib/rancher/rke2/agent/etc/crictl.yaml PATH=$PATH:/var/lib/rancher/rke2/bin" >> ~/.bashrc
   ln -s /var/run/k3s/containerd/containerd.sock /var/run/containerd/containerd.sock
   source ~/.bashrc
 
-  echo - Setup nfs
-  # share out opt directory
+  echo -e "${BLUE}Rancher Installer ${NC}- Setup NFS/Mount for Worker Nodes"
   echo "/opt/rancher *(ro)" > /etc/exports
   systemctl enable nfs-server.service && systemctl start nfs-server.service
 
-  echo - run local registry
+  echo -e "${BLUE}Rancher Installer ${NC}- Start Local Registry"
   mkdir /opt/rancher/registry
   chcon system_u:object_r:container_file_t:s0 /opt/rancher/registry
 
@@ -267,14 +287,14 @@ spec:
       hostNetwork: true
 EOF
 
-  sleep 30
+  echo -e "${BLUE}Rancher Installer ${NC}- Waiting for Kubernetes..."
+  sleep 60
   
-  echo - load images
+  echo -e "${BLUE}Rancher Installer ${NC}- Load Images to Local Registry"
   for file in $(ls /opt/rancher/images/longhorn/ | grep -v txt ); do 
     skopeo copy docker-archive:/opt/rancher/images/longhorn/$file docker://$(echo $file | sed 's/.tar//g' | awk -F_ '{print "localhost:5000/longhornio/"$1":"$2}') --dest-tls-verify=false
   done
 
-  # longhorn issue due to tags
   skopeo copy docker-archive:/opt/rancher/images/longhorn/longhorn-instance-manager_v1_20221003.tar docker://localhost:5000/longhornio/longhorn-instance-manager:v1_20221003 --dest-tls-verify=false
   skopeo copy docker-archive:/opt/rancher/images/longhorn/longhorn-share-manager_v1_20221003.tar docker://localhost:5000/longhornio/longhorn-share-manager:v1_20221003 --dest-tls-verify=false
 
@@ -292,44 +312,42 @@ EOF
 
   chmod 600 /etc/rancher/rke2/rke2.yaml
 
-  echo - unpack helm
+  echo -e "${BLUE}Rancher Installer ${NC}- Unpacking Helm"
   cd /opt/rancher/helm
   tar -zxvf helm-v3.10.2-linux-386.tar.gz > /dev/null 2>&1
   rsync -avP linux-386/helm /usr/local/bin/ > /dev/null 2>&1
 
   cat /var/lib/rancher/rke2/server/token > /opt/rancher/token
 
-  echo "------------------------------------------------------------------"
-  echo " Next:"
-  echo "  - Mkdir: \"mkdir /opt/rancher\""
-  echo "  - Mount: \"mount $(hostname -I | awk '{ print $1 }'):/opt/rancher /opt/rancher\""
-  echo "  - CD: \"cd /opt/rancher\""
-  echo "  - Run: \""$0" worker\" on your worker nodes"
-  echo "------------------------------------------------------------------"
-  echo "  - yolo: \"mkdir /opt/rancher && mount $(hostname -I | awk '{ print $1 }'):/opt/rancher /opt/rancher && cd /opt/rancher && $0 worker\""
-  echo "------------------------------------------------------------------"
-
+  echo -e "${BLUE}Rancher Installer ${NC}- Mount Directory to Worker Nodes"
+  echo -e "  Switch to your worker nodes and run the following commands:"
+  echo -e "    mkdir /opt/rancher"
+  echo -e "    mount $(hostname -I | awk '{ print $1 }'):/opt/rancher /opt/rancher"
+  echo -e "    cd /opt/rancher"
+  echo -e "    $0 worker"
+  echo -e "  Complete command to run on worker nodes:"
+  echo -e "    mkdir /opt/rancher && mount $(hostname -I | awk '{ print $1 }'):/opt/rancher /opt/rancher && cd /opt/rancher && $0 worker"
 }
 
-function deploy_worker () {
-  echo - deploy worker
+function deploy-worker () {
+  echo -e "${BLUE}Rancher Installer ${NC}- Deploy Worker Node (RKE2)"
 
-  # check for mount point
+  # Verify Control Plan Node Mounted
   if [ ! -f /opt/rancher/token ]; then echo " -$RED Did you mount the volume from the first node?$NO_COLOR"; exit 1; fi
 
-  # base bits
-  base
+  # Setup Base
+  base-settings
 
+  # Export Token to RKE2 Worker Node
   export token=$(cat /opt/rancher/token)
   export server=$(mount |grep rancher | awk -F: '{print $1}')
 
-  # setup RKE2
+  # Setup RKE2
   mkdir -p /etc/rancher/rke2/
   echo -e "server: https://$server:9345\ntoken: $token\nwrite-kubeconfig-mode: 0640\n#profile: cis-1.6\nkube-apiserver-arg:\n- \"authorization-mode=RBAC,Node\"\nkubelet-arg:\n- \"protect-kernel-defaults=true\" " > /etc/rancher/rke2/config.yaml
-
   chmod 600 /etc/rancher/rke2/config.yaml
 
-  # install rke2
+  # Install RKE2
   cd /opt/rancher
   INSTALL_RKE2_ARTIFACT_PATH=/opt/rancher/rke2_$RKE_VERSION INSTALL_RKE2_TYPE=agent sh /opt/rancher/rke2_$RKE_VERSION/install.sh 
   yum install -y /opt/rancher/rke2_$RKE_VERSION/rke2-common-$RKE_VERSION.rke2r1-0.x86_64.rpm /opt/rancher/rke2_$RKE_VERSION/rke2-selinux-0.9-1.el8.noarch.rpm
@@ -339,75 +357,40 @@ function deploy_worker () {
   systemctl enable rke2-agent.service && systemctl start rke2-agent.service
 }
 
-function longhorn () {
-  # deploy longhorn with local helm/images
+# Install and Deploy Rancher
+function install-rancher () {
+  echo - deploying rancher
+  helm upgrade -i cert-manager /opt/rancher/helm/cert-manager-v1.10.0.tgz --namespace cert-manager --create-namespace --set installCRDs=true --set image.repository=localhost:5000/cert-manager-controller --set webhook.image.repository=localhost:5000/cert-manager-webhook --set cainjector.image.repository=localhost:5000/cert-manager-cainjector --set startupapicheck.image.repository=localhost:5000/cert-manager-ctl
+  helm upgrade -i rancher /opt/rancher/helm/rancher-2.7.0.tgz --namespace cattle-system --create-namespace --set bootstrapPassword=bootStrapAllTheThings --set replicas=1 --set auditLog.level=2 --set auditLog.destination=hostPath --set useBundledSystemChart=true --set rancherImage=localhost:5000/rancher/rancher --set systemDefaultRegistry=localhost:5000 --set hostname=rancher.$DOMAIN
+  echo "   - bootstrap password = \"bootStrapAllTheThings\" "
+}
+
+# Install and Deploy Longhorn
+function install-longhorn () {
   echo - deploying longhorn
   helm upgrade -i longhorn /opt/rancher/helm/longhorn-1.3.2.tgz --namespace longhorn-system --create-namespace --set ingress.enabled=true --set ingress.host=longhorn.$DOMAIN --set global.cattle.systemDefaultRegistry=localhost:5000
 }
 
-function neuvector () {
-  # deploy neuvector with local helm/images
+# Install and Deploy Neuvector
+function install-neuvector () {
   echo - deploying neuvector
   helm upgrade -i neuvector --namespace neuvector neuvector/core --create-namespace  --set imagePullSecrets=regsecret --set k3s.enabled=true --set k3s.runtimePath=/run/k3s/containerd/containerd.sock  --set manager.ingress.enabled=true --set controller.pvc.enabled=true --set controller.pvc.capacity=500Mi --set registry=localhost:5000 --set tag=5.0.5 --set controller.image.repository=neuvector/controller --set enforcer.image.repository=neuvector/enforcer --set manager.image.repository=neuvector/manager --set cve.updater.image.repository=neuvector/updater --set manager.ingress.host=neuvector.$DOMAIN
 }
 
-function rancher () {
-  # deploy rancher with local helm/images
-  echo - deploying rancher
-  helm upgrade -i cert-manager /opt/rancher/helm/cert-manager-v1.10.0.tgz --namespace cert-manager --create-namespace --set installCRDs=true --set image.repository=localhost:5000/cert-manager-controller --set webhook.image.repository=localhost:5000/cert-manager-webhook --set cainjector.image.repository=localhost:5000/cert-manager-cainjector --set startupapicheck.image.repository=localhost:5000/cert-manager-ctl
-
-  helm upgrade -i rancher /opt/rancher/helm/rancher-2.7.0.tgz --namespace cattle-system --create-namespace --set bootstrapPassword=bootStrapAllTheThings --set replicas=1 --set auditLog.level=2 --set auditLog.destination=hostPath --set useBundledSystemChart=true --set rancherImage=localhost:5000/rancher/rancher --set systemDefaultRegistry=localhost:5000 --set hostname=rancher.$DOMAIN
-
-  echo "   - bootstrap password = \"bootStrapAllTheThings\" "
-}
-
-function validate () {
+# Validate Complete Deployment
+function validation () {
   echo - showing images
   kubectl get pods -A -o jsonpath="{.items[*].spec.containers[*].image}" | tr -s '[[:space:]]' '\n' |sort | uniq -c
-}
-
-function usage () {
-  echo ""
-  echo "-------------------------------------------------"
-  echo ""
-  echo " Usage: $0 {build | deploy}"
-  echo ""
-  echo " $0 build # download and create the monster TAR "
-  echo " $0 control # deploy on a control plane server"
-  echo " $0 worker # deploy on a worker"
-  echo " $0 neuvector # deploy neuvector"
-  echo " $0 longhorn # deploy longhorn"
-  echo " $0 rancher # deploy rancher"
-  echo " $0 validate # validate all the image locations"
-  echo ""
-  echo "-------------------------------------------------"
-  echo ""
-  echo "Steps:"
-  echo " - UNCLASS - $0 build"
-  echo " - Move the ZST file across the air gap"
-  echo " - Build 3 vms with 4cpu and 8gb of ram"
-  echo " - On 1st node ( Control Plane node ) run: mkdir /opt/rancher && tar -I zstd -vxf rke2_rancher_longhorn.zst -C /opt/rancher"
-  echo " - On 1st node run cd /opt/rancher; $0 control"
-  echo " - Wait and watch for errors"
-  echo " - On 2nd, and 3rd nodes run mkdir /opt/rancher && mount \$IP:/opt/rancher /opt/rancher"
-  echo " - On 2nd, and 3rd nodes run $0 worker"
-  echo " - On 1st node install"
-  echo "   - Longhorn : $0 longhorn"
-  echo "   - Rancher : $0 rancher"
-  echo ""
-  echo "-------------------------------------------------"
-  echo ""
-  exit 1
 }
 
 case "$1" in
         build) build-server;;
         base) base-settings;;
-        control) deploy_control;;
-        worker) deploy_worker;;
-        neuvector) neuvector;;
-        longhorn) longhorn;;
-        rancher) rancher;;
-        validate) validate;;
+        control) deploy-control;;
+        worker) deploy-worker;;
+        rancher) install-rancher;;
+        longhorn) install-longhorn;;
+        neuvector) install-neuvector;;
+        validate) validation;;
         *) usage;;
 esac
