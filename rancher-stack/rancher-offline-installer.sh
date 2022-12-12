@@ -187,7 +187,6 @@ function build-server () {
   
 }
 
-################################# deploy control ################################
 function deploy_control () {
   # this is for the first node
   # mkdir /opt/rancher
@@ -312,7 +311,6 @@ EOF
 
 }
 
-################################# deploy worker ################################
 function deploy_worker () {
   echo - deploy worker
 
@@ -341,21 +339,18 @@ function deploy_worker () {
   systemctl enable rke2-agent.service && systemctl start rke2-agent.service
 }
 
-################################# longhorn ################################
 function longhorn () {
   # deploy longhorn with local helm/images
   echo - deploying longhorn
   helm upgrade -i longhorn /opt/rancher/helm/longhorn-1.3.2.tgz --namespace longhorn-system --create-namespace --set ingress.enabled=true --set ingress.host=longhorn.$DOMAIN --set global.cattle.systemDefaultRegistry=localhost:5000
 }
 
-################################# neuvector ################################
 function neuvector () {
   # deploy neuvector with local helm/images
   echo - deploying neuvector
   helm upgrade -i neuvector --namespace neuvector neuvector/core --create-namespace  --set imagePullSecrets=regsecret --set k3s.enabled=true --set k3s.runtimePath=/run/k3s/containerd/containerd.sock  --set manager.ingress.enabled=true --set controller.pvc.enabled=true --set controller.pvc.capacity=500Mi --set registry=localhost:5000 --set tag=5.0.5 --set controller.image.repository=neuvector/controller --set enforcer.image.repository=neuvector/enforcer --set manager.image.repository=neuvector/manager --set cve.updater.image.repository=neuvector/updater --set manager.ingress.host=neuvector.$DOMAIN
 }
 
-################################# rancher ################################
 function rancher () {
   # deploy rancher with local helm/images
   echo - deploying rancher
@@ -366,13 +361,11 @@ function rancher () {
   echo "   - bootstrap password = \"bootStrapAllTheThings\" "
 }
 
-################################# validate ################################
 function validate () {
   echo - showing images
   kubectl get pods -A -o jsonpath="{.items[*].spec.containers[*].image}" | tr -s '[[:space:]]' '\n' |sort | uniq -c
 }
 
-############################# usage ################################
 function usage () {
   echo ""
   echo "-------------------------------------------------"
