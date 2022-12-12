@@ -4,34 +4,95 @@
 
 set -ebpf
 
+#Set script package version varibles
 export RKE_VERSION=1.24.8
 export CERT_VERSION=v1.10.0
 export RANCHER_VERSION=v2.7.0
 export LONGHORN_VERSION=v1.3.2
-export NEU_VERSION=2.2.5 # this is the chart version for 5.0.5
-export DOMAIN=awesome.sauce
+export NEUVECTOR_VERSION=2.2.5
+export DOMAIN=7310hargrove.court
 
-######  NO MOAR EDITS #######
+### Set script color variables
 export RED='\x1b[0;31m'
 export GREEN='\x1b[32m'
 export BLUE='\x1b[34m'
 export YELLOW='\x1b[33m'
-export NO_COLOR='\x1b[0m'
+export NC='\x1b[0m'
 
 #better error checking
 #command -v skopeo >/dev/null 2>&1 || { echo "$RED" " ** skopeo was not found. Please install. ** " "$NORMAL" >&2; exit 1; }
 
+function base-settings () {
+
+echo -e "${BLUE}Rancher Installer:${NC} Updating to recommended kernel settings"
+cat << EOF >> /etc/sysctl.conf
+
+# SWAP Settings
+vm.swappiness=0
+vm.panic_on_oom=0
+vm.overcommit_memory=1
+kernel.panic=10
+kernel.panic_on_oops=1
+vm.max_map_count = 262144
+
+# Larger connection range available
+net.ipv4.ip_local_port_range=1024 65000
+
+# Increase max connection
+net.core.somaxconn=10000
+
+# Reuse closed sockets faster
+net.ipv4.tcp_tw_reuse=1
+net.ipv4.tcp_fin_timeout=15
+
+# Maximum number of "backlogged sockets"
+net.core.somaxconn=4096
+net.core.netdev_max_backlog=4096
+
+# 16MB per socket, but is definitely required for high performance
+net.core.rmem_max=16777216
+net.core.wmem_max=16777216
+
+# Various network tunings
+net.ipv4.tcp_max_syn_backlog=20480
+net.ipv4.tcp_max_tw_buckets=400000
+net.ipv4.tcp_no_metrics_save=1
+net.ipv4.tcp_rmem=4096 87380 16777216
+net.ipv4.tcp_syn_retries=2
+net.ipv4.tcp_synack_retries=2
+net.ipv4.tcp_wmem=4096 65536 16777216
+
+# ARP cache settings tunings
+net.ipv4.neigh.default.gc_thresh1=8096
+net.ipv4.neigh.default.gc_thresh2=12288
+net.ipv4.neigh.default.gc_thresh3=16384
+
+# IP forward and tcp keepalive for iptables
+net.ipv4.tcp_keepalive_time=600
+net.ipv4.ip_forward=1
+
+# Monitor file system events
+fs.inotify.max_user_instances=8192
+fs.inotify.max_user_watches=1048576
+EOF
+sysctl -p > /dev/null 2>&1
+
+  echo Install packages
+  yum install -y zstd nfs-utils iptables skopeo container-selinux iptables libnetfilter_conntrack libnfnetlink libnftnl policycoreutils-python-utils cryptsetup iscsi-initiator-utils
+  systemctl enable iscsid && systemctl start iscsid
+  echo -e "[keyfile]\nunmanaged-devices=interface-name:cali*;interface-name:flannel*" > /etc/NetworkManager/conf.d/rke2-canal.conf
+}
+
 ################################# build ################################
 function build () {
 
-  echo - Installing packages
+  echo -e "${BLUE}Rancher Installer ${NC}- Installing packages"
   yum install zstd skopeo -y > /dev/null 2>&1
 
   mkdir -p /opt/rancher/rke2_$RKE_VERSION/
   cd /opt/rancher/rke2_$RKE_VERSION/
 
   echo - download rke, rancher and longhorn
-  # from https://docs.rke2.io/install/airgap
   curl -#OL https://github.com/rancher/rke2/releases/download/v$RKE_VERSION%2Brke2r1/rke2-images.linux-amd64.tar.zst
   curl -#OL https://github.com/rancher/rke2/releases/download/v$RKE_VERSION%2Brke2r1/rke2.linux-amd64.tar.gz
   curl -#OL https://github.com/rancher/rke2/releases/download/v$RKE_VERSION%2Brke2r1/sha256sum-amd64.txt
@@ -52,6 +113,7 @@ function build () {
   rm -rf linux-386 > /dev/null 2>&1
 
   echo - add repos
+
   helm repo add jetstack https://charts.jetstack.io > /dev/null 2>&1
   helm repo add rancher-latest https://releases.rancher.com/server-charts/latest > /dev/null 2>&1
   helm repo add longhorn https://charts.longhorn.io > /dev/null 2>&1
@@ -62,12 +124,12 @@ function build () {
   helm pull jetstack/cert-manager --version $CERT_VERSION > /dev/null 2>&1
   helm pull rancher-latest/rancher --version $RANCHER_VERSION > /dev/null 2>&1
   helm pull longhorn/longhorn --version $LONGHORN_VERSION > /dev/null 2>&1
-  helm pull neuvector/core --version $NEU_VERSION > /dev/null 2>&1
+  helm pull neuvector/core --version $NEUVECTOR_VERSION > /dev/null 2>&1
 
   echo - Get Images - Rancher/Longhorn
 
   echo - create image dir
-  mkdir -p /opt/rancher/images/{cert,rancher,longhorn,registry,flask,neuvector}
+  mkdir -p /opt/rancher/images/{cert,rancher,longhorn,registry,neuvector}
   cd /opt/rancher/images/
 
   echo - rancher image list 
@@ -95,7 +157,7 @@ function build () {
   curl -#L https://raw.githubusercontent.com/longhorn/longhorn/$LONGHORN_VERSION/deploy/longhorn-images.txt -o longhorn/longhorn-images.txt
 
   echo - neuvector image list
-  helm template /opt/rancher/helm/core-$NEU_VERSION.tgz | awk '$1 ~ /image:/ {print $2}' | sed -e 's/\"//g' > neuvector/neuvector_images.txt
+  helm template /opt/rancher/helm/core-$NEUVECTOR_VERSION.tgz | awk '$1 ~ /image:/ {print $2}' | sed -e 's/\"//g' > neuvector/neuvector_images.txt
 
  # get images
   echo - skopeo - cert-manager
@@ -120,12 +182,6 @@ function build () {
 
   curl -#L https://github.com/clemenko/rke_airgap_install/raw/main/registry.tar -o registry/registry_2.tar > /dev/null 2>&1
 
-  # add flask app and yaml.
-  skopeo copy docker://redis docker-archive:flask/redis.tar > /dev/null 2>&1
-  skopeo copy docker://mongo docker-archive:flask/mongo.tar > /dev/null 2>&1
-  skopeo copy docker://clemenko/flask_demo docker-archive:flask/flask_demo.tar > /dev/null 2>&1
-  curl -#L https://raw.githubusercontent.com/clemenko/rke_airgap_install/main/flask.yaml -o /opt/rancher/images/flask/flask.yaml > /dev/null 2>&1
-
   cd /opt/rancher/
   echo - compress all the things
   tar -I zstd -vcf /opt/rke2_rancher_longhorn.zst $(ls) > /dev/null 2>&1
@@ -139,69 +195,6 @@ function build () {
   echo "   tar -I zstd -vxf rke2_rancher_longhorn.zst -C /opt/rancher"
   echo "------------------------------------------------------------------"
 
-}
-
-################################# base ################################
-function base () {
-  # install all the base bits.
-
-  echo " updating kernel settings"
-  cat << EOF >> /etc/sysctl.conf
-# SWAP settings
-vm.swappiness=0
-vm.panic_on_oom=0
-vm.overcommit_memory=1
-kernel.panic=10
-kernel.panic_on_oops=1
-vm.max_map_count = 262144
-
-# Have a larger connection range available
-net.ipv4.ip_local_port_range=1024 65000
-
-# Increase max connection
-net.core.somaxconn=10000
-
-# Reuse closed sockets faster
-net.ipv4.tcp_tw_reuse=1
-net.ipv4.tcp_fin_timeout=15
-
-# The maximum number of "backlogged sockets".  Default is 128.
-net.core.somaxconn=4096
-net.core.netdev_max_backlog=4096
-
-# 16MB per socket - which sounds like a lot,
-# but will virtually never consume that much.
-net.core.rmem_max=16777216
-net.core.wmem_max=16777216
-
-# Various network tunables
-net.ipv4.tcp_max_syn_backlog=20480
-net.ipv4.tcp_max_tw_buckets=400000
-net.ipv4.tcp_no_metrics_save=1
-net.ipv4.tcp_rmem=4096 87380 16777216
-net.ipv4.tcp_syn_retries=2
-net.ipv4.tcp_synack_retries=2
-net.ipv4.tcp_wmem=4096 65536 16777216
-
-# ARP cache settings for a highly loaded docker swarm
-net.ipv4.neigh.default.gc_thresh1=8096
-net.ipv4.neigh.default.gc_thresh2=12288
-net.ipv4.neigh.default.gc_thresh3=16384
-
-# ip_forward and tcp keepalive for iptables
-net.ipv4.tcp_keepalive_time=600
-net.ipv4.ip_forward=1
-
-# monitor file system events
-fs.inotify.max_user_instances=8192
-fs.inotify.max_user_watches=1048576
-EOF
-sysctl -p > /dev/null 2>&1
-
-  echo install packages
-  yum install -y zstd nfs-utils iptables skopeo container-selinux iptables libnetfilter_conntrack libnfnetlink libnftnl policycoreutils-python-utils cryptsetup iscsi-initiator-utils
-  systemctl enable iscsid && systemctl start iscsid
-  echo -e "[keyfile]\nunmanaged-devices=interface-name:cali*;interface-name:flannel*" > /etc/NetworkManager/conf.d/rke2-canal.conf
 }
 
 ################################# deploy control ################################
@@ -246,7 +239,6 @@ function deploy_control () {
   systemctl enable nfs-server.service && systemctl start nfs-server.service
 
   echo - run local registry
-  # Adam made me use localhost:5000
   mkdir /opt/rancher/registry
   chcon system_u:object_r:container_file_t:s0 /opt/rancher/registry
 
@@ -359,22 +351,6 @@ function deploy_worker () {
   systemctl enable rke2-agent.service && systemctl start rke2-agent.service
 }
 
-################################# flask ################################
-function flask () {
-  # dummy 3 tier app - asked for by a customer. 
-  echo - load images
-  for file in $(ls /opt/rancher/images/flask/ | grep -v yaml ); do 
-     skopeo copy docker-archive:/opt/rancher/images/flask/$file docker://$(echo $file | sed 's/.tar//g' | awk '{print "localhost:5000/flask/"$1}') --dest-tls-verify=false
-  done
-
-  echo "------------------------------------------------------------------"
-  echo " to deploy: "
-  echo "   edit /opt/rancher/images/flask/flask.yaml to the ingress URL."
-  echo "   kubectl apply -f /opt/rancher/images/flask/flask.yaml"
-  echo "------------------------------------------------------------------"
-
-}
-
 ################################# longhorn ################################
 function longhorn () {
   # deploy longhorn with local helm/images
@@ -416,7 +392,6 @@ function usage () {
   echo " $0 build # download and create the monster TAR "
   echo " $0 control # deploy on a control plane server"
   echo " $0 worker # deploy on a worker"
-  echo " $0 flask # deploy a 3 tier app"
   echo " $0 neuvector # deploy neuvector"
   echo " $0 longhorn # deploy longhorn"
   echo " $0 rancher # deploy rancher"
@@ -436,7 +411,6 @@ function usage () {
   echo " - On 1st node install"
   echo "   - Longhorn : $0 longhorn"
   echo "   - Rancher : $0 rancher"
-  echo "   - Flask : $0 flask"
   echo ""
   echo "-------------------------------------------------"
   echo ""
@@ -444,14 +418,13 @@ function usage () {
 }
 
 case "$1" in
-        build ) build;;
+        build) build;;
+        base) base-settings;;
         control) deploy_control;;
         worker) deploy_worker;;
         neuvector) neuvector;;
         longhorn) longhorn;;
         rancher) rancher;;
-        flask) flask;;
         validate) validate;;
         *) usage;;
 esac
-
