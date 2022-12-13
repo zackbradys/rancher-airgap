@@ -1,9 +1,9 @@
 #!/bin/bash
 
-# Rancher Offline Installer Setup (do this first on the build server machine)
-# mkdir /opt/rancher && cd /opt/rancher 
-# curl -#OL https://raw.githubusercontent.com/zackbradys/rancher-offline-install/main/rancher-stack/rancher-offline-installer.sh
-# chmod 755 rancher-offine-installer.sh
+# Rancher Offline Installer Setup 
+  # mkdir /opt/rancher && cd /opt/rancher 
+  # curl -#OL https://raw.githubusercontent.com/zackbradys/rancher-offline-install/main/rancher-stack/rancher-offline-installer.sh
+  # chmod 755 rancher-offine-installer.sh
 
 set -ebpf
 
@@ -22,35 +22,19 @@ export BLUE='\x1b[34m'
 export YELLOW='\x1b[33m'
 export NC='\x1b[0m'
 
-#better error checking
-#command -v skopeo >/dev/null 2>&1 || { echo "$RED" " ** skopeo was not found. Please install. ** " "$NORMAL" >&2; exit 1; }''
 # Script Steps and Tips
 functions steps () {
-  echo -e "${BLUE}Rancher Installer ${NC}- Steps"
-  echo -e "  1) Build the offline installer on a machine with internet access."
-  echo -e "  2) Mount or Copy the installer files to the offline or airgapped server."
-  echo -e "  3) Install and deploy the control plane node to the first offline or airgapped server."
-  echo -e "  4) Install and deploy the worker "
-  echo -e "  ."
-  echo -e "  ."
-  echo -e "  ."
-  echo -e "  ."
-  echo -e "  ."
-  echo -e "  ."
-  exit 1
-}
-function usage () {
-  echo " - UNCLASS - $0 build"
-  echo " - Move the ZST file across the air gap"
-  echo " - Build 3 vms with 4cpu and 8gb of ram"
-  echo " - On 1st node ( Control Plane node ) run: mkdir /opt/rancher && tar -I zstd -vxf rek2-rancher-longhorn-neuvector.zst -C /opt/rancher"
-  echo " - On 1st node run cd /opt/rancher; $0 control"
-  echo " - Wait and watch for errors"
-  echo " - On 2nd, and 3rd nodes run mkdir /opt/rancher && mount \$IP:/opt/rancher /opt/rancher"
-  echo " - On 2nd, and 3rd nodes run $0 worker"
-  echo " - On 1st node install"
-  echo "   - Longhorn : $0 longhorn"
-  echo "   - Rancher : $0 rancher"
+  echo -e "${BLUE}Rancher Installer ${NC}- High Level Steps"
+  echo -e "  1) Download and Build the script on a server with internet access."
+  echo -e "  2) Mount/Move/Copy the compressed script to the offline/airgapped server."
+  echo -e "  3) Install and Deploy the control node to the first offline/airgapped server."
+  echo -e "  4) Install and Deploy the worker node to as many other offiline/airgapped servers."
+  echo -e "  5) Verify no errors occured with any of the nodes."
+  echo -e "  6) Install and Deploy Rancher, Longhorn, and Neuvector on the control plane node."
+  echo -e "  7) and done! You have successfully installed RKE2, Rancher, Longhorn, and Neuvector."
+  echo -e "     - https://rancher.$DOMAIN"
+  echo -e "     - https://longhorn.$DOMAIN"
+  echo -e "     - https://neuvector.$DOMAIN"
 }
 
 # Base Settings
@@ -216,7 +200,7 @@ function build-server () {
 }
 
 function deploy-control () {
-  echo -e "${BLUE}Rancher Installer ${NC}- Deploy Control Plane Node (RKE2)"
+  echo -e "${BLUE}Rancher Installer ${NC}- Deploying Control Node"
 
   # Setup Base
   base-settings
@@ -330,9 +314,9 @@ EOF
 }
 
 function deploy-worker () {
-  echo -e "${BLUE}Rancher Installer ${NC}- Deploy Worker Node (RKE2)"
+  echo -e "${BLUE}Rancher Installer ${NC}- Deploying Worker Node"
 
-  # Verify Control Plan Node Mounted
+  # Verify Control Node Mount Point
   if [ ! -f /opt/rancher/token ]; then echo " -$RED Did you mount the volume from the first node?$NO_COLOR"; exit 1; fi
 
   # Setup Base
@@ -359,33 +343,37 @@ function deploy-worker () {
 
 # Install and Deploy Rancher
 function install-rancher () {
-  echo - deploying rancher
+  echo -e "${BLUE}Rancher Installer ${NC}- Deploying Cert Manager"
   helm upgrade -i cert-manager /opt/rancher/helm/cert-manager-v1.10.0.tgz --namespace cert-manager --create-namespace --set installCRDs=true --set image.repository=localhost:5000/cert-manager-controller --set webhook.image.repository=localhost:5000/cert-manager-webhook --set cainjector.image.repository=localhost:5000/cert-manager-cainjector --set startupapicheck.image.repository=localhost:5000/cert-manager-ctl
+  
+  echo -e "${BLUE}Rancher Installer ${NC}- Deploying Rancher"
   helm upgrade -i rancher /opt/rancher/helm/rancher-2.7.0.tgz --namespace cattle-system --create-namespace --set bootstrapPassword=bootStrapAllTheThings --set replicas=1 --set auditLog.level=2 --set auditLog.destination=hostPath --set useBundledSystemChart=true --set rancherImage=localhost:5000/rancher/rancher --set systemDefaultRegistry=localhost:5000 --set hostname=rancher.$DOMAIN
-  echo "   - bootstrap password = \"bootStrapAllTheThings\" "
+  
+  echo -e "${BLUE}Rancher Installer ${NC}- Bootstrap Password"
+  echo "  - \"bootStrapAllTheThings\" "
 }
 
 # Install and Deploy Longhorn
 function install-longhorn () {
-  echo - deploying longhorn
+  echo -e "${BLUE}Rancher Installer ${NC}- Deploying Longhorn"
   helm upgrade -i longhorn /opt/rancher/helm/longhorn-1.3.2.tgz --namespace longhorn-system --create-namespace --set ingress.enabled=true --set ingress.host=longhorn.$DOMAIN --set global.cattle.systemDefaultRegistry=localhost:5000
 }
 
 # Install and Deploy Neuvector
 function install-neuvector () {
-  echo - deploying neuvector
+  echo -e "${BLUE}Rancher Installer ${NC}- Deploying Neuvector"
   helm upgrade -i neuvector --namespace neuvector neuvector/core --create-namespace  --set imagePullSecrets=regsecret --set k3s.enabled=true --set k3s.runtimePath=/run/k3s/containerd/containerd.sock  --set manager.ingress.enabled=true --set controller.pvc.enabled=true --set controller.pvc.capacity=500Mi --set registry=localhost:5000 --set tag=5.0.5 --set controller.image.repository=neuvector/controller --set enforcer.image.repository=neuvector/enforcer --set manager.image.repository=neuvector/manager --set cve.updater.image.repository=neuvector/updater --set manager.ingress.host=neuvector.$DOMAIN
 }
 
 # Validate Complete Deployment
 function validation () {
-  echo - showing images
+  echo -e "${BLUE}Rancher Installer ${NC}- Image List"
   kubectl get pods -A -o jsonpath="{.items[*].spec.containers[*].image}" | tr -s '[[:space:]]' '\n' |sort | uniq -c
 }
 
 case "$1" in
-        build) build-server;;
         base) base-settings;;
+        build) build-server;;
         control) deploy-control;;
         worker) deploy-worker;;
         rancher) install-rancher;;
