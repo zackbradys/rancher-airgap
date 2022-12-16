@@ -23,7 +23,7 @@ export YELLOW='\x1b[33m'
 export NC='\x1b[0m'
 
 # Script Steps and Tips
-functions steps () {
+function steps () {
   echo -e "${BLUE}Rancher Installer ${NC}- High Level Steps"
   echo -e "  1) Download and Build the script on a server with internet access."
   echo -e "  2) Mount/Move/Copy the compressed script to the offline/airgapped server."
