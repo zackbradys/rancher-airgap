@@ -172,7 +172,7 @@ function build-server () {
   echo -e "${BLUE}Rancher Offline Installer ${NC}- Fetching Registry"
   curl -#L https://raw.githubusercontent.com/zackbradys/rancher-offline-install/main/rancher-stack/registry.tar -o registry/registry_2.tar > /dev/null 2>&1
 
-  echo -e "${BLUE}Rancher Offline Installer ${NC}- Compressing... this might take a hot minute"
+  echo -e "${BLUE}Rancher Offline Installer ${NC}- Compressing... this might take a minute"
   cd /opt/rancher/
   tar -I zstd -vcf /opt/rke2-rancher-longhorn-neuvector.zst $(ls) > /dev/null 2>&1
 
@@ -206,7 +206,7 @@ function deploy-control () {
   systemctl enable rke2-server.service && systemctl start rke2-server.service
 
   echo -e "${BLUE}Rancher Offline Installer ${NC}- Waiting for RKE2..."
-  sleep 60
+  sleep 30
 
   echo "export KUBECONFIG=/etc/rancher/rke2/rke2.yaml CRI_CONFIG_FILE=/var/lib/rancher/rke2/agent/etc/crictl.yaml PATH=$PATH:/var/lib/rancher/rke2/bin" >> ~/.bashrc
   ln -s /var/run/k3s/containerd/containerd.sock /var/run/containerd/containerd.sock
@@ -257,7 +257,7 @@ spec:
 EOF
 
   echo -e "${BLUE}Rancher Offline Installer ${NC}- Waiting for Kubernetes..."
-  sleep 60
+  sleep 30
   
   echo -e "${BLUE}Rancher Offline Installer ${NC}- Load Images to Local Registry"
   for file in $(ls /opt/rancher/images/longhorn/ | grep -v txt ); do 
