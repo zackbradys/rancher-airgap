@@ -3,7 +3,7 @@
 # Rancher Offline Installer Setup 
   # mkdir /opt/rancher && cd /opt/rancher 
   # curl -#OL https://raw.githubusercontent.com/zackbradys/rancher-offline-install/main/rancher-stack/rancher-offline-installer.sh
-  # chmod 755 rancher-offine-installer.sh
+  # chmod 755 rancher-offline-installer.sh
 
 set -ebpf
 
