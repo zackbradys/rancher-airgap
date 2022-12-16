@@ -288,6 +288,9 @@ EOF
 
   cat /var/lib/rancher/rke2/server/token > /opt/rancher/token
 
+  /var/lib/rancher/rke2/bin/kubectl --kubeconfig /etc/rancher/rke2/rke2.yaml get nodes
+  echo -e "${BLUE}Rancher Offline Installer ${NC}- Verify Successful Install of RKE2"
+  echo -e "    - /var/lib/rancher/rke2/bin/kubectl --kubeconfig /etc/rancher/rke2/rke2.yaml get nodes"
   echo -e "${BLUE}Rancher Offline Installer ${NC}- Mount Directory to Worker Nodes"
   echo -e "  Switch to your worker nodes and run the following commands:"
   echo -e "    mkdir /opt/rancher"
@@ -361,11 +364,14 @@ function steps () {
   echo -e "${BLUE}Rancher Offline Installer ${NC}- High Level Steps"
   echo -e "  1) Download and Build the script on a server with internet access."
   echo -e "  2) Mount/Move/Copy the compressed script to the offline/airgapped server."
-  echo -e "  3) Install and Deploy the control node to the first offline/airgapped server."
-  echo -e "  4) Install and Deploy the worker node to as many other offiline/airgapped servers."
-  echo -e "  5) Verify no errors occured with any of the nodes."
-  echo -e "  6) Install and Deploy Rancher, Longhorn, and Neuvector on the control plane node."
-  echo -e "  7) and done! You have successfully installed RKE2, Rancher, Longhorn, and Neuvector."
+  echo -e "  3) Uncompress the compressed script and continue the installation."
+  echo -e "  4) Install and Deploy the control node to the first offline/airgapped server."
+  echo -e "  5) Verify the RKE2 installation was sucessful."
+  echo -e "  6) Install and Deploy the worker node to as many other offiline/airgapped servers."
+  echo -e "  5) Verify the RKE2 installations was sucessful."
+  echo -e "  8) Verify no errors occured with any of the nodes."
+  echo -e "  9) Install and Deploy Rancher, Longhorn, and Neuvector on the control plane node."
+  echo -e "  10) and done! You have successfully installed RKE2, Rancher, Longhorn, and Neuvector."
   echo -e "     - https://rancher.$DOMAIN"
   echo -e "     - https://longhorn.$DOMAIN"
   echo -e "     - https://neuvector.$DOMAIN"
