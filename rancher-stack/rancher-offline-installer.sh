@@ -93,7 +93,7 @@ function build-server () {
   mkdir -p /opt/rancher/rke2_$RKE_VERSION/
   cd /opt/rancher/rke2_$RKE_VERSION/
 
-  echo -e "${BLUE}Rancher Installer ${NC}- Downloading Rancher MCM, RKE2, and Longhorn"
+  echo -e "${BLUE}Rancher Installer ${NC}- Fetching RKE2"
   curl -#OL https://github.com/rancher/rke2/releases/download/v$RKE_VERSION%2Brke2r1/rke2-images.linux-amd64.tar.zst
   curl -#OL https://github.com/rancher/rke2/releases/download/v$RKE_VERSION%2Brke2r1/rke2.linux-amd64.tar.gz
   curl -#OL https://github.com/rancher/rke2/releases/download/v$RKE_VERSION%2Brke2r1/sha256sum-amd64.txt
@@ -105,20 +105,20 @@ function build-server () {
   mkdir -p /opt/rancher/helm/
   cd /opt/rancher/helm/
 
-  echo -e "${BLUE}Rancher Installer ${NC}- Install Helm"
+  echo -e "${BLUE}Rancher Installer ${NC}- Installing Helm"
   curl -#LO https://get.helm.sh/helm-v3.10.2-linux-386.tar.gz > /dev/null 2>&1
   tar -zxvf helm-v3.10.2-linux-386.tar.gz > /dev/null 2>&1
   rsync -avP linux-386/helm /usr/local/bin/ > /dev/null 2>&1
   rm -rf linux-386 > /dev/null 2>&1
 
-  echo -e "${BLUE}Rancher Installer ${NC}- Setup Repositories"
+  echo -e "${BLUE}Rancher Installer ${NC}- Fetching Repositories"
   helm repo add jetstack https://charts.jetstack.io > /dev/null 2>&1
   helm repo add rancher-latest https://releases.rancher.com/server-charts/latest > /dev/null 2>&1
   helm repo add longhorn https://charts.longhorn.io > /dev/null 2>&1
   helm repo add neuvector https://neuvector.github.io/neuvector-helm/ > /dev/null 2>&1
   helm repo update > /dev/null 2>&1
 
-  echo -e "${BLUE}Rancher Installer ${NC}- Fetch Helm Charts"
+  echo -e "${BLUE}Rancher Installer ${NC}- Fetching Helm Charts"
   helm pull jetstack/cert-manager --version $CERT_VERSION > /dev/null 2>&1
   helm pull rancher-latest/rancher --version $RANCHER_VERSION > /dev/null 2>&1
   helm pull longhorn/longhorn --version $LONGHORN_VERSION > /dev/null 2>&1
@@ -128,7 +128,7 @@ function build-server () {
   mkdir -p /opt/rancher/images/{cert,rancher,longhorn,registry,neuvector}
   cd /opt/rancher/images/
 
-  echo -e "${BLUE}Rancher Installer ${NC}- Fetch Rancher Images"
+  echo -e "${BLUE}Rancher Installer ${NC}- Fetching Rancher Images"
   curl -#L https://github.com/rancher/rancher/releases/download/$RANCHER_VERSION/rancher-images.txt -o rancher/orig_rancher-images.txt
 
   echo -e "${BLUE}Rancher Installer ${NC}- Clean Up Rancher Images"
@@ -148,39 +148,40 @@ function build-server () {
   echo -e "${BLUE}Rancher Installer ${NC}- Clean Up Neuvector Images"
   helm template /opt/rancher/helm/core-$NEUVECTOR_VERSION.tgz | awk '$1 ~ /image:/ {print $2}' | sed -e 's/\"//g' > neuvector/neuvector_images.txt
 
-  echo -e "${BLUE}Rancher Installer ${NC}- Fetch Registry Images"
+  echo -e "${BLUE}Rancher Installer ${NC}- Fetching Images"
+  echo -e "${BLUE}Rancher Installer ${NC}- ... Registry Images"
   for i in $(cat cert/cert-manager-images.txt); do 
     skopeo copy docker://$i docker-archive:cert/$(echo $i| awk -F/ '{print $3}'|sed 's/:/_/g').tar:$(echo $i| awk -F/ '{print $3}') > /dev/null 2>&1
   done
 
-  echo -e "${BLUE}Rancher Installer ${NC}- ... Neuvector Images"
+  echo -e "${BLUE}Rancher Installer ${NC}- .... Neuvector Images"
   for i in $(cat neuvector/neuvector_images.txt); do 
     skopeo copy docker://$i docker-archive:neuvector/$(echo $i| awk -F/ '{print $3}'|sed 's/:/_/g').tar:$(echo $i| awk -F/ '{print $3}') > /dev/null 2>&1
   done
 
-  echo -e "${BLUE}Rancher Installer ${NC}- ... Longhorn Images"
+  echo -e "${BLUE}Rancher Installer ${NC}- ..... Longhorn Images"
   for i in $(cat longhorn/longhorn-images.txt); do 
     skopeo copy docker://$i docker-archive:longhorn/$(echo $i| awk -F/ '{print $2}'|sed 's/:/_/g').tar:$(echo $i| awk -F/ '{print $2}') > /dev/null 2>&1
   done
 
-  echo -e "${BLUE}Rancher Installer ${NC}- ... Rancher Images"
+  echo -e "${BLUE}Rancher Installer ${NC}- ...... Rancher Images"
   for i in $(cat rancher/rancher-images.txt); do 
     skopeo copy docker://$i docker-archive:rancher/$(echo $i| awk -F/ '{print $2}'|sed 's/:/_/g').tar:$(echo $i| awk -F/ '{print $2}') > /dev/null 2>&1
   done
 
-  echo -e "${BLUE}Rancher Installer ${NC}- Fetch Registry"
+  echo -e "${BLUE}Rancher Installer ${NC}- ...... Fetching Registry"
   curl -#L https://raw.githubusercontent.com/zackbradys/rancher-offline-install/main/rancher-stack/registry.tar -o registry/registry_2.tar > /dev/null 2>&1
 
-  echo -e "${BLUE}Rancher Installer ${NC}- Compress Everything"
+  echo -e "${BLUE}Rancher Installer ${NC}- Compressing... this might take a hot minute"
   cd /opt/rancher/
-  tar -I zstd -vcf /opt/rek2-rancher-longhorn-neuvector.zst $(ls) > /dev/null 2>&1
+  tar -I zstd -vcf /opt/rke2-rancher-longhorn-neuvector.zst $(ls) > /dev/null 2>&1
 
-  echo -e "${BLUE}Rancher Installer ${NC}- Mount or Copy to Control Node Server"
-  echo -e "  Mounting or copying, depends on your environment."
+  echo -e "${BLUE}Rancher Installer ${NC}- Mount/Copy/Move to Control Node Server"
+  echo -e "  Mount/Copy/Move, will depend on your environment."
   echo -e "  Tip - To uncompress, run the following commands:"
   echo -e "    yum install -y zstd"
   echo -e "    mkdir /opt/rancher"
-  echo -e "    tar -I zstd -vxf rek2-rancher-longhorn-neuvector.zst -C /opt/rancher"
+  echo -e "    tar -I zstd -vxf rke2-rancher-longhorn-neuvector.zst -C /opt/rancher"
 }
 
 function deploy-control () {
