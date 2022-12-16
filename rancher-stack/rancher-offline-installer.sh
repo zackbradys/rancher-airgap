@@ -22,21 +22,6 @@ export BLUE='\x1b[34m'
 export YELLOW='\x1b[33m'
 export NC='\x1b[0m'
 
-# Script Steps and Tips
-function steps () {
-  echo -e "${BLUE}Rancher Installer ${NC}- High Level Steps"
-  echo -e "  1) Download and Build the script on a server with internet access."
-  echo -e "  2) Mount/Move/Copy the compressed script to the offline/airgapped server."
-  echo -e "  3) Install and Deploy the control node to the first offline/airgapped server."
-  echo -e "  4) Install and Deploy the worker node to as many other offiline/airgapped servers."
-  echo -e "  5) Verify no errors occured with any of the nodes."
-  echo -e "  6) Install and Deploy Rancher, Longhorn, and Neuvector on the control plane node."
-  echo -e "  7) and done! You have successfully installed RKE2, Rancher, Longhorn, and Neuvector."
-  echo -e "     - https://rancher.$DOMAIN"
-  echo -e "     - https://longhorn.$DOMAIN"
-  echo -e "     - https://neuvector.$DOMAIN"
-}
-
 # Base Settings
 function base-settings () {
 
@@ -196,7 +181,6 @@ function build-server () {
   echo -e "    yum install -y zstd"
   echo -e "    mkdir /opt/rancher"
   echo -e "    tar -I zstd -vxf rek2-rancher-longhorn-neuvector.zst -C /opt/rancher"
-  
 }
 
 function deploy-control () {
@@ -369,6 +353,22 @@ function install-neuvector () {
 function validation () {
   echo -e "${BLUE}Rancher Installer ${NC}- Image List"
   kubectl get pods -A -o jsonpath="{.items[*].spec.containers[*].image}" | tr -s '[[:space:]]' '\n' |sort | uniq -c
+}
+
+# Script Steps and Tips
+function steps () {
+  echo -e "${BLUE}Rancher Installer ${NC}- High Level Steps"
+  echo -e "  1) Download and Build the script on a server with internet access."
+  echo -e "  2) Mount/Move/Copy the compressed script to the offline/airgapped server."
+  echo -e "  3) Install and Deploy the control node to the first offline/airgapped server."
+  echo -e "  4) Install and Deploy the worker node to as many other offiline/airgapped servers."
+  echo -e "  5) Verify no errors occured with any of the nodes."
+  echo -e "  6) Install and Deploy Rancher, Longhorn, and Neuvector on the control plane node."
+  echo -e "  7) and done! You have successfully installed RKE2, Rancher, Longhorn, and Neuvector."
+  echo -e "     - https://rancher.$DOMAIN"
+  echo -e "     - https://longhorn.$DOMAIN"
+  echo -e "     - https://neuvector.$DOMAIN"
+  exit 1
 }
 
 case "$1" in
