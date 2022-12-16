@@ -1,12 +1,54 @@
-# Rancher Federal Offline Installs
+# Rancher Federal Offline Installs (Rancher Stack)
 
 #### Zack Brady, Field Engineer, Rancher Government Solutions (RGS)
 #### [@zackbradys](https://twitter.com/zackbradys) - zack.brady@rancherfederal.com - https://rancher.com/government
 
-![rancher-long-banner](./images/rgs-banner-rounded.png)
+![rancher-long-banner](../images/rgs-banner-rounded.png)
 
 ### Welcome to the Rancher Federal Offline Install Guides
+### ... for the Core Rancher Stack!!
 
-Use this repository to completely offline and airgap install and setup various architectures surrounding the Rancher ecosystem. In most cases, the [Rancher Stack](https://github.com/zackbradys/rancher-offline-install/tree/main/rancher-stack) guide will be the most useful! It's provides the secure baseline installation of all the core Rancher products.
+- RKE2 (Kubernetes Engine) - [learn more](https://www.rancher.com/products/rke)
+- Rancher MCM (Cluster Management) - [learn more](https://www.rancher.com/products/rancher)
+- Longhorn (Storage) - [learn more](https://www.rancher.com/products/longhorn)
+- Neuvector (Security) - [learn more](https://ranchergovernment.com/neuvector)
 
-Please see the individual readme's for more information and the install and setup guides!
+more coming soon
+
+## Table of Contents
+
+
+
+### Overview
+
+
+
+### Setup Build/Staging Server
+
+
+
+### Install Control Nodes
+
+
+
+### Install Worker Nodes
+
+
+
+### Rancher
+
+
+
+### Longhorn
+
+
+
+### Neuvector
+
+
+
+### Verification and Validation
+
+
+
+### That's a wrap folks!!

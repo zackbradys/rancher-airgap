@@ -2,7 +2,7 @@
 
 # Rancher Offline Installer Setup 
   # mkdir /opt/rancher && cd /opt/rancher 
-  # curl -#OL https://raw.githubusercontent.com/zackbradys/rancher-offline-install/main/rancher-stack/rancher-offline-installer.sh
+  # curl -#OL https://raw.githubusercontent.com/zackbradys/rancher-offline-install/main/rancher-offline-installer.sh
   # chmod 755 rancher-offline-installer.sh
 
 set -ebpf
@@ -113,7 +113,7 @@ function build-server () {
   done
 
   echo -e "${BLUE}Rancher Offline Installer ${NC}- Fetching Registry"
-  curl -#L https://raw.githubusercontent.com/zackbradys/rancher-offline-install/main/rancher-stack/registry.tar -o registry/registry_2.tar > /dev/null 2>&1
+  curl -#L https://raw.githubusercontent.com/zackbradys/rancher-offline-install/main/registry.tar -o registry/registry_2.tar > /dev/null 2>&1
 
   echo -e "${BLUE}Rancher Offline Installer ${NC}- Compressing... this might take a minute"
   cd /opt/rancher/
