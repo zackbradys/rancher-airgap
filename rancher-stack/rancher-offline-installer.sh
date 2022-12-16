@@ -31,12 +31,14 @@ function build-server () {
   mkdir -p /opt/rancher/rke2_$RKE_VERSION/
   cd /opt/rancher/rke2_$RKE_VERSION/
 
-  echo -e "${BLUE}Rancher Offline Installer ${NC}- Fetching RKE2"
+  echo -e "${BLUE}Rancher Offline Installer ${NC}- Fetching RKE2, Rancher, Longhorn, and Neuvector"
   curl -#OL https://github.com/rancher/rke2/releases/download/v$RKE_VERSION%2Brke2r1/rke2-images.linux-amd64.tar.zst
   curl -#OL https://github.com/rancher/rke2/releases/download/v$RKE_VERSION%2Brke2r1/rke2.linux-amd64.tar.gz
   curl -#OL https://github.com/rancher/rke2/releases/download/v$RKE_VERSION%2Brke2r1/sha256sum-amd64.txt
   curl -#OL https://github.com/rancher/rke2-packaging/releases/download/v$RKE_VERSION%2Brke2r1.stable.0/rke2-common-$RKE_VERSION.rke2r1-0.x86_64.rpm
   curl -#OL https://github.com/rancher/rke2-selinux/releases/download/v0.9.stable.1/rke2-selinux-0.9-1.el8.noarch.rpm
+
+  echo -e "${BLUE}Rancher Offline Installer ${NC}- Fetching RKE2 Install Script"
   curl -sfL https://get.rke2.io -o install.sh
 
   echo -e "${BLUE}Rancher Offline Installer ${NC}- Setup Helm"
@@ -71,10 +73,13 @@ function build-server () {
 
   echo -e "${BLUE}Rancher Offline Installer ${NC}- Clean Up Rancher Images"
   sed -i -e '0,/busybox/s/busybox/library\/busybox/' -e 's/registry/library\/registry/g' rancher/orig_rancher-images.txt
+
   sed -i -E '/neuvector|minio|gke|aks|eks|sriov|harvester|mirrored|longhorn|thanos|tekton|istio|multus|hyper|jenkins|windows/d' rancher/orig_rancher-images.txt
-  for i in $(cat rancher/orig_rancher-images.txt|awk -F: '{print $1}'); do 
+ 
+ for i in $(cat rancher/orig_rancher-images.txt|awk -F: '{print $1}'); do 
     grep -w $i rancher/orig_rancher-images.txt | sort -Vr| head -1 >> rancher/version_unsorted.txt
   done
+
   cat rancher/version_unsorted.txt | sort -u >> rancher/rancher-images.txt
 
   echo -e "${BLUE}Rancher Offline Installer ${NC}- Clean Up Cert Manager Images"
@@ -112,14 +117,14 @@ function build-server () {
 
   echo -e "${BLUE}Rancher Offline Installer ${NC}- Compressing... this might take a minute"
   cd /opt/rancher/
-  tar -I zstd -vcf /opt/rke2-rancher-longhorn-neuvector.zst $(ls) > /dev/null 2>&1
+  tar -I zstd -vcf /opt/rancher-offline-files.zst $(ls) > /dev/null 2>&1
 
   echo -e "${BLUE}Rancher Offline Installer ${NC}- Mount/Copy/Move to Control Node Server"
   echo -e "  Mount/Copy/Move, will depend on your environment."
   echo -e "  Tip - To uncompress, run the following commands:"
   echo -e "    yum install -y zstd"
   echo -e "    mkdir /opt/rancher"
-  echo -e "    tar -I zstd -vxf rke2-rancher-longhorn-neuvector.zst -C /opt/rancher"
+  echo -e "    tar -I zstd -vxf rancher-offline-files.zst -C /opt/rancher"
 }
 
 # Base Settings
@@ -195,7 +200,9 @@ function deploy-control () {
   useradd -r -c "etcd user" -s /sbin/nologin -M etcd -U
   mkdir -p /etc/rancher/rke2/ /var/lib/rancher/rke2/server/manifests/
   echo -e "#profile: cis-1.6\nselinux: true\nsecrets-encryption: true\nwrite-kubeconfig-mode: 0640\nkube-controller-manager-arg:\n- bind-address=127.0.0.1\n- use-service-account-credentials=true\n- tls-min-version=VersionTLS12\n- tls-cipher-suites=TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305,TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305,TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384\nkube-scheduler-arg:\n- tls-min-version=VersionTLS12\n- tls-cipher-suites=TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305,TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305,TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384\nkube-apiserver-arg:\n- tls-min-version=VersionTLS12\n- tls-cipher-suites=TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305,TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305,TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384\n- authorization-mode=RBAC,Node\n- anonymous-auth=false\n- audit-policy-file=/etc/rancher/rke2/audit-policy.yaml\n- audit-log-mode=blocking-strict\n- audit-log-maxage=30\nkubelet-arg:\n- protect-kernel-defaults=true\n- read-only-port=0\n- authorization-mode=Webhook" > /etc/rancher/rke2/config.yaml
+  
   echo -e "apiVersion: audit.k8s.io/v1\nkind: Policy\nrules:\n- level: RequestResponse" > /etc/rancher/rke2/audit-policy.yaml
+  
   echo -e "---\napiVersion: helm.cattle.io/v1\nkind: HelmChartConfig\nmetadata:\n  name: rke2-ingress-nginx\n  namespace: kube-system\nspec:\n  valuesContent: |-\n    controller:\n      config:\n        use-forwarded-headers: true\n      extraArgs:\n        enable-ssl-passthrough: true" > /var/lib/rancher/rke2/server/manifests/rke2-ingress-nginx-config.yaml; 
 
   mkdir -p /var/lib/rancher/rke2/agent/images
@@ -206,6 +213,7 @@ function deploy-control () {
   systemctl enable rke2-server.service && systemctl start rke2-server.service
 
   echo -e "${BLUE}Rancher Offline Installer ${NC}- Waiting for RKE2..."
+  
   sleep 30
 
   echo "export KUBECONFIG=/etc/rancher/rke2/rke2.yaml CRI_CONFIG_FILE=/var/lib/rancher/rke2/agent/etc/crictl.yaml PATH=$PATH:/var/lib/rancher/rke2/bin" >> ~/.bashrc
@@ -257,6 +265,7 @@ spec:
 EOF
 
   echo -e "${BLUE}Rancher Offline Installer ${NC}- Waiting for Kubernetes..."
+  
   sleep 30
   
   echo -e "${BLUE}Rancher Offline Installer ${NC}- Load Images to Local Registry"
@@ -288,9 +297,8 @@ EOF
 
   cat /var/lib/rancher/rke2/server/token > /opt/rancher/token
 
-  /var/lib/rancher/rke2/bin/kubectl --kubeconfig /etc/rancher/rke2/rke2.yaml get nodes
   echo -e "${BLUE}Rancher Offline Installer ${NC}- Verify Successful Install of RKE2"
-  echo -e "    - /var/lib/rancher/rke2/bin/kubectl --kubeconfig /etc/rancher/rke2/rke2.yaml get nodes"
+  echo -e "    - "
   echo -e "${BLUE}Rancher Offline Installer ${NC}- Mount Directory to Worker Nodes"
   echo -e "  Switch to your worker nodes and run the following commands:"
   echo -e "    mkdir /opt/rancher"
@@ -317,6 +325,7 @@ function deploy-worker () {
   # Setup RKE2
   mkdir -p /etc/rancher/rke2/
   echo -e "server: https://$server:9345\ntoken: $token\nwrite-kubeconfig-mode: 0640\n#profile: cis-1.6\nkube-apiserver-arg:\n- \"authorization-mode=RBAC,Node\"\nkubelet-arg:\n- \"protect-kernel-defaults=true\" " > /etc/rancher/rke2/config.yaml
+  
   chmod 600 /etc/rancher/rke2/config.yaml
 
   # Install RKE2
@@ -331,10 +340,9 @@ function deploy-worker () {
 
 # Install and Deploy Rancher
 function install-rancher () {
-  echo -e "${BLUE}Rancher Offline Installer ${NC}- Deploying Cert Manager"
-  helm upgrade -i cert-manager /opt/rancher/helm/cert-manager-v1.10.0.tgz --namespace cert-manager --create-namespace --set installCRDs=true --set image.repository=localhost:5000/cert-manager-controller --set webhook.image.repository=localhost:5000/cert-manager-webhook --set cainjector.image.repository=localhost:5000/cert-manager-cainjector --set startupapicheck.image.repository=localhost:5000/cert-manager-ctl
-  
   echo -e "${BLUE}Rancher Offline Installer ${NC}- Deploying Rancher"
+  helm upgrade -i cert-manager /opt/rancher/helm/cert-manager-v1.10.0.tgz --namespace cert-manager --create-namespace --set installCRDs=true --set image.repository=localhost:5000/cert-manager-controller --set webhook.image.repository=localhost:5000/cert-manager-webhook --set cainjector.image.repository=localhost:5000/cert-manager-cainjector --set startupapicheck.image.repository=localhost:5000/cert-manager-ctl
+
   helm upgrade -i rancher /opt/rancher/helm/rancher-2.7.0.tgz --namespace cattle-system --create-namespace --set bootstrapPassword=bootStrapAllTheThings --set replicas=1 --set auditLog.level=2 --set auditLog.destination=hostPath --set useBundledSystemChart=true --set rancherImage=localhost:5000/rancher/rancher --set systemDefaultRegistry=localhost:5000 --set hostname=rancher.$DOMAIN
   
   echo -e "${BLUE}Rancher Offline Installer ${NC}- Bootstrap Password"
@@ -379,7 +387,6 @@ function steps () {
 }
 
 case "$1" in
-        base) base-settings;;
         build) build-server;;
         control) deploy-control;;
         worker) deploy-worker;;
