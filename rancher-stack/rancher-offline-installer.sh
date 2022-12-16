@@ -22,68 +22,6 @@ export BLUE='\x1b[34m'
 export YELLOW='\x1b[33m'
 export NC='\x1b[0m'
 
-# Base Settings
-function base-settings () {
-
-echo -e "${BLUE}Rancher Offline Installer:${NC}- Updating Kernel Settings"
-cat << EOF >> /etc/sysctl.conf
-
-# SWAP Settings
-vm.swappiness=0
-vm.panic_on_oom=0
-vm.overcommit_memory=1
-kernel.panic=10
-kernel.panic_on_oops=1
-vm.max_map_count = 262144
-
-# Larger connection range available
-net.ipv4.ip_local_port_range=1024 65000
-
-# Increase max connection
-net.core.somaxconn=10000
-
-# Reuse closed sockets faster
-net.ipv4.tcp_tw_reuse=1
-net.ipv4.tcp_fin_timeout=15
-
-# Maximum number of "backlogged sockets"
-net.core.somaxconn=4096
-net.core.netdev_max_backlog=4096
-
-# 16MB per socket, but is definitely required for high performance
-net.core.rmem_max=16777216
-net.core.wmem_max=16777216
-
-# Various network tunings
-net.ipv4.tcp_max_syn_backlog=20480
-net.ipv4.tcp_max_tw_buckets=400000
-net.ipv4.tcp_no_metrics_save=1
-net.ipv4.tcp_rmem=4096 87380 16777216
-net.ipv4.tcp_syn_retries=2
-net.ipv4.tcp_synack_retries=2
-net.ipv4.tcp_wmem=4096 65536 16777216
-
-# ARP cache settings tunings
-net.ipv4.neigh.default.gc_thresh1=8096
-net.ipv4.neigh.default.gc_thresh2=12288
-net.ipv4.neigh.default.gc_thresh3=16384
-
-# IP forward and tcp keepalive for iptables
-net.ipv4.tcp_keepalive_time=600
-net.ipv4.ip_forward=1
-
-# Monitor file system events
-fs.inotify.max_user_instances=8192
-fs.inotify.max_user_watches=1048576
-EOF
-sysctl -p > /dev/null 2>&1
-
-  echo -e "${BLUE}Rancher Offline Installer:${NC}- Installing Base Packages"
-  yum install -y zstd nfs-utils iptables skopeo container-selinux iptables libnetfilter_conntrack libnfnetlink libnftnl policycoreutils-python-utils cryptsetup iscsi-initiator-utils
-  systemctl enable iscsid && systemctl start iscsid
-  echo -e "[keyfile]\nunmanaged-devices=interface-name:cali*;interface-name:flannel*" > /etc/NetworkManager/conf.d/rke2-canal.conf
-}
-
 # Build/Staging Setup
 function build-server () {
 
@@ -182,6 +120,68 @@ function build-server () {
   echo -e "    yum install -y zstd"
   echo -e "    mkdir /opt/rancher"
   echo -e "    tar -I zstd -vxf rke2-rancher-longhorn-neuvector.zst -C /opt/rancher"
+}
+
+# Base Settings
+function base-settings () {
+
+echo -e "${BLUE}Rancher Offline Installer:${NC}- Updating Kernel Settings"
+cat << EOF >> /etc/sysctl.conf
+
+# SWAP Settings
+vm.swappiness=0
+vm.panic_on_oom=0
+vm.overcommit_memory=1
+kernel.panic=10
+kernel.panic_on_oops=1
+vm.max_map_count = 262144
+
+# Larger connection range available
+net.ipv4.ip_local_port_range=1024 65000
+
+# Increase max connection
+net.core.somaxconn=10000
+
+# Reuse closed sockets faster
+net.ipv4.tcp_tw_reuse=1
+net.ipv4.tcp_fin_timeout=15
+
+# Maximum number of "backlogged sockets"
+net.core.somaxconn=4096
+net.core.netdev_max_backlog=4096
+
+# 16MB per socket, but is definitely required for high performance
+net.core.rmem_max=16777216
+net.core.wmem_max=16777216
+
+# Various network tunings
+net.ipv4.tcp_max_syn_backlog=20480
+net.ipv4.tcp_max_tw_buckets=400000
+net.ipv4.tcp_no_metrics_save=1
+net.ipv4.tcp_rmem=4096 87380 16777216
+net.ipv4.tcp_syn_retries=2
+net.ipv4.tcp_synack_retries=2
+net.ipv4.tcp_wmem=4096 65536 16777216
+
+# ARP cache settings tunings
+net.ipv4.neigh.default.gc_thresh1=8096
+net.ipv4.neigh.default.gc_thresh2=12288
+net.ipv4.neigh.default.gc_thresh3=16384
+
+# IP forward and tcp keepalive for iptables
+net.ipv4.tcp_keepalive_time=600
+net.ipv4.ip_forward=1
+
+# Monitor file system events
+fs.inotify.max_user_instances=8192
+fs.inotify.max_user_watches=1048576
+EOF
+sysctl -p > /dev/null 2>&1
+
+  echo -e "${BLUE}Rancher Offline Installer:${NC}- Installing Base Packages"
+  yum install -y zstd nfs-utils iptables skopeo container-selinux iptables libnetfilter_conntrack libnfnetlink libnftnl policycoreutils-python-utils cryptsetup iscsi-initiator-utils
+  systemctl enable iscsid && systemctl start iscsid
+  echo -e "[keyfile]\nunmanaged-devices=interface-name:cali*;interface-name:flannel*" > /etc/NetworkManager/conf.d/rke2-canal.conf
 }
 
 function deploy-control () {
