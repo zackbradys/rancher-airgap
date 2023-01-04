@@ -1,9 +1,5 @@
 #!/bin/bash
 
-# mkdir /opt/rancher && cd /opt/rancher
-# curl -#OL https://raw.githubusercontent.com/zackbradys/rancher-offline/main/rancher-offline-installer.sh
-# chmod 755 rancher-offline-installer.sh
-
 set -ebpf
 
 export RKE_VERSION=1.24.9
@@ -383,34 +379,28 @@ function validate () {
 ############################# steps ################################
 function steps () {
   echo ""
-  echo "-------------------------------------------------"
-  echo ""
-  echo " Steps: $0 {build | deploy}"
-  echo ""
-  echo " $0 build # download and create the monster TAR "
-  echo " $0 control # deploy on a control plane server"
-  echo " $0 worker # deploy on a worker"
-  echo " $0 neuvector # deploy neuvector"
-  echo " $0 longhorn # deploy longhorn"
-  echo " $0 rancher # deploy rancher"
-  echo " $0 validate # validate all the image locations"
-  echo ""
-  echo "-------------------------------------------------"
+  echo "----------------------------------------------------------------"
   echo ""
   echo "Steps:"
-  echo " - UNCLASS - $0 build"
-  echo " - Move the ZST file across the air gap"
-  echo " - Build 3 vms with 4cpu and 8gb of ram"
-  echo " - On 1st node ( Control Plane node ) run: mkdir /opt/rancher && tar -I zstd -vxf rancher-offline.zst -C /opt/rancher"
-  echo " - On 1st node run cd /opt/rancher; $0 control"
-  echo " - Wait and watch for errors"
-  echo " - On 2nd, and 3rd nodes run mkdir /opt/rancher && mount \$IP:/opt/rancher /opt/rancher"
-  echo " - On 2nd, and 3rd nodes run $0 worker"
-  echo " - On 1st node install"
-  echo "   - Longhorn : $0 longhorn"
+  echo " - On the Build Server (Unclass System)... Pull the Installer Script and Package It Up!"
+  echo "   - mkdir /opt/rancher && cd /opt/rancher"
+  echo "   - curl -#OL https://raw.githubusercontent.com/zackbradys/rancher-offline/main/rancher-offline-installer.sh && chmod 755 rancher-offline-installer.sh"
+  echo "   - $0 build"
+  echo " - Move the Package (.zst) to the network/air gapped server"
+  echo " - Setup the Control Node Server (.zst)"
+  echo "   - mkdir /opt/rancher && tar -I zstd -vxf rancher-offline.zst -C /opt/rancher"
+  echo " - Install the Control Node Server (RKE2)"
+  echo "   - cd /opt/rancher; $0 control"
+  echo " - Setup the Worker Node Servers (RKE2)"
+  ecgo "   - mkdir /opt/rancher && mount \$IP:/opt/rancher /opt/rancher"
+  echo " - Install on each Worker Node Servers (RKE2)"
+  echo "   - cd /opt/rancher; $0 worker"
+  echo " - Install on the Control Node Server"
   echo "   - Rancher : $0 rancher"
+  echo "   - Longhorn : $0 longhorn"
+  echo "   - Neuvector : $0 neuvector"
   echo ""
-  echo "-------------------------------------------------"
+  echo "----------------------------------------------------------------"
   echo ""
   exit 1
 }
