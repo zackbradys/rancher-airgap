@@ -1,12 +1,12 @@
 #!/bin/bash
 
 # mkdir /opt/rancher && cd /opt/rancher
-# curl -#OL https://raw.githubusercontent.com/zackbradys/rancher-offline-install/main/rancher-offline-installer.sh
+# curl -#OL https://raw.githubusercontent.com/zackbradys/rancher-offline/main/rancher-offline-installer.sh
 # chmod 755 rancher-offline-installer.sh
 
 set -ebpf
 
-export RKE_VERSION=1.24.8
+export RKE_VERSION=1.24.9
 export CERT_VERSION=v1.10.0
 export RANCHER_VERSION=v2.7.0
 export LONGHORN_VERSION=v1.3.2
@@ -34,7 +34,7 @@ function build-server () {
   curl -#OL https://github.com/rancher/rke2/releases/download/v$RKE_VERSION%2Brke2r1/rke2.linux-amd64.tar.gz
   curl -#OL https://github.com/rancher/rke2/releases/download/v$RKE_VERSION%2Brke2r1/sha256sum-amd64.txt
   curl -#OL https://github.com/rancher/rke2-packaging/releases/download/v$RKE_VERSION%2Brke2r1.stable.0/rke2-common-$RKE_VERSION.rke2r1-0.x86_64.rpm
-  curl -#OL https://github.com/rancher/rke2-selinux/releases/download/v0.9.stable.1/rke2-selinux-0.9-1.el8.noarch.rpm
+  curl -#OL https://github.com/rancher/rke2-selinux/releases/download/v0.11.stable.1/rke2-selinux-0.11-1.el8.noarch.rpm
 
   echo - get the install script
   curl -sfL https://get.rke2.io -o install.sh
@@ -116,7 +116,7 @@ function build-server () {
     skopeo copy docker://$i docker-archive:rancher/$(echo $i| awk -F/ '{print $2}'|sed 's/:/_/g').tar:$(echo $i| awk -F/ '{print $2}') > /dev/null 2>&1
   done
 
-  curl -#L https://github.com/zackbradys/rancher-offline-install/raw/main/registry.tar -o registry/registry_2.tar > /dev/null 2>&1
+  curl -#L https://github.com/zackbradys/rancher-offline/raw/main/registry.tar -o registry/registry_2.tar > /dev/null 2>&1
 
   cd /opt/rancher/
   echo - compress all the things
@@ -220,7 +220,7 @@ function deploy-control-nodes () {
 
  # insall rke2 - stig'd
   INSTALL_RKE2_ARTIFACT_PATH=/opt/rancher/rke2_$RKE_VERSION sh /opt/rancher/rke2_$RKE_VERSION/install.sh 
-  yum install -y /opt/rancher/rke2_$RKE_VERSION/rke2-common-$RKE_VERSION.rke2r1-0.x86_64.rpm /opt/rancher/rke2_$RKE_VERSION/rke2-selinux-0.9-1.el8.noarch.rpm
+  yum install -y /opt/rancher/rke2_$RKE_VERSION/rke2-common-$RKE_VERSION.rke2r1-0.x86_64.rpm /opt/rancher/rke2_$RKE_VERSION/rke2-selinux-0.11-1.el8.noarch.rpm
   systemctl enable rke2-server.service && systemctl start rke2-server.service
 
   sleep 30
@@ -342,7 +342,7 @@ function deploy-worker-nodes () {
   # install rke2
   cd /opt/rancher
   INSTALL_RKE2_ARTIFACT_PATH=/opt/rancher/rke2_$RKE_VERSION INSTALL_RKE2_TYPE=agent sh /opt/rancher/rke2_$RKE_VERSION/install.sh 
-  yum install -y /opt/rancher/rke2_$RKE_VERSION/rke2-common-$RKE_VERSION.rke2r1-0.x86_64.rpm /opt/rancher/rke2_$RKE_VERSION/rke2-selinux-0.9-1.el8.noarch.rpm
+  yum install -y /opt/rancher/rke2_$RKE_VERSION/rke2-common-$RKE_VERSION.rke2r1-0.x86_64.rpm /opt/rancher/rke2_$RKE_VERSION/rke2-selinux-0.11-1.el8.noarch.rpm
 
   rsync -avP /opt/rancher/images/registry/registry_2.tar /var/lib/rancher/rke2/agent/images/
   
