@@ -389,7 +389,7 @@ function helpme () {
   echo " - Install the Control Node Server (RKE2)"
   echo "   - cd /opt/rancher; $0 control"
   echo " - Setup the Worker Node Servers (RKE2)"
-  ecgo "   - mkdir /opt/rancher && mount \$IP:/opt/rancher /opt/rancher"
+  echo "   - mkdir /opt/rancher && mount \$IP:/opt/rancher /opt/rancher"
   echo " - Install on each Worker Node Servers (RKE2)"
   echo "   - cd /opt/rancher; $0 worker"
   echo " - Install on the Control Node Server"
