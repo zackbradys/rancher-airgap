@@ -118,12 +118,12 @@ function build-server () {
   echo - compress all the things
   tar -I zstd -vcf /opt/rancher-offline.zst $(ls) > /dev/null 2>&1
 
-  echo "------------------------------------------------------------------"
+  echo "----------------------------------------------------------------"
   echo " to uncompress : "
   echo "   yum install -y zstd"
   echo "   mkdir /opt/rancher"
   echo "   tar -I zstd -vxf rancher-offline.zst -C /opt/rancher"
-  echo "------------------------------------------------------------------"
+  echo "----------------------------------------------------------------"
 
 }
 
@@ -303,15 +303,15 @@ EOF
 
   cat /var/lib/rancher/rke2/server/token > /opt/rancher/token
 
-  echo "------------------------------------------------------------------"
+  echo "----------------------------------------------------------------"
   echo " Next:"
   echo "  - Mkdir: \"mkdir /opt/rancher\""
   echo "  - Mount: \"mount $(hostname -I | awk '{ print $1 }'):/opt/rancher /opt/rancher\""
   echo "  - CD: \"cd /opt/rancher\""
   echo "  - Run: \""$0" worker\" on your worker nodes"
-  echo "------------------------------------------------------------------"
+  echo "----------------------------------------------------------------"
   echo "  - yolo: \"mkdir /opt/rancher && mount $(hostname -I | awk '{ print $1 }'):/opt/rancher /opt/rancher && cd /opt/rancher && $0 worker\""
-  echo "------------------------------------------------------------------"
+  echo "----------------------------------------------------------------"
 
 }
 
@@ -378,24 +378,28 @@ function helpme () {
   echo "----------------------------------------------------------------"
   echo ""
   echo "High Level Steps:"
-  echo " - On the Build Server (Unclass System)... Pull the Installer Script and Package It Up!"
-  echo "   - mkdir /opt/rancher && cd /opt/rancher"
-  echo "   - curl -#OL https://raw.githubusercontent.com/zackbradys/rancher-offline/main/rancher-offline-installer.sh"
-  echo "   - chmod 755 rancher-offline-installer.sh"
-  echo "   - $0 build"
+  echo " - On the Build Server (Unclass)... Pull the Installer Script and Package It Up!"
+  echo "    - mkdir /opt/rancher && cd /opt/rancher"
+  echo "    - curl -#OL https://raw.githubusercontent.com/zackbradys/rancher-offline/main/rancher-offline-installer.sh"
+  echo "    - chmod 755 rancher-offline-installer.sh"
+  echo "    - $0 build"
   echo " - Move the Package (.zst) to the network/air gapped server"
+  echo "    - ex: scp /opt/rancher-offline.zst user@IP:/opt/"
   echo " - Setup the Control Node Server (.zst)"
-  echo "   - mkdir /opt/rancher && tar -I zstd -vxf rancher-offline.zst -C /opt/rancher"
+  echo "    - mkdir /opt/rancher && tar -I zstd -vxf rancher-offline.zst -C /opt/rancher"
   echo " - Install the Control Node Server (RKE2)"
-  echo "   - cd /opt/rancher; $0 control"
+  echo "    - cd /opt/rancher; $0 control"
   echo " - Setup the Worker Node Servers (RKE2)"
-  echo "   - mkdir /opt/rancher && mount \$IP:/opt/rancher /opt/rancher"
+  echo "    - mkdir /opt/rancher && mount \$IP:/opt/rancher /opt/rancher"
   echo " - Install on each Worker Node Servers (RKE2)"
-  echo "   - cd /opt/rancher; $0 worker"
+  echo "    - cd /opt/rancher; $0 worker"
   echo " - Install on the Control Node Server"
-  echo "   - Rancher : $0 rancher"
-  echo "   - Longhorn : $0 longhorn"
-  echo "   - Neuvector : $0 neuvector"
+  echo "    - Rancher : $0 rancher"
+  echo "    - Longhorn : $0 longhorn"
+  echo "    - Neuvector : $0 neuvector"
+  echo ""
+  echo " - Please refer to the Github Repository for more details:"
+  echo "    - https://github.com/zackbradys/rancher-offline"
   echo ""
   echo "----------------------------------------------------------------"
   echo ""
