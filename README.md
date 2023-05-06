@@ -1,54 +1,89 @@
-# Rancher Federal Offline Install
-
-#### Zack Brady, Field Engineer, Rancher Government Solutions (RGS)
-#### [@zackbradys](https://twitter.com/zackbradys) - zack.brady@rancherfederal.com - https://rancher.com/government
+# Offline Deployment of Rancher RKE2, Rancher Manager, Longhorn, and Neuvector
 
 ![rancher-long-banner](/images/rgs-banner-rounded.png)
 
-### Welcome to the Rancher Federal Offline Install Guide
-### ... for the Core Rancher Stack!!
-
-- RKE2 (Kubernetes Engine) - [learn more](https://www.rancher.com/products/rke)
-- Rancher MCM (Cluster Management) - [learn more](https://www.rancher.com/products/rancher)
-- Longhorn (Storage) - [learn more](https://www.rancher.com/products/longhorn)
-- Neuvector (Security) - [learn more](https://ranchergovernment.com/neuvector)
-
-more coming soon
-
-## Table of Contents
-
-
-
-### Overview
-
+### Table of Contents
+* [About Me](#about-me)
+* [Introduction](#introduction)
+* [Prerequisites](#prerequisites)
+* [Infrastructure](#infrastructure)
+  * [Connected Build Server](#connected-build-server)
+  * [Across the Airgap](#across-the-airgap)
+* [RKE2 Configuration](#rke2-configuration)
+  * [RKE2 Control Node](#rke2-control-node)
+  * [RKE2 Worker Nodes](#rke2-worker-nodes)
+* [Rancher Configuration](#rancher-configuration)
+* [Longhorn Configuration](#longhorn-configuration)
+* [NeuVector Configuration](#neuvector-configuration)
+* [Final Thoughts](#final-thoughts)
 
 
-### Setup Build/Staging Server
+## About Me
+
+A little bit about me, my history, and what I've done in the industry. 
+- DOD/IC Contractor
+- U.S. Military Veteran
+- Open-Source Contributor
+- Built and Exited a Digital Firm
+- Active Volunteer Firefighter/EMT
 
 
+## Introduction
 
-### Install Control Nodes
+### Welcome to the Offline Rancher Installation Guide
 
+In this deployment guide, we will be installing the entire Rancher Stack airgapped to include the following products:
 
-
-### Install Worker Nodes
-
-
-
-### Rancher
-
-
-
-### Longhorn
+- RKE2 (Kubernetes Engine) - [click learn more](https://www.rancher.com/products/rke)
+- Rancher MCM (Cluster Management) - [click to learn more](https://www.rancher.com/products/rancher)
+- Longhorn (Storage) - [click to learn more](https://www.rancher.com/products/longhorn)
+- Neuvector (Security) - [click to learn more](https://ranchergovernment.com/neuvector)
+- and various minor tools/dependencies (more info below)
 
 
-
-### Neuvector
-
-
-
-### Verification and Validation
+## Prerequisites
 
 
 
-### That's a wrap folks!!
+## Infrastructure
+
+
+
+### Connected Build Server
+
+
+
+### Across the Airgap
+
+
+
+## RKE2 Configuration
+
+
+
+### RKE2 Control Node
+
+
+
+### RKE2 Worker Nodes
+
+
+
+## Rancher Configuration
+
+
+
+
+## Longhorn Configuration
+
+
+
+
+## NeuVector Configuration
+
+
+
+
+## Final Thoughts
+
+
