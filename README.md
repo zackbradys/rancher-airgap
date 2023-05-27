@@ -19,7 +19,6 @@
 
 
 ## About Me
-
 A little bit about me, my history, and what I've done in the industry. 
 - DOD/IC Contractor
 - U.S. Military Veteran
@@ -31,7 +30,6 @@ A little bit about me, my history, and what I've done in the industry.
 ## Introduction
 
 ### Welcome to the Offline Rancher Installation Guide
-
 In this deployment guide, we will be installing the entire Rancher Stack airgapped to include the following products:
 
 - RKE2 (Kubernetes Engine) - [click learn more](https://www.rancher.com/products/rke)
@@ -44,46 +42,32 @@ In this deployment guide, we will be installing the entire Rancher Stack airgapp
 ## Prerequisites
 
 
-
 ## Infrastructure
-
 
 
 ### Connected Build Server
 
 
-
 ### Across the Airgap
-
 
 
 ## RKE2 Configuration
 
 
-
 ### RKE2 Control Node
-
 
 
 ### RKE2 Worker Nodes
 
 
-
 ## Rancher Configuration
-
-
 
 
 ## Longhorn Configuration
 
 
-
-
 ## NeuVector Configuration
 
 
-
-
 ## Final Thoughts
-
 
