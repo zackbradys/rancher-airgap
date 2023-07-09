@@ -1,6 +1,6 @@
-# Offline Deployment of Rancher RKE2, Rancher Manager, Longhorn, and Neuvector
-
 ![rancher-long-banner](/images/rgs-banner-rounded.png)
+
+# Offline Deployment of Rancher RKE2, Rancher Manager, Longhorn, and Neuvector
 
 ### Table of Contents
 * [About Me](#about-me)
@@ -18,7 +18,7 @@
 * [Final Thoughts](#final-thoughts)
 
 ## About Me
-A little bit about me, my history, and what I've done in the industry. 
+A little bit about me, my history, and what I've done in the industry.
 - DOD/IC Contractor
 - U.S. Military Veteran
 - Open-Source Contributor
