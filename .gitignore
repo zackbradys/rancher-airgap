@@ -10,3 +10,4 @@
 **/*.tfstate
 **/*.tfstate.*
 **/hauler-carbide.sh
+**/hauler-extra.sh.*

@@ -1,7 +1,18 @@
+### Set Variables
+export vHauler=0.3.0
+export vRKE2=1.24.15
+export vRancher=2.7.5
+export vLonghorn=1.5.0
+export vNeuVector=2.6.0
+export vCertManager=1.7.1
+export vHarbor=1.7.5
+export vKubeWardenDefaults=1.6.1
+export vKubeWardenController=1.5.3
+
 ### Install Hauler
 mkdir -p /opt/rancher/hauler
 cd /opt/rancher/hauler
-curl -#OL https://github.com/rancherfederal/hauler/releases/download/v0.3.0/hauler_0.3.0_linux_amd64.tar.gz
+curl -#OL https://github.com/rancherfederal/hauler/releases/download/v${vHauler}/hauler_${vHauler}_linux_amd64.tar.gz
 cp hauler /usr/bin/hauler
 
 ### Create Rancher Offline YUM Repo
@@ -9,46 +20,44 @@ mkdir -p /opt/rancher/hauler/rancher-offline-packages
 cd /opt/rancher/hauler/rancher-offline-packages
 yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
 yum-config-manager --add-repo https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo
+
 repotrack -y zip zstd skopeo createrepo tree terraform iptables container-selinux libnetfilter_conntrack libnfnetlink libnftnl policycoreutils-python-utils cryptsetup iscsi-initiator-utils docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 tar -I zstd -vcf /opt/rancher/hauler/rancher-offline-packages.tar.zst $(ls)
+cd /opt/rancher/hauler && rm -rf rancher-offline-packages
 
 ### Download Images
-curl -#OL https://github.com/rancher/rke2/releases/download/v1.24.15%2Brke2r1/rke2-images-all.linux-amd64.txt
+mkdir -p /opt/rancher/hauler/rancher-offline-images
+cd /opt/rancher/hauler/rancher-offline-images
+curl -#L https://github.com/rancher/rke2/releases/download/v${vRKE2}+rke2r1/rke2-images-all.linux-amd64.txt -o rke2-images.txt
+sed -i "s#docker.io/#    - name: #g" rke2-images.txt
 
-### Add Helm Charts (rancher-offline)
-hauler store add chart cert-manager --repo "https://charts.jetstack.io" --version=1.7.1 --store rancher-offline
-hauler store add chart rancher --repo "https://releases.rancher.com/server-charts/latest" --version=2.7.5 --store rancher-offline
-hauler store add chart longhorn --repo "https://charts.longhorn.io" --version=1.5.0 --store rancher-offline
-hauler store add chart core --repo "https://neuvector.github.io/neuvector-helm" --version=2.6.0 --store rancher-offline
-hauler store add chart ui-plugin-operator --repo "https://charts.rancher.io" --version=102.0.0+up0.2.0 --store rancher-offline
-hauler store add chart ui-plugin-operator-crd --repo "https://charts.rancher.io" --version=102.0.0+up0.2.0 --store rancher-offline
-hauler store add chart rancher-monitoring-crd --repo "https://charts.rancher.io" --version=102.0.1+up40.1.2 --store rancher-offline
-hauler store add chart rancher-monitoring --repo "https://charts.rancher.io" --version=102.0.1+up40.1.2 --store rancher-offline
-hauler store add chart kubewarden-crds --repo "https://charts.kubewarden.io" --version=1.3.1 --store rancher-offline
-hauler store add chart kubewarden-controller --repo "https://charts.kubewarden.io" --version=1.5.3 --store rancher-offline
-hauler store add chart kubewarden-defaults --repo "https://charts.kubewarden.io" --version=1.6.1 --store rancher-offline
+curl -#L https://github.com/rancher/rancher/releases/download/v${vRancher}/rancher-images.txt -o rancher-images.txt
+sed -i "s#^#    - name: #" rancher-images.txt
 
-### Add Required Packages
-hauler store add file "https://github.com/rancherfederal/hauler/releases/download/v0.3.0/hauler_0.3.0_linux_amd64.tar.gz" --name hauler --store rancher-offline
-hauler store add file "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" --name awscli --store rancher-offline
-hauler store add file "https://github.com/sigstore/cosign/releases/download/v1.8.0/cosign-linux-amd64" --name cosign --store rancher-offline
-hauler store add file "https://get.helm.sh/helm-v3.11.1-linux-386.tar.gz" --name helm --store rancher-offline
-hauler store add file "https://releases.hashicorp.com/terraform-provider-aws/4.54.0/terraform-provider-aws_4.54.0_linux_386.zip" --name terraform-provider-aws-linux386 --store rancher-offline
-hauler store add file "https://releases.hashicorp.com/terraform-provider-aws/4.54.0/terraform-provider-aws_4.54.0_linux_amd64.zip" --name terraform-provider-aws-amd64 --store rancher-offline
-hauler store add file "/opt/rancher/hauler/rancher-offline-packages.tar.zst" --name rancher-offline-packages --store rancher-offline
+curl -#L https://raw.githubusercontent.com/longhorn/longhorn/v${vLonghorn}/deploy/longhorn-images.txt -o longhorn-images.txt
+sed -i "s#^#    - name: #" longhorn-images.txt
 
-### Add Required Files
-hauler store add file "https://github.com/rancher/rke2/releases/download/v1.24.15%2Brke2r1/rke2-images.linux-amd64.tar.zst" --name rke2-images --store rancher-offline
-hauler store add file "https://github.com/rancher/rke2/releases/download/v1.24.15%2Brke2r1/rke2.linux-amd64.tar.gz" --name rke2-linux --store rancher-offline
-hauler store add file "https://github.com/rancher/rke2/releases/download/v1.24.15%2Brke2r1/sha256sum-amd64.txt" --name rke2-sha256sum --store rancher-offline
-hauler store add file "https://github.com/rancher/rke2-packaging/releases/download/v1.24.15%2Brke2r1.stable.0/rke2-common-1.24.10.rke2r1-0.x86_64.rpm" --name rke2-common --store rancher-offline
-hauler store add file "https://github.com/rancher/rke2-selinux/releases/download/v0.14.stable.1/rke2-selinux-0.14-1.el9.noarch.rpm" --name rke2-selinux --store rancher-offline
-hauler store add file "https://github.com/rancher/rke2/blob/master/install.sh" --name install.sh --store rancher-offline
+### Add Image Helm Chart Repos
+helm repo add jetstack https://charts.jetstack.io
+helm repo add neuvector https://neuvector.github.io/neuvector-helm
+helm repo add rancher-charts https://charts.rancher.io
+helm repo add goharbor https://helm.goharbor.io
+helm repo update
 
-hauler store add file "https://github.com/zackbradys/code-templates/blob/main/k8s/yamls/rancher-banner-ufouo.yaml" --name rancher-banner-ufouo --store rancher-offline
-hauler store add file "https://github.com/zackbradys/code-templates/blob/main/k8s/yamls/rancher-banner-tssci.yaml" --name rancher-banner-tssci --store rancher-offline
-hauler store add file "https://github.com/zackbradys/code-templates/blob/main/k8s/yamls/longhorn-volume.yaml" --name longhorn=volume --store rancher-offline
-hauler store add file "https://github.com/zackbradys/code-templates/blob/main/k8s/yamls/longhorn-volume-test.yaml" --name longhorn-volume-test --store rancher-offline
+helm template jetstack/cert-manager --version=${vCertManager} | grep 'image:' | sed 's/"//g' | awk '{ print $2 }' > cert-manager-images.txt
+sed -i "s#quay.io/#    - name: #g" cert-manager-images.txt
+
+helm template neuvector/core --version=${vNeuVector} | grep 'image:' | sed 's/"//g' | awk '{ print $2 }' > neuvector-images.txt
+sed -i "s#docker.io/#    - name: #g" neuvector-images.txt
+
+
+helm template goharbor/harbor --version=${vHarbor} | grep 'image:' | sed 's/"//g' | sed "s/'//g" | awk '{ print $2 }' > harbor-images.txt
+sed -i "s#^#    - name: #" harbor-images.txt
+
+cat rke2-images.txt rancher-images.txt longhorn-images.txt cert-manager-images.txt neuvector-images.txt harbor-images.txt > rancher-offline-images.txt
+
+### Load Store Contents
+hauler store sync -f rancher-offline.yaml --store rancher-offline
 
 ### Verify Store Contents
 hauler store info --store rancher-offline
