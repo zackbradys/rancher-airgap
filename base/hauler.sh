@@ -43,10 +43,10 @@ cd /opt/rancher/hauler/rancher-offline-packages
 ### Download Required Packages
 ### https://github.com/rpm-software-management/createrepo
 yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
-repotrack -y zip zstd skopeo createrepo tree container-selinux iptables libnetfilter_conntrack libnfnetlink libnftnl policycoreutils-python-utils cryptsetup iscsi-initiator-utils nfs-utils rke2-common rke2-selinux
+repotrack -y zip zstd skopeo createrepo tree container-selinux iptables libnetfilter_conntrack libnfnetlink libnftnl policycoreutils-python-utils cryptsetup iscsi-initiator-utils nfs-utils
 
 ### Compress Packages
-tar --zstd -cf /opt/rancher/hauler/rancher-offline-packages.tar.zst /opt/rancher/hauler/rancher-offline-packages
+tar -czvf /opt/rancher/hauler/rancher-offline-packages.tar.zst /opt/rancher/hauler/rancher-offline-packages
 cd /opt/rancher/hauler && rm -rf /opt/rancher/hauler/rancher-offline-packages
 
 ### Create Hauler Manifest
