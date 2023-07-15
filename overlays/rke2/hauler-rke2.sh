@@ -6,6 +6,7 @@ mkdir -p /opt/rancher/hauler/rke2
 cd /opt/rancher/hauler/rke2
 
 ### Download RKE2 Images
+### https://github.com/rancher/rke2
 curl -#L https://github.com/rancher/rke2/releases/download/v${vRKE2}+rke2r1/rke2-images-all.linux-amd64.txt -o rke2-images.txt
 sed -i "s#docker.io/#    - name: #g" rke2-images.txt
 

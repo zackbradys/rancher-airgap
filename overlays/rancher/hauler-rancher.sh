@@ -7,6 +7,7 @@ mkdir -p /opt/rancher/hauler/rancher
 cd /opt/rancher/hauler/rancher
 
 ### Download Cert Manager Images
+### https://github.com/cert-manager/cert-manager
 helm repo add jetstack https://charts.jetstack.io && helm repo update
 helm template jetstack/cert-manager --version=${vCertManager} | grep 'image:' | sed 's/"//g' | awk '{ print $2 }' > cert-manager-images.txt
 sed -i "s#^#    - name: #" cert-manager-images.txt
@@ -16,6 +17,7 @@ certmanagerImages=$(cat cert-manager-images.txt)
 rm -rf /opt/rancher/hauler/rancher/cert-manager-images.txt
 
 ### Download Rancher Images
+### https://github.com/rancher/rancher
 curl -#L https://github.com/rancher/rancher/releases/download/v${vRancher}/rancher-images.txt -o rancher-images.txt
 sed -i "s#^#    - name: #" rancher-images.txt
 

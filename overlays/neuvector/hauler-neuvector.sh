@@ -5,10 +5,12 @@ export vNeuVector=2.6.0
 mkdir -p /opt/rancher/hauler/neuvector
 cd /opt/rancher/hauler/neuvector
 
-### Add Image Helm Chart Repos
+### Add NeuVector Helm Chart Repos
 helm repo add neuvector https://neuvector.github.io/neuvector-helm
 helm repo update
 
+### Download NeuVector Images
+### https://github.com/neuvector/neuvector
 helm template neuvector/core --version=${vNeuVector} | grep 'image:' | sed 's/"//g' | awk '{ print $2 }' > neuvector-images.txt
 sed -i "s#docker.io/#    - name: #g" neuvector-images.txt
 
