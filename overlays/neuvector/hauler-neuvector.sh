@@ -12,7 +12,7 @@ helm repo update
 ### Download NeuVector Images
 ### https://github.com/neuvector/neuvector
 helm template neuvector/core --version=${vNeuVector} | grep 'image:' | sed 's/"//g' | awk '{ print $2 }' > neuvector-images.txt
-sed -i "s#docker.io/#    - name: #g" neuvector-images.txt
+sed -i "s#^#    - name: #" neuvector-images.txt
 
 ### Set Rancher Images Variable
 neuvectorImages=$(cat neuvector-images.txt)
