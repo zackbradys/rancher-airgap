@@ -9,5 +9,4 @@
 **/terraform.tfvars
 **/*.tfstate
 **/*.tfstate.*
-**/hauler-carbide.sh
-**/hauler-extra.sh.*
+**/extras
