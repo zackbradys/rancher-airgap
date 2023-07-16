@@ -34,6 +34,7 @@ jobs:
           path: hauler/base/rancher-airgap-base-rocky-el9.tar.zst
 
       - name: Commit and Push Repository
+        continue-on-error: true
         run: |
           ls -la
           git status
@@ -72,7 +73,8 @@ jobs:
           name: rancher-airgap-base-rhel-el9
           path: hauler/base/rancher-airgap-base-rhel-el9.tar.zst
 
-      - name: Commit Changes to Repository
+      - name: Commit and Push Repository
+        continue-on-error: true
         run: |
           ls -la
           git status
