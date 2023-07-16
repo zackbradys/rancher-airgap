@@ -1,8 +1,5 @@
 name: hauler-workflow
-on:
-  push:
-    tags:
-      - '*'
+on: push
 
 jobs:
   start-runner:
@@ -24,14 +21,14 @@ jobs:
         with:
           mode: start
           github-token: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
-          ec2-image-id: ${{ secrets.AWS_AMI_ID }}
-          ec2-instance-type: ${{ secrets.AWS_INSTANCE_TYPE }}
-          subnet-id: ${{ secrets.AWS_SUBNET_ID }}
-          security-group-id: ${{ secrets.AWS_SECURITY_GROUP }}
+          ec2-image-id: ami-0fe64c0692c69d851
+          ec2-instance-type: t3.medium
+          subnet-id: subnet-066fd23f61755396e
+          security-group-id: sg-047e30edd6c877dc1
           pre-runner-script: |
-            sudo yum install -y git docker libicu
+            sudo yum update -y && \
+            sudo yum install docker git libicu -y
             sudo systemctl enable docker
-
   hauler-job:
     name: Hauler Workflow Job
     needs: start-runner
@@ -39,7 +36,6 @@ jobs:
     steps:
       - name: Hello World
         run: echo 'Hello World!'
-
   stop-runner:
     name: Stop EC2 Github Runner
     needs:
