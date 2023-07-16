@@ -28,6 +28,7 @@ jobs:
 
       - name: Commit and Push Repository
         run: |
+          ls -la
           git config --global user.name "${GITHUB_ACTOR}"
           git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
           git commit -a -m "updated rancher-airgap for rocky linux 9.1"
@@ -56,6 +57,7 @@ jobs:
 
       - name: Commit Changes to Repository
         run: |
+          ls -la
           git config --global user.name "${GITHUB_ACTOR}"
           git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
           git commit -a -m "updated rancher-airgap for rhel 9.1"
