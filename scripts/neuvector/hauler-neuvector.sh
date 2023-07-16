@@ -19,11 +19,11 @@ neuvectorImages=$(cat neuvector-images.txt)
 rm -rf /opt/rancher/hauler/neuvector/neuvector-images.txt
 
 ### Create Hauler Manifest
-cat << EOF >> /opt/rancher/hauler/neuvector/rancher-offline-neuvector.yaml
+cat << EOF >> /opt/rancher/hauler/neuvector/rancher-airgap-neuvector.yaml
 apiVersion: content.hauler.cattle.io/v1alpha1
 kind: Charts
 metadata:
-  name: rancher-offline-charts-neuvector
+  name: rancher-airgap-charts-neuvector
 spec:
   charts:
     - name: core
@@ -33,18 +33,21 @@ spec:
 apiVersion: content.hauler.cattle.io/v1alpha1
 kind: Images
 metadata:
-  name: rancher-offline-images-neuvector
+  name: rancher-airgap-images-neuvector
 spec:
   images:
 ${neuvectorImages}
 EOF
 
+### Set OS Release Variable
+export OS=$(. /etc/os-release && echo "$ID"-"$PLATFORM_ID" | sed "s#platform:##")
+
 ### Load Hauler Manifest into Store
-hauler store sync -f rancher-offline-neuvector.yaml
+hauler store sync -f rancher-airgap-neuvector-${OS}.yaml
 
 ### Verify Hauler Store Contents
 hauler store info
 
 ### Compress Hauler Store Contents
-hauler store save --filename rancher-offline-neuvector.tar.zst
+hauler store save --filename rancher-airgap-neuvector-${OS}.tar.zst
 rm -rf /opt/rancher/hauler/neuvector/store

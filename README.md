@@ -1,6 +1,6 @@
 ![rancher-long-banner](/images/rgs-banner-rounded.png)
 
-# Offline Deployment of Rancher RKE2, Rancher Manager, Longhorn, and Neuvector
+# Airgap Deployment of Rancher RKE2, Rancher Manager, Longhorn, and Neuvector
 
 ### Table of Contents
 * [About Me](#about-me)

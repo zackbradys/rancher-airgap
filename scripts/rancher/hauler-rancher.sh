@@ -26,11 +26,11 @@ rancherImages=$(cat rancher-images.txt)
 rm -rf /opt/rancher/hauler/rancher/rancher-images.txt
 
 ### Create Hauler Manifest
-cat << EOF >> /opt/rancher/hauler/rancher/rancher-offline-rancher.yaml
+cat << EOF >> /opt/rancher/hauler/rancher/rancher-airgap-rancher.yaml
 apiVersion: content.hauler.cattle.io/v1alpha1
 kind: Files
 metadata:
-  name: rancher-offline-files-rancher
+  name: rancher-airgap-files-rancher
 spec:
   files:
     - path: https://github.com/zackbradys/code-templates/blob/main/k8s/yamls/rancher-banner-ufouo.yaml
@@ -41,7 +41,7 @@ spec:
 apiVersion: content.hauler.cattle.io/v1alpha1
 kind: Charts
 metadata:
-  name: rancher-offline-charts-rancher
+  name: rancher-airgap-charts-rancher
 spec:
   charts:
     - name: cert-manager
@@ -54,19 +54,22 @@ spec:
 apiVersion: content.hauler.cattle.io/v1alpha1
 kind: Images
 metadata:
-  name: rancher-offline-images-rancher
+  name: rancher-airgap-images-rancher
 spec:
   images:
 ${certmanagerImages}
 ${rancherImages}
 EOF
 
+### Set OS Release Variable
+export OS=$(. /etc/os-release && echo "$ID"-"$PLATFORM_ID" | sed "s#platform:##")
+
 ### Load Hauler Manifest into Store
-hauler store sync -f rancher-offline-rancher.yaml
+hauler store sync -f rancher-airgap-rancher-${OS}.yaml
 
 ### Verify Hauler Store Contents
 hauler store info
 
 ### Compress Hauler Store Contents
-hauler store save --filename rancher-offline-rancher.tar.zst
+hauler store save --filename rancher-airgap-rancher-${OS}.tar.zst
 rm -rf /opt/rancher/hauler/rancher/store

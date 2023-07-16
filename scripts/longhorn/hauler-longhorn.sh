@@ -15,11 +15,11 @@ longhornImages=$(cat longhorn-images.txt)
 rm -rf /opt/rancher/hauler/longhorn/longhorn-images.txt
 
 ### Create Hauler Manifest
-cat << EOF >> /opt/rancher/hauler/longhorn/rancher-offline-longhorn.yaml
+cat << EOF >> /opt/rancher/hauler/longhorn/rancher-airgap-longhorn.yaml
 apiVersion: content.hauler.cattle.io/v1alpha1
 kind: Files
 metadata:
-  name: rancher-offline-files-longhorn
+  name: rancher-airgap-files-longhorn
 spec:
   files:
     - path: https://github.com/zackbradys/code-templates/blob/main/k8s/yamls/longhorn-volume.yaml
@@ -30,7 +30,7 @@ spec:
 apiVersion: content.hauler.cattle.io/v1alpha1
 kind: Charts
 metadata:
-  name: rancher-offline-charts-longhorn
+  name: rancher-airgap-charts-longhorn
 spec:
   charts:
     - name: longhorn
@@ -40,18 +40,21 @@ spec:
 apiVersion: content.hauler.cattle.io/v1alpha1
 kind: Images
 metadata:
-  name: rancher-offline-images-longhorn
+  name: rancher-airgap-images-longhorn
 spec:
   images:
 ${longhornImages}
 EOF
 
+### Set OS Release Variable
+export OS=$(. /etc/os-release && echo "$ID"-"$PLATFORM_ID" | sed "s#platform:##")
+
 ### Load Hauler Manifest into Store
-hauler store sync -f rancher-offline-longhorn.yaml
+hauler store sync -f rancher-airgap-longhorn-${OS}.yaml
 
 ### Verify Hauler Store Contents
 hauler store info
 
 ### Compress Hauler Store Contents
-hauler store save --filename rancher-offline-longhorn.tar.zst
+hauler store save --filename rancher-airgap-longhorn-${OS}.tar.zst
 rm -rf /opt/rancher/hauler/longhorn/store

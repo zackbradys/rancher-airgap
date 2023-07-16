@@ -37,24 +37,27 @@ curl -#OL https://github.com/sigstore/cosign/releases/download/v${vCosign}/cosig
 mv cosign-linux-amd64 cosign && cp cosign /usr/bin/cosign
 
 ### Create Package Directory
-mkdir -p /opt/rancher/hauler/rancher-offline-packages
-cd /opt/rancher/hauler/rancher-offline-packages
+mkdir -p /opt/rancher/hauler/rancher-airgap-packages
+cd /opt/rancher/hauler/rancher-airgap-packages
 
 ### Download Required Packages
 ### https://github.com/rpm-software-management/createrepo
 yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
 repotrack -y zip zstd skopeo createrepo tree container-selinux iptables libnetfilter_conntrack libnfnetlink libnftnl policycoreutils-python-utils cryptsetup iscsi-initiator-utils nfs-utils
 
+### Set OS Release Variable
+export OS=$(. /etc/os-release && echo "$ID"-"$PLATFORM_ID" | sed "s#platform:##")
+
 ### Compress Packages
-tar -czvf /opt/rancher/hauler/rancher-offline-packages.tar.zst /opt/rancher/hauler/rancher-offline-packages
-cd /opt/rancher/hauler && rm -rf /opt/rancher/hauler/rancher-offline-packages
+tar -czvf /opt/rancher/hauler/rancher-airgap-packages-${OS}.tar.zst /opt/rancher/hauler/rancher-airgap-packages
+cd /opt/rancher/hauler && rm -rf /opt/rancher/hauler/rancher-airgap-packages
 
 ### Create Hauler Manifest
-cat << EOF >> /opt/rancher/hauler/rancher-offline.yaml
+cat << EOF >> /opt/rancher/hauler/rancher-airgap.yaml
 apiVersion: content.hauler.cattle.io/v1alpha1
 kind: Files
 metadata:
-  name: rancher-offline-files
+  name: rancher-airgap-files
 spec:
   files:
     - path: /opt/rancher/hauler/hauler/hauler
@@ -63,16 +66,16 @@ spec:
       name: helm
     - path: /opt/rancher/hauler/cosign/cosign
       name: cosign
-    - path: /opt/rancher/hauler/rancher-offline-packages.tar.zst
-      name: rancher-offline-packages
+    - path: /opt/rancher/hauler/rancher-airgap-packages-${OS}.tar.zst
+      name: rancher-airgap-packages
 EOF
 
 ### Load Hauler Manifest into Store
-hauler store sync -f rancher-offline.yaml
+hauler store sync -f rancher-airgap-${OS}.yaml
 
 ### Verify Hauler Store Contents
 hauler store info
 
 ### Compress Hauler Store Contents
-hauler store save --filename rancher-offline.tar.zst
+hauler store save --filename rancher-airgap-${OS}.tar.zst
 rm -rf /opt/rancher/hauler/store /opt/rancher/hauler/hauler /opt/rancher/hauler/helm /opt/rancher/hauler/cosign
