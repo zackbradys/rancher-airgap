@@ -58,6 +58,7 @@ jobs:
   rancher-airgap-release:
     name: Rancher Airgap Release Workflow Job
     runs-on: [self-hosted, linux, X64, general]
+    needs: [hauler-job-rocky-el9, hauler-job-rhel-el9]
     steps:
       - name: Create Release
         id: create_release
