@@ -1,8 +1,5 @@
 name: hauler-workflow
-on:
-  push:
-    tags:
-      - '*'
+on: push
 
 jobs:
   hauler-job-rocky-el9:
@@ -15,6 +12,11 @@ jobs:
       - name: View Repository Structure
         run: ls -la
 
+      - name: Build Rancher Airgap Base
+        run: |
+          sh scripts/base/hauler-base.sh
+          ls -la scripts/base
+
   hauler-job-rhel-el9:
     name: Hauler Workflow Job for RHEL 9.1
     runs-on: [self-hosted, linux, X64, rhel, el9]
@@ -25,124 +27,7 @@ jobs:
       - name: View Repository Structure
         run: ls -la
 
-  create-release:
-    name: Create Rancher Airgap Release
-    needs: [hauler-job-rocky-el9, hauler-job-rhel-el9]
-    runs-on: [self-hosted, linux, X64, general]
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
-
-      - name: View Repository Structure
-        run: ls -la
-
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          draft: false
-          prerelease: false
-
-      - name: Upload Rancher Airgap Base Rocky Linux 9.1 Asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: hauler/base/rancher-airgap-base-rocky-el9.tar.gz
-          asset_name: rancher-airgap-base-rocky-el9.tar.gz
-          asset_content_type: application/gzip
-
-      - name: Upload Rancher Airgap Base RHEL 9.1 Asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: hauler/base/rancher-airgap-base-rhel-el9.tar.gz
-          asset_name: rancher-airgap-base-rhel-el9.tar.gz
-          asset_content_type: application/gzip
-
-      - name: Upload Rancher Airgap RKE2 Rocky Linux 9.1 Asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: hauler/rke2/rancher-airgap-rke2-rocky-el9.tar.gz
-          asset_name: rancher-airgap-rke2-rocky-el9.tar.gz
-          asset_content_type: application/gzip
-
-      - name: Upload Rancher Airgap RKE2 RHEL 9.1 Asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: hauler/rke2/rancher-airgap-rke2-rhel-el9.tar.gz
-          asset_name: rancher-airgap-rke2-rhel-el9.tar.gz
-          asset_content_type: application/gzip
-
-      - name: Upload Rancher Airgap Rancher Rocky Linux 9.1 Asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: hauler/rancher/rancher-airgap-rancher-rocky-el9.tar.gz
-          asset_name: rancher-airgap-rancher-rocky-el9.tar.gz
-          asset_content_type: application/gzip
-
-      - name: Upload Rancher Airgap Rancher RHEL 9.1 Asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: hauler/rancher/rancher-airgap-rancher-rhel-el9.tar.gz
-          asset_name: rancher-airgap-rancher-rhel-el9.tar.gz
-          asset_content_type: application/gzip
-
-      - name: Upload Rancher Airgap Longhorn Rocky Linux 9.1 Asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: hauler/longhorn/rancher-airgap-longhorn-rocky-el9.tar.gz
-          asset_name: rancher-airgap-longhorn-rocky-el9.tar.gz
-          asset_content_type: application/gzip
-
-      - name: Upload Rancher Airgap Longhorn RHEL 9.1 Asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: hauler/longhorn/rancher-airgap-longhorn-rhel-el9.tar.gz
-          asset_name: rancher-airgap-longhorn-rhel-el9.tar.gz
-          asset_content_type: application/gzip
-
-      - name: Upload Rancher Airgap NeuVector Rocky Linux 9.1 Asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: hauler/neuvector/rancher-airgap-neuvector-rocky-el9.tar.gz
-          asset_name: rancher-airgap-neuvector-rocky-el9.tar.gz
-          asset_content_type: application/gzip
-
-      - name: Upload Rancher Airgap NeuVector RHEL 9.1 Asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: hauler/neuvector/rancher-airgap-neuvector-rhel-el9.tar.gz
-          asset_name: rancher-airgap-neuvector-rhel-el9.tar.gz
-          asset_content_type: application/gzip
+      - name: Build Rancher Airgap Base
+        run: |
+          sh scripts/base/hauler-base.sh
+          ls -la scripts/base

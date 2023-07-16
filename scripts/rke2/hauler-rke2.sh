@@ -18,7 +18,7 @@ rm -rf /opt/rancher/hauler/rke2/rke2-images.txt
 export platform=$(. /etc/os-release && echo "$PLATFORM_ID" | sed "s#platform:##")
 
 ### Create Hauler Manifest
-cat << EOF >> /opt/rancher/hauler/rke2/rancher-airgap-rke2.yaml
+cat << EOF >> /opt/rancher/hauler/rke2/rancher-airgap-rke2-${OS}.yaml
 apiVersion: content.hauler.cattle.io/v1alpha1
 kind: Files
 metadata:

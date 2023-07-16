@@ -15,7 +15,7 @@ longhornImages=$(cat longhorn-images.txt)
 rm -rf /opt/rancher/hauler/longhorn/longhorn-images.txt
 
 ### Create Hauler Manifest
-cat << EOF >> /opt/rancher/hauler/longhorn/rancher-airgap-longhorn.yaml
+cat << EOF >> /opt/rancher/hauler/longhorn/rancher-airgap-longhorn-${OS}.yaml
 apiVersion: content.hauler.cattle.io/v1alpha1
 kind: Files
 metadata:

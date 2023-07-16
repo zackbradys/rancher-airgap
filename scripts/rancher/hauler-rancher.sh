@@ -26,7 +26,7 @@ rancherImages=$(cat rancher-images.txt)
 rm -rf /opt/rancher/hauler/rancher/rancher-images.txt
 
 ### Create Hauler Manifest
-cat << EOF >> /opt/rancher/hauler/rancher/rancher-airgap-rancher.yaml
+cat << EOF >> /opt/rancher/hauler/rancher/rancher-airgap-rancher-${OS}.yaml
 apiVersion: content.hauler.cattle.io/v1alpha1
 kind: Files
 metadata:

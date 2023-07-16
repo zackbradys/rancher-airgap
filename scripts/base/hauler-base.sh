@@ -53,7 +53,7 @@ tar -czvf /opt/rancher/hauler/rancher-airgap-packages-${OS}.tar.zst /opt/rancher
 cd /opt/rancher/hauler && rm -rf /opt/rancher/hauler/rancher-airgap-packages
 
 ### Create Hauler Manifest
-cat << EOF >> /opt/rancher/hauler/rancher-airgap.yaml
+cat << EOF >> /opt/rancher/hauler/rancher-airgap-${OS}.yaml
 apiVersion: content.hauler.cattle.io/v1alpha1
 kind: Files
 metadata:
