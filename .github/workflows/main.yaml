@@ -15,6 +15,9 @@ jobs:
       - name: View Repository Structure
         run: pwd && ls -la
 
+      - name: Add Required Packages
+        run: yum install -y git libicu
+
       - name: Build Rancher Airgap Base
         run: |
           sh scripts/base/hauler-base.sh
@@ -28,12 +31,7 @@ jobs:
           git config --global user.name "${GITHUB_ACTOR}"
           git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
           git commit -a -m "updated rancher-airgap for rocky linux 9.1"
-
-      - name: Push Changes to Repository
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
-          branch: ${{ github.ref }}
+          git push
 
   hauler-job-rhel-el9:
     name: Hauler Workflow Job for RHEL 9.1
@@ -44,6 +42,9 @@ jobs:
 
       - name: View Repository Structure
         run: pwd && ls -la
+
+      - name: Add Required Packages
+        run: yum install -y git libicu
 
       - name: Build Rancher Airgap Base
         run: |
@@ -58,12 +59,7 @@ jobs:
           git config --global user.name "${GITHUB_ACTOR}"
           git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
           git commit -a -m "updated rancher-airgap for rhel 9.1"
-
-      - name: Push Changes to Repository
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
-          branch: ${{ github.ref }}
+          git push
 
   rancher-airgap-release:
     name: Rancher Airgap Release Workflow Job
