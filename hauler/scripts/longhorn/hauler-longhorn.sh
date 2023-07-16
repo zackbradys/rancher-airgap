@@ -1,6 +1,9 @@
 ### Set Variables
 export vLonghorn=1.5.0
 
+### Set OS Release Variable
+export OS=$(. /etc/os-release && echo "$ID"-"$PLATFORM_ID" | sed "s#platform:##")
+
 ### Setup Working Directory
 mkdir -p /opt/rancher/hauler/longhorn
 cd /opt/rancher/hauler/longhorn
@@ -45,9 +48,6 @@ spec:
   images:
 ${longhornImages}
 EOF
-
-### Set OS Release Variable
-export OS=$(. /etc/os-release && echo "$ID"-"$PLATFORM_ID" | sed "s#platform:##")
 
 ### Load Hauler Manifest into Store
 hauler store sync -f rancher-airgap-longhorn-${OS}.yaml

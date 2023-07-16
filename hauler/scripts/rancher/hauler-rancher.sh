@@ -2,6 +2,9 @@
 export vRancher=2.7.5
 export vCertManager=1.7.1
 
+### Set OS Release Variable
+export OS=$(. /etc/os-release && echo "$ID"-"$PLATFORM_ID" | sed "s#platform:##")
+
 ### Setup Working Directory
 mkdir -p /opt/rancher/hauler/rancher
 cd /opt/rancher/hauler/rancher
@@ -60,9 +63,6 @@ spec:
 ${certmanagerImages}
 ${rancherImages}
 EOF
-
-### Set OS Release Variable
-export OS=$(. /etc/os-release && echo "$ID"-"$PLATFORM_ID" | sed "s#platform:##")
 
 ### Load Hauler Manifest into Store
 hauler store sync -f rancher-airgap-rancher-${OS}.yaml

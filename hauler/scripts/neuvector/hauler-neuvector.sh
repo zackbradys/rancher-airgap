@@ -1,6 +1,9 @@
 ### Set Variables
 export vNeuVector=2.6.0
 
+### Set OS Release Variable
+export OS=$(. /etc/os-release && echo "$ID"-"$PLATFORM_ID" | sed "s#platform:##")
+
 ### Setup Working Directory
 mkdir -p /opt/rancher/hauler/neuvector
 cd /opt/rancher/hauler/neuvector
@@ -38,9 +41,6 @@ spec:
   images:
 ${neuvectorImages}
 EOF
-
-### Set OS Release Variable
-export OS=$(. /etc/os-release && echo "$ID"-"$PLATFORM_ID" | sed "s#platform:##")
 
 ### Load Hauler Manifest into Store
 hauler store sync -f rancher-airgap-neuvector-${OS}.yaml

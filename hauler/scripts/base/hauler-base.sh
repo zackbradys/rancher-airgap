@@ -3,6 +3,9 @@ export vHauler=0.3.0
 export vHelm=3.12.0
 export vCosign=1.8.0
 
+### Set OS Release Variable
+export OS=$(. /etc/os-release && echo "$ID"-"$PLATFORM_ID" | sed "s#platform:##")
+
 ## Setup Main Directory
 mkdir -p /opt/rancher/hauler
 
@@ -37,9 +40,6 @@ cd /opt/rancher/hauler/cosign
 ### https://github.com/sigstore/cosign
 curl -#OL https://github.com/sigstore/cosign/releases/download/v${vCosign}/cosign-linux-amd64
 mv cosign-linux-amd64 cosign && cp cosign /usr/bin/cosign
-
-### Set OS Release Variable
-export OS=$(. /etc/os-release && echo "$ID"-"$PLATFORM_ID" | sed "s#platform:##")
 
 ### Create Package Directory
 mkdir -p /opt/rancher/hauler/rancher-airgap-packages

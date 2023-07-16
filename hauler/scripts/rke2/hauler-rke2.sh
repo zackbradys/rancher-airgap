@@ -1,6 +1,12 @@
 ### Set Variables
 export vRKE2=1.24.15
 
+### Set Platform Variable
+export platform=$(. /etc/os-release && echo "$PLATFORM_ID" | sed "s#platform:##")
+
+### Set OS Release Variable
+export OS=$(. /etc/os-release && echo "$ID"-"$PLATFORM_ID" | sed "s#platform:##")
+
 ### Setup Working Directory
 mkdir -p /opt/rancher/hauler/rke2
 cd /opt/rancher/hauler/rke2
@@ -13,9 +19,6 @@ sed -i "s#^#    - name: #" rke2-images.txt
 ### Set RKE2 Images Variable
 rke2Images=$(cat rke2-images.txt)
 rm -rf /opt/rancher/hauler/rke2/rke2-images.txt
-
-### Set Platform Variable
-export platform=$(. /etc/os-release && echo "$PLATFORM_ID" | sed "s#platform:##")
 
 ### Create Hauler Manifest
 cat << EOF >> /opt/rancher/hauler/rke2/rancher-airgap-rke2-${OS}.yaml
@@ -46,9 +49,6 @@ spec:
   images:
 ${rke2Images}
 EOF
-
-### Set OS Release Variable
-export OS=$(. /etc/os-release && echo "$ID"-"$PLATFORM_ID" | sed "s#platform:##")
 
 ### Load Hauler Manifest into Store
 hauler store sync -f rancher-airgap-rke2-${OS}.yaml
