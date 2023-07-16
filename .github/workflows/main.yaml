@@ -10,16 +10,15 @@ jobs:
         uses: actions/checkout@v3
 
       - name: View Repository Structure
-        run: ls -la
+        run: pwd && ls -la
 
       - name: Build Rancher Airgap Base
         run: |
           sh scripts/base/hauler-base.sh
           pwd
-          cd /opt/rancher/hauler/base/
           ls -la
-          mv rancher-airgap-rocky-el9.tar.zst /opt/actions-runner/_work/rancher-airgap/rancher-airgap/hauler/base/rancher-airgap-rocky-el9.tar.zst
-          mv rancher-airgap-rocky-el9.yaml /opt/actions-runner/_work/rancher-airgap/rancher-airgap/hauler/base/rancher-airgap-rocky-el9.yaml
+          mv /opt/rancher/hauler/base/rancher-airgap-rocky-el9.tar.zst /opt/actions-runner/_work/rancher-airgap/rancher-airgap/hauler/base/rancher-airgap-rocky-el9.tar.zst
+          mv /opt/rancher/hauler/base/rancher-airgap-rocky-el9.yaml /opt/actions-runner/_work/rancher-airgap/rancher-airgap/hauler/base/rancher-airgap-rocky-el9.yaml
           pwd
           ls -la
           ls -la /opt/actions-runner/_work/rancher-airgap/rancher-airgap/hauler/base
@@ -33,16 +32,15 @@ jobs:
         uses: actions/checkout@v3
 
       - name: View Repository Structure
-        run: ls -la
+        run: pwd && ls -la
 
       - name: Build Rancher Airgap Base
         run: |
           sh scripts/base/hauler-base.sh
           pwd
-          cd /opt/rancher/hauler/base/
           ls -la
-          mv rancher-airgap-rocky-el9.tar.zst /opt/actions-runner/_work/rancher-airgap/rancher-airgap/hauler/base/rancher-airgap-rocky-el9.tar.zst
-          mv rancher-airgap-rocky-el9.yaml /opt/actions-runner/_work/rancher-airgap/rancher-airgap/hauler/base/rancher-airgap-rocky-el9.yaml
+          mv /opt/rancher/hauler/base/rancher-airgap-rocky-el9.tar.zst /opt/actions-runner/_work/rancher-airgap/rancher-airgap/hauler/base/rancher-airgap-rocky-el9.tar.zst
+          mv /opt/rancher/hauler/base/rancher-airgap-rocky-el9.yaml /opt/actions-runner/_work/rancher-airgap/rancher-airgap/hauler/base/rancher-airgap-rocky-el9.yaml
           pwd
           ls -la
           ls -la /opt/actions-runner/_work/rancher-airgap/rancher-airgap/hauler/base
