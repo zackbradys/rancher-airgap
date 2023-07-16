@@ -15,18 +15,24 @@ jobs:
           ref: main
           token: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
 
-      - name: View Repository Structure
-        run: pwd && ls -la
-
-      - name: Add Required Packages
-        run: yum install -y git libicu
+      - name: Prebuild Setup/Checks
+        run: |
+          pwd && ls -la
+          yum install -y git libicu
 
       - name: Build Rancher Airgap Base
         run: |
           sh scripts/base/hauler-base.sh
-          mv /opt/rancher/hauler/base/rancher-airgap-base-rocky-el9.yaml /opt/actions-runner/_work/rancher-airgap/rancher-airgap/hauler/base/rancher-airgap-base-rocky-el9.yaml
-          ls -la /opt/actions-runner/_work/rancher-airgap/rancher-airgap/hauler/base
-          ls -la /opt/actions-runner/_work/rancher-airgap/rancher-airgap/scripts/base
+          mv /opt/rancher/hauler/base/rancher-airgap-base-rocky-el9.yaml hauler/base/rancher-airgap-base-rocky-el9.yaml
+          mv /opt/rancher/hauler/base/rancher-airgap-base-rocky-el9.tar.gz hauler/base/rancher-airgap-base-rocky-el9.tar.gz
+          ls -la hauler/base
+          ls -la scripts/base
+
+      - name: Upload Rancher Airgap Base to Repository
+        uses: actions/upload-artifact@v2
+        with:
+          name: rancher-airgap-base-rocky-el9
+          path: hauler/base/rancher-airgap-base-rocky-el9.tar.gz
 
       - name: Commit and Push Repository
         run: |
@@ -34,7 +40,7 @@ jobs:
           git status
           git config --global user.name "${GITHUB_ACTOR}"
           git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
-          git add --all
+          git add *.yaml
           git commit -a -m "updated rancher-airgap for rocky linux 9.1"
           git push
 
@@ -49,18 +55,24 @@ jobs:
           ref: main
           token: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
 
-      - name: View Repository Structure
-        run: pwd && ls -la
-
-      - name: Add Required Packages
-        run: yum install -y git libicu
+      - name: Prebuild Setup/Checks
+        run: |
+          pwd && ls -la
+          yum install -y git libicu
 
       - name: Build Rancher Airgap Base
         run: |
           sh scripts/base/hauler-base.sh
-          mv /opt/rancher/hauler/base/rancher-airgap-base-rhel-el9.yaml /opt/actions-runner/_work/rancher-airgap/rancher-airgap/hauler/base/rancher-airgap-base-rhel-el9.yaml
-          ls -la /opt/actions-runner/_work/rancher-airgap/rancher-airgap/hauler/base
-          ls -la /opt/actions-runner/_work/rancher-airgap/rancher-airgap/scripts/base
+          mv /opt/rancher/hauler/base/rancher-airgap-base-rhel-el9.yaml hauler/base/rancher-airgap-base-rhel-el9.yaml
+          mv /opt/rancher/hauler/base/rancher-airgap-base-rhel-el9.tar.gz hauler/base/rancher-airgap-base-rhel-el9.tar.gz
+          ls -la hauler/base
+          ls -la scripts/base
+
+      - name: Upload Rancher Airgap Base to Repository
+        uses: actions/upload-artifact@v2
+        with:
+          name: rancher-airgap-base-rhel-el9
+          path: hauler/base/rancher-airgap-base-rhel-el9.tar.gz
 
       - name: Commit Changes to Repository
         run: |
@@ -68,7 +80,7 @@ jobs:
           git status
           git config --global user.name "${GITHUB_ACTOR}"
           git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
-          git add --all
+          git add *.yaml
           git commit -a -m "updated rancher-airgap for rhel 9.1"
           git push
 
@@ -77,7 +89,24 @@ jobs:
     runs-on: [self-hosted, linux, X64, general]
     needs: [hauler-job-rocky-el9, hauler-job-rhel-el9]
     steps:
-      - name: Create Release
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+        with:
+          ref: main
+          token: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
+
+      - name: Prebuild Setup/Checks
+        run: |
+          pwd && ls -la
+          yum install -y git libicu
+
+      - name: Download Rancher Airgap Base Assets
+        uses: actions/download-artifact@v2
+        with:
+          name: rancher-airgap-base-rocky-el9 rancher-airgap-base-rhel-el9
+          path: hauler/base/
+
+      - name: Create Release for Rancher Airgap
         id: create_release
         uses: actions/create-release@v1
         env:
