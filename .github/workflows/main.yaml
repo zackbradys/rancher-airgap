@@ -16,12 +16,14 @@ jobs:
         run: |
           sh scripts/base/hauler-base.sh
           pwd
+          ls -la
           mv /opt/rancher/hauler/base/rancher-airgap-rocky-el9.tar.zst hauler/base
           pwd
+          ls -la
           mv /opt/rancher/hauler/base/rancher-airgap-rocky-el9.yaml hauler/base
           pwd
+          ls -la
           ls -la scripts/base
-          pwd
 
   hauler-job-rhel-el9:
     name: Hauler Workflow Job for RHEL 9.1
@@ -37,9 +39,11 @@ jobs:
         run: |
           sh scripts/base/hauler-base.sh
           pwd
+          ls -la
           mv /opt/rancher/hauler/base/rancher-airgap-rhel-el9.tar.zst hauler/base
           pwd
+          ls -la
           mv /opt/rancher/hauler/base/rancher-airgap-rhel-el9.yaml hauler/base
           pwd
+          ls -la
           ls -la scripts/base
-          pwd
