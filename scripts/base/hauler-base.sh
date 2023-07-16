@@ -54,7 +54,7 @@ tar -czvf /opt/rancher/hauler/rancher-airgap-packages-${OS}.tar.zst /opt/rancher
 cd /opt/rancher/hauler/base && rm -rf /opt/rancher/hauler/rancher-airgap-packages
 
 ### Create Hauler Manifest
-cat << EOF >> /opt/rancher/hauler/base/rancher-airgap-${OS}.yaml
+cat << EOF >> /opt/rancher/hauler/base/rancher-airgap-base-${OS}.yaml
 apiVersion: content.hauler.cattle.io/v1alpha1
 kind: Files
 metadata:
@@ -72,11 +72,11 @@ spec:
 EOF
 
 ### Load Hauler Manifest into Store
-hauler store sync -f rancher-airgap-${OS}.yaml
+hauler store sync -f rancher-airgap-base-${OS}.yaml
 
 ### Verify Hauler Store Contents
 hauler store info
 
 ### Compress Hauler Store Contents
-hauler store save --filename rancher-airgap-${OS}.tar.zst
+hauler store save --filename rancher-airgap-base-${OS}.tar.zst
 rm -rf /opt/rancher/hauler/base/store /opt/rancher/hauler/hauler /opt/rancher/hauler/helm /opt/rancher/hauler/cosign
