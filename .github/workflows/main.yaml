@@ -29,6 +29,7 @@ jobs:
       - name: Commit and Push Repository
         run: |
           ls -la
+          git status
           git config --global user.name "${GITHUB_ACTOR}"
           git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
           git add --all
@@ -59,6 +60,7 @@ jobs:
       - name: Commit Changes to Repository
         run: |
           ls -la
+          git status
           git config --global user.name "${GITHUB_ACTOR}"
           git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
           git add --all
