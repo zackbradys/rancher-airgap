@@ -23,6 +23,13 @@ jobs:
           ls -la /opt/actions-runner/_work/rancher-airgap/rancher-airgap/hauler/base
           ls -la /opt/actions-runner/_work/rancher-airgap/rancher-airgap/scripts/base
 
+      - name: Commit and Push Repository
+        run: |
+          git config --global user.name "${GITHUB_ACTOR}"
+          git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+          git commit -a -m "updated rancher-airgap for rocky linux 9.1"
+          git push
+
   hauler-job-rhel-el9:
     name: Hauler Workflow Job for RHEL 9.1
     runs-on: [self-hosted, linux, X64, rhel, el9]
@@ -41,6 +48,17 @@ jobs:
           ls -la /opt/actions-runner/_work/rancher-airgap/rancher-airgap/hauler/base
           ls -la /opt/actions-runner/_work/rancher-airgap/rancher-airgap/scripts/base
 
+      - name: Commit and Push Repository
+        run: |
+          git config --global user.name "${GITHUB_ACTOR}"
+          git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+          git commit -a -m "updated rancher-airgap for rhel 9.1"
+          git push
+
+  rancher-airgap-release:
+    name: Rancher Airgap Release Workflow Job
+    runs-on: [self-hosted, linux, X64, general]
+    steps:
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -58,7 +76,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: /opt/actions-runner/_work/rancher-airgap/rancher-airgap/hauler/base/rancher-airgap-base-rocky-el9.tar.gz
+          asset_path: hauler/base/rancher-airgap-base-rocky-el9.tar.gz
           asset_name: rancher-airgap-base-rocky-el9.tar.gz
           asset_content_type: application/gzip
 
@@ -68,6 +86,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: /opt/actions-runner/_work/rancher-airgap/rancher-airgap/hauler/base/rancher-airgap-base-rhel-el9.tar.gz
+          asset_path: hauler/base/rancher-airgap-base-rhel-el9.tar.gz
           asset_name: rancher-airgap-base-rhel-el9.tar.gz
           asset_content_type: application/gzip
