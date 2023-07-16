@@ -18,7 +18,6 @@ jobs:
       - name: Prebuild Setup/Checks
         run: |
           pwd && ls -la
-          yum install -y git libicu
 
       - name: Build Rancher Airgap Base
         run: |
@@ -58,7 +57,6 @@ jobs:
       - name: Prebuild Setup/Checks
         run: |
           pwd && ls -la
-          yum install -y git libicu
 
       - name: Build Rancher Airgap Base
         run: |
@@ -98,12 +96,17 @@ jobs:
       - name: Prebuild Setup/Checks
         run: |
           pwd && ls -la
-          yum install -y git libicu
 
-      - name: Download Rancher Airgap Base Assets
-        uses: actions/download-artifact@v2
+      - name: Download Rancher Airgap Base Rocky Linux 9.1 Assets
+        uses: actions/download-artifact@v3
         with:
-          name: rancher-airgap-base-rocky-el9 rancher-airgap-base-rhel-el9
+          name: rancher-airgap-base-rocky-el9
+          path: hauler/base/
+
+      - name: Download Rancher Airgap Base RHEL 9.1 Assets
+        uses: actions/download-artifact@v3
+        with:
+          name: rancher-airgap-base-rhel-el9
           path: hauler/base/
 
       - name: Create Release for Rancher Airgap
