@@ -15,6 +15,8 @@ jobs:
       - name: Build Rancher Airgap Base
         run: |
           sh scripts/base/hauler-base.sh
+          mv /opt/rancher/hauler/base/rancher-airgap-rocky-el9.tar.zst hauler/base
+          mv /opt/rancher/hauler/base/rancher-airgap-rocky-el9.yaml hauler/base
           ls -la scripts/base
 
   hauler-job-rhel-el9:
@@ -30,4 +32,6 @@ jobs:
       - name: Build Rancher Airgap Base
         run: |
           sh scripts/base/hauler-base.sh
+          mv /opt/rancher/hauler/base/rancher-airgap-rhel-el9.tar.zst hauler/base
+          mv /opt/rancher/hauler/base/rancher-airgap-rhel-el9.yaml hauler/base
           ls -la scripts/base

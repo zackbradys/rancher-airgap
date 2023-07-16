@@ -3,9 +3,11 @@ export vHauler=0.3.0
 export vHelm=3.12.0
 export vCosign=1.8.0
 
-## Setup Working Directory
+## Setup Main Directory
 mkdir -p /opt/rancher/hauler
-cd /opt/rancher/hauler
+
+## Setup Working Directory
+mkdir -p /opt/rancher/hauler/base
 
 ### Setup Hauler Directory
 mkdir -p /opt/rancher/hauler/hauler
@@ -36,28 +38,27 @@ cd /opt/rancher/hauler/cosign
 curl -#OL https://github.com/sigstore/cosign/releases/download/v${vCosign}/cosign-linux-amd64
 mv cosign-linux-amd64 cosign && cp cosign /usr/bin/cosign
 
+### Set OS Release Variable
+export OS=$(. /etc/os-release && echo "$ID"-"$PLATFORM_ID" | sed "s#platform:##")
+
 ### Create Package Directory
 mkdir -p /opt/rancher/hauler/rancher-airgap-packages
 cd /opt/rancher/hauler/rancher-airgap-packages
 
 ### Download Required Packages
 ### https://github.com/rpm-software-management/createrepo
-yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
 repotrack -y zip zstd skopeo createrepo tree container-selinux iptables libnetfilter_conntrack libnfnetlink libnftnl policycoreutils-python-utils cryptsetup iscsi-initiator-utils nfs-utils
-
-### Set OS Release Variable
-export OS=$(. /etc/os-release && echo "$ID"-"$PLATFORM_ID" | sed "s#platform:##")
 
 ### Compress Packages
 tar -czvf /opt/rancher/hauler/rancher-airgap-packages-${OS}.tar.zst /opt/rancher/hauler/rancher-airgap-packages
-cd /opt/rancher/hauler && rm -rf /opt/rancher/hauler/rancher-airgap-packages
+cd /opt/rancher/hauler/base && rm -rf /opt/rancher/hauler/rancher-airgap-packages
 
 ### Create Hauler Manifest
-cat << EOF >> /opt/rancher/hauler/rancher-airgap-${OS}.yaml
+cat << EOF >> /opt/rancher/hauler/base/rancher-airgap-${OS}.yaml
 apiVersion: content.hauler.cattle.io/v1alpha1
 kind: Files
 metadata:
-  name: rancher-airgap-files
+  name: rancher-airgap-files-base
 spec:
   files:
     - path: /opt/rancher/hauler/hauler/hauler
@@ -78,4 +79,4 @@ hauler store info
 
 ### Compress Hauler Store Contents
 hauler store save --filename rancher-airgap-${OS}.tar.zst
-rm -rf /opt/rancher/hauler/store /opt/rancher/hauler/hauler /opt/rancher/hauler/helm /opt/rancher/hauler/cosign
+rm -rf /opt/rancher/hauler/base/store /opt/rancher/hauler/hauler /opt/rancher/hauler/helm /opt/rancher/hauler/cosign
