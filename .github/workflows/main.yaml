@@ -11,6 +11,9 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
+        with:
+          ref: main
+          token: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
 
       - name: View Repository Structure
         run: pwd && ls -la
@@ -42,6 +45,9 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
+        with:
+          ref: main
+          token: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
 
       - name: View Repository Structure
         run: pwd && ls -la
