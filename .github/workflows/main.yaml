@@ -24,19 +24,33 @@ jobs:
           sh hauler/scripts/base/hauler-base.sh
           mv /opt/rancher/hauler/base/rancher-airgap-base-rocky-el9.yaml hauler/base/rancher-airgap-base-rocky-el9.yaml
           mv /opt/rancher/hauler/base/rancher-airgap-base-rocky-el9.tar.zst hauler/base/rancher-airgap-base-rocky-el9.tar.zst
-          ls -la hauler/base
-          ls -la hauler/scripts/base
+          pwd && ls -la hauler/base
+          pwd && ls -la hauler/scripts/base
 
       - name: Upload Rancher Airgap Base to Repository
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: rancher-airgap-base-rocky-el9
           path: hauler/base/rancher-airgap-base-rocky-el9.tar.zst
 
+      - name: Build Rancher Airgap RKE2
+        run: |
+          sh hauler/scripts/rke2/hauler-rke2.sh
+          mv /opt/rancher/hauler/rke2/rancher-airgap-rke2-rocky-el9.yaml hauler/rke2/rancher-airgap-rke2-rocky-el9.yaml
+          mv /opt/rancher/hauler/rke2/rancher-airgap-rke2-rocky-el9.tar.zst hauler/rke2/rancher-airgap-rke2-rocky-el9.tar.zst
+          pwd && ls -la hauler/rke2
+          pwd && ls -la hauler/scripts/rke2
+
+      - name: Upload Rancher Airgap RKE2 to Repository
+        uses: actions/upload-artifact@v3
+        with:
+          name: rancher-airgap-base-rocky-el9
+          path: hauler/rke2/rancher-airgap-rke2-rocky-el9.tar.zst
+
       - name: Commit and Push Repository
         continue-on-error: true
         run: |
-          ls -la
+          pwd && ls -la
           git status
           git config --global user.name "${GITHUB_ACTOR}"
           git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
@@ -64,19 +78,33 @@ jobs:
           sh hauler/scripts/base/hauler-base.sh
           mv /opt/rancher/hauler/base/rancher-airgap-base-rhel-el9.yaml hauler/base/rancher-airgap-base-rhel-el9.yaml
           mv /opt/rancher/hauler/base/rancher-airgap-base-rhel-el9.tar.zst hauler/base/rancher-airgap-base-rhel-el9.tar.zst
-          ls -la hauler/base
-          ls -la hauler/scripts/base
+          pwd && ls -la hauler/base
+          pwd && ls -la hauler/scripts/base
 
       - name: Upload Rancher Airgap Base to Repository
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: rancher-airgap-base-rhel-el9
           path: hauler/base/rancher-airgap-base-rhel-el9.tar.zst
 
+      - name: Build Rancher Airgap RKE2
+        run: |
+          sh hauler/scripts/rke2/hauler-rke2.sh
+          mv /opt/rancher/hauler/rke2/rancher-airgap-rke2-rhel-el9.yaml hauler/rke2/rancher-airgap-rke2-rhel-el9.yaml
+          mv /opt/rancher/hauler/rke2/rancher-airgap-rke2-rhel-el9.tar.zst hauler/rke2/rancher-airgap-rke2-rhel-el9.tar.zst
+          pwd && ls -la hauler/rke2
+          pwd && ls -la hauler/scripts/rke2
+
+      - name: Upload Rancher Airgap RKE2 to Repository
+        uses: actions/upload-artifact@v3
+        with:
+          name: rancher-airgap-base-rhel-el9
+          path: hauler/rke2/rancher-airgap-rke2-rhel-el9.tar.zst
+
       - name: Commit and Push Repository
         continue-on-error: true
         run: |
-          ls -la
+          pwd && ls -la
           git status
           git config --global user.name "${GITHUB_ACTOR}"
           git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
@@ -111,6 +139,18 @@ jobs:
           name: rancher-airgap-base-rhel-el9
           path: hauler/base/
 
+      - name: Download Rancher Airgap RKE2 Rocky Linux 9.1 Assets
+        uses: actions/download-artifact@v3
+        with:
+          name: rancher-airgap-rke2-rocky-el9
+          path: hauler/rke2/
+
+      - name: Download Rancher Airgap RKE2 RHEL 9.1 Assets
+        uses: actions/download-artifact@v3
+        with:
+          name: rancher-airgap-rke2-rhel-el9
+          path: hauler/rke2/
+
       - name: Create Release for Rancher Airgap
         id: create_release
         uses: actions/create-release@v1
@@ -140,4 +180,24 @@ jobs:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: hauler/base/rancher-airgap-base-rhel-el9.tar.zst
           asset_name: rancher-airgap-base-rhel-el9.tar.zst
+          asset_content_type: application/gzip
+
+      - name: Upload Rancher Airgap RKE2 Rocky Linux 9.1 Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: hauler/rke2/rancher-airgap-rke2-rocky-el9.tar.zst
+          asset_name: rancher-airgap-rke2-rocky-el9.tar.zst
+          asset_content_type: application/gzip
+
+      - name: Upload Rancher Airgap RKE2 RHEL 9.1 Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: hauler/rke2/rancher-airgap-rke2-rhel-el9.tar.zst
+          asset_name: rancher-airgap-rke2-rhel-el9.tar.zst
           asset_content_type: application/gzip
