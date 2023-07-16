@@ -4,7 +4,6 @@ on: push
 jobs:
   hauler-job:
     name: Hauler Workflow Job
-    needs: start-runner
     runs-on: self-hosted
     steps:
       - name: Hello World
