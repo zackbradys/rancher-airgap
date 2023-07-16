@@ -28,7 +28,12 @@ jobs:
           git config --global user.name "${GITHUB_ACTOR}"
           git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
           git commit -a -m "updated rancher-airgap for rocky linux 9.1"
-          git push
+
+      - name: Push Changes to Repository
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
+          branch: ${{ github.ref }}
 
   hauler-job-rhel-el9:
     name: Hauler Workflow Job for RHEL 9.1
@@ -48,12 +53,17 @@ jobs:
           ls -la /opt/actions-runner/_work/rancher-airgap/rancher-airgap/hauler/base
           ls -la /opt/actions-runner/_work/rancher-airgap/rancher-airgap/scripts/base
 
-      - name: Commit and Push Repository
+      - name: Commit Changes to Repository
         run: |
           git config --global user.name "${GITHUB_ACTOR}"
           git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
           git commit -a -m "updated rancher-airgap for rhel 9.1"
-          git push
+
+      - name: Push Changes to Repository
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
+          branch: ${{ github.ref }}
 
   rancher-airgap-release:
     name: Rancher Airgap Release Workflow Job
