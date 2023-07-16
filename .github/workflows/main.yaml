@@ -24,7 +24,6 @@ jobs:
           ls -la /opt/actions-runner/_work/rancher-airgap/rancher-airgap/scripts/base
 
       - name: Commit and Push Repository
-        if: github.event_name == 'push'
         run: |
           git config --global user.name "${GITHUB_ACTOR}"
           git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
@@ -50,7 +49,6 @@ jobs:
           ls -la /opt/actions-runner/_work/rancher-airgap/rancher-airgap/scripts/base
 
       - name: Commit and Push Repository
-        if: github.event_name == 'push'
         run: |
           git config --global user.name "${GITHUB_ACTOR}"
           git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
