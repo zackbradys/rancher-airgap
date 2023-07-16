@@ -47,7 +47,7 @@ cd /opt/rancher/hauler/rancher-airgap-packages
 
 ### Download Required Packages
 ### https://github.com/rpm-software-management/createrepo
-repotrack -y zip zstd skopeo createrepo tree container-selinux iptables libnetfilter_conntrack libnfnetlink libnftnl policycoreutils-python-utils cryptsetup iscsi-initiator-utils nfs-utils
+repoquery -y zip zstd skopeo createrepo tree container-selinux iptables libnetfilter_conntrack libnfnetlink libnftnl policycoreutils-python-utils cryptsetup iscsi-initiator-utils nfs-utils
 
 ### Compress Packages
 tar -czvf /opt/rancher/hauler/rancher-airgap-packages-${OS}.tar.zst /opt/rancher/hauler/rancher-airgap-packages
@@ -77,6 +77,5 @@ hauler store sync -f rancher-airgap-base-${OS}.yaml
 ### Verify Hauler Store Contents
 hauler store info
 
-### Compress Hauler Store Contents
-hauler store save --filename rancher-airgap-base-${OS}.tar.zst
+### Remove Working Directory
 rm -rf /opt/rancher/hauler/base/store /opt/rancher/hauler/hauler /opt/rancher/hauler/helm /opt/rancher/hauler/cosign

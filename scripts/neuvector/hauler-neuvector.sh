@@ -48,6 +48,5 @@ hauler store sync -f rancher-airgap-neuvector-${OS}.yaml
 ### Verify Hauler Store Contents
 hauler store info
 
-### Compress Hauler Store Contents
-hauler store save --filename rancher-airgap-neuvector-${OS}.tar.zst
+### Remove Working Directory
 rm -rf /opt/rancher/hauler/neuvector/store

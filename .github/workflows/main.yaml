@@ -24,7 +24,6 @@ jobs:
       - name: Build Rancher Airgap Base
         run: |
           sh scripts/base/hauler-base.sh
-          mv /opt/rancher/hauler/base/rancher-airgap-base-rocky-el9.tar.zst /opt/actions-runner/_work/rancher-airgap/rancher-airgap/hauler/base/rancher-airgap-base-rocky-el9.tar.zst
           mv /opt/rancher/hauler/base/rancher-airgap-base-rocky-el9.yaml /opt/actions-runner/_work/rancher-airgap/rancher-airgap/hauler/base/rancher-airgap-base-rocky-el9.yaml
           ls -la /opt/actions-runner/_work/rancher-airgap/rancher-airgap/hauler/base
           ls -la /opt/actions-runner/_work/rancher-airgap/rancher-airgap/scripts/base
@@ -58,7 +57,6 @@ jobs:
       - name: Build Rancher Airgap Base
         run: |
           sh scripts/base/hauler-base.sh
-          mv /opt/rancher/hauler/base/rancher-airgap-base-rhel-el9.tar.zst /opt/actions-runner/_work/rancher-airgap/rancher-airgap/hauler/base/rancher-airgap-base-rhel-el9.tar.zst
           mv /opt/rancher/hauler/base/rancher-airgap-base-rhel-el9.yaml /opt/actions-runner/_work/rancher-airgap/rancher-airgap/hauler/base/rancher-airgap-base-rhel-el9.yaml
           ls -la /opt/actions-runner/_work/rancher-airgap/rancher-airgap/hauler/base
           ls -la /opt/actions-runner/_work/rancher-airgap/rancher-airgap/scripts/base

@@ -56,6 +56,5 @@ hauler store sync -f rancher-airgap-rke2-${OS}.yaml
 ### Verify Hauler Store Contents
 hauler store info
 
-### Compress Hauler Store Contents
-hauler store save --filename rancher-airgap-rke2-${OS}.tar.zst
+### Remove Working Directory
 rm -rf /opt/rancher/hauler/rke2/store

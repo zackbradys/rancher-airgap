@@ -55,6 +55,5 @@ hauler store sync -f rancher-airgap-longhorn-${OS}.yaml
 ### Verify Hauler Store Contents
 hauler store info
 
-### Compress Hauler Store Contents
-hauler store save --filename rancher-airgap-longhorn-${OS}.tar.zst
+### Remove Working Directory
 rm -rf /opt/rancher/hauler/longhorn/store
