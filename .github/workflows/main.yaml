@@ -32,6 +32,7 @@ jobs:
         with:
           name: rancher-airgap-base-rocky-el9
           path: hauler/base/rancher-airgap-base-rocky-el9.tar.zst
+          retention-days: 1
 
       - name: Build Rancher Airgap RKE2
         run: |
@@ -44,8 +45,9 @@ jobs:
       - name: Upload Rancher Airgap RKE2 to Repository
         uses: actions/upload-artifact@v3
         with:
-          name: rancher-airgap-base-rocky-el9
+          name: rancher-airgap-rke2-rocky-el9
           path: hauler/rke2/rancher-airgap-rke2-rocky-el9.tar.zst
+          retention-days: 1
 
       - name: Commit and Push Repository
         continue-on-error: true
@@ -86,6 +88,7 @@ jobs:
         with:
           name: rancher-airgap-base-rhel-el9
           path: hauler/base/rancher-airgap-base-rhel-el9.tar.zst
+          retention-days: 1
 
       - name: Build Rancher Airgap RKE2
         run: |
@@ -98,8 +101,9 @@ jobs:
       - name: Upload Rancher Airgap RKE2 to Repository
         uses: actions/upload-artifact@v3
         with:
-          name: rancher-airgap-base-rhel-el9
+          name: rancher-airgap-rke2-rhel-el9
           path: hauler/rke2/rancher-airgap-rke2-rhel-el9.tar.zst
+          retention-days: 1
 
       - name: Commit and Push Repository
         continue-on-error: true
