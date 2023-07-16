@@ -1,5 +1,8 @@
 name: hauler-workflow
-on: push
+on:
+   push:
+     tags:
+       - '*'
 
 jobs:
   hauler-job-rocky-el9:
@@ -33,7 +36,38 @@ jobs:
       - name: Build Rancher Airgap Base
         run: |
           sh scripts/base/hauler-base.sh
-          mv /opt/rancher/hauler/base/rancher-airgap-rocky-el9.tar.zst /opt/actions-runner/_work/rancher-airgap/rancher-airgap/hauler/base/rancher-airgap-rocky-el9.tar.zst
-          mv /opt/rancher/hauler/base/rancher-airgap-rocky-el9.yaml /opt/actions-runner/_work/rancher-airgap/rancher-airgap/hauler/base/rancher-airgap-rocky-el9.yaml
+          mv /opt/rancher/hauler/base/rancher-airgap-rhel-el9.tar.zst /opt/actions-runner/_work/rancher-airgap/rancher-airgap/hauler/base/rancher-airgap-rhel-el9.tar.zst
+          mv /opt/rancher/hauler/base/rancher-airgap-rhel-el9.yaml /opt/actions-runner/_work/rancher-airgap/rancher-airgap/hauler/base/rancher-airgap-rhel-el9.yaml
           ls -la /opt/actions-runner/_work/rancher-airgap/rancher-airgap/hauler/base
           ls -la /opt/actions-runner/_work/rancher-airgap/rancher-airgap/scripts/base
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
+
+      - name: Upload Rancher Airgap Base Rocky Linux 9.1 Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: /opt/actions-runner/_work/rancher-airgap/rancher-airgap/hauler/base/rancher-airgap-base-rocky-el9.tar.gz
+          asset_name: rancher-airgap-base-rocky-el9.tar.gz
+          asset_content_type: application/gzip
+
+      - name: Upload Rancher Airgap Base RHEL 9.1 Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: /opt/actions-runner/_work/rancher-airgap/rancher-airgap/hauler/base/rancher-airgap-base-rhel-el9.tar.gz
+          asset_name: rancher-airgap-base-rhel-el9.tar.gz
+          asset_content_type: application/gzip
