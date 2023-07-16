@@ -16,8 +16,6 @@ jobs:
         run: |
           sh scripts/base/hauler-base.sh
           pwd
-          cd $GITHUB_WORKSPACE
-          pwd
           mv /opt/rancher/hauler/base/rancher-airgap-rocky-el9.tar.zst hauler/base
           pwd
           mv /opt/rancher/hauler/base/rancher-airgap-rocky-el9.yaml hauler/base
@@ -38,8 +36,6 @@ jobs:
       - name: Build Rancher Airgap Base
         run: |
           sh scripts/base/hauler-base.sh
-          pwd
-          cd $GITHUB_WORKSPACE
           pwd
           mv /opt/rancher/hauler/base/rancher-airgap-rhel-el9.tar.zst hauler/base
           pwd
