@@ -16,11 +16,10 @@ jobs:
         run: |
           sh scripts/base/hauler-base.sh
           pwd
-          ls -la mv /opt/rancher/hauler/base/
-          mv /opt/rancher/hauler/base/rancher-airgap-rocky-el9.tar.zst /opt/actions-runner/_work/rancher-airgap/rancher-airgap/hauler/base
-          pwd
+          cd /opt/rancher/hauler/base/
           ls -la
-          mv /opt/rancher/hauler/base/rancher-airgap-rocky-el9.yaml /opt/actions-runner/_work/rancher-airgap/rancher-airgap/hauler/base
+          mv rancher-airgap-rocky-el9.tar.zst /opt/actions-runner/_work/rancher-airgap/rancher-airgap/hauler/base/rancher-airgap-rocky-el9.tar.zst
+          mv rancher-airgap-rocky-el9.yaml /opt/actions-runner/_work/rancher-airgap/rancher-airgap/hauler/base/rancher-airgap-rocky-el9.yaml
           pwd
           ls -la
           ls -la scripts/base
@@ -39,11 +38,10 @@ jobs:
         run: |
           sh scripts/base/hauler-base.sh
           pwd
-          ls -la mv /opt/rancher/hauler/base/
-          mv /opt/rancher/hauler/base/rancher-airgap-rocky-el9.tar.zst /opt/actions-runner/_work/rancher-airgap/rancher-airgap/hauler/base
-          pwd
+          cd /opt/rancher/hauler/base/
           ls -la
-          mv /opt/rancher/hauler/base/rancher-airgap-rhel-el9.yaml /opt/actions-runner/_work/rancher-airgap/rancher-airgap/hauler/base
+          mv rancher-airgap-rocky-el9.tar.zst /opt/actions-runner/_work/rancher-airgap/rancher-airgap/hauler/base/rancher-airgap-rocky-el9.tar.zst
+          mv rancher-airgap-rocky-el9.yaml /opt/actions-runner/_work/rancher-airgap/rancher-airgap/hauler/base/rancher-airgap-rocky-el9.yaml
           pwd
           ls -la
           ls -la scripts/base
