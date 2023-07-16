@@ -6,11 +6,19 @@ jobs:
     name: Hauler Workflow Job for Rocky Linux 9.1
     runs-on: [self-hosted, linux, X64, rocky, el9]
     steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+        run: ls -la
+
       - name: Hello World
         run: echo 'Hello World!'
   hauler-job-rhel-el9:
     name: Hauler Workflow Job for RHEL 9.1
     runs-on: [self-hosted, linux, X64, rhel, el9]
     steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+        run: ls -la
+
       - name: Hello World
         run: echo 'Hello World!'
