@@ -209,7 +209,7 @@ jobs:
 
       - name: Build Rancher Airgap Base
         run: |
-          sh hauler/scripts/base/hauler-base.sh
+          sh hauler/scripts/base/hauler-base-centos.sh
           mv /opt/rancher/hauler/base/rancher-airgap-base-centos-el7.yaml hauler/base/rancher-airgap-base-centos-el7.yaml
           mv /opt/rancher/hauler/base/rancher-airgap-base-centos-el7.tar.zst hauler/base/rancher-airgap-base-centos-el7.tar.zst
           pwd && ls -la hauler/base
