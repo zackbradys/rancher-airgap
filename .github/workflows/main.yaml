@@ -27,13 +27,6 @@ jobs:
           pwd && ls -la hauler/base
           pwd && ls -la hauler/scripts/base
 
-      - name: Upload Rancher Airgap Base to Repository
-        uses: actions/upload-artifact@v3
-        with:
-          name: rancher-airgap-base-rocky-el9
-          path: hauler/base/rancher-airgap-base-rocky-el9.tar.zst
-          retention-days: 1
-
       - name: Build Rancher Airgap RKE2
         run: |
           sh hauler/scripts/rke2/hauler-rke2.sh
@@ -42,12 +35,19 @@ jobs:
           pwd && ls -la hauler/rke2
           pwd && ls -la hauler/scripts/rke2
 
-      - name: Upload Rancher Airgap RKE2 to Repository
-        uses: actions/upload-artifact@v3
+      - name: Setup AWS Credentials/CLI
+        uses: aws-actions/configure-aws-credentials@v1
         with:
-          name: rancher-airgap-rke2-rocky-el9
-          path: hauler/rke2/rancher-airgap-rke2-rocky-el9.tar.zst
-          retention-days: 1
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-default-region: ${{ secrets.AWS_DEFAULT_REGION }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Upload Rancher Airgap to S3 Bucket
+        run: |
+          aws s3 ls s3://rancher-airgap/
+          aws s3 cp hauler s3://rancher-airgap/${{ github.ref }} --recursive
+          aws s3 ls s3://rancher-airgap/${{ github.ref }}
 
       - name: Commit and Push Repository
         continue-on-error: true
@@ -83,13 +83,6 @@ jobs:
           pwd && ls -la hauler/base
           pwd && ls -la hauler/scripts/base
 
-      - name: Upload Rancher Airgap Base to Repository
-        uses: actions/upload-artifact@v3
-        with:
-          name: rancher-airgap-base-rhel-el9
-          path: hauler/base/rancher-airgap-base-rhel-el9.tar.zst
-          retention-days: 1
-
       - name: Build Rancher Airgap RKE2
         run: |
           sh hauler/scripts/rke2/hauler-rke2.sh
@@ -98,12 +91,19 @@ jobs:
           pwd && ls -la hauler/rke2
           pwd && ls -la hauler/scripts/rke2
 
-      - name: Upload Rancher Airgap RKE2 to Repository
-        uses: actions/upload-artifact@v3
+      - name: Setup AWS Credentials/CLI
+        uses: aws-actions/configure-aws-credentials@v1
         with:
-          name: rancher-airgap-rke2-rhel-el9
-          path: hauler/rke2/rancher-airgap-rke2-rhel-el9.tar.zst
-          retention-days: 1
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-default-region: ${{ secrets.AWS_DEFAULT_REGION }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Upload Rancher Airgap to S3 Bucket
+        run: |
+          aws s3 ls s3://rancher-airgap/
+          aws s3 cp hauler s3://rancher-airgap/${{ github.ref }} --recursive
+          aws s3 ls s3://rancher-airgap/${{ github.ref }}
 
       - name: Commit and Push Repository
         continue-on-error: true
@@ -131,29 +131,10 @@ jobs:
         run: |
           pwd && ls -la
 
-      - name: Download Rancher Airgap Base Rocky Linux 9.1 Assets
-        uses: actions/download-artifact@v3
-        with:
-          name: rancher-airgap-base-rocky-el9
-          path: hauler/base/
-
-      - name: Download Rancher Airgap Base RHEL 9.1 Assets
-        uses: actions/download-artifact@v3
-        with:
-          name: rancher-airgap-base-rhel-el9
-          path: hauler/base/
-
-      - name: Download Rancher Airgap RKE2 Rocky Linux 9.1 Assets
-        uses: actions/download-artifact@v3
-        with:
-          name: rancher-airgap-rke2-rocky-el9
-          path: hauler/rke2/
-
-      - name: Download Rancher Airgap RKE2 RHEL 9.1 Assets
-        uses: actions/download-artifact@v3
-        with:
-          name: rancher-airgap-rke2-rhel-el9
-          path: hauler/rke2/
+      - name: Create Release Notes
+        run: |
+          echo -e "# Rancher Airgap ${{ github.ref }}\nLatest Release Notes and Asset URLs for the Rancher Airgap Tool. Please review all notes below and ensure to download the correct assets.\n\nRelease for Rocky Linux 9.1:\n*Rancher Airgap Base YAML -> https://rancher-airgap.s3.amazonaws.com/${{ github.ref }}/hauler/base/rancher-airgap-base-rocky-el9.yaml\n*Rancher Airgap Base TAR -> https://rancher-airgap.s3.amazonaws.com/${{ github.ref }}/hauler/base/rancher-airgap-base-rocky-el9.tar.zst\n*Rancher Airgap RKE2 YAML -> https://rancher-airgap.s3.amazonaws.com/${{ github.ref }}/hauler/rke2/rancher-airgap-rke2-rocky-el9.yaml\n*Rancher Airgap RKE2 TAR -> https://rancher-airgap.s3.amazonaws.com/${{ github.ref }}/hauler/rke2/rancher-airgap-rke2-rocky-el9.tar.zst\n\nRelease for RHEL 9.1:\n*Rancher Airgap Base YAML -> https://rancher-airgap.s3.amazonaws.com/${{ github.ref }}/hauler/base/rancher-airgap-base-rhel-el9.yaml\n*Rancher Airgap Base TAR -> https://rancher-airgap.s3.amazonaws.com/${{ github.ref }}/hauler/base/rancher-airgap-base-rhel-el9.tar.zst\n*Rancher Airgap RKE2 YAML -> https://rancher-airgap.s3.amazonaws.com/${{ github.ref }}/hauler/rke2/rancher-airgap-rke2-rhel-el9.yaml\n*Rancher Airgap RKE2 TAR -> https://rancher-airgap.s3.amazonaws.com/${{ github.ref }}/hauler/rke2/rancher-airgap-rke2-rhel-el9.tar.zst\n" > RELEASE-NOTES.MD
+          cat RELEASE-NOTES.MD
 
       - name: Create Release for Rancher Airgap
         id: create_release
@@ -165,43 +146,4 @@ jobs:
           release_name: Rancher Airgap ${{ github.ref }}
           draft: false
           prerelease: false
-
-      - name: Upload Rancher Airgap Base Rocky Linux 9.1 Asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: hauler/base/rancher-airgap-base-rocky-el9.tar.zst
-          asset_name: rancher-airgap-base-rocky-el9.tar.zst
-          asset_content_type: application/gzip
-
-      - name: Upload Rancher Airgap Base RHEL 9.1 Asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: hauler/base/rancher-airgap-base-rhel-el9.tar.zst
-          asset_name: rancher-airgap-base-rhel-el9.tar.zst
-          asset_content_type: application/gzip
-
-      - name: Upload Rancher Airgap RKE2 Rocky Linux 9.1 Asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: hauler/rke2/rancher-airgap-rke2-rocky-el9.tar.zst
-          asset_name: rancher-airgap-rke2-rocky-el9.tar.zst
-          asset_content_type: application/gzip
-
-      - name: Upload Rancher Airgap RKE2 RHEL 9.1 Asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: hauler/rke2/rancher-airgap-rke2-rhel-el9.tar.zst
-          asset_name: rancher-airgap-rke2-rhel-el9.tar.zst
-          asset_content_type: application/gzip
+          body_path: RELEASE-NOTES.MD
