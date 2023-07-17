@@ -7,12 +7,10 @@
 * [Introduction](#introduction)
 * [Prerequisites](#prerequisites)
 * [Infrastructure](#infrastructure)
-  * [Connected Build Server](#connected-build-server)
+  * [Collection and Packaging](#collection-and-packaging)
   * [Across the Airgap](#across-the-airgap)
+  * [Loading and Distribution](#loading-and-distribution)
 * [RKE2 Configuration](#rke2-configuration)
-  * [RKE2 Control Nodes](#rke2-control-nodes)
-  * [RKE2 Worker Nodes](#rke2-worker-nodes)
-* [Rancher Configuration](#rancher-configuration)
 * [Longhorn Configuration](#longhorn-configuration)
 * [NeuVector Configuration](#neuvector-configuration)
 * [Final Thoughts](#final-thoughts)
@@ -27,14 +25,12 @@ A little bit about me, my history, and what I've done in the industry.
 
 ## Introduction
 
-### Welcome to the Airgapped Rancher Installation Guide
-In this deployment guide, we will be installing the entire Rancher Stack airgapped to include the following products:
+### Welcome to the Rancher Airgap Tool and Guide
+Airgap collecting, packaging, installation of Rancher RKE2, Rancher, Longhorn and NeuVector. Specifically built and engineered for disconnected environments.
 
-- RKE2 (Kubernetes Engine) - [click learn more](https://www.rancher.com/products/rke)
-- Rancher MCM (Cluster Management) - [click to learn more](https://www.rancher.com/products/rancher)
-- Longhorn (Storage) - [click to learn more](https://www.rancher.com/products/longhorn)
-- Neuvector (Security) - [click to learn more](https://ranchergovernment.com/neuvector)
-- and various minor tools/dependencies (more info below)
+```bash
+fetch -> save -> | <airgap> | -> validate -> load -> distribute
+```
 
 ## Prerequisites
 
@@ -42,19 +38,16 @@ In this deployment guide, we will be installing the entire Rancher Stack airgapp
 ## Infrastructure
 
 
-### Connected Build Server
+### Collection and Packaging
 
 
 ### Across the Airgap
 
 
+### Loading and Distribution
+
+
 ## RKE2 Configuration
-
-
-### RKE2 Control Nodes
-
-
-### RKE2 Worker Nodes
 
 
 ## Rancher Configuration
