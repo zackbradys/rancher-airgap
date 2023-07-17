@@ -45,8 +45,8 @@ jobs:
       - name: Upload Assets to AWS S3 Bucket
         run: |
           aws s3 ls s3://rancher-airgap/
-          aws s3 cp hauler s3://rancher-airgap/${GITHUB_REF##*/} --recursive
-          aws s3 ls s3://rancher-airgap/${GITHUB_REF##*/}
+          aws s3 cp hauler s3://rancher-airgap/${GITHUB_REF##*/}/hauler --recursive
+          aws s3 ls s3://rancher-airgap/${GITHUB_REF##*/}/hauler
 
       - name: Commit and Push Repository
         continue-on-error: true
@@ -100,8 +100,8 @@ jobs:
       - name: Upload Assets to AWS S3 Bucket
         run: |
           aws s3 ls s3://rancher-airgap/
-          aws s3 cp hauler s3://rancher-airgap/${GITHUB_REF##*/} --recursive
-          aws s3 ls s3://rancher-airgap/${GITHUB_REF##*/}
+          aws s3 cp hauler s3://rancher-airgap/${GITHUB_REF##*/}/hauler --recursive
+          aws s3 ls s3://rancher-airgap/${GITHUB_REF##*/}/hauler
 
       - name: Commit and Push Repository
         continue-on-error: true
@@ -154,8 +154,8 @@ jobs:
       - name: Upload Assets to AWS S3 Bucket
         run: |
           aws s3 ls s3://rancher-airgap/
-          aws s3 cp hauler s3://rancher-airgap/${GITHUB_REF##*/} --recursive
-          aws s3 ls s3://rancher-airgap/${GITHUB_REF##*/}
+          aws s3 cp hauler s3://rancher-airgap/${GITHUB_REF##*/}/hauler --recursive
+          aws s3 ls s3://rancher-airgap/${GITHUB_REF##*/}/hauler
 
       - name: Commit and Push Repository
         continue-on-error: true
@@ -209,8 +209,8 @@ jobs:
       - name: Upload Assets to AWS S3 Bucket
         run: |
           aws s3 ls s3://rancher-airgap/
-          aws s3 cp hauler s3://rancher-airgap/${GITHUB_REF##*/} --recursive
-          aws s3 ls s3://rancher-airgap/${GITHUB_REF##*/}
+          aws s3 cp hauler s3://rancher-airgap/${GITHUB_REF##*/}/hauler --recursive
+          aws s3 ls s3://rancher-airgap/${GITHUB_REF##*/}/hauler
 
       - name: Commit and Push Repository
         continue-on-error: true
