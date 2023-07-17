@@ -165,6 +165,7 @@ jobs:
   hauler-job-rocky-el8:
     name: Hauler Workflow Job for Rocky Linux 8.5
     runs-on: [self-hosted, linux, X64, rocky, el8]
+    needs: [hauler-job-rhel-el9]
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
