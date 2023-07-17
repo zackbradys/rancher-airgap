@@ -194,7 +194,7 @@ jobs:
 
   hauler-job-base-centos-el7:
     name: Hauler Base Workflow Job for CentOS 7.8
-    runs-on: [self-hosted, linux, X64, rhel, el8]
+    runs-on: [self-hosted, linux, X64, centos, el7]
     needs: [hauler-job-base-rhel-el8]
     steps:
       - name: Checkout Repository
