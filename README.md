@@ -3,7 +3,6 @@
 # Airgap Deployment of Rancher RKE2, Rancher Manager, Longhorn, and Neuvector
 
 ### Table of Contents
-* [About Me](#about-me)
 * [Introduction](#introduction)
 * [Prerequisites](#prerequisites)
 * [Infrastructure](#infrastructure)
@@ -15,21 +14,13 @@
 * [NeuVector Configuration](#neuvector-configuration)
 * [Final Thoughts](#final-thoughts)
 
-## About Me
-A little bit about me, my history, and what I've done in the industry.
-- DOD/IC Contractor
-- U.S. Military Veteran
-- Open-Source Contributor
-- Built and Exited a Digital Firm
-- Active Volunteer Firefighter/EMT
-
 ## Introduction
 
 ### Welcome to the Rancher Airgap Tool and Guide
-Airgap collecting, packaging, installation of Rancher RKE2, Rancher, Longhorn and NeuVector. Specifically built and engineered for disconnected environments.
+Airgap collecting, packaging, installation guide for Rancher RKE2, Rancher, Longhorn and NeuVector. Specifically engineered, designed, and built for those tricky disconnected environments. **Review the most recent release on the [Releases](https://github.com/zackbradys/rancher-airgap/releases) page!**
 
 ```bash
-fetch -> save -> | <airgap> | -> validate -> load -> distribute
+fetch -> validate -> save -> | <airgap> | -> validate -> load -> distribute
 ```
 
 ## Prerequisites
