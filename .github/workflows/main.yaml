@@ -210,8 +210,8 @@ jobs:
       - name: Build Rancher Airgap Base
         run: |
           sh hauler/scripts/base/hauler-base.sh
-          mv /opt/rancher/hauler/base/rancher-airgap-base-rhel-el8.yaml hauler/base/rancher-airgap-base-rhel-el8.yaml
-          mv /opt/rancher/hauler/base/rancher-airgap-base-rhel-el8.tar.zst hauler/base/rancher-airgap-base-rhel-el8.tar.zst
+          mv /opt/rancher/hauler/base/rancher-airgap-base-centos-el7.yaml hauler/base/rancher-airgap-base-centos-el7.yaml
+          mv /opt/rancher/hauler/base/rancher-airgap-base-centos-el7.tar.zst hauler/base/rancher-airgap-base-centos-el7.tar.zst
           pwd && ls -la hauler/base
           pwd && ls -la hauler/scripts/base
 
@@ -236,7 +236,7 @@ jobs:
           git config --global user.name "${GITHUB_ACTOR}"
           git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
           git add *.yaml
-          git commit -a -m "updated rancher airgap base (rhel 8.5)[github-actions]"
+          git commit -a -m "updated rancher airgap base (centos 7.8)[github-actions]"
           git push
 
   hauler-job-rancher:
