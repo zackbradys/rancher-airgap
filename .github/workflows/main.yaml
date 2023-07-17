@@ -35,6 +35,30 @@ jobs:
           pwd && ls -la hauler/rke2
           pwd && ls -la hauler/scripts/rke2
 
+      - name: Build Rancher Airgap Rancher
+        run: |
+          sh hauler/scripts/rancher/hauler-rancher.sh
+          mv /opt/rancher/hauler/rancher/rancher-airgap-rancher-rocky-el9.yaml hauler/rancher/rancher-airgap-rancher-rocky-el9.yaml
+          mv /opt/rancher/hauler/rancher/rancher-airgap-rancher-rocky-el9.tar.zst hauler/rancher/rancher-airgap-rancher-rocky-el9.tar.zst
+          pwd && ls -la hauler/rancher
+          pwd && ls -la hauler/scripts/rancher
+
+      - name: Build Rancher Airgap Longhorn
+        run: |
+          sh hauler/scripts/longhorn/hauler-longhorn.sh
+          mv /opt/rancher/hauler/longhorn/rancher-airgap-longhorn-rocky-el9.yaml hauler/longhorn/rancher-airgap-longhorn-rocky-el9.yaml
+          mv /opt/rancher/hauler/longhorn/rancher-airgap-longhorn-rocky-el9.tar.zst hauler/longhorn/rancher-airgap-longhorn-rocky-el9.tar.zst
+          pwd && ls -la hauler/longhorn
+          pwd && ls -la hauler/scripts/longhorn
+
+      - name: Build Rancher Airgap NeuVector
+        run: |
+          sh hauler/scripts/neuvector/hauler-neuvector.sh
+          mv /opt/rancher/hauler/neuvector/rancher-airgap-neuvector-rocky-el9.yaml hauler/neuvector/rancher-airgap-neuvector-rocky-el9.yaml
+          mv /opt/rancher/hauler/neuvector/rancher-airgap-neuvector-rocky-el9.tar.zst hauler/neuvector/rancher-airgap-neuvector-rocky-el9.tar.zst
+          pwd && ls -la hauler/neuvector
+          pwd && ls -la hauler/scripts/neuvector
+
       - name: Setup AWS Credentials/CLI
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -90,6 +114,30 @@ jobs:
           pwd && ls -la hauler/rke2
           pwd && ls -la hauler/scripts/rke2
 
+      - name: Build Rancher Airgap Rancher
+        run: |
+          sh hauler/scripts/rancher/hauler-rancher.sh
+          mv /opt/rancher/hauler/rancher/rancher-airgap-rancher-rhel-el9.yaml hauler/rancher/rancher-airgap-rancher-rhel-el9.yaml
+          mv /opt/rancher/hauler/rancher/rancher-airgap-rancher-rhel-el9.tar.zst hauler/rancher/rancher-airgap-rancher-rhel-el9.tar.zst
+          pwd && ls -la hauler/rancher
+          pwd && ls -la hauler/scripts/rancher
+
+      - name: Build Rancher Airgap Longhorn
+        run: |
+          sh hauler/scripts/longhorn/hauler-longhorn.sh
+          mv /opt/rancher/hauler/longhorn/rancher-airgap-longhorn-rhel-el9.yaml hauler/longhorn/rancher-airgap-longhorn-rhel-el9.yaml
+          mv /opt/rancher/hauler/longhorn/rancher-airgap-longhorn-rhel-el9.tar.zst hauler/longhorn/rancher-airgap-longhorn-rhel-el9.tar.zst
+          pwd && ls -la hauler/longhorn
+          pwd && ls -la hauler/scripts/longhorn
+
+      - name: Build Rancher Airgap NeuVector
+        run: |
+          sh hauler/scripts/neuvector/hauler-neuvector.sh
+          mv /opt/rancher/hauler/neuvector/rancher-airgap-neuvector-rhel-el9.yaml hauler/neuvector/rancher-airgap-neuvector-rhel-el9.yaml
+          mv /opt/rancher/hauler/neuvector/rancher-airgap-neuvector-rhel-el9.tar.zst hauler/neuvector/rancher-airgap-neuvector-rhel-el9.tar.zst
+          pwd && ls -la hauler/neuvector
+          pwd && ls -la hauler/scripts/neuvector
+
       - name: Setup AWS Credentials/CLI
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -143,6 +191,30 @@ jobs:
           mv /opt/rancher/hauler/rke2/rancher-airgap-rke2-rocky-el8.tar.zst hauler/rke2/rancher-airgap-rke2-rocky-el8.tar.zst
           pwd && ls -la hauler/rke2
           pwd && ls -la hauler/scripts/rke2
+
+      - name: Build Rancher Airgap Rancher
+        run: |
+          sh hauler/scripts/rancher/hauler-rancher.sh
+          mv /opt/rancher/hauler/rancher/rancher-airgap-rancher-rocky-el8.yaml hauler/rancher/rancher-airgap-rancher-rocky-el8.yaml
+          mv /opt/rancher/hauler/rancher/rancher-airgap-rancher-rocky-el8.tar.zst hauler/rancher/rancher-airgap-rancher-rocky-el8.tar.zst
+          pwd && ls -la hauler/rancher
+          pwd && ls -la hauler/scripts/rancher
+
+      - name: Build Rancher Airgap Longhorn
+        run: |
+          sh hauler/scripts/longhorn/hauler-longhorn.sh
+          mv /opt/rancher/hauler/longhorn/rancher-airgap-longhorn-rocky-el8.yaml hauler/longhorn/rancher-airgap-longhorn-rocky-el8.yaml
+          mv /opt/rancher/hauler/longhorn/rancher-airgap-longhorn-rocky-el8.tar.zst hauler/longhorn/rancher-airgap-longhorn-rocky-el8.tar.zst
+          pwd && ls -la hauler/longhorn
+          pwd && ls -la hauler/scripts/longhorn
+
+      - name: Build Rancher Airgap NeuVector
+        run: |
+          sh hauler/scripts/neuvector/hauler-neuvector.sh
+          mv /opt/rancher/hauler/neuvector/rancher-airgap-neuvector-rocky-el8.yaml hauler/neuvector/rancher-airgap-neuvector-rocky-el8.yaml
+          mv /opt/rancher/hauler/neuvector/rancher-airgap-neuvector-rocky-el8.tar.zst hauler/neuvector/rancher-airgap-neuvector-rocky-el8.tar.zst
+          pwd && ls -la hauler/neuvector
+          pwd && ls -la hauler/scripts/neuvector
 
       - name: Setup AWS Credentials/CLI
         uses: aws-actions/configure-aws-credentials@v1
@@ -198,6 +270,30 @@ jobs:
           mv /opt/rancher/hauler/rke2/rancher-airgap-rke2-rhel-el8.tar.zst hauler/rke2/rancher-airgap-rke2-rhel-el8.tar.zst
           pwd && ls -la hauler/rke2
           pwd && ls -la hauler/scripts/rke2
+
+      - name: Build Rancher Airgap Rancher
+        run: |
+          sh hauler/scripts/rancher/hauler-rancher.sh
+          mv /opt/rancher/hauler/rancher/rancher-airgap-rancher-rhel-el8.yaml hauler/rancher/rancher-airgap-rancher-rhel-el8.yaml
+          mv /opt/rancher/hauler/rancher/rancher-airgap-rancher-rhel-el8.tar.zst hauler/rancher/rancher-airgap-rancher-rhel-el8.tar.zst
+          pwd && ls -la hauler/rancher
+          pwd && ls -la hauler/scripts/rancher
+
+      - name: Build Rancher Airgap Longhorn
+        run: |
+          sh hauler/scripts/longhorn/hauler-longhorn.sh
+          mv /opt/rancher/hauler/longhorn/rancher-airgap-longhorn-rhel-el8.yaml hauler/longhorn/rancher-airgap-longhorn-rhel-el8.yaml
+          mv /opt/rancher/hauler/longhorn/rancher-airgap-longhorn-rhel-el8.tar.zst hauler/longhorn/rancher-airgap-longhorn-rhel-el8.tar.zst
+          pwd && ls -la hauler/longhorn
+          pwd && ls -la hauler/scripts/longhorn
+
+      - name: Build Rancher Airgap NeuVector
+        run: |
+          sh hauler/scripts/neuvector/hauler-neuvector.sh
+          mv /opt/rancher/hauler/neuvector/rancher-airgap-neuvector-rhel-el8.yaml hauler/neuvector/rancher-airgap-neuvector-rhel-el8.yaml
+          mv /opt/rancher/hauler/neuvector/rancher-airgap-neuvector-rhel-el8.tar.zst hauler/neuvector/rancher-airgap-neuvector-rhel-el8.tar.zst
+          pwd && ls -la hauler/neuvector
+          pwd && ls -la hauler/scripts/neuvector
 
       - name: Setup AWS Credentials/CLI
         uses: aws-actions/configure-aws-credentials@v1
