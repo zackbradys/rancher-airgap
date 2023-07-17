@@ -6,7 +6,7 @@ on:
 
 jobs:
   hauler-job-base-rocky-el9:
-    name: Hauler Workflow Base Job for Rocky Linux 9.1
+    name: Hauler Base Workflow Job for Rocky Linux 9.1
     runs-on: [self-hosted, linux, X64, rocky, el9]
     steps:
       - name: Checkout Repository
@@ -52,7 +52,7 @@ jobs:
           git push
 
   hauler-job-base-rhel-el9:
-    name: Hauler Workflow Base Job for RHEL 9.1
+    name: Hauler Base Workflow Job for RHEL 9.1
     runs-on: [self-hosted, linux, X64, rhel, el9]
     needs: [hauler-job-base-rocky-el9]
     steps:
@@ -95,11 +95,11 @@ jobs:
           git config --global user.name "${GITHUB_ACTOR}"
           git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
           git add *.yaml
-          git commit -a -m "updated rancher airgap base (rhel 9.1) [github-actions]"
+          git commit -a -m "updated rancher airgap base (rhel 9.1)[github-actions]"
           git push
 
   hauler-job-base-rocky-el8:
-    name: Hauler Workflow Base Job for Rocky Linux 8.5
+    name: Hauler Base Workflow Job for Rocky Linux 8.5
     runs-on: [self-hosted, linux, X64, rocky, el8]
     needs: [hauler-job-base-rhel-el9]
     steps:
@@ -142,11 +142,11 @@ jobs:
           git config --global user.name "${GITHUB_ACTOR}"
           git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
           git add *.yaml
-          git commit -a -m "updated rancher airgap base (rocky 8.5) [github-actions]"
+          git commit -a -m "updated rancher airgap base (rocky 8.5)[github-actions]"
           git push
 
   hauler-job-base-rhel-el8:
-    name: Hauler Workflow Base Job for RHEL 8.5
+    name: Hauler Base Workflow Job for RHEL 8.5
     runs-on: [self-hosted, linux, X64, rhel, el8]
     needs: [hauler-job-base-rocky-el8]
     steps:
@@ -189,11 +189,11 @@ jobs:
           git config --global user.name "${GITHUB_ACTOR}"
           git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
           git add *.yaml
-          git commit -a -m "updated rancher airgap base (rhel 8.5) [github-actions]"
+          git commit -a -m "updated rancher airgap base (rhel 8.5)[github-actions]"
           git push
 
   hauler-job-rancher:
-    name: Hauler Workflow Rancher/RKE2/Longhorn/NeuVector Job for RHEL 8.5
+    name: Hauler Rancher Stack Workflow Job
     runs-on: [self-hosted, linux, X64, general]
     needs: [hauler-job-base-rhel-el8]
     steps:
