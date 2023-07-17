@@ -114,10 +114,119 @@ jobs:
           git commit -a -m "updated rancher airgap for rhel 9.1"
           git push
 
+  hauler-job-rocky-el8:
+    name: Hauler Workflow Job for Rocky Linux 8.5
+    runs-on: [self-hosted, linux, X64, rocky, el8]
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+        with:
+          ref: main
+          token: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
+
+      - name: Prebuild Setup/Checks
+        run: |
+          pwd && ls -la
+
+      - name: Build Rancher Airgap Base
+        run: |
+          sh hauler/scripts/base/hauler-base.sh
+          mv /opt/rancher/hauler/base/rancher-airgap-base-rocky-el8.yaml hauler/base/rancher-airgap-base-rocky-el8.yaml
+          mv /opt/rancher/hauler/base/rancher-airgap-base-rocky-el8.tar.zst hauler/base/rancher-airgap-base-rocky-el8.tar.zst
+          pwd && ls -la hauler/base
+          pwd && ls -la hauler/scripts/base
+
+      - name: Build Rancher Airgap RKE2
+        run: |
+          sh hauler/scripts/rke2/hauler-rke2.sh
+          mv /opt/rancher/hauler/rke2/rancher-airgap-rke2-rocky-el8.yaml hauler/rke2/rancher-airgap-rke2-rocky-el8.yaml
+          mv /opt/rancher/hauler/rke2/rancher-airgap-rke2-rocky-el8.tar.zst hauler/rke2/rancher-airgap-rke2-rocky-el8.tar.zst
+          pwd && ls -la hauler/rke2
+          pwd && ls -la hauler/scripts/rke2
+
+      - name: Setup AWS Credentials/CLI
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Upload Assets to AWS S3 Bucket
+        run: |
+          aws s3 ls s3://rancher-airgap/
+          aws s3 cp hauler s3://rancher-airgap/${GITHUB_REF##*/} --recursive
+          aws s3 ls s3://rancher-airgap/${GITHUB_REF##*/}
+
+      - name: Commit and Push Repository
+        continue-on-error: true
+        run: |
+          pwd && ls -la
+          git status
+          git config --global user.name "${GITHUB_ACTOR}"
+          git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+          git add *.yaml
+          git commit -a -m "updated rancher airgap for rocky linux 8.5"
+          git push
+
+  hauler-job-rhel-el8:
+    name: Hauler Workflow Job for RHEL 8.5
+    runs-on: [self-hosted, linux, X64, rhel, el8]
+    needs: [hauler-job-rocky-el8]
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+        with:
+          ref: main
+          token: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
+
+      - name: Prebuild Setup/Checks
+        run: |
+          pwd && ls -la
+
+      - name: Build Rancher Airgap Base
+        run: |
+          sh hauler/scripts/base/hauler-base.sh
+          mv /opt/rancher/hauler/base/rancher-airgap-base-rhel-el8.yaml hauler/base/rancher-airgap-base-rhel-el8.yaml
+          mv /opt/rancher/hauler/base/rancher-airgap-base-rhel-el8.tar.zst hauler/base/rancher-airgap-base-rhel-el8.tar.zst
+          pwd && ls -la hauler/base
+          pwd && ls -la hauler/scripts/base
+
+      - name: Build Rancher Airgap RKE2
+        run: |
+          sh hauler/scripts/rke2/hauler-rke2.sh
+          mv /opt/rancher/hauler/rke2/rancher-airgap-rke2-rhel-el8.yaml hauler/rke2/rancher-airgap-rke2-rhel-el8.yaml
+          mv /opt/rancher/hauler/rke2/rancher-airgap-rke2-rhel-el8.tar.zst hauler/rke2/rancher-airgap-rke2-rhel-el8.tar.zst
+          pwd && ls -la hauler/rke2
+          pwd && ls -la hauler/scripts/rke2
+
+      - name: Setup AWS Credentials/CLI
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Upload Assets to AWS S3 Bucket
+        run: |
+          aws s3 ls s3://rancher-airgap/
+          aws s3 cp hauler s3://rancher-airgap/${GITHUB_REF##*/} --recursive
+          aws s3 ls s3://rancher-airgap/${GITHUB_REF##*/}
+
+      - name: Commit and Push Repository
+        continue-on-error: true
+        run: |
+          pwd && ls -la
+          git status
+          git config --global user.name "${GITHUB_ACTOR}"
+          git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+          git add *.yaml
+          git commit -a -m "updated rancher airgap for rhel 8.5"
+          git push
+
   rancher-airgap-release:
     name: Rancher Airgap Release Workflow Job
     runs-on: [self-hosted, linux, X64, general]
-    needs: [hauler-job-rocky-el9, hauler-job-rhel-el9]
+    needs: [hauler-job-rocky-el9, hauler-job-rhel-el9, hauler-job-rocky-el8, hauler-job-rhel-el8]
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
