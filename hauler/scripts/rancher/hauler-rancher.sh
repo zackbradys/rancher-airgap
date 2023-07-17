@@ -2,9 +2,6 @@
 export vRancher=2.7.5
 export vCertManager=1.7.1
 
-### Set OS Release Variable
-export OS=$(. /etc/os-release && echo "$ID"-"$PLATFORM_ID" | sed "s#platform:##")
-
 ### Setup Working Directory
 mkdir -p /opt/rancher/hauler/rancher
 cd /opt/rancher/hauler/rancher
@@ -29,7 +26,7 @@ rancherImages=$(cat rancher-images.txt)
 rm -rf /opt/rancher/hauler/rancher/rancher-images.txt
 
 ### Create Hauler Manifest
-cat << EOF >> /opt/rancher/hauler/rancher/rancher-airgap-rancher-${OS}.yaml
+cat << EOF >> /opt/rancher/hauler/rancher/rancher-airgap-rancher.yaml
 apiVersion: content.hauler.cattle.io/v1alpha1
 kind: Files
 metadata:
@@ -65,11 +62,11 @@ ${rancherImages}
 EOF
 
 ### Load Hauler Manifest into Store
-hauler store sync -f rancher-airgap-rancher-${OS}.yaml
+hauler store sync -f rancher-airgap-rancher.yaml
 
 ### Verify Hauler Store Contents
 hauler store info
 
 ### Compress Hauler Store Contents
-hauler store save --filename rancher-airgap-rancher-${OS}.tar.zst
+hauler store save --filename rancher-airgap-rancher.tar.zst
 rm -rf /opt/rancher/hauler/rancher/store

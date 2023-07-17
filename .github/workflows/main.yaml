@@ -5,8 +5,8 @@ on:
        - '*'
 
 jobs:
-  hauler-job-rocky-el9:
-    name: Hauler Workflow Job for Rocky Linux 9.1
+  hauler-job-base-rocky-el9:
+    name: Hauler Workflow Base Job for Rocky Linux 9.1
     runs-on: [self-hosted, linux, X64, rocky, el9]
     steps:
       - name: Checkout Repository
@@ -27,38 +27,6 @@ jobs:
           pwd && ls -la hauler/base
           pwd && ls -la hauler/scripts/base
 
-      - name: Build Rancher Airgap RKE2
-        run: |
-          sh hauler/scripts/rke2/hauler-rke2.sh
-          mv /opt/rancher/hauler/rke2/rancher-airgap-rke2-rocky-el9.yaml hauler/rke2/rancher-airgap-rke2-rocky-el9.yaml
-          mv /opt/rancher/hauler/rke2/rancher-airgap-rke2-rocky-el9.tar.zst hauler/rke2/rancher-airgap-rke2-rocky-el9.tar.zst
-          pwd && ls -la hauler/rke2
-          pwd && ls -la hauler/scripts/rke2
-
-      - name: Build Rancher Airgap Rancher
-        run: |
-          sh hauler/scripts/rancher/hauler-rancher.sh
-          mv /opt/rancher/hauler/rancher/rancher-airgap-rancher-rocky-el9.yaml hauler/rancher/rancher-airgap-rancher-rocky-el9.yaml
-          mv /opt/rancher/hauler/rancher/rancher-airgap-rancher-rocky-el9.tar.zst hauler/rancher/rancher-airgap-rancher-rocky-el9.tar.zst
-          pwd && ls -la hauler/rancher
-          pwd && ls -la hauler/scripts/rancher
-
-      - name: Build Rancher Airgap Longhorn
-        run: |
-          sh hauler/scripts/longhorn/hauler-longhorn.sh
-          mv /opt/rancher/hauler/longhorn/rancher-airgap-longhorn-rocky-el9.yaml hauler/longhorn/rancher-airgap-longhorn-rocky-el9.yaml
-          mv /opt/rancher/hauler/longhorn/rancher-airgap-longhorn-rocky-el9.tar.zst hauler/longhorn/rancher-airgap-longhorn-rocky-el9.tar.zst
-          pwd && ls -la hauler/longhorn
-          pwd && ls -la hauler/scripts/longhorn
-
-      - name: Build Rancher Airgap NeuVector
-        run: |
-          sh hauler/scripts/neuvector/hauler-neuvector.sh
-          mv /opt/rancher/hauler/neuvector/rancher-airgap-neuvector-rocky-el9.yaml hauler/neuvector/rancher-airgap-neuvector-rocky-el9.yaml
-          mv /opt/rancher/hauler/neuvector/rancher-airgap-neuvector-rocky-el9.tar.zst hauler/neuvector/rancher-airgap-neuvector-rocky-el9.tar.zst
-          pwd && ls -la hauler/neuvector
-          pwd && ls -la hauler/scripts/neuvector
-
       - name: Setup AWS Credentials/CLI
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -80,13 +48,13 @@ jobs:
           git config --global user.name "${GITHUB_ACTOR}"
           git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
           git add *.yaml
-          git commit -a -m "updated rancher airgap for rocky linux 9.1"
+          git commit -a -m "updated rancher airgap base (rocky 9.1)[github-actions]"
           git push
 
-  hauler-job-rhel-el9:
-    name: Hauler Workflow Job for RHEL 9.1
+  hauler-job-base-rhel-el9:
+    name: Hauler Workflow Base Job for RHEL 9.1
     runs-on: [self-hosted, linux, X64, rhel, el9]
-    needs: [hauler-job-rocky-el9]
+    needs: [hauler-job-base-rocky-el9]
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
@@ -106,38 +74,6 @@ jobs:
           pwd && ls -la hauler/base
           pwd && ls -la hauler/scripts/base
 
-      - name: Build Rancher Airgap RKE2
-        run: |
-          sh hauler/scripts/rke2/hauler-rke2.sh
-          mv /opt/rancher/hauler/rke2/rancher-airgap-rke2-rhel-el9.yaml hauler/rke2/rancher-airgap-rke2-rhel-el9.yaml
-          mv /opt/rancher/hauler/rke2/rancher-airgap-rke2-rhel-el9.tar.zst hauler/rke2/rancher-airgap-rke2-rhel-el9.tar.zst
-          pwd && ls -la hauler/rke2
-          pwd && ls -la hauler/scripts/rke2
-
-      - name: Build Rancher Airgap Rancher
-        run: |
-          sh hauler/scripts/rancher/hauler-rancher.sh
-          mv /opt/rancher/hauler/rancher/rancher-airgap-rancher-rhel-el9.yaml hauler/rancher/rancher-airgap-rancher-rhel-el9.yaml
-          mv /opt/rancher/hauler/rancher/rancher-airgap-rancher-rhel-el9.tar.zst hauler/rancher/rancher-airgap-rancher-rhel-el9.tar.zst
-          pwd && ls -la hauler/rancher
-          pwd && ls -la hauler/scripts/rancher
-
-      - name: Build Rancher Airgap Longhorn
-        run: |
-          sh hauler/scripts/longhorn/hauler-longhorn.sh
-          mv /opt/rancher/hauler/longhorn/rancher-airgap-longhorn-rhel-el9.yaml hauler/longhorn/rancher-airgap-longhorn-rhel-el9.yaml
-          mv /opt/rancher/hauler/longhorn/rancher-airgap-longhorn-rhel-el9.tar.zst hauler/longhorn/rancher-airgap-longhorn-rhel-el9.tar.zst
-          pwd && ls -la hauler/longhorn
-          pwd && ls -la hauler/scripts/longhorn
-
-      - name: Build Rancher Airgap NeuVector
-        run: |
-          sh hauler/scripts/neuvector/hauler-neuvector.sh
-          mv /opt/rancher/hauler/neuvector/rancher-airgap-neuvector-rhel-el9.yaml hauler/neuvector/rancher-airgap-neuvector-rhel-el9.yaml
-          mv /opt/rancher/hauler/neuvector/rancher-airgap-neuvector-rhel-el9.tar.zst hauler/neuvector/rancher-airgap-neuvector-rhel-el9.tar.zst
-          pwd && ls -la hauler/neuvector
-          pwd && ls -la hauler/scripts/neuvector
-
       - name: Setup AWS Credentials/CLI
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -159,13 +95,13 @@ jobs:
           git config --global user.name "${GITHUB_ACTOR}"
           git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
           git add *.yaml
-          git commit -a -m "updated rancher airgap for rhel 9.1"
+          git commit -a -m "updated rancher airgap base (rhel 9.1) [github-actions]"
           git push
 
-  hauler-job-rocky-el8:
-    name: Hauler Workflow Job for Rocky Linux 8.5
+  hauler-job-base-rocky-el8:
+    name: Hauler Workflow Base Job for Rocky Linux 8.5
     runs-on: [self-hosted, linux, X64, rocky, el8]
-    needs: [hauler-job-rhel-el9]
+    needs: [hauler-job-base-rhel-el9]
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
@@ -185,38 +121,6 @@ jobs:
           pwd && ls -la hauler/base
           pwd && ls -la hauler/scripts/base
 
-      - name: Build Rancher Airgap RKE2
-        run: |
-          sh hauler/scripts/rke2/hauler-rke2.sh
-          mv /opt/rancher/hauler/rke2/rancher-airgap-rke2-rocky-el8.yaml hauler/rke2/rancher-airgap-rke2-rocky-el8.yaml
-          mv /opt/rancher/hauler/rke2/rancher-airgap-rke2-rocky-el8.tar.zst hauler/rke2/rancher-airgap-rke2-rocky-el8.tar.zst
-          pwd && ls -la hauler/rke2
-          pwd && ls -la hauler/scripts/rke2
-
-      - name: Build Rancher Airgap Rancher
-        run: |
-          sh hauler/scripts/rancher/hauler-rancher.sh
-          mv /opt/rancher/hauler/rancher/rancher-airgap-rancher-rocky-el8.yaml hauler/rancher/rancher-airgap-rancher-rocky-el8.yaml
-          mv /opt/rancher/hauler/rancher/rancher-airgap-rancher-rocky-el8.tar.zst hauler/rancher/rancher-airgap-rancher-rocky-el8.tar.zst
-          pwd && ls -la hauler/rancher
-          pwd && ls -la hauler/scripts/rancher
-
-      - name: Build Rancher Airgap Longhorn
-        run: |
-          sh hauler/scripts/longhorn/hauler-longhorn.sh
-          mv /opt/rancher/hauler/longhorn/rancher-airgap-longhorn-rocky-el8.yaml hauler/longhorn/rancher-airgap-longhorn-rocky-el8.yaml
-          mv /opt/rancher/hauler/longhorn/rancher-airgap-longhorn-rocky-el8.tar.zst hauler/longhorn/rancher-airgap-longhorn-rocky-el8.tar.zst
-          pwd && ls -la hauler/longhorn
-          pwd && ls -la hauler/scripts/longhorn
-
-      - name: Build Rancher Airgap NeuVector
-        run: |
-          sh hauler/scripts/neuvector/hauler-neuvector.sh
-          mv /opt/rancher/hauler/neuvector/rancher-airgap-neuvector-rocky-el8.yaml hauler/neuvector/rancher-airgap-neuvector-rocky-el8.yaml
-          mv /opt/rancher/hauler/neuvector/rancher-airgap-neuvector-rocky-el8.tar.zst hauler/neuvector/rancher-airgap-neuvector-rocky-el8.tar.zst
-          pwd && ls -la hauler/neuvector
-          pwd && ls -la hauler/scripts/neuvector
-
       - name: Setup AWS Credentials/CLI
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -238,13 +142,13 @@ jobs:
           git config --global user.name "${GITHUB_ACTOR}"
           git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
           git add *.yaml
-          git commit -a -m "updated rancher airgap for rocky linux 8.5"
+          git commit -a -m "updated rancher airgap base (rocky 8.5) [github-actions]"
           git push
 
-  hauler-job-rhel-el8:
-    name: Hauler Workflow Job for RHEL 8.5
+  hauler-job-base-rhel-el8:
+    name: Hauler Workflow Base Job for RHEL 8.5
     runs-on: [self-hosted, linux, X64, rhel, el8]
-    needs: [hauler-job-rocky-el8]
+    needs: [hauler-job-base-rocky-el8]
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
@@ -264,35 +168,74 @@ jobs:
           pwd && ls -la hauler/base
           pwd && ls -la hauler/scripts/base
 
+      - name: Setup AWS Credentials/CLI
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Upload Assets to AWS S3 Bucket
+        run: |
+          aws s3 ls s3://rancher-airgap/
+          aws s3 cp hauler s3://rancher-airgap/${GITHUB_REF##*/}/hauler --recursive
+          aws s3 ls s3://rancher-airgap/${GITHUB_REF##*/}/hauler
+
+      - name: Commit and Push Repository
+        continue-on-error: true
+        run: |
+          pwd && ls -la
+          git status
+          git config --global user.name "${GITHUB_ACTOR}"
+          git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+          git add *.yaml
+          git commit -a -m "updated rancher airgap base (rhel 8.5) [github-actions]"
+          git push
+
+  hauler-job-rancher:
+    name: Hauler Workflow Rancher/RKE2/Longhorn/NeuVector Job for RHEL 8.5
+    runs-on: [self-hosted, linux, X64, general]
+    needs: [hauler-job-base-rhel-el8]
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+        with:
+          ref: main
+          token: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
+
+      - name: Prebuild Setup/Checks
+        run: |
+          pwd && ls -la
+
       - name: Build Rancher Airgap RKE2
         run: |
           sh hauler/scripts/rke2/hauler-rke2.sh
-          mv /opt/rancher/hauler/rke2/rancher-airgap-rke2-rhel-el8.yaml hauler/rke2/rancher-airgap-rke2-rhel-el8.yaml
-          mv /opt/rancher/hauler/rke2/rancher-airgap-rke2-rhel-el8.tar.zst hauler/rke2/rancher-airgap-rke2-rhel-el8.tar.zst
+          mv /opt/rancher/hauler/rke2/rancher-airgap-rke2.yaml hauler/rke2/rancher-airgap-rke2.yaml
+          mv /opt/rancher/hauler/rke2/rancher-airgap-rke2.tar.zst hauler/rke2/rancher-airgap-rke2.tar.zst
           pwd && ls -la hauler/rke2
           pwd && ls -la hauler/scripts/rke2
 
       - name: Build Rancher Airgap Rancher
         run: |
           sh hauler/scripts/rancher/hauler-rancher.sh
-          mv /opt/rancher/hauler/rancher/rancher-airgap-rancher-rhel-el8.yaml hauler/rancher/rancher-airgap-rancher-rhel-el8.yaml
-          mv /opt/rancher/hauler/rancher/rancher-airgap-rancher-rhel-el8.tar.zst hauler/rancher/rancher-airgap-rancher-rhel-el8.tar.zst
+          mv /opt/rancher/hauler/rancher/rancher-airgap-rancher.yaml hauler/rancher/rancher-airgap-rancher.yaml
+          mv /opt/rancher/hauler/rancher/rancher-airgap-rancher.tar.zst hauler/rancher/rancher-airgap-rancher.tar.zst
           pwd && ls -la hauler/rancher
           pwd && ls -la hauler/scripts/rancher
 
       - name: Build Rancher Airgap Longhorn
         run: |
           sh hauler/scripts/longhorn/hauler-longhorn.sh
-          mv /opt/rancher/hauler/longhorn/rancher-airgap-longhorn-rhel-el8.yaml hauler/longhorn/rancher-airgap-longhorn-rhel-el8.yaml
-          mv /opt/rancher/hauler/longhorn/rancher-airgap-longhorn-rhel-el8.tar.zst hauler/longhorn/rancher-airgap-longhorn-rhel-el8.tar.zst
+          mv /opt/rancher/hauler/longhorn/rancher-airgap-longhorn.yaml hauler/longhorn/rancher-airgap-longhorn.yaml
+          mv /opt/rancher/hauler/longhorn/rancher-airgap-longhorn.tar.zst hauler/longhorn/rancher-airgap-longhorn.tar.zst
           pwd && ls -la hauler/longhorn
           pwd && ls -la hauler/scripts/longhorn
 
       - name: Build Rancher Airgap NeuVector
         run: |
           sh hauler/scripts/neuvector/hauler-neuvector.sh
-          mv /opt/rancher/hauler/neuvector/rancher-airgap-neuvector-rhel-el8.yaml hauler/neuvector/rancher-airgap-neuvector-rhel-el8.yaml
-          mv /opt/rancher/hauler/neuvector/rancher-airgap-neuvector-rhel-el8.tar.zst hauler/neuvector/rancher-airgap-neuvector-rhel-el8.tar.zst
+          mv /opt/rancher/hauler/neuvector/rancher-airgap-neuvector.yaml hauler/neuvector/rancher-airgap-neuvector.yaml
+          mv /opt/rancher/hauler/neuvector/rancher-airgap-neuvector.tar.zst hauler/neuvector/rancher-airgap-neuvector.tar.zst
           pwd && ls -la hauler/neuvector
           pwd && ls -la hauler/scripts/neuvector
 
@@ -317,13 +260,13 @@ jobs:
           git config --global user.name "${GITHUB_ACTOR}"
           git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
           git add *.yaml
-          git commit -a -m "updated rancher airgap for rhel 8.5"
+          git commit -a -m "updated rancher airgap manifests [github-actions]"
           git push
 
   rancher-airgap-release:
     name: Rancher Airgap Release Workflow Job
     runs-on: [self-hosted, linux, X64, general]
-    needs: [hauler-job-rocky-el9, hauler-job-rhel-el9, hauler-job-rocky-el8, hauler-job-rhel-el8]
+    needs: [hauler-job-base-rocky-el9, hauler-job-base-rhel-el9, hauler-job-base-rocky-el8, hauler-job-base-rhel-el8, hauler-job-rancher]
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
@@ -337,7 +280,7 @@ jobs:
 
       - name: Create Release Notes
         run: |
-          echo -e "# Rancher Airgap Release ${GITHUB_REF##*/}\nLatest Release Notes and Asset URLs. Please review all notes below and ensure to download the correct assets. Please utilize GitHub Issues, Forks, and/or Pull Requests to submit any issues, updates, or fixes! Thank you.\n\n## Upgrade Steps\n* No upgrade steps for this release.\n\n## Breaking Changes\n* No breaking changes for this release.\n\n## Features and Improvements\n* No features or improvements for this release.\n\n## Bug Fixes and Additional Notes\n* No bug fixes or additional notes for this release.\n\n\n## Release Assets\n\n### Release for Rocky Linux 9.1\n* **Base YAML ->** [s3://rancher-airgap-base-rocky-el9.yaml](https://rancher-airgap.s3.amazonaws.com/${GITHUB_REF##*/}/hauler/base/rancher-airgap-base-rocky-el9.yaml)\n* **Base TAR ->** [s3://rancher-airgap-base-rocky-el9.tar.zst](https://rancher-airgap.s3.amazonaws.com/${GITHUB_REF##*/}/hauler/base/rancher-airgap-base-rocky-el9.tar.zst)\n* **RKE2 YAML ->** [s3://rancher-airgap-rke2-rocky-el9.yaml](https://rancher-airgap.s3.amazonaws.com/${GITHUB_REF##*/}/hauler/rke2/rancher-airgap-rke2-rocky-el9.yaml)\n* **RKE2 TAR ->** [s3://rancher-airgap-rke2-rocky-el9.tar.zst](https://rancher-airgap.s3.amazonaws.com/${GITHUB_REF##*/}/hauler/rke2/rancher-airgap-rke2-rocky-el9.tar.zst)\n* **Rancher YAML ->** [s3://rancher-airgap-rancher-rocky-el9.yaml](https://rancher-airgap.s3.amazonaws.com/${GITHUB_REF##*/}/hauler/rancher/rancher-airgap-rancher-rocky-el9.yaml)\n* **Rancher TAR ->** [s3://rancher-airgap-rancher-rocky-el9.tar.zst](https://rancher-airgap.s3.amazonaws.com/${GITHUB_REF##*/}/hauler/rancher/rancher-airgap-rancher-rocky-el9.tar.zst)\n* **Longhorn YAML ->** [s3://rancher-airgap-longhorn-rocky-el9.yaml](https://rancher-airgap.s3.amazonaws.com/${GITHUB_REF##*/}/hauler/longhorn/rancher-airgap-longhorn-rocky-el9.yaml)\n* **Longhorn TAR ->** [s3://rancher-airgap-longhorn-rocky-el9.tar.zst](https://rancher-airgap.s3.amazonaws.com/${GITHUB_REF##*/}/hauler/longhorn/rancher-airgap-longhorn-rocky-el9.tar.zst)\n* **NeuVector YAML ->** [s3://rancher-airgap-neuvector-rocky-el9.yaml](https://rancher-airgap.s3.amazonaws.com/${GITHUB_REF##*/}/hauler/neuvector/rancher-airgap-neuvector-rocky-el9.yaml)\n* **NeuVector TAR ->** [s3://rancher-airgap-neuvector-rocky-el9.tar.zst](https://rancher-airgap.s3.amazonaws.com/${GITHUB_REF##*/}/hauler/neuvector/rancher-airgap-neuvector-rocky-el9.tar.zst)\n\n### Release for RHEL 9.1\n* **Base YAML ->** [s3://rancher-airgap-base-rhel-el9.yaml](https://rancher-airgap.s3.amazonaws.com/${GITHUB_REF##*/}/hauler/base/rancher-airgap-base-rhel-el9.yaml)\n* **Base TAR ->** [s3://rancher-airgap-base-rhel-el9.tar.zst](https://rancher-airgap.s3.amazonaws.com/${GITHUB_REF##*/}/hauler/base/rancher-airgap-base-rhel-el9.tar.zst)\n* **RKE2 YAML ->** [s3://rancher-airgap-rke2-rhel-el9.yaml](https://rancher-airgap.s3.amazonaws.com/${GITHUB_REF##*/}/hauler/rke2/rancher-airgap-rke2-rhel-el9.yaml)\n* **RKE2 TAR ->** [s3://rancher-airgap-rke2-rhel-el9.tar.zst](https://rancher-airgap.s3.amazonaws.com/${GITHUB_REF##*/}/hauler/rke2/rancher-airgap-rke2-rhel-el9.tar.zst)\n* **Rancher YAML ->** [s3://rancher-airgap-rancher-rhel-el9.yaml](https://rancher-airgap.s3.amazonaws.com/${GITHUB_REF##*/}/hauler/rancher/rancher-airgap-rancher-rhel-el9.yaml)\n* **Rancher TAR ->** [s3://rancher-airgap-rancher-rhel-el9.tar.zst](https://rancher-airgap.s3.amazonaws.com/${GITHUB_REF##*/}/hauler/rancher/rancher-airgap-rancher-rhel-el9.tar.zst)\n* **Longhorn YAML ->** [s3://rancher-airgap-longhorn-rhel-el9.yaml](https://rancher-airgap.s3.amazonaws.com/${GITHUB_REF##*/}/hauler/longhorn/rancher-airgap-longhorn-rhel-el9.yaml)\n* **Longhorn TAR ->** [s3://rancher-airgap-longhorn-rhel-el9.tar.zst](https://rancher-airgap.s3.amazonaws.com/${GITHUB_REF##*/}/hauler/longhorn/rancher-airgap-longhorn-rhel-el9.tar.zst)\n* **NeuVector YAML ->** [s3://rancher-airgap-neuvector-rhel-el9.yaml](https://rancher-airgap.s3.amazonaws.com/${GITHUB_REF##*/}/hauler/neuvector/rancher-airgap-neuvector-rhel-el9.yaml)\n* **NeuVector TAR ->** [s3://rancher-airgap-neuvector-rhel-el9.tar.zst](https://rancher-airgap.s3.amazonaws.com/${GITHUB_REF##*/}/hauler/neuvector/rancher-airgap-neuvector-rhel-el9.tar.zst)\n\n### Release for Rocky Linux 8.5\n* **Base YAML ->** [s3://rancher-airgap-base-rocky-el8.yaml](https://rancher-airgap.s3.amazonaws.com/${GITHUB_REF##*/}/hauler/base/rancher-airgap-base-rocky-el8.yaml)\n* **Base TAR ->** [s3://rancher-airgap-base-rocky-el8.tar.zst](https://rancher-airgap.s3.amazonaws.com/${GITHUB_REF##*/}/hauler/base/rancher-airgap-base-rocky-el8.tar.zst)\n* **RKE2 YAML ->** [s3://rancher-airgap-rke2-rocky-el8.yaml](https://rancher-airgap.s3.amazonaws.com/${GITHUB_REF##*/}/hauler/rke2/rancher-airgap-rke2-rocky-el8.yaml)\n* **RKE2 TAR ->** [s3://rancher-airgap-rke2-rocky-el8.tar.zst](https://rancher-airgap.s3.amazonaws.com/${GITHUB_REF##*/}/hauler/rke2/rancher-airgap-rke2-rocky-el8.tar.zst)\n* **Rancher YAML ->** [s3://rancher-airgap-rancher-rocky-el8.yaml](https://rancher-airgap.s3.amazonaws.com/${GITHUB_REF##*/}/hauler/rancher/rancher-airgap-rancher-rocky-el8.yaml)\n* **Rancher TAR ->** [s3://rancher-airgap-rancher-rocky-el8.tar.zst](https://rancher-airgap.s3.amazonaws.com/${GITHUB_REF##*/}/hauler/rancher/rancher-airgap-rancher-rocky-el8.tar.zst)\n* **Longhorn YAML ->** [s3://rancher-airgap-longhorn-rocky-el8.yaml](https://rancher-airgap.s3.amazonaws.com/${GITHUB_REF##*/}/hauler/longhorn/rancher-airgap-longhorn-rocky-el8.yaml)\n* **Longhorn TAR ->** [s3://rancher-airgap-longhorn-rocky-el8.tar.zst](https://rancher-airgap.s3.amazonaws.com/${GITHUB_REF##*/}/hauler/longhorn/rancher-airgap-longhorn-rocky-el8.tar.zst)\n* **NeuVector YAML ->** [s3://rancher-airgap-neuvector-rocky-el8.yaml](https://rancher-airgap.s3.amazonaws.com/${GITHUB_REF##*/}/hauler/neuvector/rancher-airgap-neuvector-rocky-el8.yaml)\n* **NeuVector TAR ->** [s3://rancher-airgap-neuvector-rocky-el8.tar.zst](https://rancher-airgap.s3.amazonaws.com/${GITHUB_REF##*/}/hauler/neuvector/rancher-airgap-neuvector-rocky-el8.tar.zst)\n\n### Release for RHEL 8.5\n* **Base YAML ->** [s3://rancher-airgap-base-rhel-el8.yaml](https://rancher-airgap.s3.amazonaws.com/${GITHUB_REF##*/}/hauler/base/rancher-airgap-base-rhel-el8.yaml)\n* **Base TAR ->** [s3://rancher-airgap-base-rhel-el8.tar.zst](https://rancher-airgap.s3.amazonaws.com/${GITHUB_REF##*/}/hauler/base/rancher-airgap-base-rhel-el8.tar.zst)\n* **RKE2 YAML ->** [s3://rancher-airgap-rke2-rhel-el8.yaml](https://rancher-airgap.s3.amazonaws.com/${GITHUB_REF##*/}/hauler/rke2/rancher-airgap-rke2-rhel-el8.yaml)\n* **RKE2 TAR ->** [s3://rancher-airgap-rke2-rhel-el8.tar.zst](https://rancher-airgap.s3.amazonaws.com/${GITHUB_REF##*/}/hauler/rke2/rancher-airgap-rke2-rhel-el8.tar.zst)\n* **Rancher YAML ->** [s3://rancher-airgap-rancher-rhel-el8.yaml](https://rancher-airgap.s3.amazonaws.com/${GITHUB_REF##*/}/hauler/rancher/rancher-airgap-rancher-rhel-el8.yaml)\n* **Rancher TAR ->** [s3://rancher-airgap-rancher-rhel-el8.tar.zst](https://rancher-airgap.s3.amazonaws.com/${GITHUB_REF##*/}/hauler/rancher/rancher-airgap-rancher-rhel-el8.tar.zst)\n* **Longhorn YAML ->** [s3://rancher-airgap-longhorn-rhel-el8.yaml](https://rancher-airgap.s3.amazonaws.com/${GITHUB_REF##*/}/hauler/longhorn/rancher-airgap-longhorn-rhel-el8.yaml)\n* **Longhorn TAR ->** [s3://rancher-airgap-longhorn-rhel-el8.tar.zst](https://rancher-airgap.s3.amazonaws.com/${GITHUB_REF##*/}/hauler/longhorn/rancher-airgap-longhorn-rhel-el8.tar.zst)\n* **NeuVector YAML ->** [s3://rancher-airgap-neuvector-rhel-el8.yaml](https://rancher-airgap.s3.amazonaws.com/${GITHUB_REF##*/}/hauler/neuvector/rancher-airgap-neuvector-rhel-el8.yaml)\n* **NeuVector TAR ->** [s3://rancher-airgap-neuvector-rhel-el8.tar.zst](https://rancher-airgap.s3.amazonaws.com/${GITHUB_REF##*/}/hauler/neuvector/rancher-airgap-neuvector-rhel-el8.tar.zst)" > RELEASE-NOTES.MD
+          echo -e "# Rancher Airgap Release ${GITHUB_REF##*/}\nLatest Release Notes and Asset URLs. Please review all notes below and ensure to download the correct assets. Please utilize GitHub Issues, Forks, and/or Pull Requests to submit any issues, updates, or fixes! Thank you.\n\n## Upgrade Steps\n* No upgrade steps for this release.\n\n## Breaking Changes\n* No breaking changes for this release.\n\n## Features and Improvements\n* No features or improvements for this release.\n\n## Bug Fixes and Additional Notes\n* No bug fixes or additional notes for this release.\n\n## Release Assets for the Rancher Stack\n\n### Rancher Kubernetes Engine 2 (RKE2)\n* **Hauler YAML ->** [s3://rancher-airgap-rke2.yaml](https://rancher-airgap.s3.amazonaws.com/0.2.1/hauler/rke2/rancher-airgap-rke2.yaml)\n* **TAR ->** [s3://rancher-airgap-rke2.tar.zst](https://rancher-airgap.s3.amazonaws.com/0.2.1/hauler/rke2/rancher-airgap-rke2.tar.zst)\n\n### Rancher Multi-Cluster-Manager (MCM)\n* **Hauler YAML ->** [s3://rancher-airgap-rancher.yaml](https://rancher-airgap.s3.amazonaws.com/0.2.1/hauler/rancher/rancher-airgap-rancher.yaml)\n* **TAR ->** [s3://rancher-airgap-rancher.tar.zst](https://rancher-airgap.s3.amazonaws.com/0.2.1/hauler/rancher/rancher-airgap-rancher.tar.zst)\n\n### Rancher Longhorn (LH)\n* **Hauler YAML ->** [s3://rancher-airgap-longhorn.yaml](https://rancher-airgap.s3.amazonaws.com/0.2.1/hauler/longhorn/rancher-airgap-longhorn.yaml)\n* **TAR ->** [s3://rancher-airgap-longhorn.tar.zst](https://rancher-airgap.s3.amazonaws.com/0.2.1/hauler/longhorn/rancher-airgap-longhorn.tar.zst)\n\n### Rancher NeuVector (NV)\n* **Hauler YAML ->** [s3://rancher-airgap-neuvector.yaml](https://rancher-airgap.s3.amazonaws.com/0.2.1/hauler/neuvector/rancher-airgap-neuvector.yaml)\n* **TAR ->** [s3://rancher-airgap-neuvector.tar.zst](https://rancher-airgap.s3.amazonaws.com/0.2.1/hauler/neuvector/rancher-airgap-neuvector.tar.zst)\n\n\n## Release Assets for Hauler Base (OS)\n\n### Rocky Linux 9.1\n* **Hauler YAML ->** [s3://rancher-airgap-base-rocky-el9.yaml](https://rancher-airgap.s3.amazonaws.com/0.2.1/hauler/base/rancher-airgap-base-rocky-el9.yaml)\n* **TAR ->** [s3://rancher-airgap-base-rocky-el9.tar.zst](https://rancher-airgap.s3.amazonaws.com/0.2.1/hauler/base/rancher-airgap-base-rocky-el9.tar.zst)\n\n### Red Had Enterprise Linux 9.1\n* **Hauler YAML ->** [s3://rancher-airgap-base-rhel-el9.yaml](https://rancher-airgap.s3.amazonaws.com/0.2.1/hauler/base/rancher-airgap-base-rhel-el9.yaml)\n* **TAR ->** [s3://rancher-airgap-base-rhel-el9.tar.zst](https://rancher-airgap.s3.amazonaws.com/0.2.1/hauler/base/rancher-airgap-base-rhel-el9.tar.zst)\n\n### Rocky Linux 8.5\n* **Hauler YAML ->** [s3://rancher-airgap-base-rocky-el8.yaml](https://rancher-airgap.s3.amazonaws.com/0.2.1/hauler/base/rancher-airgap-base-rocky-el8.yaml)\n* **TAR ->** [s3://rancher-airgap-base-rocky-el8.tar.zst](https://rancher-airgap.s3.amazonaws.com/0.2.1/hauler/base/rancher-airgap-base-rocky-el8.tar.zst)\n\n### Red Hat Enterprise Linux 8.5\n* **Hauler YAML ->** [s3://rancher-airgap-base-rhel-el8.yaml](https://rancher-airgap.s3.amazonaws.com/0.2.1/hauler/base/rancher-airgap-base-rhel-el8.yaml)\n* **TAR ->** [s3://rancher-airgap-base-rhel-el8.tar.zst](https://rancher-airgap.s3.amazonaws.com/0.2.1/hauler/base/rancher-airgap-base-rhel-el8.tar.zst)" > RELEASE-NOTES.MD
           echo Previewing Release Notes:
           cat RELEASE-NOTES.MD
 

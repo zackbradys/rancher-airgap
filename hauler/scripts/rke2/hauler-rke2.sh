@@ -1,12 +1,6 @@
 ### Set Variables
 export vRKE2=1.24.15
 
-### Set Platform Variable
-export platform=$(. /etc/os-release && echo "$PLATFORM_ID" | sed "s#platform:##")
-
-### Set OS Release Variable
-export OS=$(. /etc/os-release && echo "$ID"-"$PLATFORM_ID" | sed "s#platform:##")
-
 ### Setup Working Directory
 mkdir -p /opt/rancher/hauler/rke2
 cd /opt/rancher/hauler/rke2
@@ -21,7 +15,7 @@ rke2Images=$(cat rke2-images.txt)
 rm -rf /opt/rancher/hauler/rke2/rke2-images.txt
 
 ### Create Hauler Manifest
-cat << EOF >> /opt/rancher/hauler/rke2/rancher-airgap-rke2-${OS}.yaml
+cat << EOF >> /opt/rancher/hauler/rke2/rancher-airgap-rke2.yaml
 apiVersion: content.hauler.cattle.io/v1alpha1
 kind: Files
 metadata:
@@ -36,8 +30,12 @@ spec:
       name: rke2-sha256sum
     - path: https://github.com/rancher/rke2-packaging/releases/download/v${vRKE2}%2Brke2r1.stable.0/rke2-common-${vRKE2}.rke2r1-0.x86_64.rpm
       name: rke2-common
-    - path: https://github.com/rancher/rke2-selinux/releases/download/v0.14.stable.1/rke2-selinux-0.14-1.${platform}.noarch.rpm
-      name: rke2-selinux
+    - path: https://github.com/rancher/rke2-selinux/releases/download/v0.14.stable.1/rke2-selinux-0.14-1.el9.noarch.rpm
+      name: rke2-selinux-el9
+    - path: https://github.com/rancher/rke2-selinux/releases/download/v0.14.stable.1/rke2-selinux-0.14-1.el8.noarch.rpm
+      name: rke2-selinux-el8
+    - path: https://github.com/rancher/rke2-selinux/releases/download/v0.14.stable.1/rke2-selinux-0.14-1.el7.noarch.rpm
+      name: rke2-selinux-el7
     - path: https://github.com/rancher/rke2/blob/master/install.sh
       name: install.sh
 ---
@@ -51,11 +49,11 @@ ${rke2Images}
 EOF
 
 ### Load Hauler Manifest into Store
-hauler store sync -f rancher-airgap-rke2-${OS}.yaml
+hauler store sync -f rancher-airgap-rke2.yaml
 
 ### Verify Hauler Store Contents
 hauler store info
 
 ### Compress Hauler Store Contents
-hauler store save --filename rancher-airgap-rke2-${OS}.tar.zst
+hauler store save --filename rancher-airgap-rke2.tar.zst
 rm -rf /opt/rancher/hauler/rke2/store

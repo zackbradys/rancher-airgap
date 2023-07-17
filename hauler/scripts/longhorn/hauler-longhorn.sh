@@ -1,9 +1,6 @@
 ### Set Variables
 export vLonghorn=1.5.0
 
-### Set OS Release Variable
-export OS=$(. /etc/os-release && echo "$ID"-"$PLATFORM_ID" | sed "s#platform:##")
-
 ### Setup Working Directory
 mkdir -p /opt/rancher/hauler/longhorn
 cd /opt/rancher/hauler/longhorn
@@ -18,7 +15,7 @@ longhornImages=$(cat longhorn-images.txt)
 rm -rf /opt/rancher/hauler/longhorn/longhorn-images.txt
 
 ### Create Hauler Manifest
-cat << EOF >> /opt/rancher/hauler/longhorn/rancher-airgap-longhorn-${OS}.yaml
+cat << EOF >> /opt/rancher/hauler/longhorn/rancher-airgap-longhorn.yaml
 apiVersion: content.hauler.cattle.io/v1alpha1
 kind: Files
 metadata:
@@ -50,11 +47,11 @@ ${longhornImages}
 EOF
 
 ### Load Hauler Manifest into Store
-hauler store sync -f rancher-airgap-longhorn-${OS}.yaml
+hauler store sync -f rancher-airgap-longhorn.yaml
 
 ### Verify Hauler Store Contents
 hauler store info
 
 ### Compress Hauler Store Contents
-hauler store save --filename rancher-airgap-longhorn-${OS}.tar.zst
+hauler store save --filename rancher-airgap-longhorn.tar.zst
 rm -rf /opt/rancher/hauler/longhorn/store
