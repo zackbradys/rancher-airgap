@@ -26,7 +26,9 @@ fetch -> validate -> save -> | <airgap> | -> validate -> load -> distribute
 
 ## Infrastructure
 
-### Collection and Packaging
+```bash
+Collection and Package -> Across the Airgap -> Loading and Distribution
+```
 
 * [hauler/base](hauler/base) - provides the content manifest for most Operating System Dependencies
   * currently supports Rocky 9.1, RHEL 9.1, Rocky 8.5, RHEL 8.5, and CentOS 7.8
@@ -38,11 +40,6 @@ fetch -> validate -> save -> | <airgap> | -> validate -> load -> distribute
   * currently supports Longhorn 1.5.0
 * [hauler/neuvector](hauler/neuvector) - provides the content manifest for Rancher NeuVector
   * currently supports NeuVector 5.2.0
-
-### Across the Airgap
-
-
-### Loading and Distribution
 
 
 ## RKE2 Configuration
