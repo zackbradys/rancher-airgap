@@ -31,15 +31,15 @@ Collection and Package -> Across the Airgap -> Loading and Distribution
 ```
 
 * [hauler/base](hauler/base/README.md) - provides the content manifest for most Operating System Dependencies
-  * currently supports Rocky 9.1, RHEL 9.1, Rocky 8.5, RHEL 8.5, and CentOS 7.8
+  * currently supports `Rocky 9.1` `RHEL 9.1` `Rocky 8.5` `RHEL 8.5` `CentOS 7.8`
 * [hauler/rke2](hauler/rke2/README.md) - provides the content manifest for Rancher RKE2
-  * currently supports RKE2 v1.24.15
+  * currently supports `RKE2 v1.24.15`
 * [hauler/rancher](hauler/rancher/README.md) - provides the content manifest for the Rancher Multi-Cluster Manager
-  * currently supports Rancher v2.7.5
+  * currently supports `Rancher v2.7.5`
 * [hauler/longhorn](hauler/longhorn/README.md) - provides the content manifest for Rancher Longhorn
-  * currently supports Longhorn v1.5.1
+  * currently supports `Longhorn v1.5.1`
 * [hauler/neuvector](hauler/neuvector/README.md) - provides the content manifest for Rancher NeuVector
-  * currently supports NeuVector v5.2.0
+  * currently supports `NeuVector v5.2.0`
 
 
 ## RKE2 Configuration

@@ -1,5 +1,5 @@
 ### Set Variables
-export vLonghorn=1.5.0
+export vLonghorn=1.5.1
 
 ### Setup Working Directory
 mkdir -p /opt/rancher/hauler/longhorn
