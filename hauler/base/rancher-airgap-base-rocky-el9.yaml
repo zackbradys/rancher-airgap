@@ -1,0 +1,14 @@
+apiVersion: content.hauler.cattle.io/v1alpha1
+kind: Files
+metadata:
+  name: rancher-airgap-files-base
+spec:
+  files:
+    - path: /opt/rancher/hauler/hauler/hauler
+      name: hauler
+    - path: /opt/rancher/hauler/helm/helm
+      name: helm
+    - path: /opt/rancher/hauler/cosign/cosign
+      name: cosign
+    - path: /opt/rancher/hauler/rancher-airgap-packages-rocky-el9.tar.zst
+      name: rancher-airgap-packages-rocky-el9.tar.zst
