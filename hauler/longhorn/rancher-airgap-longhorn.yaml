@@ -5,9 +5,9 @@ metadata:
 spec:
   files:
     - path: https://github.com/zackbradys/code-templates/blob/main/k8s/yamls/longhorn-volume.yaml
-      name: longhorn-volume
+      name: longhorn-volume.yaml
     - path: https://github.com/zackbradys/code-templates/blob/main/k8s/yamls/longhorn-volume-test.yaml
-      name: longhorn-volume-test
+      name: longhorn-volume-test.yaml
 ---
 apiVersion: content.hauler.cattle.io/v1alpha1
 kind: Charts
