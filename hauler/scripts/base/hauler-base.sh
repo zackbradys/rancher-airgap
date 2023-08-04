@@ -71,7 +71,7 @@ spec:
     - path: /opt/rancher/hauler/cosign/cosign
       name: cosign
     - path: /opt/rancher/hauler/rancher-airgap-packages-${OS}.tar.zst
-      name: rancher-airgap-packages
+      name: rancher-airgap-packages-${OS}.tar.zst
 EOF
 
 ### Load Hauler Manifest into Store

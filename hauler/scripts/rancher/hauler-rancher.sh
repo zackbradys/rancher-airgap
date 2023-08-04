@@ -34,9 +34,9 @@ metadata:
 spec:
   files:
     - path: https://github.com/zackbradys/code-templates/blob/main/k8s/yamls/rancher-banner-ufouo.yaml
-      name: rancher-banner-ufouo
+      name: rancher-banner-ufouo.yaml
     - path: https://github.com/zackbradys/code-templates/blob/main/k8s/yamls/rancher-banner-tssci.yaml
-      name: rancher-banner-tssci
+      name: rancher-banner-tssci.yaml
 ---
 apiVersion: content.hauler.cattle.io/v1alpha1
 kind: Charts

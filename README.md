@@ -31,16 +31,25 @@ Collection and Package -> Across the Airgap -> Loading and Distribution
 ```
 
 * [hauler/base](hauler/base/README.md) - provides the content manifest for most Operating System Dependencies
-  * currently supports `Rocky 9.1` `RHEL 9.1` `Rocky 8.5` `RHEL 8.5` `CentOS 7.8`
+  * currently supports and validated: `Rocky 9.1` `RHEL 9.1` `Rocky 8.5` `RHEL 8.5` `CentOS 7.8`
 * [hauler/rke2](hauler/rke2/README.md) - provides the content manifest for Rancher RKE2
-  * currently supports `RKE2 v1.25.11`
+  * currently supports: `RKE2 v1.25.12`
 * [hauler/rancher](hauler/rancher/README.md) - provides the content manifest for the Rancher Multi-Cluster Manager
-  * currently supports `Rancher v2.7.5`
+  * currently supports: `Rancher v2.7.5`
 * [hauler/longhorn](hauler/longhorn/README.md) - provides the content manifest for Rancher Longhorn
-  * currently supports `Longhorn v1.5.1`
+  * currently supports: `Longhorn v1.5.1`
 * [hauler/neuvector](hauler/neuvector/README.md) - provides the content manifest for Rancher NeuVector
-  * currently supports `NeuVector v5.2.0`
+  * currently supports: `NeuVector v5.2.0`
 
+## Hauler Installation
+
+```bash
+### Hauler v0.3.0 (latest)
+### https://github.com/rancherfederal/hauler
+curl -#OL https://github.com/rancherfederal/hauler/releases/download/v0.3.0/hauler_0.3.0_linux_amd64.tar.gz
+tar -xf hauler_0.3.0_linux_amd64.tar.gz
+cp hauler /usr/bin/hauler
+```
 
 ## RKE2 Configuration
 
