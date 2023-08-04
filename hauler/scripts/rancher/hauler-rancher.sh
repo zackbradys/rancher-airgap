@@ -3,6 +3,7 @@ export vRancher=2.7.5
 export vCertManager=1.7.1
 
 ### Setup Working Directory
+rm -rf /opt/rancher/hauler/rancher
 mkdir -p /opt/rancher/hauler/rancher
 cd /opt/rancher/hauler/rancher
 

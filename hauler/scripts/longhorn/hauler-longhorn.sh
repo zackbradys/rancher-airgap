@@ -2,6 +2,7 @@
 export vLonghorn=1.5.1
 
 ### Setup Working Directory
+rm -rf /opt/rancher/hauler/longhorn
 mkdir -p /opt/rancher/hauler/longhorn
 cd /opt/rancher/hauler/longhorn
 

@@ -2,6 +2,7 @@
 export vRKE2=1.25.12
 
 ### Setup Working Directory
+rm -rf /opt/rancher/hauler/rke2
 mkdir -p /opt/rancher/hauler/rke2
 cd /opt/rancher/hauler/rke2
 

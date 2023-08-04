@@ -7,6 +7,7 @@ export vCosign=1.8.0
 export OS=$(. /etc/os-release && echo "$ID"-"$PLATFORM_ID" | sed "s#platform:##")
 
 ## Setup Main Directory
+rm -rf /opt/rancher/hauler
 mkdir -p /opt/rancher/hauler
 
 ## Setup Working Directory
