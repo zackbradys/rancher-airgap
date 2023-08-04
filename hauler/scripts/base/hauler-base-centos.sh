@@ -48,7 +48,7 @@ cd /opt/rancher/hauler/rancher-airgap-packages
 
 ### Download Required Packages
 ### https://github.com/rpm-software-management/createrepo
-repotrack -y git zip zstd tree createrepo container-selinux iptables libnetfilter_conntrack libnfnetlink libnftnl policycoreutils-python-utils cryptsetup iscsi-initiator-utils nfs-utils
+repotrack git zip zstd tree createrepo container-selinux iptables libnetfilter_conntrack libnfnetlink libnftnl policycoreutils-python-utils cryptsetup iscsi-initiator-utils nfs-utils
 
 ### Compile Package List
 ls /opt/rancher/hauler/rancher-airgap-packages > /opt/rancher/hauler/base/rancher-airgap-packages-${OS}.txt
