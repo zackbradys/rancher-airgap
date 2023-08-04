@@ -11,4 +11,4 @@ spec:
     - path: /opt/rancher/hauler/cosign/cosign
       name: cosign
     - path: /opt/rancher/hauler/rancher-airgap-packages-rocky-el9.tar.zst
-      name: rancher-airgap-packages
+      name: rancher-airgap-packages-rocky-el9.tar.zst
