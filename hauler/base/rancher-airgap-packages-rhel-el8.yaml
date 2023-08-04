@@ -181,8 +181,8 @@ ncurses-libs-6.1-9.20180224.el8.x86_64.rpm
 nettle-3.4.1-7.el8.x86_64.rpm
 nfs-utils-2.3.3-59.el8.x86_64.rpm
 openldap-2.4.46-18.el8.x86_64.rpm
-openssh-8.0p1-17.el8_7.x86_64.rpm
-openssh-clients-8.0p1-17.el8_7.x86_64.rpm
+openssh-8.0p1-19.el8_8.x86_64.rpm
+openssh-clients-8.0p1-19.el8_8.x86_64.rpm
 openssl-1.1.1k-9.el8_7.x86_64.rpm
 openssl-libs-1.1.1k-9.el8_7.i686.rpm
 openssl-libs-1.1.1k-9.el8_7.x86_64.rpm
