@@ -2,6 +2,7 @@
 export vNeuVector=2.6.0
 
 ### Setup Working Directory
+rm -rf /opt/rancher/hauler/neuvector
 mkdir -p /opt/rancher/hauler/neuvector
 cd /opt/rancher/hauler/neuvector
 
