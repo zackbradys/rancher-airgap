@@ -22,6 +22,7 @@ jobs:
       - name: Build Rancher Airgap Hauler
         run: |
           sh hauler/scripts/hauler/hauler-hauler.sh
+          mv /opt/rancher/hauler/hauler/hauler hauler/hauler/hauler
           mv /opt/rancher/hauler/rancher-airgap-hauler.tar.zst hauler/hauler/rancher-airgap-hauler.tar.zst
           pwd && ls -la hauler/hauler
           pwd && ls -la hauler/scripts/hauler
@@ -78,7 +79,7 @@ jobs:
           git status
           git config --global user.name "${GITHUB_ACTOR}"
           git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
-          git add *.yaml
+          git add hauler *.yaml
           git commit -a -m "updated rancher airgap assets [github-actions]"
           git push
 

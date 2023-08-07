@@ -1,4 +1,4 @@
-![rancher-long-banner](/images/rgs-banner-rounded.png)
+![rancher-long-banner](images/rgs-banner-rounded.png)
 
 # Rancher Airgap Tool and Guide
 
@@ -25,7 +25,9 @@ fetch -> validate -> save -> | <airgap> | -> validate -> load -> distribute
   * currently supports and validated: `Rocky 9.1` `RHEL 9.1` `Rocky 8.5` `RHEL 8.5` `CentOS 7.8`
 * [hauler/rke2](hauler/rke2/README.md) - provides the content manifest for Rancher RKE2
   * currently supports: `RKE2 v1.25.12`
-* [hauler/rancher](hauler/rancher/README.md) - provides the content manifest for the Rancher Multi-Cluster Manager
+* [hauler/rancher](hauler/rancher/README.md) - provides the content manifest for Cert-Manager
+  * currently supports: `Cert-Manager v1.7.1`
+* [hauler/rancher](hauler/rancher/README.md) - provides the content manifest for Rancher Multi-Cluster Manager
   * currently supports: `Rancher v2.7.5`
 * [hauler/longhorn](hauler/longhorn/README.md) - provides the content manifest for Rancher Longhorn
   * currently supports: `Longhorn v1.5.1`
