@@ -1,34 +1,25 @@
 ![rancher-long-banner](/images/rgs-banner-rounded.png)
 
-# Airgap Deployment of Rancher RKE2, Rancher Manager, Longhorn, and Neuvector
+# Rancher Airgap Tool and Guide
 
-### Table of Contents
-* [Introduction](#introduction)
-* [Infrastructure](#infrastructure)
-  * [Collection and Packaging](#collection-and-packaging)
-  * [Across the Airgap](#across-the-airgap)
-  * [Loading and Distribution](#loading-and-distribution)
-* [RKE2 Configuration](#rke2-configuration)
-* [Longhorn Configuration](#longhorn-configuration)
-* [NeuVector Configuration](#neuvector-configuration)
-* [Final Thoughts](#final-thoughts)
-
-## Introduction
-
-### Welcome to the Rancher Airgap Tool and Guide
+### Welcome to the Rancher Airgap Tool
 Rancher Airgap is a tool built for collecting, packaging, installating Rancher RKE2, Rancher Manager, Longhorn and NeuVector. Specifically engineered, designed, and built for those tricky disconnected environments. **Review the most recent release on the [Releases](https://github.com/zackbradys/rancher-airgap/releases) page!**
 
-We utilize a tool known as [Rancher Federal Hauler](https://github.com/rancherfederal/hauler) to collect, package, and distribute content across the airgap. `Hauler` simplifies the airgap process, by representing assets as content or collections groups to easily fetch and package them with declarative manifests. In this repositry, we generate these manifests and subsequent compress files to ease the burden of collecting all components required the airgap the [Rancher Stack](https://ranchergovernment.com/products)!
+We utilize a project known as [Hauler](https://github.com/rancherfederal/hauler) by [Rancher Government Solutions](https://github.com/rancherfederal) to collect, package, and distribute content across the airgap. `Hauler` simplifies the airgap process, by representing assets as content or collections to easily fetch, store, and package with declarative manifests. In this repositry, we generate these manifests and subsequent compressed files ("stores") to ease the burden of collecting all components required to the airgap the [Rancher Stack](https://ranchergovernment.com/products)!
 
+**High Level Workflow:**
+```bash
+Collection -> Across the Airgap -> Distribution
+```
+
+**Detailed Workflow:**
 ```bash
 fetch -> validate -> save -> | <airgap> | -> validate -> load -> distribute
 ```
 
-## Infrastructure
+**Example Workflow:** [examples/rancherstack.md](examples/rancherstack.md)
 
-```bash
-Collection and Package -> Across the Airgap -> Loading and Distribution
-```
+## Repository Structure
 
 * [hauler/base](hauler/base/README.md) - provides the content manifest for most Operating System Dependencies
   * currently supports and validated: `Rocky 9.1` `RHEL 9.1` `Rocky 8.5` `RHEL 8.5` `CentOS 7.8`
@@ -50,17 +41,3 @@ curl -#OL https://github.com/rancherfederal/hauler/releases/download/v0.3.0/haul
 tar -xf hauler_0.3.0_linux_amd64.tar.gz
 cp hauler /usr/bin/hauler
 ```
-
-## RKE2 Configuration
-
-
-## Rancher Configuration
-
-
-## Longhorn Configuration
-
-
-## NeuVector Configuration
-
-
-## Final Thoughts
