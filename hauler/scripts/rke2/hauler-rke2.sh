@@ -30,13 +30,13 @@ spec:
     - path: https://github.com/rancher/rke2/releases/download/v${vRKE2}%2Brke2r1/sha256sum-amd64.txt
       name: sha256sum-amd64.txt
     - path: https://github.com/rancher/rke2-packaging/releases/download/v${vRKE2}%2Brke2r1.stable.0/rke2-common-${vRKE2}.rke2r1-0.x86_64.rpm
-      name: rke2-common-v${vRKE2}.rpm
+      name: rke2-common-${vRKE2}.rke2r1-0.x86_64.rpm
     - path: https://github.com/rancher/rke2-selinux/releases/download/v0.14.stable.1/rke2-selinux-0.14-1.el9.noarch.rpm
-      name: rke2-selinux-el9.noarch.rpm
+      name: rke2-selinux-0.14-1.el9.noarch.rpm
     - path: https://github.com/rancher/rke2-selinux/releases/download/v0.14.stable.1/rke2-selinux-0.14-1.el8.noarch.rpm
-      name: rke2-selinux-el8.noarch.rpm
+      name: rke2-selinux-0.14-1.el8.noarch.rpm
     - path: https://github.com/rancher/rke2-selinux/releases/download/v0.14.stable.1/rke2-selinux-0.14-1.el7.noarch.rpm
-      name: rke2-selinux-el7.noarch.rpm
+      name: rke2-selinux-0.14-1.el7.noarch.rpm
     - path: https://github.com/rancher/rke2/blob/master/install.sh
       name: install.sh
 ---

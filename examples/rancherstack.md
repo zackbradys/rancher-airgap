@@ -1,11 +1,9 @@
 ## Internet Connected Server
-```bash
-### Set Variables
-export vRancherAirgap=0.6.0
-export date=date
-```
 
 ```bash
+### Set Variables
+export vRancherAirgap=0.6.1
+
 ### Fetch Hauler TARs
 mkdir -p /opt/rancher/hauler
 cd /opt/rancher/hauler
@@ -23,7 +21,7 @@ tar -czvf /opt/rancher/hauler/rancher-airgap-$(date +"%Y%d%m").tar.zst /opt/ranc
 
 ---
 
-**MOVE *SINGLE TARBALL* ACROSS THE AIRGAP**
+**MOVE SINGLE TARBALL ACROSS THE AIRGAP**
 
 ---
 
