@@ -2,7 +2,7 @@
 
 ## Collection and Packaging
 
-### Rancher Longhorn v1.5.0
+### Hauler (by Rancher Government Solutions)
 
 [hauler/hauler/hauler](https://rancher-airgap.s3.amazonaws.com/0.6.0/hauler/hauler/hauler) - provides the binary for Hauler.
 
