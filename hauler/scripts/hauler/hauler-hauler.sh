@@ -12,4 +12,4 @@ curl -#OL https://github.com/rancherfederal/hauler/releases/download/v${vHauler}
 tar -xf hauler_${vHauler}_linux_amd64.tar.gz
 
 ### Compress Hauler
-tar -czvf /opt/rancher/hauler/rancher-airgap-hauler.tar.zst /opt/rancher/hauler/hauler
+tar -czvf /opt/rancher/hauler/rancher-airgap-hauler2.tar.zst .
