@@ -1,8 +1,10 @@
+WIP WIP WIP
+
 ## Internet Connected Server
 
 ```bash
 ### Set Variables
-export vRancherAirgap=0.6.1
+export vRancherAirgap=0.6.2
 
 ### Fetch Individual Hauler TARs
 mkdir -p /opt/rancher/hauler
@@ -39,3 +41,5 @@ hauler store load rancher-airgap-base-rocky-el9.tar.zst rancher-airgap-rke2.tar.
 ### Verify Hauler Store
 hauler store info
 ```
+
+WIP WIP WIP
