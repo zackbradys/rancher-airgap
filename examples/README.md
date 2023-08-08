@@ -4,7 +4,7 @@ WIP WIP WIP
 
 ```bash
 ### Set Variables
-export vRancherAirgap=0.6.2
+export vRancherAirgap=0.6.3
 
 ### Fetch Individual Hauler TARs
 mkdir -p /opt/rancher/hauler
