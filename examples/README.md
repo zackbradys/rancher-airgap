@@ -4,7 +4,7 @@ Complete the following commands on the Internet Connected Server. For the initia
 
 ```bash
 ### Set Variables
-export vRancherAirgap=0.7.2
+export vRancherAirgap=0.7.3
 
 ### Fetch Individual Hauler TARs
 mkdir -p /opt/rancher/hauler
@@ -65,7 +65,7 @@ hauler serve registry -r registry
 ### Configure and Install Rancher RKE2
 ```bash
 ### Set Variables
-export vRancherAirgap=0.7.2
+export vRancherAirgap=0.7.3
 export vRKE2=1.25.12
 export vPlatform=el9
 export IP=0.0.0.0
