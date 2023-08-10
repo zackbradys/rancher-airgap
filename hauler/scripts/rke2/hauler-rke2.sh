@@ -37,7 +37,7 @@ spec:
       name: rke2-selinux-0.14-1.el8.noarch.rpm
     - path: https://github.com/rancher/rke2-selinux/releases/download/v0.14.stable.1/rke2-selinux-0.14-1.el7.noarch.rpm
       name: rke2-selinux-0.14-1.el7.noarch.rpm
-    - path: https://github.com/rancher/rke2/blob/master/install.sh
+    - path: https://raw.githubusercontent.com/rancher/rke2/master/install.sh
       name: install.sh
 ---
 apiVersion: content.hauler.cattle.io/v1alpha1
