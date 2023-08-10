@@ -4,7 +4,7 @@ Complete the following commands on the Internet Connected Server. For the initia
 
 ```bash
 ### Set Variables
-export vRancherAirgap=0.7.0
+export vRancherAirgap=0.7.1
 
 ### Fetch Individual Hauler TARs
 mkdir -p /opt/rancher/hauler
@@ -44,7 +44,7 @@ cd /opt/rancher/hauler
 
 ### Untar Hauler
 tar -xf /opt/rancher/hauler/rancher-airgap-hauler.tar.zst
-rm -rf rancher-airgap-hauler.tar.zst && cp hauler /usr/bin/hauler
+rm -rf README.md hauler_0.3.0_linux_amd64.tar.gz && mv hauler /usr/bin/hauler
 
 ### Verify Hauler Store
 hauler store info
@@ -59,7 +59,7 @@ hauler store info
 hauler store serve
 
 ### Serve Hauler Registry (serves the oci compliant registry)
-hauler server registry -r registry
+hauler serve registry -r registry
 
 ### Verify Registry Contents
 curl -X GET localhost:5000/v2/_catalog
