@@ -27,6 +27,14 @@ jobs:
           pwd && ls -la hauler/hauler
           pwd && ls -la hauler/scripts/hauler
 
+      - name: Build Rancher Airgap Helm
+        run: |
+          sh hauler/scripts/helm/hauler-helm.sh
+          mv /opt/rancher/hauler/helm/helm hauler/helm/helm
+          mv /opt/rancher/hauler/rancher-airgap-helm.tar.zst hauler/helm/rancher-airgap-helm.tar.zst
+          pwd && ls -la hauler/helm
+          pwd && ls -la hauler/scripts/helm
+
       - name: Build Rancher Airgap RKE2
         run: |
           sh hauler/scripts/rke2/hauler-rke2.sh

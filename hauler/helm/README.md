@@ -1,10 +1,10 @@
-# Hauler
+# Helm
 
 ## Collection and Packaging
 
-### Hauler (by Rancher Government Solutions)
+### Helm (by Cloud Native Computing Foundation)
 
-[hauler/hauler/hauler](https://rancher-airgap.s3.amazonaws.com/0.8.0/hauler/hauler/hauler) - provides the binary for Hauler.
+[hauler/helm/helm](https://rancher-airgap.s3.amazonaws.com/0.8.0/hauler/helm/helm) - provides the binary for Helm.
 
 **Note:** The [Releases](https://github.com/zackbradys/rancher-airgap/releases) page contain the most up-to-date assets.
 
