@@ -11,6 +11,7 @@ mkdir -p /opt/rancher/hauler
 cd /opt/rancher/hauler
 
 curl -#OL https://rancher-airgap.s3.amazonaws.com/${vRancherAirgap}/hauler/hauler/rancher-airgap-hauler.tar.zst
+curl -#OL https://rancher-airgap.s3.amazonaws.com/${vRancherAirgap}/hauler/helm/rancher-airgap-helm.tar.zst
 curl -#OL https://rancher-airgap.s3.amazonaws.com/${vRancherAirgap}/hauler/rke2/rancher-airgap-rke2.tar.zst
 curl -#OL https://rancher-airgap.s3.amazonaws.com/${vRancherAirgap}/hauler/rancher/rancher-airgap-rancher.tar.zst
 curl -#OL https://rancher-airgap.s3.amazonaws.com/${vRancherAirgap}/hauler/longhorn/rancher-airgap-longhorn.tar.zst
@@ -42,9 +43,13 @@ echo -e "[keyfile]\nunmanaged-devices=interface-name:cali*;interface-name:flanne
 mkdir -p /opt/rancher/hauler
 cd /opt/rancher/hauler
 
-### Untar Hauler
+### Untar and Install Hauler
 tar -xf /opt/rancher/hauler/rancher-airgap-hauler.tar.zst
 rm -rf README.md hauler_0.3.0_linux_amd64.tar.gz && mv hauler /usr/bin/hauler
+
+### Untar and Install Helm
+tar -xf /opt/rancher/hauler/rancher-airgap-helm.tar.zst
+rm -rf README.md LICENSE helm-v3.12.0-linux-amd64.tar.gz && mv helm /usr/bin/helm
 
 ### Import Hauler TARs (will take a minute)
 hauler store load rancher-airgap-rke2.tar.zst rancher-airgap-rancher.tar.zst rancher-airgap-longhorn.tar.zst rancher-airgap-neuvector.tar.zst
@@ -52,7 +57,7 @@ hauler store load rancher-airgap-rke2.tar.zst rancher-airgap-rancher.tar.zst ran
 ### Verify Hauler Store
 hauler store info
 
-### Create Hauler Registry Directory Structure (will show errors)
+### Create Hauler Registry Directory Structure (will take a minute and show errors)
 hauler store serve
 
 ### Serve Hauler Registry (serves the oci compliant registry)
@@ -66,7 +71,7 @@ hauler serve registry -r registry
 ### Set Variables
 export vRKE2=1.25.12
 export vPlatform=el9
-export IP=3.89.28.28
+export IP=0.0.0.0
 
 ### Verify Registry Contents
 ### Replace $IP with Server IP
