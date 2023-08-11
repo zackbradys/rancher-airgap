@@ -46,9 +46,6 @@ cd /opt/rancher/hauler
 tar -xf /opt/rancher/hauler/rancher-airgap-hauler.tar.zst
 rm -rf README.md hauler_0.3.0_linux_amd64.tar.gz && mv hauler /usr/bin/hauler
 
-### Verify Hauler Store
-hauler store info
-
 ### Import Hauler TARs (will take a minute)
 hauler store load rancher-airgap-rke2.tar.zst rancher-airgap-rancher.tar.zst rancher-airgap-longhorn.tar.zst rancher-airgap-neuvector.tar.zst
 
@@ -62,13 +59,14 @@ hauler store serve
 hauler serve registry -r registry
 ```
 
-### Configure and Install Rancher RKE2
+### Configure and Install Rancher RKE2 Nodes
+
+#### Rancher RKE2 Server Node (Control Plane)
 ```bash
 ### Set Variables
-export vRancherAirgap=0.7.3
 export vRKE2=1.25.12
 export vPlatform=el9
-export IP=0.0.0.0
+export IP=3.89.28.28
 
 ### Verify Registry Contents
 ### Replace $IP with Server IP
@@ -120,6 +118,13 @@ EOF
 
 ### Source BASHRC
 source ~/.bashrc
+
+### Verify Node
+kubectl get nodes -o wide
 ```
 
+#### Rancher RKE2 Agent Nodes (Workers)
+```bash
+
+```
 WIP WIP WIP
