@@ -17,7 +17,7 @@ Collection -> Across the Airgap -> Distribution
 fetch -> validate -> save -> | <airgap> | -> validate -> load -> distribute
 ```
 
-**Example Workflow:** [examples/rancherstack.md](examples/rancherstack.md)
+**Example Workflows:** [examples folder](examples/)
 
 ## Repository Structure
 
@@ -31,6 +31,8 @@ fetch -> validate -> save -> | <airgap> | -> validate -> load -> distribute
   * currently supports: `Longhorn v1.5.1`
 * [hauler/neuvector](hauler/neuvector/README.md) - provides the content manifest for Rancher NeuVector
   * currently supports: `NeuVector v5.2.0`
+
+**Note:** We are currently planning and working towards supporting every major supported version of every product.
 
 ## Hauler Installation
 
