@@ -29,9 +29,9 @@ tar -czvf /opt/rancher/hauler/rancher-airgap.tar.zst .
 
 ## Disconnected Build Server
 
-Complete the following commands on the Disconnected Server. We recommend you do **not** use this server as one of the nodes in the cluster.
+Complete the following commands on the Disconnected Server. We recommend to **not** use this server in the cluster.
 
-**Note:** There are many ways to airgap packages, most customers use existing methodologies for it. If not, we have a example over here --> [os packages example readme](os-packages-example.md).
+**Note:** There are many ways to airgap packages, most customers use existing processes or methodologies for it. If you do not currently have a process or method... we have a example over here --> [os packages example readme](os-packages-example.md).
 
 ### Setup Server with Hauler
 ```bash
@@ -179,4 +179,3 @@ EOF
 ### Enable/Start RKE2 Agent
 systemctl enable --now rke2-agent.service
 ```
-WIP WIP WIP
