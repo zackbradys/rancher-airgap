@@ -68,7 +68,7 @@ Complete the following commands on the **first** node in the cluster. You will n
 
 ```bash
 ### Set Variables
-export vRKE2=1.25.12
+export vRKE2=1.25.13
 export vPlatform=el9
 export IP=0.0.0.0
 
@@ -138,7 +138,7 @@ Complete the following commands on the **second** and **third** nodes in the clu
 
 ```bash
 ### Set Variables
-export vRKE2=1.25.12
+export vRKE2=1.25.13
 export vPlatform=el9
 export IP=0.0.0.0
 

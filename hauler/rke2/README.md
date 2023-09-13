@@ -2,7 +2,7 @@
 
 ## Collection and Packaging
 
-### Rancher RKE2 v1.25.12
+### Rancher RKE2 v1.25.13
 
 [hauler/rke2/rancher-airgap-rke2.yaml](https://rancher-airgap.s3.amazonaws.com/v1.1.0/hauler/rke2/rancher-airgap-rke2.yaml) - provides the content manifest for the assets.
 

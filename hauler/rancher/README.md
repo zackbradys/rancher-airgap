@@ -2,7 +2,7 @@
 
 ## Collection and Packaging
 
-### Rancher Multi-Cluster Manager v2.7.5
+### Rancher Multi-Cluster Manager v2.7.6
 
 **Cert-Manager v1.7.1:** Included in the Rancher Multi-Cluster Manager content and assets.
 
