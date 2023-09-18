@@ -23,10 +23,10 @@ metadata:
   name: rancher-airgap-files-longhorn
 spec:
   files:
-    - path: https://raw.githubusercontent.com/zackbradys/code-templates/main/k8s/yamls/longhorn-volume.yaml
-      name: longhorn-volume.yaml
-    - path: https://raw.githubusercontent.com/zackbradys/code-templates/main/k8s/yamls/longhorn-volume-test.yaml
-      name: longhorn-volume-test.yaml
+    - path: https://raw.githubusercontent.com/zackbradys/code-templates/main/k8s/yamls/longhorn-encrypted-sc.yaml
+      name: longhorn-encrypted-sc.yaml
+    - path: https://github.com/zackbradys/code-templates/blob/main/k8s/yamls/longhorn-encrypted-volume.yaml
+      name: longhorn-encrypted-volume.yaml
 ---
 apiVersion: content.hauler.cattle.io/v1alpha1
 kind: Charts
