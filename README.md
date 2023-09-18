@@ -3,9 +3,9 @@
 # Rancher Airgap Guide
 
 ### Welcome to the Rancher Airgap Guide
-Rancher Airgap is a framework and guide built for collecting, packaging, installating Rancher RKE2, Rancher Manager, Longhorn and NeuVector. Specifically engineered, designed, and built for those tricky disconnected environments. **Review the most recent release on the [Releases](https://github.com/zackbradys/rancher-airgap/releases) page!**
+Rancher Airgap is a framework and guide built for collecting, packaging, distributing, and installing the Rancher Product Stack in airgapped environments. Such as RKE2, Rancher Manager, Longhorn and NeuVector.
 
-We utilize the [Hauler](https://github.com/rancherfederal/hauler) project by [Rancher Government Solutions](https://github.com/rancherfederal) to collect, package, and distribute content. `Hauler` simplifies the airgap process, by representing assets as content or collections and allows users to easily fetch, store, and package with declarative manifests. In this repositry, we generate these manifests and subsequent compressed tars, aka `stores`, to simplify the airgap process and the burden of collecting all components required to the airgap the [Rancher Product Stack](https://ranchergovernment.com/products).
+We utilize the [Hauler](https://github.com/rancherfederal/hauler) project by [Rancher Government Solutions](https://github.com/rancherfederal) to collect, package, and distribute assets. `Hauler` simplifies the airgap process, by representing assets as content and collections and allows users to easily fetch, store, package, and distribute with declarative manifests or the command line. In this repositry, we generate these manifests and subsequent compressed archives aka `stores` for the Rancher Product Stack. Review the most recent release on the **[releases](https://github.com/zackbradys/rancher-airgap/releases)** page or review one of the **[example uses!](examples)**
 
 **High Level Workflow:**
 ```bash
@@ -17,12 +17,10 @@ Collection -> Across the Airgap -> Distribution
 fetch -> validate -> save -> | <airgap> | -> validate -> load -> distribute
 ```
 
-**Example Workflows:** [examples folder](examples/)
-
 ## Repository Structure
 
-### Products
-* [hauler/rke2](hauler/rke2/README.md) - provides the content manifest for Rancher RKE2
+### Core Components
+* [hauler/rke2](hauler/rke2/README.md) - provides the content manifest for Rancher Kubernetes (RKE2)
   * currently supports: `RKE2 v1.25.13`
 * [hauler/rancher](hauler/rancher/README.md) - provides the content manifest for Cert-Manager
   * currently supports: `Cert-Manager v1.7.1`
@@ -39,10 +37,9 @@ fetch -> validate -> save -> | <airgap> | -> validate -> load -> distribute
 * [hauler/helm](hauler/helm/README.md) - provides the content manifest for Helm
   * currently supports: `Helm v3.12.3`
 
-**Note:** We are currently planning and working towards supporting every major supported version of our products. We will continue to update to the latest until we implement previous major verions.
+**Note:** We are currently planning and working towards supporting every major version of our products. We will continue to update to the latest until we implement previous major verions.
 
 ## Hauler Installation
-
 ```bash
 ### Hauler v0.3.0 (latest)
 ### https://github.com/rancherfederal/hauler

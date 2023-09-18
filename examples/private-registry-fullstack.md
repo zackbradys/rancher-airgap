@@ -62,7 +62,7 @@ hauler serve registry -r registry
 
 ### Rancher RKE2 Nodes
 
-#### Rancher RKE2 Server Node (Control Plane)
+#### RKE2 Server Node (Control Plane Node)
 
 Complete the following commands on the **first** node in the cluster. You will need network connectivity to the Disconnected Build Server.
 
@@ -132,7 +132,7 @@ source ~/.bashrc
 kubectl get nodes
 ```
 
-#### Rancher RKE2 Agent Nodes (Workers)
+#### RKE2 Agent Nodes (Worker Nodes)
 
 Complete the following commands on the **second** and **third** nodes in the cluster. You will need network connectivity to the Disconnected Build Server.
 
