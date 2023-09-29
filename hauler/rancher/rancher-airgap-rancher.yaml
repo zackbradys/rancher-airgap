@@ -357,7 +357,7 @@ spec:
     - name: rancher/mirrored-grafana-grafana:9.1.5
     - name: rancher/mirrored-idealista-prom2teams:3.2.2
     - name: rancher/mirrored-idealista-prom2teams:4.2.1
-    - name: rancher/mirrored-ingress-nginx-kube-webhook-certgen:v1.1.1
+    - name: rancher/mirrored-ingress-nginx-kube-webhook-certgen:v1.1.2
     - name: rancher/mirrored-ingress-nginx-kube-webhook-certgen:v1.3.0
     - name: rancher/mirrored-ingress-nginx-kube-webhook-certgen:v20230312-helm-chart-4.5.2-28-g66a760794
     - name: rancher/mirrored-istio-install-cni:1.17.2-distroless
