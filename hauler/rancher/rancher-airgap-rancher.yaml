@@ -20,7 +20,7 @@ spec:
       version: 1.7.1
     - name: rancher
       repoURL: https://releases.rancher.com/server-charts/latest
-      version: 2.7.6
+      version: 2.7.7
 ---
 apiVersion: content.hauler.cattle.io/v1alpha1
 kind: Images
@@ -32,8 +32,8 @@ spec:
     - name: quay.io/jetstack/cert-manager-controller:v1.7.1
     - name: quay.io/jetstack/cert-manager-webhook:v1.7.1
     - name: quay.io/jetstack/cert-manager-ctl:v1.7.1
-    - name: rancher/aks-operator:v1.1.2
-    - name: rancher/backup-restore-operator:v3.1.1
+    - name: rancher/aks-operator:v1.1.3
+    - name: rancher/backup-restore-operator:v3.1.2
     - name: rancher/calico-cni:v3.22.5-rancher1
     - name: rancher/calico-cni:v3.24.1-rancher1
     - name: rancher/calico-cni:v3.25.0-rancher1
@@ -41,15 +41,15 @@ spec:
     - name: rancher/coreos-kube-state-metrics:v1.9.7
     - name: rancher/coreos-prometheus-config-reloader:v0.38.1
     - name: rancher/coreos-prometheus-operator:v0.38.1
-    - name: rancher/eks-operator:v1.2.0
+    - name: rancher/eks-operator:v1.2.2
     - name: rancher/externalip-webhook:v1.0.1
     - name: rancher/flannel-cni:v0.3.0-rancher6
     - name: rancher/flannel-cni:v0.3.0-rancher7
     - name: rancher/flannel-cni:v0.3.0-rancher8
-    - name: rancher/fleet-agent:v0.7.1
-    - name: rancher/fleet:v0.7.1
-    - name: rancher/gitjob:v0.1.54
-    - name: rancher/gke-operator:v1.1.5
+    - name: rancher/fleet-agent:v0.8.0
+    - name: rancher/fleet:v0.8.0
+    - name: rancher/gitjob:v0.1.76
+    - name: rancher/gke-operator:v1.1.6
     - name: rancher/grafana-grafana:7.1.5
     - name: rancher/hardened-calico:v3.22.2-build20220509
     - name: rancher/hardened-calico:v3.24.1-build20221011
@@ -57,6 +57,7 @@ spec:
     - name: rancher/hardened-calico:v3.25.0-build20230209
     - name: rancher/hardened-calico:v3.25.1-build20230512
     - name: rancher/hardened-calico:v3.25.1-build20230607
+    - name: rancher/hardened-calico:v3.26.1-build20230802
     - name: rancher/hardened-cluster-autoscaler:v1.8.5-build20211119
     - name: rancher/hardened-cluster-autoscaler:v1.8.5-build20221011
     - name: rancher/hardened-cluster-autoscaler:v1.8.6-build20230406
@@ -72,6 +73,7 @@ spec:
     - name: rancher/hardened-etcd:v3.5.4-k3s1-build20220504
     - name: rancher/hardened-etcd:v3.5.4-k3s1-build20221011
     - name: rancher/hardened-etcd:v3.5.7-k3s1-build20230406
+    - name: rancher/hardened-etcd:v3.5.9-k3s1-build20230802
     - name: rancher/hardened-flannel:v0.17.0-build20220317
     - name: rancher/hardened-flannel:v0.19.1-build20221011
     - name: rancher/hardened-flannel:v0.20.2-build20221201
@@ -79,6 +81,7 @@ spec:
     - name: rancher/hardened-flannel:v0.21.3-build20230308
     - name: rancher/hardened-flannel:v0.22.0-build20230609
     - name: rancher/hardened-flannel:v0.22.0-build20230612
+    - name: rancher/hardened-flannel:v0.22.1-build20230802
     - name: rancher/hardened-ib-sriov-cni:v1.0.2-build20220419
     - name: rancher/hardened-ib-sriov-cni:v1.0.2-build20221014
     - name: rancher/hardened-k8s-metrics-server:v0.5.0-build20211119
@@ -97,6 +100,7 @@ spec:
     - name: rancher/hardened-kubernetes:v1.24.14-rke2r1-build20230518
     - name: rancher/hardened-kubernetes:v1.24.15-rke2r1-build20230614
     - name: rancher/hardened-kubernetes:v1.24.16-rke2r1-build20230719
+    - name: rancher/hardened-kubernetes:v1.24.17-rke2r1-build20230824
     - name: rancher/hardened-kubernetes:v1.24.4-rke2r1-build20220817
     - name: rancher/hardened-kubernetes:v1.24.7-rke2r1-build20221013
     - name: rancher/hardened-kubernetes:v1.24.8-rke2r1-build20221110
@@ -104,16 +108,19 @@ spec:
     - name: rancher/hardened-kubernetes:v1.25.10-rke2r1-build20230518
     - name: rancher/hardened-kubernetes:v1.25.11-rke2r1-build20230614
     - name: rancher/hardened-kubernetes:v1.25.12-rke2r1-build20230719
+    - name: rancher/hardened-kubernetes:v1.25.13-rke2r1-build20230824
     - name: rancher/hardened-kubernetes:v1.25.7-rke2r1-build20230228
     - name: rancher/hardened-kubernetes:v1.25.9-rke2r1-build20230412
     - name: rancher/hardened-kubernetes:v1.26.5-rke2r1-build20230518
     - name: rancher/hardened-kubernetes:v1.26.6-rke2r1-build20230614
     - name: rancher/hardened-kubernetes:v1.26.7-rke2r1-build20230719
+    - name: rancher/hardened-kubernetes:v1.26.8-rke2r1-build20230824
     - name: rancher/hardened-multus-cni:v3.8-build20211104
     - name: rancher/hardened-multus-cni:v3.8-build20221011
     - name: rancher/hardened-multus-cni:v3.9-build20221028
     - name: rancher/hardened-multus-cni:v3.9.3-build20230109
     - name: rancher/hardened-multus-cni:v4.0.2-build20230707
+    - name: rancher/hardened-multus-cni:v4.0.2-build20230811
     - name: rancher/hardened-node-feature-discovery:v0.13.2-build20230605
     - name: rancher/hardened-sriov-cni:v2.6.2-build20220419
     - name: rancher/hardened-sriov-cni:v2.6.3-build20221014
@@ -131,6 +138,7 @@ spec:
     - name: rancher/hardened-whereabouts:v0.5.3-build20221027
     - name: rancher/hardened-whereabouts:v0.6-build20230109
     - name: rancher/hardened-whereabouts:v0.6.1-build20230330
+    - name: rancher/hardened-whereabouts:v0.6.2-build20230717
     - name: rancher/harvester-cloud-provider:v0.1.4
     - name: rancher/harvester-cloud-provider:v0.1.5
     - name: rancher/harvester-cloud-provider:v0.2.0
@@ -139,10 +147,14 @@ spec:
     - name: rancher/harvester-csi-driver:v0.1.5
     - name: rancher/helm-project-operator:v0.2.1
     - name: rancher/hyperkube:v1.23.16-rancher2
-    - name: rancher/hyperkube:v1.24.16-rancher1
-    - name: rancher/hyperkube:v1.25.12-rancher1
-    - name: rancher/hyperkube:v1.26.7-rancher1
+    - name: rancher/hyperkube:v1.24.17-rancher1
+    - name: rancher/hyperkube:v1.25.13-rancher1
+    - name: rancher/hyperkube:v1.26.8-rancher1
+    - name: rancher/istio-installer:1.14.3-rancher1
+    - name: rancher/istio-installer:1.15.3-rancher1
+    - name: rancher/istio-installer:1.16.3-rancher1
     - name: rancher/istio-installer:1.17.2-rancher1
+    - name: rancher/istio-installer:1.18.2-rancher1
     - name: rancher/istio-kubectl:1.5.10
     - name: rancher/jimmidyson-configmap-reload:v0.3.0
     - name: rancher/k3s-upgrade:v1.23.10-k3s1
@@ -157,6 +169,7 @@ spec:
     - name: rancher/k3s-upgrade:v1.24.14-k3s1
     - name: rancher/k3s-upgrade:v1.24.15-k3s1
     - name: rancher/k3s-upgrade:v1.24.16-k3s1
+    - name: rancher/k3s-upgrade:v1.24.17-k3s1
     - name: rancher/k3s-upgrade:v1.24.4-k3s1
     - name: rancher/k3s-upgrade:v1.24.7-k3s1
     - name: rancher/k3s-upgrade:v1.24.8-k3s1
@@ -164,28 +177,31 @@ spec:
     - name: rancher/k3s-upgrade:v1.25.10-k3s1
     - name: rancher/k3s-upgrade:v1.25.11-k3s1
     - name: rancher/k3s-upgrade:v1.25.12-k3s1
+    - name: rancher/k3s-upgrade:v1.25.13-k3s1
     - name: rancher/k3s-upgrade:v1.25.7-k3s1
     - name: rancher/k3s-upgrade:v1.25.9-k3s1
     - name: rancher/k3s-upgrade:v1.26.5-k3s1
     - name: rancher/k3s-upgrade:v1.26.6-k3s1
     - name: rancher/k3s-upgrade:v1.26.7-k3s1
+    - name: rancher/k3s-upgrade:v1.26.8-k3s1
     - name: rancher/klipper-helm:v0.7.0-build20220315
     - name: rancher/klipper-helm:v0.7.3-build20220613
     - name: rancher/klipper-helm:v0.7.4-build20221121
     - name: rancher/klipper-helm:v0.7.6-build20230223
     - name: rancher/klipper-helm:v0.7.7-build20230403
     - name: rancher/klipper-helm:v0.8.0-build20230510
+    - name: rancher/klipper-helm:v0.8.2-build20230815
     - name: rancher/klipper-lb:v0.3.5
     - name: rancher/klipper-lb:v0.4.0
     - name: rancher/klipper-lb:v0.4.3
     - name: rancher/klipper-lb:v0.4.4
-    - name: rancher/kube-api-auth:v0.1.8
+    - name: rancher/kube-api-auth:v0.2.0
     - name: rancher/kubectl:v1.20.2
     - name: rancher/kubectl:v1.21.5
     - name: rancher/kubectl:v1.21.9
     - name: rancher/kubectl:v1.22.6
     - name: rancher/kubectl:v1.23.3
-    - name: rancher/kubectl:v1.26.3
+    - name: rancher/kubectl:v1.28.1
     - name: rancher/library-nginx:1.19.2-alpine
     - name: rancher/local-path-provisioner:v0.0.21
     - name: rancher/local-path-provisioner:v0.0.23
@@ -194,7 +210,7 @@ spec:
     - name: rancher/longhornio-csi-node-driver-registrar:v2.3.0
     - name: rancher/longhornio-csi-provisioner:v2.1.2
     - name: rancher/longhornio-csi-resizer:v1.2.0
-    - name: rancher/machine:v0.15.0-rancher100
+    - name: rancher/machine:v0.15.0-rancher104
     - name: rancher/mirrored-amazon-aws-cli:2.9.14
     - name: rancher/mirrored-appscode-kubed:v0.13.2
     - name: rancher/mirrored-banzaicloud-fluentd:v1.14.6-alpine-5
@@ -246,6 +262,7 @@ spec:
     - name: rancher/mirrored-calico-typha:v3.25.0
     - name: rancher/mirrored-calico-typha:v3.26.1
     - name: rancher/mirrored-cilium-certgen:v0.1.8
+    - name: rancher/mirrored-cilium-cilium-envoy:v1.25.9-f039e2bd380b7eef2f2feea5750676bb36133699
     - name: rancher/mirrored-cilium-cilium-etcd-operator:v2.0.7
     - name: rancher/mirrored-cilium-cilium:v1.12.0
     - name: rancher/mirrored-cilium-cilium:v1.12.1
@@ -254,20 +271,26 @@ spec:
     - name: rancher/mirrored-cilium-cilium:v1.12.5
     - name: rancher/mirrored-cilium-cilium:v1.13.0
     - name: rancher/mirrored-cilium-cilium:v1.13.2
+    - name: rancher/mirrored-cilium-cilium:v1.14.0
     - name: rancher/mirrored-cilium-clustermesh-apiserver:v1.12.4
     - name: rancher/mirrored-cilium-clustermesh-apiserver:v1.12.5
     - name: rancher/mirrored-cilium-clustermesh-apiserver:v1.13.0
     - name: rancher/mirrored-cilium-clustermesh-apiserver:v1.13.2
+    - name: rancher/mirrored-cilium-clustermesh-apiserver:v1.14.0
     - name: rancher/mirrored-cilium-hubble-relay:v1.12.4
     - name: rancher/mirrored-cilium-hubble-relay:v1.12.5
     - name: rancher/mirrored-cilium-hubble-relay:v1.13.0
     - name: rancher/mirrored-cilium-hubble-relay:v1.13.2
+    - name: rancher/mirrored-cilium-hubble-relay:v1.14.0
     - name: rancher/mirrored-cilium-hubble-ui-backend:v0.10.0
     - name: rancher/mirrored-cilium-hubble-ui-backend:v0.11.0
+    - name: rancher/mirrored-cilium-hubble-ui-backend:v0.12.0
     - name: rancher/mirrored-cilium-hubble-ui-backend:v0.9.2
     - name: rancher/mirrored-cilium-hubble-ui:v0.10.0
     - name: rancher/mirrored-cilium-hubble-ui:v0.11.0
+    - name: rancher/mirrored-cilium-hubble-ui:v0.12.0
     - name: rancher/mirrored-cilium-hubble-ui:v0.9.2
+    - name: rancher/mirrored-cilium-kvstoremesh:v1.14.0
     - name: rancher/mirrored-cilium-operator-aws:v1.12.0
     - name: rancher/mirrored-cilium-operator-aws:v1.12.1
     - name: rancher/mirrored-cilium-operator-aws:v1.12.3
@@ -275,6 +298,7 @@ spec:
     - name: rancher/mirrored-cilium-operator-aws:v1.12.5
     - name: rancher/mirrored-cilium-operator-aws:v1.13.0
     - name: rancher/mirrored-cilium-operator-aws:v1.13.2
+    - name: rancher/mirrored-cilium-operator-aws:v1.14.0
     - name: rancher/mirrored-cilium-operator-azure:v1.12.0
     - name: rancher/mirrored-cilium-operator-azure:v1.12.1
     - name: rancher/mirrored-cilium-operator-azure:v1.12.3
@@ -282,6 +306,7 @@ spec:
     - name: rancher/mirrored-cilium-operator-azure:v1.12.5
     - name: rancher/mirrored-cilium-operator-azure:v1.13.0
     - name: rancher/mirrored-cilium-operator-azure:v1.13.2
+    - name: rancher/mirrored-cilium-operator-azure:v1.14.0
     - name: rancher/mirrored-cilium-operator-generic:v1.12.0
     - name: rancher/mirrored-cilium-operator-generic:v1.12.1
     - name: rancher/mirrored-cilium-operator-generic:v1.12.3
@@ -289,6 +314,7 @@ spec:
     - name: rancher/mirrored-cilium-operator-generic:v1.12.5
     - name: rancher/mirrored-cilium-operator-generic:v1.13.0
     - name: rancher/mirrored-cilium-operator-generic:v1.13.2
+    - name: rancher/mirrored-cilium-operator-generic:v1.14.0
     - name: rancher/mirrored-cilium-startup-script:d69851597ea019af980891a4628fb36b7880ec26
     - name: rancher/mirrored-cloud-provider-vsphere-cpi-release-manager:v1.18.0
     - name: rancher/mirrored-cloud-provider-vsphere-cpi-release-manager:v1.19.0
@@ -326,6 +352,7 @@ spec:
     - name: rancher/mirrored-cloud-provider-vsphere-csi-release-syncer:v2.7.0
     - name: rancher/mirrored-cloud-provider-vsphere-csi-release-syncer:v2.7.1
     - name: rancher/mirrored-cloud-provider-vsphere-csi-release-syncer:v3.0.1
+    - name: rancher/mirrored-cluster-api-controller:v1.4.4
     - name: rancher/mirrored-cluster-proportional-autoscaler:1.8.5
     - name: rancher/mirrored-cluster-proportional-autoscaler:1.8.6
     - name: rancher/mirrored-coredns-coredns:1.10.1
@@ -344,9 +371,9 @@ spec:
     - name: rancher/mirrored-curlimages-curl:7.85.0
     - name: rancher/mirrored-dexidp-dex:v2.36.0
     - name: rancher/mirrored-directxman12-k8s-prometheus-adapter:v0.8.4
-    - name: rancher/mirrored-epinio-epinio-server:v1.8.1
-    - name: rancher/mirrored-epinio-epinio-ui:v1.8.1-0.0.1
-    - name: rancher/mirrored-epinio-epinio-unpacker:v1.8.1
+    - name: rancher/mirrored-epinio-epinio-server:v1.9.0
+    - name: rancher/mirrored-epinio-epinio-ui:v1.9.0-0.0.3
+    - name: rancher/mirrored-epinio-epinio-unpacker:v1.9.0
     - name: rancher/mirrored-flannel-flannel:v0.21.4
     - name: rancher/mirrored-flannelcni-flannel:v0.17.0
     - name: rancher/mirrored-flannelcni-flannel:v0.19.2
@@ -357,14 +384,30 @@ spec:
     - name: rancher/mirrored-grafana-grafana:9.1.5
     - name: rancher/mirrored-idealista-prom2teams:3.2.2
     - name: rancher/mirrored-idealista-prom2teams:4.2.1
-    - name: rancher/mirrored-ingress-nginx-kube-webhook-certgen:v1.1.2
+    - name: rancher/mirrored-ingress-nginx-kube-webhook-certgen:v1.1.1
     - name: rancher/mirrored-ingress-nginx-kube-webhook-certgen:v1.3.0
     - name: rancher/mirrored-ingress-nginx-kube-webhook-certgen:v20230312-helm-chart-4.5.2-28-g66a760794
+    - name: rancher/mirrored-istio-install-cni:1.14.3-distroless
+    - name: rancher/mirrored-istio-install-cni:1.15.3-distroless
+    - name: rancher/mirrored-istio-install-cni:1.16.3-distroless
     - name: rancher/mirrored-istio-install-cni:1.17.2-distroless
+    - name: rancher/mirrored-istio-install-cni:1.18.2-distroless
+    - name: rancher/mirrored-istio-pilot:1.14.3-distroless
+    - name: rancher/mirrored-istio-pilot:1.15.3-distroless
+    - name: rancher/mirrored-istio-pilot:1.16.3-distroless
     - name: rancher/mirrored-istio-pilot:1.17.2-distroless
+    - name: rancher/mirrored-istio-pilot:1.18.2-distroless
+    - name: rancher/mirrored-istio-proxyv2:1.14.3-distroless
+    - name: rancher/mirrored-istio-proxyv2:1.15.3-distroless
+    - name: rancher/mirrored-istio-proxyv2:1.16.3-distroless
     - name: rancher/mirrored-istio-proxyv2:1.17.2-distroless
+    - name: rancher/mirrored-istio-proxyv2:1.18.2-distroless
     - name: rancher/mirrored-jaegertracing-all-in-one:1.20.0
+    - name: rancher/mirrored-jaegertracing-all-in-one:1.37.0
+    - name: rancher/mirrored-jaegertracing-all-in-one:1.39.0
+    - name: rancher/mirrored-jaegertracing-all-in-one:1.42.0
     - name: rancher/mirrored-jaegertracing-all-in-one:1.43.0
+    - name: rancher/mirrored-jaegertracing-all-in-one:1.47.0
     - name: rancher/mirrored-jimmidyson-configmap-reload:v0.3.0
     - name: rancher/mirrored-jimmidyson-configmap-reload:v0.4.0
     - name: rancher/mirrored-jimmidyson-configmap-reload:v0.8.0
@@ -381,7 +424,11 @@ spec:
     - name: rancher/mirrored-k8s-dns-sidecar:1.22.20
     - name: rancher/mirrored-k8s-dns-sidecar:1.22.8
     - name: rancher/mirrored-kiali-kiali:v1.35.0
+    - name: rancher/mirrored-kiali-kiali:v1.55.0
+    - name: rancher/mirrored-kiali-kiali:v1.59.0
+    - name: rancher/mirrored-kiali-kiali:v1.63.2
     - name: rancher/mirrored-kiali-kiali:v1.66.0
+    - name: rancher/mirrored-kiali-kiali:v1.67.0
     - name: rancher/mirrored-kiwigrid-k8s-sidecar:1.12.2
     - name: rancher/mirrored-kiwigrid-k8s-sidecar:1.19.2
     - name: rancher/mirrored-kube-rbac-proxy:v0.5.0
@@ -422,19 +469,19 @@ spec:
     - name: rancher/mirrored-metrics-server:v0.6.1
     - name: rancher/mirrored-metrics-server:v0.6.2
     - name: rancher/mirrored-metrics-server:v0.6.3
-    - name: rancher/mirrored-minio-mc:RELEASE.2023-01-28T20-29-38Z
-    - name: rancher/mirrored-minio-minio:RELEASE.2023-02-10T18-48-39Z
-    - name: rancher/mirrored-neuvector-controller:5.2.0
-    - name: rancher/mirrored-neuvector-enforcer:5.2.0
-    - name: rancher/mirrored-neuvector-manager:5.2.0
-    - name: rancher/mirrored-neuvector-prometheus-exporter:5.2.0
+    - name: rancher/mirrored-minio-mc:RELEASE.2023-06-28T21-54-17Z
+    - name: rancher/mirrored-minio-minio:RELEASE.2023-07-07T07-13-57Z
+    - name: rancher/mirrored-neuvector-controller:5.2.1
+    - name: rancher/mirrored-neuvector-enforcer:5.2.1
+    - name: rancher/mirrored-neuvector-manager:5.2.1
+    - name: rancher/mirrored-neuvector-prometheus-exporter:5.2.1
     - name: rancher/mirrored-neuvector-registry-adapter:0.1.0
     - name: rancher/mirrored-neuvector-scanner:latest
     - name: rancher/mirrored-neuvector-updater:latest
     - name: rancher/mirrored-nginx-ingress-controller-defaultbackend:1.5-rancher1
     - name: rancher/mirrored-openpolicyagent-gatekeeper-crds:v3.12.0
     - name: rancher/mirrored-openpolicyagent-gatekeeper:v3.12.0
-    - name: rancher/mirrored-paketobuildpacks-builder:0.2.407-full
+    - name: rancher/mirrored-paketobuildpacks-builder:0.2.441-full
     - name: rancher/mirrored-pause:3.6
     - name: rancher/mirrored-pause:3.7
     - name: rancher/mirrored-prom-node-exporter:v1.0.1
@@ -473,6 +520,7 @@ spec:
     - name: rancher/mirrored-sig-storage-livenessprobe:v2.9.0
     - name: rancher/mirrored-sig-storage-snapshot-controller:v6.2.1
     - name: rancher/mirrored-sig-storage-snapshot-validation-webhook:v6.2.1
+    - name: rancher/mirrored-sig-storage-snapshot-validation-webhook:v6.2.2
     - name: rancher/mirrored-sigwindowstools-k8s-gmsa-webhook:v0.3.0
     - name: rancher/mirrored-skopeo-skopeo:v1.10.0
     - name: rancher/mirrored-sonobuoy-sonobuoy:v0.56.16
@@ -494,12 +542,12 @@ spec:
     - name: rancher/prometheus-federator:v0.3.2
     - name: rancher/pushprox-client:v0.1.0-rancher2-client
     - name: rancher/pushprox-proxy:v0.1.0-rancher2-proxy
-    - name: rancher/rancher-agent:v2.7.6
+    - name: rancher/rancher-agent:v2.7.7
     - name: rancher/rancher-csp-adapter:v2.0.2
-    - name: rancher/rancher-webhook:v0.3.5
-    - name: rancher/rancher:v2.7.6
+    - name: rancher/rancher-webhook:v0.3.6
+    - name: rancher/rancher:v2.7.7
     - name: rancher/rke-tools:v0.1.88
-    - name: rancher/rke-tools:v0.1.89
+    - name: rancher/rke-tools:v0.1.90
     - name: rancher/rke2-cloud-provider:v0.0.3-build20211118
     - name: rancher/rke2-cloud-provider:v1.25.3-build20221017
     - name: rancher/rke2-cloud-provider:v1.26.1-build20230210
@@ -516,6 +564,7 @@ spec:
     - name: rancher/rke2-runtime:v1.24.14-rke2r1
     - name: rancher/rke2-runtime:v1.24.15-rke2r1
     - name: rancher/rke2-runtime:v1.24.16-rke2r1
+    - name: rancher/rke2-runtime:v1.24.17-rke2r1
     - name: rancher/rke2-runtime:v1.24.4-rke2r1
     - name: rancher/rke2-runtime:v1.24.7-rke2r1
     - name: rancher/rke2-runtime:v1.24.8-rke2r1
@@ -523,11 +572,13 @@ spec:
     - name: rancher/rke2-runtime:v1.25.10-rke2r1
     - name: rancher/rke2-runtime:v1.25.11-rke2r1
     - name: rancher/rke2-runtime:v1.25.12-rke2r1
+    - name: rancher/rke2-runtime:v1.25.13-rke2r1
     - name: rancher/rke2-runtime:v1.25.7-rke2r1
     - name: rancher/rke2-runtime:v1.25.9-rke2r1
     - name: rancher/rke2-runtime:v1.26.5-rke2r1
     - name: rancher/rke2-runtime:v1.26.6-rke2r1
     - name: rancher/rke2-runtime:v1.26.7-rke2r1
+    - name: rancher/rke2-runtime:v1.26.8-rke2r1
     - name: rancher/rke2-upgrade:v1.23.10-rke2r1
     - name: rancher/rke2-upgrade:v1.23.13-rke2r1
     - name: rancher/rke2-upgrade:v1.23.14-rke2r1
@@ -540,6 +591,7 @@ spec:
     - name: rancher/rke2-upgrade:v1.24.14-rke2r1
     - name: rancher/rke2-upgrade:v1.24.15-rke2r1
     - name: rancher/rke2-upgrade:v1.24.16-rke2r1
+    - name: rancher/rke2-upgrade:v1.24.17-rke2r1
     - name: rancher/rke2-upgrade:v1.24.4-rke2r1
     - name: rancher/rke2-upgrade:v1.24.7-rke2r1
     - name: rancher/rke2-upgrade:v1.24.8-rke2r1
@@ -547,15 +599,17 @@ spec:
     - name: rancher/rke2-upgrade:v1.25.10-rke2r1
     - name: rancher/rke2-upgrade:v1.25.11-rke2r1
     - name: rancher/rke2-upgrade:v1.25.12-rke2r1
+    - name: rancher/rke2-upgrade:v1.25.13-rke2r1
     - name: rancher/rke2-upgrade:v1.25.7-rke2r1
     - name: rancher/rke2-upgrade:v1.25.9-rke2r1
     - name: rancher/rke2-upgrade:v1.26.5-rke2r1
     - name: rancher/rke2-upgrade:v1.26.6-rke2r1
     - name: rancher/rke2-upgrade:v1.26.7-rke2r1
-    - name: rancher/security-scan:v0.2.12
+    - name: rancher/rke2-upgrade:v1.26.8-rke2r1
+    - name: rancher/security-scan:v0.2.13
     - name: rancher/shell:v0.1.18
     - name: rancher/shell:v0.1.19
-    - name: rancher/shell:v0.1.20
+    - name: rancher/shell:v0.1.21
     - name: rancher/system-agent-installer-k3s:v1.21.10-k3s1
     - name: rancher/system-agent-installer-k3s:v1.21.12-k3s1
     - name: rancher/system-agent-installer-k3s:v1.21.13-k3s1
@@ -594,6 +648,7 @@ spec:
     - name: rancher/system-agent-installer-k3s:v1.24.14-k3s1
     - name: rancher/system-agent-installer-k3s:v1.24.15-k3s1
     - name: rancher/system-agent-installer-k3s:v1.24.16-k3s1
+    - name: rancher/system-agent-installer-k3s:v1.24.17-k3s1
     - name: rancher/system-agent-installer-k3s:v1.24.2-k3s2
     - name: rancher/system-agent-installer-k3s:v1.24.4-k3s1
     - name: rancher/system-agent-installer-k3s:v1.24.7-k3s1
@@ -602,11 +657,13 @@ spec:
     - name: rancher/system-agent-installer-k3s:v1.25.10-k3s1
     - name: rancher/system-agent-installer-k3s:v1.25.11-k3s1
     - name: rancher/system-agent-installer-k3s:v1.25.12-k3s1
+    - name: rancher/system-agent-installer-k3s:v1.25.13-k3s1
     - name: rancher/system-agent-installer-k3s:v1.25.7-k3s1
     - name: rancher/system-agent-installer-k3s:v1.25.9-k3s1
     - name: rancher/system-agent-installer-k3s:v1.26.5-k3s1
     - name: rancher/system-agent-installer-k3s:v1.26.6-k3s1
     - name: rancher/system-agent-installer-k3s:v1.26.7-k3s1
+    - name: rancher/system-agent-installer-k3s:v1.26.8-k3s1
     - name: rancher/system-agent-installer-rke2:v1.21.10-rke2r2
     - name: rancher/system-agent-installer-rke2:v1.21.12-rke2r1
     - name: rancher/system-agent-installer-rke2:v1.21.12-rke2r2
@@ -648,6 +705,7 @@ spec:
     - name: rancher/system-agent-installer-rke2:v1.24.14-rke2r1
     - name: rancher/system-agent-installer-rke2:v1.24.15-rke2r1
     - name: rancher/system-agent-installer-rke2:v1.24.16-rke2r1
+    - name: rancher/system-agent-installer-rke2:v1.24.17-rke2r1
     - name: rancher/system-agent-installer-rke2:v1.24.2-rke2r1
     - name: rancher/system-agent-installer-rke2:v1.24.4-rke2r1
     - name: rancher/system-agent-installer-rke2:v1.24.7-rke2r1
@@ -656,14 +714,16 @@ spec:
     - name: rancher/system-agent-installer-rke2:v1.25.10-rke2r1
     - name: rancher/system-agent-installer-rke2:v1.25.11-rke2r1
     - name: rancher/system-agent-installer-rke2:v1.25.12-rke2r1
+    - name: rancher/system-agent-installer-rke2:v1.25.13-rke2r1
     - name: rancher/system-agent-installer-rke2:v1.25.7-rke2r1
     - name: rancher/system-agent-installer-rke2:v1.25.9-rke2r1
     - name: rancher/system-agent-installer-rke2:v1.26.5-rke2r1
     - name: rancher/system-agent-installer-rke2:v1.26.6-rke2r1
     - name: rancher/system-agent-installer-rke2:v1.26.7-rke2r1
+    - name: rancher/system-agent-installer-rke2:v1.26.8-rke2r1
     - name: rancher/system-agent:v0.3.3-suc
     - name: rancher/system-upgrade-controller:v0.11.0
-    - name: rancher/tekton-utils:v0.1.22
+    - name: rancher/tekton-utils:v0.1.33
     - name: rancher/thanosio-thanos:v0.15.0
     - name: rancher/ui-plugin-operator:v0.1.1
     - name: rancher/webhook-receiver:v0.2.4
