@@ -45,7 +45,7 @@ rm -rf README.md hauler_0.3.0_linux_amd64.tar.gz && mv hauler /usr/bin/hauler
 
 ### Untar and Install Helm
 tar -xf /opt/rancher/hauler/rancher-airgap-helm.tar.zst
-rm -rf README.md LICENSE helm-v3.12.0-linux-amd64.tar.gz && mv helm /usr/bin/helm
+rm -rf README.md LICENSE helm-v3.13.0-linux-amd64.tar.gz && mv helm /usr/bin/helm
 
 ### Import Hauler TARs (will take a minute)
 hauler store load rancher-airgap-rke2.tar.zst rancher-airgap-rancher.tar.zst rancher-airgap-longhorn.tar.zst rancher-airgap-neuvector.tar.zst
@@ -68,7 +68,7 @@ Complete the following commands on the **first** node in the cluster. You will n
 
 ```bash
 ### Set Variables
-export vRKE2=1.25.13
+export vRKE2=1.25.14
 export vPlatform=el9
 export IP=0.0.0.0
 
@@ -138,7 +138,7 @@ Complete the following commands on the **second** and **third** nodes in the clu
 
 ```bash
 ### Set Variables
-export vRKE2=1.25.13
+export vRKE2=1.25.14
 export vPlatform=el9
 export IP=0.0.0.0
 

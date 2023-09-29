@@ -2,7 +2,7 @@
 
 ## Collection and Packaging
 
-### Helm v3.12.3 - Cloud Native Computing Foundation
+### Helm v3.13.0 - Cloud Native Computing Foundation
 
 [hauler/helm/helm](https://rancher-airgap.s3.amazonaws.com/v1.1.1/hauler/helm/helm) - provides the binary for Helm.
 

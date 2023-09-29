@@ -21,11 +21,11 @@ fetch -> validate -> save -> | <airgap> | -> validate -> load -> distribute
 
 ### Core Components
 * [hauler/rke2](hauler/rke2/README.md) - provides the content manifest for Rancher Kubernetes (RKE2)
-  * currently supports: `RKE2 v1.25.13`
+  * currently supports: `RKE2 v1.25.14`
 * [hauler/rancher](hauler/rancher/README.md) - provides the content manifest for Cert-Manager
   * currently supports: `Cert-Manager v1.7.1`
 * [hauler/rancher](hauler/rancher/README.md) - provides the content manifest for Rancher Multi-Cluster Manager
-  * currently supports: `Rancher v2.7.6`
+  * currently supports: `Rancher v2.7.7`
 * [hauler/longhorn](hauler/longhorn/README.md) - provides the content manifest for Rancher Longhorn
   * currently supports: `Longhorn v1.5.1`
 * [hauler/neuvector](hauler/neuvector/README.md) - provides the content manifest for Rancher NeuVector
@@ -35,7 +35,7 @@ fetch -> validate -> save -> | <airgap> | -> validate -> load -> distribute
 * [hauler/hauler](hauler/hauler/README.md) - provides the content manifest for Hauler
   * currently supports: `Hauler v0.3.0`
 * [hauler/helm](hauler/helm/README.md) - provides the content manifest for Helm
-  * currently supports: `Helm v3.12.3`
+  * currently supports: `Helm v3.13.0`
 
 **Note:** We are currently planning and working towards supporting every major version of our products. We will continue to update to the latest until we implement previous major verions.
 
