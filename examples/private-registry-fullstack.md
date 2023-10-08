@@ -4,7 +4,7 @@ Complete the following commands on the Internet Connected Server. For the initia
 
 ```bash
 ### Set Variables
-export vRancherAirgap=v1.1.2
+export vRancherAirgap=v1.1.3
 
 ### Fetch Individual Hauler TARs
 mkdir -p /opt/rancher/hauler
