@@ -1,6 +1,6 @@
 ### Set Variables
 export vRancher=2.7.8
-export vCertManager=1.7.1
+export vCertManager=v1.13.1
 
 ### Setup Working Directory
 rm -rf /opt/rancher/hauler/rancher
