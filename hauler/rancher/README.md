@@ -2,9 +2,9 @@
 
 ## Collection and Packaging
 
-### Rancher Multi-Cluster Manager v2.7.7
+### Rancher Multi-Cluster Manager v2.7.8
 
-**Cert-Manager v1.7.1:** Included in the Rancher Multi-Cluster Manager content and assets.
+**Cert-Manager v1.13.1:** Included in the Rancher Multi-Cluster Manager content and assets.
 
 [hauler/rancher/rancher-airgap-rancher.yaml](https://rancher-airgap.s3.amazonaws.com/v1.1.3/hauler/rancher/rancher-airgap-rancher.yaml) - provides the content manifest for the assets.
 
