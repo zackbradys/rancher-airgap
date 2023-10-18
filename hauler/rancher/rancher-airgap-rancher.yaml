@@ -17,10 +17,10 @@ spec:
   charts:
     - name: cert-manager
       repoURL: https://charts.jetstack.io
-      version: 1.7.1
+      version: v1.13.1
     - name: rancher
       repoURL: https://releases.rancher.com/server-charts/latest
-      version: 2.7.7
+      version: 2.7.8
 ---
 apiVersion: content.hauler.cattle.io/v1alpha1
 kind: Images
@@ -28,10 +28,10 @@ metadata:
   name: rancher-airgap-images-rancher
 spec:
   images:
-    - name: quay.io/jetstack/cert-manager-cainjector:v1.7.1
-    - name: quay.io/jetstack/cert-manager-controller:v1.7.1
-    - name: quay.io/jetstack/cert-manager-webhook:v1.7.1
-    - name: quay.io/jetstack/cert-manager-ctl:v1.7.1
+    - name: quay.io/jetstack/cert-manager-cainjector:v1.13.1
+    - name: quay.io/jetstack/cert-manager-controller:v1.13.1
+    - name: quay.io/jetstack/cert-manager-webhook:v1.13.1
+    - name: quay.io/jetstack/cert-manager-ctl:v1.13.1
     - name: rancher/aks-operator:v1.1.3
     - name: rancher/backup-restore-operator:v3.1.2
     - name: rancher/calico-cni:v3.22.5-rancher1
@@ -210,7 +210,7 @@ spec:
     - name: rancher/longhornio-csi-node-driver-registrar:v2.3.0
     - name: rancher/longhornio-csi-provisioner:v2.1.2
     - name: rancher/longhornio-csi-resizer:v1.2.0
-    - name: rancher/machine:v0.15.0-rancher104
+    - name: rancher/machine:v0.15.0-rancher100
     - name: rancher/mirrored-amazon-aws-cli:2.9.14
     - name: rancher/mirrored-appscode-kubed:v0.13.2
     - name: rancher/mirrored-banzaicloud-fluentd:v1.14.6-alpine-5
@@ -489,7 +489,7 @@ spec:
     - name: rancher/mirrored-prometheus-adapter-prometheus-adapter:v0.10.0
     - name: rancher/mirrored-prometheus-alertmanager:v0.22.0
     - name: rancher/mirrored-prometheus-alertmanager:v0.24.0
-    - name: rancher/mirrored-prometheus-node-exporter:v1.1.3
+    - name: rancher/mirrored-prometheus-node-exporter:v1.1.2
     - name: rancher/mirrored-prometheus-node-exporter:v1.3.1
     - name: rancher/mirrored-prometheus-operator-prometheus-config-reloader:v0.59.1
     - name: rancher/mirrored-prometheus-operator-prometheus-operator:v0.59.1
@@ -542,10 +542,10 @@ spec:
     - name: rancher/prometheus-federator:v0.3.2
     - name: rancher/pushprox-client:v0.1.0-rancher2-client
     - name: rancher/pushprox-proxy:v0.1.0-rancher2-proxy
-    - name: rancher/rancher-agent:v2.7.7
+    - name: rancher/rancher-agent:v2.7.8
     - name: rancher/rancher-csp-adapter:v2.0.2
     - name: rancher/rancher-webhook:v0.3.6
-    - name: rancher/rancher:v2.7.7
+    - name: rancher/rancher:v2.7.8
     - name: rancher/rke-tools:v0.1.88
     - name: rancher/rke-tools:v0.1.90
     - name: rancher/rke2-cloud-provider:v0.0.3-build20211118
