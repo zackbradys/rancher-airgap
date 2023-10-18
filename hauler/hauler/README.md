@@ -4,7 +4,7 @@
 
 ### Hauler v0.3.0 - Rancher Government Solutions
 
-[hauler/hauler/hauler](https://rancher-airgap.s3.amazonaws.com/v1.1.3/hauler/hauler/hauler) - provides the binary for Hauler.
+[hauler/hauler/hauler](https://rancher-airgap.s3.amazonaws.com/v1.1.4/hauler/hauler/hauler) - provides the binary for Hauler.
 
 **Note:** The [Releases](https://github.com/zackbradys/rancher-airgap/releases) page contain the most up-to-date assets.
 
