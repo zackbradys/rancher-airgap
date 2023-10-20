@@ -25,7 +25,6 @@ jobs:
           mv /opt/rancher/hauler/hauler/hauler hauler/hauler/hauler
           mv /opt/rancher/hauler/rancher-airgap-hauler.tar.zst hauler/hauler/rancher-airgap-hauler.tar.zst
           pwd && ls -la hauler/hauler
-          pwd && ls -la hauler/scripts/hauler
 
       - name: Rancher Airgap - Build Helm
         run: |
@@ -33,7 +32,6 @@ jobs:
           mv /opt/rancher/hauler/helm/helm hauler/helm/helm
           mv /opt/rancher/hauler/rancher-airgap-helm.tar.zst hauler/helm/rancher-airgap-helm.tar.zst
           pwd && ls -la hauler/helm
-          pwd && ls -la hauler/scripts/helm
 
       - name: Rancher Airgap - Build RKE2
         run: |
@@ -41,7 +39,6 @@ jobs:
           mv /opt/rancher/hauler/rke2/rancher-airgap-rke2.yaml hauler/rke2/rancher-airgap-rke2.yaml
           mv /opt/rancher/hauler/rke2/rancher-airgap-rke2.tar.zst hauler/rke2/rancher-airgap-rke2.tar.zst
           pwd && ls -la hauler/rke2
-          pwd && ls -la hauler/scripts/rke2
 
       - name: Rancher Airgap - Build Rancher
         run: |
@@ -49,7 +46,6 @@ jobs:
           mv /opt/rancher/hauler/rancher/rancher-airgap-rancher.yaml hauler/rancher/rancher-airgap-rancher.yaml
           mv /opt/rancher/hauler/rancher/rancher-airgap-rancher.tar.zst hauler/rancher/rancher-airgap-rancher.tar.zst
           pwd && ls -la hauler/rancher
-          pwd && ls -la hauler/scripts/rancher
 
       - name: Rancher Airgap - Build Longhorn
         run: |
@@ -57,7 +53,6 @@ jobs:
           mv /opt/rancher/hauler/longhorn/rancher-airgap-longhorn.yaml hauler/longhorn/rancher-airgap-longhorn.yaml
           mv /opt/rancher/hauler/longhorn/rancher-airgap-longhorn.tar.zst hauler/longhorn/rancher-airgap-longhorn.tar.zst
           pwd && ls -la hauler/longhorn
-          pwd && ls -la hauler/scripts/longhorn
 
       - name: Rancher Airgap - Build NeuVector
         run: |
@@ -65,7 +60,6 @@ jobs:
           mv /opt/rancher/hauler/neuvector/rancher-airgap-neuvector.yaml hauler/neuvector/rancher-airgap-neuvector.yaml
           mv /opt/rancher/hauler/neuvector/rancher-airgap-neuvector.tar.zst hauler/neuvector/rancher-airgap-neuvector.tar.zst
           pwd && ls -la hauler/neuvector
-          pwd && ls -la hauler/scripts/neuvector
 
       - name: Setup AWS Credentials/CLI
         uses: aws-actions/configure-aws-credentials@v1
@@ -90,6 +84,45 @@ jobs:
           git add hauler/hauler/hauler hauler/helm/helm *.yaml
           git commit -a -m "updated rancher airgap assets [github-actions]"
           git push
+
+  rancher-airgap-testing:
+    name: Rancher Airgap Testing and Linting Job
+    runs-on: [self-hosted, linux, X64, general]
+    needs: [rancher-airgap-hauler]
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+        with:
+          ref: main
+          token: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
+
+      - name: Pre-Build Setup/Checks
+        run: |
+          pwd && ls -la
+
+      - name: Build Rancher Airgap RKE2
+        run: |
+          cd /opt/rancher/hauler/rke2
+          hauler store info
+          rm -rf /opt/rancher/hauler/rke2
+
+      - name: Build Rancher Airgap Rancher
+        run: |
+          cd /opt/rancher/hauler/rancher
+          hauler store info
+          rm -rf /opt/rancher/hauler/rancher
+
+      - name: Build Rancher Airgap Longhorn
+        run: |
+          cd /opt/rancher/hauler/longhorn
+          hauler store info
+          rm -rf /opt/rancher/hauler/longhorn
+
+      - name: Build Rancher Airgap NeuVector
+        run: |
+          cd /opt/rancher/hauler/neuvector
+          hauler store info
+          rm -rf /opt/rancher/hauler/neuvector
 
   rancher-airgap-release:
     name: Rancher Airgap Release Workflow Job

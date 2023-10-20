@@ -50,8 +50,5 @@ EOF
 ### Load Hauler Manifest into Store
 hauler store sync -f rancher-airgap-longhorn.yaml
 
-### Verify Hauler Store Contents
-hauler store info
-
 ### Compress Hauler Store Contents
 hauler store save --filename rancher-airgap-longhorn.tar.zst

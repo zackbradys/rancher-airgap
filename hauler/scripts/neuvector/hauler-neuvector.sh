@@ -43,8 +43,5 @@ EOF
 ### Load Hauler Manifest into Store
 hauler store sync -f rancher-airgap-neuvector.yaml
 
-### Verify Hauler Store Contents
-hauler store info
-
 ### Compress Hauler Store Contents
 hauler store save --filename rancher-airgap-neuvector.tar.zst
