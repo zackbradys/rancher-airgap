@@ -75,4 +75,3 @@ hauler store info
 
 ### Compress Hauler Store Contents
 hauler store save --filename rancher-airgap-rke2.tar.zst
-rm -rf /opt/rancher/hauler/rke2/store

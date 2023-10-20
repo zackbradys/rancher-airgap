@@ -55,4 +55,3 @@ hauler store info
 
 ### Compress Hauler Store Contents
 hauler store save --filename rancher-airgap-longhorn.tar.zst
-rm -rf /opt/rancher/hauler/longhorn/store

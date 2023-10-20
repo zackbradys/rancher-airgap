@@ -70,4 +70,3 @@ hauler store info
 
 ### Compress Hauler Store Contents
 hauler store save --filename rancher-airgap-rancher.tar.zst
-rm -rf /opt/rancher/hauler/rancher/store

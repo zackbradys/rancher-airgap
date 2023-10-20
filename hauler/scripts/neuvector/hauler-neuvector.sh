@@ -48,4 +48,3 @@ hauler store info
 
 ### Compress Hauler Store Contents
 hauler store save --filename rancher-airgap-neuvector.tar.zst
-rm -rf /opt/rancher/hauler/neuvector/store
