@@ -127,7 +127,7 @@ jobs:
   rancher-airgap-release:
     name: Rancher Airgap Release Workflow Job
     runs-on: [self-hosted, linux, X64, general]
-    needs: [rancher-airgap-hauler]
+    needs: [rancher-airgap-testing]
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
