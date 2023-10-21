@@ -49,7 +49,7 @@ rm -rf README.md hauler_0.3.0_linux_amd64.tar.gz && mv hauler /usr/bin/hauler
 
 ### Untar and Install Helm
 tar -xf /opt/rancher/hauler/rancher-airgap-helm.tar.zst
-rm -rf README.md LICENSE helm-v3.13.0-linux-amd64.tar.gz && mv helm /usr/bin/helm
+rm -rf README.md LICENSE helm-v3.13.1-linux-amd64.tar.gz && mv helm /usr/bin/helm
 
 ### Import Hauler TARs (will take a minute)
 hauler store load rancher-airgap-rke2.tar.zst rancher-airgap-rancher.tar.zst rancher-airgap-longhorn.tar.zst rancher-airgap-neuvector.tar.zst

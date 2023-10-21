@@ -35,7 +35,7 @@ fetch -> validate -> save -> | <airgap> | -> validate -> load -> distribute
 * [hauler/hauler](hauler/hauler/README.md) - provides the content manifest for Hauler
   * currently supports: `Hauler v0.3.0`
 * [hauler/helm](hauler/helm/README.md) - provides the content manifest for Helm
-  * currently supports: `Helm v3.13.0`
+  * currently supports: `Helm v3.13.1`
 
 **Note:** We are currently planning and working towards supporting every major version of our products. We will continue to update to the latest until we implement previous major verions.
 
