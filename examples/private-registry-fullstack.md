@@ -1,6 +1,6 @@
 ## Prerequisites
 
-In this example and tutorial, we will **not be covering the specifics about configuring and installing each of the Rancher products**. You should have basic understanding of the Rancher products, including containers and kubernetes, before trying to configure and install in a disconnected environment. If you would like to learn more, please take a look at an effortless deployment and install guide for Rancher RKE2, Rancher Manager, Longhorn, and NeuVector: https://youtu.be/P65r2ODNlTg
+In this example and tutorial, we will **not be covering the specifics about configuring and installing each of the Rancher products**. You should have basic understanding of the Rancher products, before trying to configure and install in a disconnected environment. If you would like to learn more, please take a look at an effortless deployment and install guide for Rancher RKE2, Rancher Manager, Longhorn, and NeuVector: https://youtu.be/P65r2ODNlTg
 
 ## Internet Connected Build Server
 
@@ -8,7 +8,7 @@ Complete the following commands on the Internet Connected Server. For the initia
 
 ```bash
 ### Set Variables
-export vRancherAirgap=v1.2.3
+export vRancherAirgap=v1.3.0
 
 ### Fetch Individual Hauler TARs
 mkdir -p /opt/rancher/hauler
