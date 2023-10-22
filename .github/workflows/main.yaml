@@ -29,8 +29,8 @@ jobs:
       - name: Rancher Airgap - Build Helm
         run: |
           sh hauler/scripts/helm/hauler-helm.sh
-          mv /opt/rancher/hauler/helm/helm hauler/helm/helm
-          mv /opt/rancher/hauler/rancher-airgap-helm.tar.zst hauler/helm/rancher-airgap-helm.tar.zst
+          mv /opt/rancher/hauler/helm/rancher-airgap-helm.yaml hauler/helm/rancher-airgap-helm.yaml
+          mv /opt/rancher/hauler/helm/rancher-airgap-helm.tar.zst hauler/helm/rancher-airgap-helm.tar.zst
           pwd && ls -la hauler/helm
 
       - name: Rancher Airgap - Build RKE2
