@@ -1,6 +1,6 @@
 ## Prerequisites
 
-In this example and tutorial, we will **not be covering the specifics about configuring and installing each of the Rancher products**. You should have basic understanding of the Rancher products, before trying to configure and install in a disconnected environment. If you would like to learn more, please take a look at an effortless deployment and install guide for Rancher RKE2, Rancher Manager, Longhorn, and NeuVector: https://youtu.be/P65r2ODNlTg
+In this example and tutorial, we will **not be covering the specifics about configuring and installing each of the Rancher products**. You should have basic understanding of the Rancher products, before trying to configure and install in a disconnected environment. If you would like to learn more, please take a look at an effortless deployment and installation guide for Rancher RKE2, Rancher Manager, Longhorn, and NeuVector: **https://github.com/zackbradys/rancher-effortless (Video: https://youtu.be/P65r2ODNlTg)!**
 
 ## Internet Connected Build Server
 
@@ -16,12 +16,13 @@ cd /opt/rancher/hauler
 
 curl -#OL https://rancher-airgap.s3.amazonaws.com/${vRancherAirgap}/hauler/hauler/rancher-airgap-hauler.tar.zst
 curl -#OL https://rancher-airgap.s3.amazonaws.com/${vRancherAirgap}/hauler/helm/rancher-airgap-helm.tar.zst
+curl -#OL https://rancher-airgap.s3.amazonaws.com/${vRancherAirgap}/hauler/cosign/rancher-airgap-cosign.tar.zst
 curl -#OL https://rancher-airgap.s3.amazonaws.com/${vRancherAirgap}/hauler/rke2/rancher-airgap-rke2.tar.zst
 curl -#OL https://rancher-airgap.s3.amazonaws.com/${vRancherAirgap}/hauler/rancher/rancher-airgap-rancher.tar.zst
 curl -#OL https://rancher-airgap.s3.amazonaws.com/${vRancherAirgap}/hauler/longhorn/rancher-airgap-longhorn.tar.zst
 curl -#OL https://rancher-airgap.s3.amazonaws.com/${vRancherAirgap}/hauler/neuvector/rancher-airgap-neuvector.tar.zst
 
-### Optional: Create Single Hauler TAR
+### Optional: Create Single TAR
 tar -czvf /opt/rancher/hauler/rancher-airgap.tar.zst .
 ```
 
@@ -35,10 +36,13 @@ tar -czvf /opt/rancher/hauler/rancher-airgap.tar.zst .
 
 Complete the following commands on the Disconnected Server. We recommend to **not** use this server in the cluster.
 
-**Note:** There are many ways to airgap packages, most customers use existing processes or methodologies for it. If you do not currently have a process or method... we have a example over here --> [os packages example readme](os-packages-example.md).
+**Note:** There are many ways to airgap packages, most customers use existing processes or methodologies for it. If you do not currently have a process or method... we have a very simple example over here --> [os packages example readme](os-packages-example.md).
 
 ### Setup Server with Hauler
 ```bash
+### Sudo to Root User
+sudo su
+
 ### Setup Directories
 mkdir -p /opt/rancher/hauler
 cd /opt/rancher/hauler
@@ -57,24 +61,24 @@ hauler store load rancher-airgap-rke2.tar.zst rancher-airgap-rancher.tar.zst ran
 ### Verify Hauler Store
 hauler store info
 
-### Create Hauler Registry Directory Structure (will take a minute and show errors)
-hauler store serve
-
 ### Serve Hauler Registry (serves the oci compliant registry)
-hauler serve registry -r registry
+hauler serve registry
 ```
 
 ### Rancher RKE2 Nodes
 
 #### RKE2 Server Node (Control Plane Node)
 
-Complete the following commands on the **first** node in the cluster. You will need network connectivity to the Disconnected Build Server.
+Complete the following commands on the server node(s) in the cluster. You will need connectivity to the Disconnected Build Server.
 
 ```bash
 ### Set Variables
 export vRKE2=1.25.14
 export vPlatform=el9
 export IP=0.0.0.0
+
+### Sudo to Root User
+sudo su
 
 ### Verify Registry Contents
 curl -X GET $IP:5000/v2/_catalog
@@ -119,17 +123,14 @@ EOF
 ### Enable/Start RKE2 Server
 systemctl enable --now rke2-server.service
 
-### Symlink kubectl and containerd
+### Symlink kubectl and containerd binaries
 sudo ln -s /var/lib/rancher/rke2/data/v1*/bin/kubectl /usr/bin/kubectl
 sudo ln -s /var/run/k3s/containerd/containerd.sock /var/run/containerd/containerd.sock
 
-### Update BASHRC with KUBECONFIG/PATH
-cat << EOF >> ~/.bashrc
-export KUBECONFIG=/etc/rancher/rke2/rke2.yaml
-export PATH=$PATH:/var/lib/rancher/rke2/bin:/usr/local/bin/
-EOF
-
-### Source BASHRC
+### Update and Source your bashrc
+echo "export KUBECONFIG=/etc/rancher/rke2/rke2.yaml" >> ~/.bashrc
+echo "export PATH=$PATH:/var/lib/rancher/rke2/bin:/usr/local/bin/" >> ~/.bashrc
+echo "alias k=kubectl" >> ~/.bashrc
 source ~/.bashrc
 
 ### Verify Node
@@ -138,13 +139,16 @@ kubectl get nodes
 
 #### RKE2 Agent Nodes (Worker Nodes)
 
-Complete the following commands on the **second** and **third** nodes in the cluster. You will need network connectivity to the Disconnected Build Server.
+Complete the following commands on the agent node(s) in the cluster. You will need network connectivity to the Disconnected Build Server.
 
 ```bash
 ### Set Variables
 export vRKE2=1.25.14
 export vPlatform=el9
 export IP=0.0.0.0
+
+### Sudo to Root User
+sudo su
 
 ### Verify Registry Contents
 curl -X GET $IP:5000/v2/_catalog
