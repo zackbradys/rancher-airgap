@@ -1,0 +1,8 @@
+apiVersion: content.hauler.cattle.io/v1alpha1
+kind: Files
+metadata:
+  name: rancher-airgap-files-helm
+spec:
+  files:
+    - path: /opt/rancher/hauler/helm/linux-amd64/helm
+      name: helm
