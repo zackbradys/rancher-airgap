@@ -6,8 +6,8 @@ rm -rf /opt/rancher/hauler/helm
 mkdir -p /opt/rancher/hauler/helm
 cd /opt/rancher/hauler/helm
 
-### Install Helm
-### https://github.com/helm/helm/
+### Download Helm
+### https://github.com/helm/helm
 curl -#OL https://get.helm.sh/helm-v${vHelm}-linux-amd64.tar.gz
 tar -xf helm-v${vHelm}-linux-amd64.tar.gz
 
