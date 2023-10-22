@@ -33,6 +33,13 @@ jobs:
           mv /opt/rancher/hauler/helm/rancher-airgap-helm.tar.zst hauler/helm/rancher-airgap-helm.tar.zst
           pwd && ls -la hauler/helm
 
+      - name: Rancher Airgap - Build Cosign
+        run: |
+          sh hauler/scripts/cosign/hauler-cosign.sh
+          mv /opt/rancher/hauler/cosign/rancher-airgap-cosign.yaml hauler/cosign/rancher-airgap-cosign.yaml
+          mv /opt/rancher/hauler/cosign/rancher-airgap-cosign.tar.zst hauler/cosign/rancher-airgap-cosign.tar.zst
+          pwd && ls -la hauler/cosign
+
       - name: Rancher Airgap - Build RKE2
         run: |
           sh hauler/scripts/rke2/hauler-rke2.sh
@@ -61,7 +68,7 @@ jobs:
           mv /opt/rancher/hauler/neuvector/rancher-airgap-neuvector.tar.zst hauler/neuvector/rancher-airgap-neuvector.tar.zst
           pwd && ls -la hauler/neuvector
 
-      - name: Setup AWS Credentials/CLI
+      - name: Setup AWS Credentials and CLI
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -81,12 +88,12 @@ jobs:
           git status
           git config --global user.name "${GITHUB_ACTOR}"
           git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
-          git add hauler/hauler/hauler hauler/helm/helm *.yaml
+          git add hauler/hauler/hauler hauler/helm/helm hauler/cosign/cosign *.yaml
           git commit -a -m "updated rancher airgap assets [github-actions]"
           git push
 
   rancher-airgap-testing:
-    name: Rancher Airgap Testing and Linting Job
+    name: Rancher Airgap Test and Lint Job
     runs-on: [self-hosted, linux, X64, general]
     needs: [rancher-airgap-hauler]
     steps:
@@ -100,25 +107,37 @@ jobs:
         run: |
           pwd && ls -la
 
-      - name: Build Rancher Airgap RKE2
+      - name: Rancher Airgap - Test/Lint Helm
+        run: |
+          cd /opt/rancher/hauler/helm
+          hauler store info
+          rm -rf /opt/rancher/hauler/helm
+
+      - name: Rancher Airgap - Test/Lint Cosign
+        run: |
+          cd /opt/rancher/hauler/cosign
+          hauler store info
+          rm -rf /opt/rancher/hauler/cosign
+
+      - name: Rancher Airgap - Test/Lint RKE2
         run: |
           cd /opt/rancher/hauler/rke2
           hauler store info
           rm -rf /opt/rancher/hauler/rke2
 
-      - name: Build Rancher Airgap Rancher
+      - name: Rancher Airgap - Test/Lint Rancher
         run: |
           cd /opt/rancher/hauler/rancher
           hauler store info
           rm -rf /opt/rancher/hauler/rancher
 
-      - name: Build Rancher Airgap Longhorn
+      - name: Rancher Airgap - Test/Lint Longhorn
         run: |
           cd /opt/rancher/hauler/longhorn
           hauler store info
           rm -rf /opt/rancher/hauler/longhorn
 
-      - name: Build Rancher Airgap NeuVector
+      - name: Rancher Airgap - Test/Lint NeuVector
         run: |
           cd /opt/rancher/hauler/neuvector
           hauler store info

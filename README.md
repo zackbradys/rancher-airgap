@@ -36,6 +36,8 @@ fetch -> validate -> save -> | <airgap> | -> validate -> load -> distribute
   * currently supports: `Hauler v0.3.0`
 * [hauler/helm](hauler/helm/README.md) - provides the content manifest for Helm
   * currently supports: `Helm v3.13.1`
+* [hauler/cosign](hauler/cosign/README.md) - provides the content manifest for Cosign
+  * currently supports: `Cosign v2.22.0`
 
 **Note:** We are currently planning and working towards supporting every major version of our products. We will continue to update to the latest until we implement previous major verions.
 
@@ -44,6 +46,5 @@ fetch -> validate -> save -> | <airgap> | -> validate -> load -> distribute
 ### Hauler v0.3.0 (latest)
 ### https://github.com/rancherfederal/hauler
 curl -#OL https://github.com/rancherfederal/hauler/releases/download/v0.3.0/hauler_0.3.0_linux_amd64.tar.gz
-tar -xf hauler_0.3.0_linux_amd64.tar.gz
-cp hauler /usr/bin/hauler
+tar -xf hauler_0.3.0_linux_amd64.tar.gz && sudo cp hauler /usr/bin/hauler
 ```
