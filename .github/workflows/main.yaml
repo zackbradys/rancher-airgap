@@ -68,6 +68,13 @@ jobs:
           mv /opt/rancher/hauler/neuvector/rancher-airgap-neuvector.tar.zst hauler/neuvector/rancher-airgap-neuvector.tar.zst
           pwd && ls -la hauler/neuvector
 
+      - name: Rancher Airgap - Build Harvester
+        run: |
+          sh hauler/scripts/harvester/hauler-harvester.sh
+          mv /opt/rancher/hauler/harvester/rancher-airgap-harvester.yaml hauler/harvester/rancher-airgap-harvester.yaml
+          mv /opt/rancher/hauler/harvester/rancher-airgap-harvester.tar.zst hauler/harvester/rancher-airgap-harvester.tar.zst
+          pwd && ls -la hauler/harvester
+
       - name: Setup AWS Credentials and CLI
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -142,6 +149,12 @@ jobs:
           cd /opt/rancher/hauler/neuvector
           hauler store info
           rm -rf /opt/rancher/hauler/neuvector
+
+      - name: Rancher Airgap - Test/Lint Harvester
+        run: |
+          cd /opt/rancher/hauler/harvester
+          hauler store info
+          rm -rf /opt/rancher/hauler/harvester
 
   rancher-airgap-release:
     name: Rancher Airgap Release Workflow Job
