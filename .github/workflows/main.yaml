@@ -72,7 +72,6 @@ jobs:
         run: |
           sh hauler/scripts/harvester/hauler-harvester.sh
           mv /opt/rancher/hauler/harvester/rancher-airgap-harvester.yaml hauler/harvester/rancher-airgap-harvester.yaml
-          mv /opt/rancher/hauler/harvester/rancher-airgap-harvester.tar.zst hauler/harvester/rancher-airgap-harvester.tar.zst
           pwd && ls -la hauler/harvester
 
       - name: Setup AWS Credentials and CLI
