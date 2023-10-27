@@ -3,7 +3,9 @@
 ### Welcome to the Rancher Airgap Guide
 Rancher Airgap is a framework and guide built for collecting, packaging, distributing, and installing the Rancher Product Stack in airgapped environments. Such as RKE2, Rancher Manager, Longhorn and NeuVector.
 
-We utilize the [Hauler](https://github.com/rancherfederal/hauler) project by [Rancher Government Solutions](https://github.com/rancherfederal) to collect, package, and distribute assets. `Hauler` simplifies the airgap process, by representing assets as content and collections and allows users to easily fetch, store, package, and distribute with declarative manifests or the command line. In this repositry, we generate these manifests and subsequent compressed archives aka `stores` for the Rancher Product Stack. Review the most recent release on the **[releases](https://github.com/zackbradys/rancher-airgap/releases)** page or review some of the **[example use cases](examples)!**
+We utilize the [Hauler](https://github.com/rancherfederal/hauler) project by [Rancher Government Solutions](https://github.com/rancherfederal) to collect, package, and distribute assets. `Hauler` simplifies the airgap process, by representing assets as content and collections and allows users to easily fetch, store, package, and distribute with declarative manifests or the command line. In this repositry, we generate these manifests and subsequent compressed archives aka `stores` for the Rancher Product Stack.
+
+**Review the most recent *[releases](https://github.com/zackbradys/rancher-airgap/releases)* or the high level *[example use cases](examples)*!**
 
 **High Level Workflow:**
 ```bash
