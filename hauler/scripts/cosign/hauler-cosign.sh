@@ -9,7 +9,7 @@ cd /opt/rancher/hauler/cosign
 ### Download Cosign
 ### https://github.com/sigstore/cosign
 curl -#OL https://github.com/sigstore/cosign/releases/download/v${vCosign}/cosign-linux-amd64
-mv /opt/rancher/hauler/cosign/cosign-linux-amd64 /opt/rancher/hauler/cosign/cosign && chmod 755 cosign
+mv cosign-linux-amd64 cosign && chmod 755 cosign
 
 ### Create Hauler Manifest
 cat << EOF >> /opt/rancher/hauler/cosign/rancher-airgap-cosign.yaml
@@ -19,7 +19,7 @@ metadata:
   name: rancher-airgap-files-cosign
 spec:
   files:
-    - path: /opt/rancher/hauler/cosign/cosign
+    - path: https://github.com/sigstore/cosign/releases/download/v${vCosign}/cosign-linux-amd64
       name: cosign
 EOF
 
