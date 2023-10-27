@@ -3,7 +3,7 @@
 ## Internet Connected Build Server
 ```bash
 ### Set Variables
-export vRancherAirgap=v1.4.1
+export vRancherAirgap=v1.4.2
 
 ### Fetch Individual Hauler TARs
 mkdir -p /opt/rancher/hauler

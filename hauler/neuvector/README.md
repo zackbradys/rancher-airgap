@@ -4,9 +4,9 @@
 
 ### Rancher NeuVector v5.2.2
 
-[hauler/neuvector/rancher-airgap-neuvector.yaml](https://rancher-airgap.s3.amazonaws.com/v1.4.1/hauler/neuvector/rancher-airgap-neuvector.yaml) - provides the content manifest for the assets.
+[hauler/neuvector/rancher-airgap-neuvector.yaml](https://rancher-airgap.s3.amazonaws.com/v1.4.2/hauler/neuvector/rancher-airgap-neuvector.yaml) - provides the content manifest for the assets.
 
-[hauler/neuvector/rancher-airgap-neuvector.tar.zst](https://rancher-airgap.s3.amazonaws.com/v1.4.1/hauler/neuvector/rancher-airgap-neuvector.tar.zst) - provides the compressed content and assets, via the manifest.
+[hauler/neuvector/rancher-airgap-neuvector.tar.zst](https://rancher-airgap.s3.amazonaws.com/v1.4.2/hauler/neuvector/rancher-airgap-neuvector.tar.zst) - provides the compressed content and assets, via the manifest.
 
 **Note:** The [Releases](https://github.com/zackbradys/rancher-airgap/releases) page contain the most up-to-date assets.
 
