@@ -9,7 +9,7 @@ cd /opt/rancher/hauler/helm
 ### Download Helm
 ### https://github.com/helm/helm
 curl -#OL https://get.helm.sh/helm-v${vHelm}-linux-amd64.tar.gz
-tar -xf helm-v${vHelm}-linux-amd64.tar.gz && chmod 755 helm
+tar -xf helm-v${vHelm}-linux-amd64.tar.gz && mv linux-amd64 helm && chmod 755 helm
 
 ### Create Hauler Manifest
 cat << EOF >> /opt/rancher/hauler/helm/rancher-airgap-helm.yaml
@@ -19,8 +19,8 @@ metadata:
   name: rancher-airgap-files-helm
 spec:
   files:
-    - path: /opt/rancher/hauler/helm/linux-amd64/helm
-      name: helm
+    - path: https://get.helm.sh/helm-v${vHelm}-linux-amd64.tar.gz
+      name: helm.tar.gz
 EOF
 
 ### Load Hauler Manifest into Store
