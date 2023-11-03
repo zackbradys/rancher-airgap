@@ -23,7 +23,7 @@ fetch -> validate -> save -> | <airgap> | -> load -> validate -> distribute
 * [hauler/rke2](hauler/rke2/README.md) - provides the content manifest for Rancher Kubernetes (RKE2)
   * currently supports: `RKE2 v1.25.15`
 * [hauler/rancher](hauler/rancher/README.md) - provides the content manifest for Cert-Manager
-  * currently supports: `Cert-Manager v1.13.1`
+  * currently supports: `Cert-Manager v1.13.2`
 * [hauler/rancher](hauler/rancher/README.md) - provides the content manifest for Rancher Multi-Cluster Manager
   * currently supports: `Rancher v2.7.9`
 * [hauler/longhorn](hauler/longhorn/README.md) - provides the content manifest for Rancher Longhorn
