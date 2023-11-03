@@ -4,7 +4,7 @@
 Using Hauler Manifests (generated using Rancher Airgap):
 ```bash
 ### Set Variables
-export vRancherAirgap=v1.5.0
+export vRancherAirgap=v1.5.1
 
 ### Setup Directories
 mkdir -p /opt/rancher/hauler
@@ -42,7 +42,7 @@ hauler store save --filename rancher-airgap.tar.zst
 Using Rancher Airgaps Tarballs (complied from the manifests):
 ```bash
 ### Set Variables
-export vRancherAirgap=v1.5.0
+export vRancherAirgap=v1.5.1
 
 ### Fetch Individual Hauler TARs
 mkdir -p /opt/rancher/hauler
