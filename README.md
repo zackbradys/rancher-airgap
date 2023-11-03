@@ -27,7 +27,7 @@ fetch -> validate -> save -> | <airgap> | -> load -> validate -> distribute
 * [hauler/rancher](hauler/rancher/README.md) - provides the content manifest for Rancher Multi-Cluster Manager
   * currently supports: `Rancher v2.7.9`
 * [hauler/longhorn](hauler/longhorn/README.md) - provides the content manifest for Rancher Longhorn
-  * currently supports: `Longhorn v1.5.1`
+  * currently supports: `Longhorn v1.5.2`
 * [hauler/neuvector](hauler/neuvector/README.md) - provides the content manifest for Rancher NeuVector
   * currently supports: `NeuVector v5.2.2`
 * [hauler/harvester](hauler/harvester/README.md) - provides the content manifest for Rancher Harvester

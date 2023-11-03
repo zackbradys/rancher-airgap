@@ -2,7 +2,7 @@
 
 ## Collection and Packaging
 
-### Rancher Longhorn v1.5.1
+### Rancher Longhorn v1.5.2
 
 [hauler/longhorn/rancher-airgap-longhorn.yaml](https://rancher-airgap.s3.amazonaws.com/v1.5.0/hauler/longhorn/rancher-airgap-longhorn.yaml) - provides the content manifest for the assets.
 
