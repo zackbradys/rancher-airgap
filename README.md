@@ -29,7 +29,7 @@ fetch -> validate -> save -> | <airgap> | -> load -> validate -> distribute
 * [hauler/longhorn](hauler/longhorn/README.md) - provides the content manifest for Rancher Longhorn
   * currently supports: `Longhorn v1.5.2`
 * [hauler/neuvector](hauler/neuvector/README.md) - provides the content manifest for Rancher NeuVector
-  * currently supports: `NeuVector v5.2.2`
+  * currently supports: `NeuVector v5.2.2-s1`
 * [hauler/harvester](hauler/harvester/README.md) - provides the content manifest for Rancher Harvester
   * currently supports: `Harvester v1.2.1`
 
