@@ -11,8 +11,8 @@ mkdir -p /opt/rancher/hauler
 cd /opt/rancher/hauler
 
 ### Download and Install Hauler
-curl -#OL curl -#OL https://github.com/rancherfederal/hauler/releases/download/v0.3.0/hauler_0.3.0_linux_amd64.tar.gz
-tar -xf hauler_0.3.0_linux_amd64.tar.gz && sudo cp hauler /usr/bin/hauler
+curl -#OL curl -#OL https://github.com/rancherfederal/hauler/releases/download/v0.4.0/hauler_0.4.0_linux_amd64.tar.gz
+tar -xf hauler_0.4.0_linux_amd64.tar.gz && sudo cp hauler /usr/bin/hauler
 
 ### Fetch Rancher Airgap Manifests
 curl -#OL https://rancher-airgap.s3.amazonaws.com/${vRancherAirgap}/hauler/helm/rancher-airgap-helm.yaml
@@ -78,7 +78,7 @@ cd /opt/rancher/hauler
 
 ### Untar and Install Hauler
 tar -xf /opt/rancher/hauler/rancher-airgap-hauler.tar.zst
-rm -rf README.md hauler_0.3.0_linux_amd64.tar.gz && mv hauler /usr/bin/hauler
+rm -rf README.md hauler_0.4.0_linux_amd64.tar.gz && mv hauler /usr/bin/hauler
 
 ### Import Hauler TARs (will take a minute)
 hauler store load rancher-airgap-helm.tar.zst rancher-airgap-cosign.tar.zst rancher-airgap-rke2.tar.zst rancher-airgap-rancher.tar.zst rancher-airgap-longhorn.tar.zst rancher-airgap-neuvector.tar.zst ### rancher-airgap-harvester.tar.zst
