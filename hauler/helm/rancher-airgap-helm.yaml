@@ -4,5 +4,5 @@ metadata:
   name: rancher-airgap-files-helm
 spec:
   files:
-    - path: https://get.helm.sh/helm-v3.13.1-linux-amd64.tar.gz
+    - path: https://get.helm.sh/helm-v3.13.2-linux-amd64.tar.gz
       name: helm.tar.gz
