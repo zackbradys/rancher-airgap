@@ -39,7 +39,7 @@ fetch -> validate -> save -> | <airgap> | -> load -> validate -> distribute
 * [hauler/helm](hauler/helm/README.md) - provides the content manifest for Helm
   * currently supports: `Helm v3.13.2`
 * [hauler/cosign](hauler/cosign/README.md) - provides the content manifest for Cosign
-  * currently supports: `Cosign v2.22.0`
+  * currently supports: `Cosign v2.22.1`
 
 **Note:** We are currently planning and working towards supporting every major version of our products. We will continue to update to the latest until we implement previous major verions.
 
