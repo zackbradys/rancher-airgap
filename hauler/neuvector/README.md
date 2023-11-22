@@ -2,7 +2,7 @@
 
 ## Collection and Packaging
 
-### Rancher NeuVector v5.2.2-s1
+### Rancher NeuVector v5.2.4
 
 [hauler/neuvector/rancher-airgap-neuvector.yaml](https://rancher-airgap.s3.amazonaws.com/v1.5.2/hauler/neuvector/rancher-airgap-neuvector.yaml) - provides the content manifest for the assets.
 

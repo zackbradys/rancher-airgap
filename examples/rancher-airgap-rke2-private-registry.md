@@ -86,13 +86,13 @@ mkdir -p /etc/rancher/rke2
 cd /opt/rancher/hauler
 
 ### Extract RKE2 Contents from Hauler Build Server
-hauler store extract hauler/rke2-selinux-0.14-1.${vPlatform}.noarch.rpm:latest
+hauler store extract hauler/rke2-selinux-0.16-1.${vPlatform}.noarch.rpm:latest
 hauler store extract hauler/rke2-common-${vRKE2}.rke2r1-0.${vPlatform}.x86_64.rpm:latest
 hauler store extract hauler/rke2-server-${vRKE2}.rke2r1-0.${vPlatform}.x86_64.rpm:latest
 ### Move Extracted Contents to Node
 
 ### Install RKE2 SELinux Package
-yum install -y rke2-selinux-0.14-1.${vPlatform}.noarch.rpm rke2-common-${vRKE2}.rke2r1-0.${vPlatform}.x86_64.rpm rke2-server-${vRKE2}.rke2r1-0.${vPlatform}.x86_64.rpm
+yum install -y rke2-selinux-0.16-1.${vPlatform}.noarch.rpm rke2-common-${vRKE2}.rke2r1-0.${vPlatform}.x86_64.rpm rke2-server-${vRKE2}.rke2r1-0.${vPlatform}.x86_64.rpm
 
 ### Configure RKE2 Config
 cat << EOF >> /etc/rancher/rke2/config.yaml
@@ -149,13 +149,13 @@ mkdir -p /etc/rancher/rke2
 cd /opt/rancher/hauler
 
 ### Extract RKE2 Contents from Hauler Build Server
-hauler store extract hauler/rke2-selinux-0.14-1.${vPlatform}.noarch.rpm:latest
+hauler store extract hauler/rke2-selinux-0.16-1.${vPlatform}.noarch.rpm:latest
 hauler store extract hauler/rke2-common-${vRKE2}.rke2r1-0.${vPlatform}.x86_64.rpm:latest
 hauler store extract hauler/rke2-agent-${vRKE2}.rke2r1-0.${vPlatform}.x86_64.rpm:latest
 ### Move Extracted Contents to Node
 
 ### Install RKE2 SELinux Package
-yum install -y rke2-selinux-0.14-1.${vPlatform}.noarch.rpm rke2-common-${vRKE2}.rke2r1-0.${vPlatform}.x86_64.rpm rke2-agent-${vRKE2}.rke2r1-0.${vPlatform}.x86_64.rpm
+yum install -y rke2-selinux-0.16-1.${vPlatform}.noarch.rpm rke2-common-${vRKE2}.rke2r1-0.${vPlatform}.x86_64.rpm rke2-agent-${vRKE2}.rke2r1-0.${vPlatform}.x86_64.rpm
 
 ### Configure RKE2 Config
 cat << EOF >> /etc/rancher/rke2/config.yaml
