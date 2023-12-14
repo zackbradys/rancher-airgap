@@ -1,5 +1,5 @@
 ### Set Variables
-export vHelm=3.13.2
+export vHelm=3.13.3
 
 ### Setup Working Directory
 rm -rf /opt/rancher/hauler/helm
