@@ -118,11 +118,13 @@ systemctl enable --now rke2-server.service
 sudo ln -s /var/lib/rancher/rke2/data/v1*/bin/kubectl /usr/bin/kubectl
 sudo ln -s /var/run/k3s/containerd/containerd.sock /var/run/containerd/containerd.sock
 
-### Update and Source your bashrc
-echo "export KUBECONFIG=/etc/rancher/rke2/rke2.yaml" >> ~/.bashrc
-echo "export PATH=$PATH:/var/lib/rancher/rke2/bin:/usr/local/bin/" >> ~/.bashrc
-echo "alias k=kubectl" >> ~/.bashrc
-source ~/.bashrc
+### Update and Source BASHRC
+cat << EOF >> ~/.bashrc
+export PATH=$PATH:/var/lib/rancher/rke2/bin:/usr/local/bin/
+export KUBECONFIG=/etc/rancher/rke2/rke2.yaml
+export CRI_CONFIG_FILE=/var/lib/rancher/rke2/agent/etc/crictl.yaml
+alias k=kubectl
+EOF
 
 ### Verify Node
 kubectl get nodes
