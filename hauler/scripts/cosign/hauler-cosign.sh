@@ -6,12 +6,8 @@ rm -rf /opt/rancher/hauler/cosign
 mkdir -p /opt/rancher/hauler/cosign
 cd /opt/rancher/hauler/cosign
 
-### Download Cosign
-### https://github.com/sigstore/cosign
-curl -#OL https://github.com/sigstore/cosign/releases/download/v${vCosign}/cosign-linux-amd64
-mv cosign-linux-amd64 cosign && chmod 755 cosign
-
 ### Create Hauler Manifest
+### Cosign -> https://github.com/sigstore/cosign
 cat << EOF >> /opt/rancher/hauler/cosign/rancher-airgap-cosign.yaml
 apiVersion: content.hauler.cattle.io/v1alpha1
 kind: Files

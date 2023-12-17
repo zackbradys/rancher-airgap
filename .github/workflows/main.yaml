@@ -22,8 +22,8 @@ jobs:
       - name: Rancher Airgap - Build Hauler
         run: |
           sh hauler/scripts/hauler/hauler-hauler.sh
-          mv /opt/rancher/hauler/hauler/hauler hauler/hauler/hauler
-          mv /opt/rancher/hauler/rancher-airgap-hauler.tar.zst hauler/hauler/rancher-airgap-hauler.tar.zst
+          mv /opt/rancher/hauler/hauler/rancher-airgap-hauler.yaml hauler/hauler/rancher-airgap-hauler.yaml
+          mv /opt/rancher/hauler/hauler/rancher-airgap-hauler.tar.zst hauler/hauler/rancher-airgap-hauler.tar.zst
           pwd && ls -la hauler/hauler
 
       - name: Rancher Airgap - Build Helm
@@ -112,6 +112,12 @@ jobs:
       - name: Pre-Build Setup/Checks
         run: |
           pwd && ls -la
+
+      - name: Rancher Airgap - Test/Lint Hauler
+        run: |
+          cd /opt/rancher/hauler/hauler
+          hauler store info
+          rm -rf /opt/rancher/hauler/hauler
 
       - name: Rancher Airgap - Test/Lint Helm
         run: |

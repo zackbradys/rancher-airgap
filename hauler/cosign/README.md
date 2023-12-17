@@ -2,7 +2,7 @@
 
 ## Collection and Packaging
 
-### Cosign v2.22.1 - Sigstore
+### Cosign v2.2.2 - Sigstore
 
 [hauler/cosign/cosign](https://rancher-airgap.s3.amazonaws.com/v1.6.1/hauler/cosign/cosign) - provides the binary for Cosign.
 

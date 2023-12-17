@@ -35,18 +35,16 @@ fetch -> validate -> save -> | <airgap> | -> load -> validate -> distribute
 
 ### Addons
 * [hauler/hauler](hauler/hauler/README.md) - provides the content manifest for Hauler
-  * currently supports: `Hauler v0.4.0`
+  * currently supports: `Hauler v0.4.1`
 * [hauler/helm](hauler/helm/README.md) - provides the content manifest for Helm
   * currently supports: `Helm v3.13.3`
 * [hauler/cosign](hauler/cosign/README.md) - provides the content manifest for Cosign
-  * currently supports: `Cosign v2.22.1`
+  * currently supports: `Cosign v2.2.2`
 
 **Note:** We are currently planning and working towards supporting every major version of our products. We will continue to update to the latest until we implement previous major verions.
 
 ## Hauler Installation
 ```bash
-### Hauler v0.4.0 (latest)
 ### https://github.com/rancherfederal/hauler
-curl -#OL https://github.com/rancherfederal/hauler/releases/download/v0.4.0/hauler_0.4.0_linux_amd64.tar.gz
-tar -xf hauler_0.4.0_linux_amd64.tar.gz && sudo cp hauler /usr/bin/hauler
+curl -sfL https://get.hauler.dev | bash
 ```
