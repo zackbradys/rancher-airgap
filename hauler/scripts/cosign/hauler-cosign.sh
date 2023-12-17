@@ -1,5 +1,5 @@
 ### Set Variables
-export vCosign=2.22.1
+export vCosign=2.2.2
 
 ### Setup Working Directory
 rm -rf /opt/rancher/hauler/cosign
