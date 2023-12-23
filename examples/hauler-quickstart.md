@@ -80,7 +80,7 @@ cd /opt/rancher/hauler
 
 ### Untar and Install Hauler
 tar -xf /opt/rancher/hauler/rancher-airgap-hauler.tar.zst
-rm -rf README.md hauler_0.4.1_linux_amd64.tar.gz && mv hauler /usr/bin/hauler
+rm -rf README.md hauler_0.4.2_linux_amd64.tar.gz && mv hauler /usr/bin/hauler
 
 ### Import Hauler TARs (will take a minute)
 hauler store load rancher-airgap-helm.tar.zst rancher-airgap-cosign.tar.zst rancher-airgap-rke2.tar.zst rancher-airgap-rancher.tar.zst rancher-airgap-longhorn.tar.zst rancher-airgap-neuvector.tar.zst # rancher-airgap-harvester.tar.zst

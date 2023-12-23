@@ -2,7 +2,7 @@
 
 ## Collection and Packaging
 
-### Hauler v0.4.1 - Rancher Government Solutions
+### Hauler v0.4.2 - Rancher Government Solutions
 
 [hauler/hauler/hauler](https://rancher-airgap.s3.amazonaws.com/v1.6.1/hauler/hauler/hauler) - provides the binary for Hauler.
 
