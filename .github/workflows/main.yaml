@@ -94,7 +94,7 @@ jobs:
           git status
           git config --global user.name "${GITHUB_ACTOR}"
           git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
-          git add hauler/hauler/hauler hauler/helm/helm hauler/cosign/cosign *.yaml
+          git add *.yaml hauler/hauler/hauler hauler/helm/helm hauler/cosign/cosign
           git commit -a -m "updated rancher airgap assets [github-actions]"
           git push
 

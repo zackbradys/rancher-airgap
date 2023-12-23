@@ -1,8 +1,0 @@
-apiVersion: content.hauler.cattle.io/v1alpha1
-kind: Files
-metadata:
-  name: rancher-airgap-files-cosign
-spec:
-  files:
-    - path: https://github.com/sigstore/cosign/releases/download/v2.22.1/cosign-linux-amd64
-      name: cosign
