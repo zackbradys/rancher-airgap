@@ -8,7 +8,7 @@ Complete the following commands on the Internet Connected Server. For the initia
 
 ```bash
 ### Set Variables
-export vRancherAirgap=v1.6.2
+export vRancherAirgap=v1.6.3
 
 ### Fetch Individual Hauler TARs
 mkdir -p /opt/rancher/hauler
@@ -75,7 +75,7 @@ sudo su
 curl -X GET $IP:5000/v2/_catalog
 
 ### Install OS Packages
-yum install -y zip zstd tree jq iptables container-selinux iptables libnetfilter_conntrack libnfnetlink libnftnl policycoreutils-python-utils cryptsetup
+yum install -y zip zstd tree jq iptables container-selinux libnetfilter_conntrack libnfnetlink libnftnl policycoreutils-python-utils cryptsetup
 yum install -y nfs-utils && yum install -y iscsi-initiator-utils && echo "InitiatorName=$(/sbin/iscsi-iname)" > /etc/iscsi/initiatorname.iscsi && systemctl enable --now iscsid
 
 ### Modify NetworkManager

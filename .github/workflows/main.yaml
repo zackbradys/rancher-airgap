@@ -72,6 +72,7 @@ jobs:
         run: |
           sh hauler/scripts/harvester/hauler-harvester.sh
           mv /opt/rancher/hauler/harvester/rancher-airgap-harvester.yaml hauler/harvester/rancher-airgap-harvester.yaml
+          mv /opt/rancher/hauler/harvester/rancher-airgap-harvester.tar.zst hauler/harvester/rancher-airgap-harvester.tar.zst
           pwd && ls -la hauler/harvester
 
       - name: Setup AWS Credentials and CLI
@@ -94,7 +95,7 @@ jobs:
           git status
           git config --global user.name "${GITHUB_ACTOR}"
           git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
-          git add *.yaml hauler/hauler/hauler hauler/helm/helm hauler/cosign/cosign
+          git add *.yaml
           git commit -a -m "updated rancher airgap assets [github-actions]"
           git push
 
