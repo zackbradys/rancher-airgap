@@ -1,0 +1,21 @@
+apiVersion: content.hauler.cattle.io/v1alpha1
+kind: Charts
+metadata:
+  name: rancher-airgap-charts-neuvector
+spec:
+  charts:
+    - name: core
+      repoURL: https://neuvector.github.io/neuvector-helm
+      version: 2.6.6
+---
+apiVersion: content.hauler.cattle.io/v1alpha1
+kind: Images
+metadata:
+  name: rancher-airgap-images-neuvector
+spec:
+  images:
+    - name: docker.io/neuvector/enforcer:5.2.4
+    - name: docker.io/neuvector/controller:5.2.4
+    - name: docker.io/neuvector/manager:5.2.4
+    - name: docker.io/neuvector/scanner:latest
+    - name: docker.io/neuvector/updater:latest

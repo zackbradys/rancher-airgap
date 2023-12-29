@@ -1,0 +1,8 @@
+apiVersion: content.hauler.cattle.io/v1alpha1
+kind: Files
+metadata:
+  name: rancher-airgap-files-helm
+spec:
+  files:
+    - path: https://get.helm.sh/helm-v3.13.3-linux-amd64.tar.gz
+      name: helm.tar.gz
