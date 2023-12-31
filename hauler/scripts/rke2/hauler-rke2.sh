@@ -13,7 +13,6 @@ sed -i "s#^#    - name: #" rke2-images.txt
 
 ### Set RKE2 Images Variable
 rke2Images=$(cat rke2-images.txt)
-rm -rf /opt/rancher/hauler/rke2/rke2-images.txt
 
 ### Create Hauler Manifest
 cat << EOF >> /opt/rancher/hauler/rke2/rancher-airgap-rke2.yaml

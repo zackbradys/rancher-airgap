@@ -15,9 +15,8 @@ helm repo update
 helm template neuvector/core --version=${vNeuVector} | grep 'image:' | sed 's/"//g' | awk '{ print $2 }' > neuvector-images.txt
 sed -i "s#^#    - name: #" neuvector-images.txt
 
-### Set Rancher Images Variable
+### Set NeuVector Images Variable
 neuvectorImages=$(cat neuvector-images.txt)
-rm -rf /opt/rancher/hauler/neuvector/neuvector-images.txt
 
 ### Create Hauler Manifest
 cat << EOF >> /opt/rancher/hauler/neuvector/rancher-airgap-neuvector.yaml

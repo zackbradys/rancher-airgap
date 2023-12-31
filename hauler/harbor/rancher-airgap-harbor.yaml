@@ -1,0 +1,26 @@
+apiVersion: content.hauler.cattle.io/v1alpha1
+kind: Charts
+metadata:
+  name: rancher-airgap-charts-harbor
+spec:
+  charts:
+    - name: harbor
+      repoURL: https://harbor.github.io/harbor-helm
+      version: 1.13.1
+---
+apiVersion: content.hauler.cattle.io/v1alpha1
+kind: Images
+metadata:
+  name: rancher-airgap-images-harbor
+spec:
+  images:
+    - name: goharbor/harbor-core:v2.9.1
+    - name: goharbor/harbor-jobservice:v2.9.1
+    - name: goharbor/harbor-portal:v2.9.1
+    - name: goharbor/registry-photon:v2.9.1
+    - name: goharbor/harbor-registryctl:v2.9.1
+    - name: goharbor/harbor-db:v2.9.1
+    - name: goharbor/harbor-db:v2.9.1
+    - name: goharbor/harbor-db:v2.9.1
+    - name: goharbor/redis-photon:v2.9.1
+    - name: goharbor/trivy-adapter-photon:v2.9.1

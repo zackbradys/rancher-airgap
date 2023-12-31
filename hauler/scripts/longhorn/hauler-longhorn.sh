@@ -11,9 +11,8 @@ cd /opt/rancher/hauler/longhorn
 curl -#L https://raw.githubusercontent.com/longhorn/longhorn/v${vLonghorn}/deploy/longhorn-images.txt -o longhorn-images.txt
 sed -i "s#^#    - name: #" longhorn-images.txt
 
-### Set Rancher Images Variable
+### Set Longhorn Images Variable
 longhornImages=$(cat longhorn-images.txt)
-rm -rf /opt/rancher/hauler/longhorn/longhorn-images.txt
 
 ### Create Hauler Manifest
 cat << EOF >> /opt/rancher/hauler/longhorn/rancher-airgap-longhorn.yaml

@@ -13,9 +13,8 @@ helm repo add jetstack https://charts.jetstack.io && helm repo update
 helm template jetstack/cert-manager --version=${vCertManager} | grep 'image:' | sed 's/"//g' | awk '{ print $2 }' > cert-manager-images.txt
 sed -i "s#^#    - name: #" cert-manager-images.txt
 
-### Set Cert Manager Images Variable
+### Set Cert-Manager Images Variable
 certmanagerImages=$(cat cert-manager-images.txt)
-rm -rf /opt/rancher/hauler/rancher/cert-manager-images.txt
 
 ### Download Rancher Images
 ### https://github.com/rancher/rancher
@@ -24,7 +23,6 @@ sed -i "s#^#    - name: #" rancher-images.txt
 
 ### Set Rancher Images Variable
 rancherImages=$(cat rancher-images.txt)
-rm -rf /opt/rancher/hauler/rancher/rancher-images.txt
 
 ### Create Hauler Manifest
 cat << EOF >> /opt/rancher/hauler/rancher/rancher-airgap-rancher.yaml

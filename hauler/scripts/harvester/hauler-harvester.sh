@@ -13,7 +13,6 @@ sed -i "/^\s*#/d" harvester-images.txt && sed -i "/^$/d" harvester-images.txt &&
 
 ### Set Harvester Images Variable
 harvesterImages=$(cat harvester-images.txt)
-rm -rf /opt/rancher/hauler/harvester/harvester-images.txt
 
 ### Create Hauler Manifest
 cat << EOF >> /opt/rancher/hauler/harvester/rancher-airgap-harvester.yaml
