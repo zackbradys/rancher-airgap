@@ -7,6 +7,8 @@ rm -rf /opt/rancher/hauler/rancher
 mkdir -p /opt/rancher/hauler/rancher
 cd /opt/rancher/hauler/rancher
 
+### Rancher Steps
+
 ### Download Cert Manager Images
 ### https://github.com/cert-manager/cert-manager
 helm repo add jetstack https://charts.jetstack.io && helm repo update
@@ -66,28 +68,25 @@ hauler store sync -f rancher-airgap-rancher.yaml
 ### Compress Hauler Store Contents
 hauler store save --filename rancher-airgap-rancher.tar.zst
 
-### Setup Working Directory
-rm -rf /opt/rancher/hauler/rancher
-mkdir -p /opt/rancher/hauler/rancher
-cd /opt/rancher/hauler/rancher
+### Rancher Minimal Steps
 
 ### Download Cert Manager Images
 ### https://github.com/cert-manager/cert-manager
 helm repo add jetstack https://charts.jetstack.io && helm repo update
-helm template jetstack/cert-manager --version=${vCertManager} | grep 'image:' | sed 's/"//g' | awk '{ print $2 }' > cert-manager-images.txt
-sed -i "s#^#    - name: #" cert-manager-images.txt
+helm template jetstack/cert-manager --version=${vCertManager} | grep 'image:' | sed 's/"//g' | awk '{ print $2 }' > cert-manager-images-minimal.txt
+sed -i "s#^#    - name: #" cert-manager-images-minimal.txt
 
 ### Set Cert-Manager Images Variable
-certmanagerImages=$(cat cert-manager-images.txt)
+certmanagerImages=$(cat cert-manager-images-minimal.txt)
 
 ### Download Rancher Images
 ### https://github.com/rancher/rancher
-curl -#L https://github.com/rancher/rancher/releases/download/v${vRancher}/rancher-images.txt -o rancher-images.txt
-sed -i '/neuvector|minio|gke|aks|eks|sriov|harvester|mirrored|longhorn|thanos|tekton|istio|multus|hyper|jenkins|prom|grafana|windows/d' rancher-images.txt
-sed -i "s#^#    - name: #" rancher-images.txt
+curl -#L https://github.com/rancher/rancher/releases/download/v${vRancher}/rancher-images.txt -o rancher-images-minimal.txt
+sed -i '/neuvector|minio|gke|aks|eks|sriov|harvester|mirrored|longhorn|thanos|tekton|istio|multus|hyper|jenkins|prom|grafana|windows/d' rancher-images-minimal.txt
+sed -i "s#^#    - name: #" rancher-images-minimal.txt
 
 ### Set Rancher Images Variable
-rancherImages=$(cat rancher-images.txt)
+rancherImages=$(cat rancher-images-minimal.txt)
 
 ### Create Hauler Manifest
 cat << EOF >> /opt/rancher/hauler/rancher/rancher-airgap-rancher-minimal.yaml
