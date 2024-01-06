@@ -64,7 +64,7 @@ Complete the following commands on the server node(s) in the cluster. You will n
 
 ```bash
 ### Set Variables
-export vRKE2=1.26.11
+export vRKE2=1.26.12
 export vPlatform=el9
 export IP=0.0.0.0
 
@@ -136,7 +136,7 @@ Complete the following commands on the agent node(s) in the cluster. You will ne
 
 ```bash
 ### Set Variables
-export vRKE2=1.26.11
+export vRKE2=1.26.12
 export vPlatform=el9
 export IP=0.0.0.0
 

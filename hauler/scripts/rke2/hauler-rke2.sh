@@ -1,5 +1,5 @@
 ### Set Variables
-export vRKE2=1.26.11
+export vRKE2=1.26.12
 
 ### Setup Working Directory
 rm -rf /opt/rancher/hauler/rke2
