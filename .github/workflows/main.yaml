@@ -52,6 +52,11 @@ jobs:
           sh hauler/scripts/rancher/hauler-rancher.sh
           mv /opt/rancher/hauler/rancher/rancher-airgap-rancher.yaml hauler/rancher/rancher-airgap-rancher.yaml
           mv /opt/rancher/hauler/rancher/rancher-airgap-rancher.tar.zst hauler/rancher/rancher-airgap-rancher.tar.zst
+          pwd && ls -la hauler/rancher
+
+      - name: Rancher Airgap - Build Rancher Minimal
+        run: |
+          sh hauler/scripts/rancher/hauler-rancher-minimal.sh
           mv /opt/rancher/hauler/rancher/rancher-airgap-rancher-minimal.yaml hauler/rancher/rancher-airgap-rancher-minimal.yaml
           mv /opt/rancher/hauler/rancher/rancher-airgap-rancher-minimal.tar.zst hauler/rancher/rancher-airgap-rancher-minimal.tar.zst
           pwd && ls -la hauler/rancher
