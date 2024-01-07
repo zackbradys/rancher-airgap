@@ -108,7 +108,7 @@ spec:
     - name: docker.io/rancher/klipper-lb:v0.4.3
     - name: docker.io/rancher/pause:3.6
     - name: docker.io/rancher/mirrored-ingress-nginx-kube-webhook-certgen:v20230312-helm-chart-4.5.2-28-g66a760794
-    - name: docker.io/rancher/nginx-ingress-controller:nginx-1.6.4-hardened4
+    - name: docker.io/rancher/nginx-ingress-controller:nginx-1.7.0-hardened4
     - name: docker.io/rancher/rke2-cloud-provider:v1.26.3-build20230406
     - name: docker.io/rancher/mirrored-sig-storage-snapshot-controller:v6.2.1
     - name: docker.io/rancher/mirrored-sig-storage-snapshot-validation-webhook:v6.2.1

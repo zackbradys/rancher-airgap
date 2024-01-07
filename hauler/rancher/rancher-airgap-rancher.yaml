@@ -530,7 +530,7 @@ spec:
     - name: rancher/nginx-ingress-controller:nginx-1.2.1-hardened9
     - name: rancher/nginx-ingress-controller:nginx-1.4.1-hardened2
     - name: rancher/nginx-ingress-controller:nginx-1.5.1-rancher2
-    - name: rancher/nginx-ingress-controller:nginx-1.6.4-hardened4
+    - name: rancher/nginx-ingress-controller:nginx-1.7.0-hardened4
     - name: rancher/nginx-ingress-controller:nginx-1.7.0-rancher1
     - name: rancher/nginx-ingress-controller:nginx-1.7.1-hardened1
     - name: rancher/pause:3.6
