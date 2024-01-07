@@ -3,7 +3,9 @@ export vRancher=2.7.9
 export vCertManager=v1.13.3
 
 ### Setup Working Directory
-cd /opt/rancher/hauler/rancher
+rm -rf /opt/rancher/hauler/rancher-minimal
+mkdir -p /opt/rancher/hauler/rancher-minimal
+cd /opt/rancher/hauler/rancher-minimal
 
 ### Download Cert Manager Images
 ### https://github.com/cert-manager/cert-manager
@@ -24,7 +26,7 @@ sed -i "s#^#    - name: #" rancher-images-minimal.txt
 rancherImagesMinimal=$(cat rancher-images-minimal.txt)
 
 ### Create Hauler Manifest
-cat << EOF >> /opt/rancher/hauler/rancher/rancher-airgap-rancher-minimal.yaml
+cat << EOF >> /opt/rancher/hauler/rancher-minimal/rancher-airgap-rancher-minimal.yaml
 apiVersion: content.hauler.cattle.io/v1alpha1
 kind: Files
 metadata:

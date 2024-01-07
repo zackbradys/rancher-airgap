@@ -57,8 +57,8 @@ jobs:
       - name: Rancher Airgap - Build Rancher Minimal
         run: |
           sh hauler/scripts/rancher/hauler-rancher-minimal.sh
-          mv /opt/rancher/hauler/rancher/rancher-airgap-rancher-minimal.yaml hauler/rancher/rancher-airgap-rancher-minimal.yaml
-          mv /opt/rancher/hauler/rancher/rancher-airgap-rancher-minimal.tar.zst hauler/rancher/rancher-airgap-rancher-minimal.tar.zst
+          mv /opt/rancher/hauler/rancher-minimal/rancher-airgap-rancher-minimal.yaml hauler/rancher/rancher-airgap-rancher-minimal.yaml
+          mv /opt/rancher/hauler/rancher-minimal/rancher-airgap-rancher-minimal.tar.zst hauler/rancher/rancher-airgap-rancher-minimal.tar.zst
           pwd && ls -la hauler/rancher
 
       - name: Rancher Airgap - Build Longhorn
@@ -157,6 +157,12 @@ jobs:
           cd /opt/rancher/hauler/rancher
           hauler store info
           rm -rf /opt/rancher/hauler/rancher
+
+      - name: Rancher Airgap - Test/Lint Rancher Minimal
+        run: |
+          cd /opt/rancher/hauler/rancher-minimal
+          hauler store info
+          rm -rf /opt/rancher/hauler/rancher-minimal
 
       - name: Rancher Airgap - Test/Lint Longhorn
         run: |
