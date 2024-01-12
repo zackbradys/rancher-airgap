@@ -19,7 +19,14 @@ certmanagerImagesMinimal=$(cat cert-manager-images-minimal.txt)
 ### Download Rancher Images
 ### https://github.com/rancher/rancher
 curl -#L https://github.com/rancher/rancher/releases/download/v${vRancher}/rancher-images.txt -o rancher-images-minimal.txt
-sed -i '/neuvector\|minio\|gke\|aks\|eks\|sriov\|harvester\|mirrored\|longhorn\|thanos\|tekton\|istio\|multus\|hyper\|jenkins\|prom\|grafana\|windows/d' rancher-images-minimal.txt
+
+sed -i '/neuvector\|minio\|gke\|aks\|eks\|sriov\|harvester\|longhorn\|thanos\|tekton\|istio\|multus\|hyper\|jenkins\|prom\|grafana\|windows/d' rancher-images-minimal.txt
+
+awk -F: '{print $1}' rancher-images-minimal.txt | while read -r i; do
+  grep -w "$i" rancher-images-minimal.txt | sort -Vr | head -1 >> rancher-images-minimal-unsorted.txt
+done
+
+sort -u rancher-images-minimal-unsorted.txt > rancher-images-minimal.txt
 sed -i "s#^#    - name: #" rancher-images-minimal.txt
 
 ### Set Rancher Images Variable
