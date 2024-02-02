@@ -17,10 +17,8 @@ jobs:
 
       - name: Dependencies/Setup/Checks
         run: |
-          sudo yum install -y unzip zstd git
-          sudo curl -sfL https://get.hauler.dev | bash
           hauler version
-          pwd && ls -la
+          pwd && ls -lh
 
       - name: Build Hauler
         run: |
@@ -106,71 +104,89 @@ jobs:
 
       - name: Dependencies/Setup/Checks
         run: |
-          sudo yum install -y unzip zstd git
-          sudo curl -sfL https://get.hauler.dev | bash
           hauler version
-          pwd && ls -la
+          pwd && ls -lh
 
       - name: Test/Lint Hauler
         run: |
           cd hauler/hauler
           hauler store sync -f rancher-airgap-hauler.yaml
+          hauler store save -f hauler.tar.zst
           hauler store info
+          ls -lh && rm -rf store hauler.tar.zst
 
       - name: Test/Lint Helm
         run: |
           cd hauler/helm
           hauler store sync -f rancher-airgap-helm.yaml
+          hauler store save -f helm.tar.zst
           hauler store info
+          ls -lh && rm -rf store helm.tar.zst
 
       - name: Test/Lint Cosign
         run: |
           cd hauler/cosign
           hauler store sync -f rancher-airgap-cosign.yaml
+          hauler store save -f cosign.tar.zst
           hauler store info
+          ls -lh && rm -rf store cosign.tar.zst
 
       - name: Test/Lint RKE2
         run: |
           cd hauler/rke2
-          hauler store sync -f rancher-airgap-rke2.yaml
+          hauler store sync -f rancher-airgap-rke2.yaml --platform linux/amd64
+          hauler store save -f rke2.tar.zst
           hauler store info
+          ls -lh && rm -rf store rke2.tar.zst
 
       - name: Test/Lint Rancher
         run: |
           cd hauler/rancher
-          hauler store sync -f rancher-airgap-rancher.yaml
+          hauler store sync -f rancher-airgap-rancher.yaml --platform linux/amd64
+          hauler store save -f rancher.tar.zst
           hauler store info
+          ls -lh && rm -rf store rancher.tar.zst
 
       - name: Test/Lint Rancher Minimal
         run: |
           cd hauler/rancher
           rm -rf store
-          hauler store sync -f rancher-airgap-rancher-minimal.yaml
+          hauler store sync -f rancher-airgap-rancher-minimal.yaml --platform linux/amd64
+          hauler store save -f rancher-minimal.tar.zst
           hauler store info
+          ls -lh && rm -rf store rancher-minimal.tar.zst
 
       - name: Test/Lint Longhorn
         run: |
           cd hauler/longhorn
-          hauler store sync -f rancher-airgap-longhorn.yaml
+          hauler store sync -f rancher-airgap-longhorn.yaml --platform linux/amd64
+          hauler store save -f longhorn.tar.zst
           hauler store info
+          ls -lh && rm -rf store longhorn.tar.zst
 
       - name: Test/Lint NeuVector
         run: |
           cd hauler/neuvector
-          hauler store sync -f rancher-airgap-neuvector.yaml
+          hauler store sync -f rancher-airgap-neuvector.yaml --platform linux/amd64
+          hauler store save -f neuvector.tar.zst
           hauler store info
+          ls -lh && rm -rf store neuvector.tar.zst
 
       - name: Test/Lint Harvester
         run: |
           cd hauler/harvester
-          hauler store sync -f rancher-airgap-harvester.yaml
+          hauler store sync -f rancher-airgap-harvester.yaml --platform linux/amd64
+          hauler store save -f harvester.tar.zst
           hauler store info
+          ls -lh && rm -rf store harvester.tar.zst
 
       - name: Test/Lint Harbor
         run: |
           cd hauler/harbor
-          hauler store sync -f rancher-airgap-harbor.yaml
+          hauler store sync -f rancher-airgap-harbor.yaml --platform linux/amd64
+          hauler store save -f harbor.tar.zst
           hauler store info
+          ls -lh && rm -rf store harbor.tar.zst
 
   rancher-airgap-release:
     name: Rancher Airgap - Release Job
@@ -185,8 +201,6 @@ jobs:
 
       - name: Dependencies/Setup/Checks
         run: |
-          sudo yum install -y unzip zstd git
-          sudo curl -sfL https://get.hauler.dev | bash
           hauler version
           pwd && ls -la
 
