@@ -1,12 +1,12 @@
-name: hauler-workflow
+name: rancher-airgap-workflow
 on:
    push:
      tags:
        - '*'
 
 jobs:
-  rancher-airgap-hauler:
-    name: Rancher Airgap Build Hauler Job
+  rancher-airgap-build:
+    name: Rancher Airgap - Build Job
     runs-on: [self-hosted, linux, X64, general]
     steps:
       - name: Checkout Repository
@@ -15,92 +15,72 @@ jobs:
           ref: main
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Pre-Build Setup/Checks
+      - name: Dependencies/Setup/Checks
         run: |
+          sudo yum install -y unzip zstd git
+          sudo curl -sfL https://get.hauler.dev | bash
+          hauler version
           pwd && ls -la
 
-      - name: Rancher Airgap - Build Hauler
+      - name: Build Hauler
         run: |
           sh hauler/scripts/hauler/hauler-hauler.sh
           mv /opt/rancher/hauler/hauler/rancher-airgap-hauler.yaml hauler/hauler/rancher-airgap-hauler.yaml
-          mv /opt/rancher/hauler/hauler/rancher-airgap-hauler.tar.zst hauler/hauler/rancher-airgap-hauler.tar.zst
           pwd && ls -la hauler/hauler
 
-      - name: Rancher Airgap - Build Helm
+      - name: Build Helm
         run: |
           sh hauler/scripts/helm/hauler-helm.sh
           mv /opt/rancher/hauler/helm/rancher-airgap-helm.yaml hauler/helm/rancher-airgap-helm.yaml
-          mv /opt/rancher/hauler/helm/rancher-airgap-helm.tar.zst hauler/helm/rancher-airgap-helm.tar.zst
           pwd && ls -la hauler/helm
 
-      - name: Rancher Airgap - Build Cosign
+      - name: Build Cosign
         run: |
           sh hauler/scripts/cosign/hauler-cosign.sh
           mv /opt/rancher/hauler/cosign/rancher-airgap-cosign.yaml hauler/cosign/rancher-airgap-cosign.yaml
-          mv /opt/rancher/hauler/cosign/rancher-airgap-cosign.tar.zst hauler/cosign/rancher-airgap-cosign.tar.zst
           pwd && ls -la hauler/cosign
 
-      - name: Rancher Airgap - Build RKE2
+      - name: Build RKE2
         run: |
           sh hauler/scripts/rke2/hauler-rke2.sh
           mv /opt/rancher/hauler/rke2/rancher-airgap-rke2.yaml hauler/rke2/rancher-airgap-rke2.yaml
-          mv /opt/rancher/hauler/rke2/rancher-airgap-rke2.tar.zst hauler/rke2/rancher-airgap-rke2.tar.zst
           pwd && ls -la hauler/rke2
 
-      - name: Rancher Airgap - Build Rancher
+      - name: Build Rancher
         run: |
           sh hauler/scripts/rancher/hauler-rancher.sh
           mv /opt/rancher/hauler/rancher/rancher-airgap-rancher.yaml hauler/rancher/rancher-airgap-rancher.yaml
-          mv /opt/rancher/hauler/rancher/rancher-airgap-rancher.tar.zst hauler/rancher/rancher-airgap-rancher.tar.zst
           pwd && ls -la hauler/rancher
 
-      - name: Rancher Airgap - Build Rancher Minimal
+      - name: Build Rancher Minimal
         run: |
           sh hauler/scripts/rancher/hauler-rancher-minimal.sh
           mv /opt/rancher/hauler/rancher-minimal/rancher-airgap-rancher-minimal.yaml hauler/rancher/rancher-airgap-rancher-minimal.yaml
-          mv /opt/rancher/hauler/rancher-minimal/rancher-airgap-rancher-minimal.tar.zst hauler/rancher/rancher-airgap-rancher-minimal.tar.zst
           pwd && ls -la hauler/rancher
 
-      - name: Rancher Airgap - Build Longhorn
+      - name: Build Longhorn
         run: |
           sh hauler/scripts/longhorn/hauler-longhorn.sh
           mv /opt/rancher/hauler/longhorn/rancher-airgap-longhorn.yaml hauler/longhorn/rancher-airgap-longhorn.yaml
-          mv /opt/rancher/hauler/longhorn/rancher-airgap-longhorn.tar.zst hauler/longhorn/rancher-airgap-longhorn.tar.zst
           pwd && ls -la hauler/longhorn
 
-      - name: Rancher Airgap - Build NeuVector
+      - name: Build NeuVector
         run: |
           sh hauler/scripts/neuvector/hauler-neuvector.sh
           mv /opt/rancher/hauler/neuvector/rancher-airgap-neuvector.yaml hauler/neuvector/rancher-airgap-neuvector.yaml
-          mv /opt/rancher/hauler/neuvector/rancher-airgap-neuvector.tar.zst hauler/neuvector/rancher-airgap-neuvector.tar.zst
           pwd && ls -la hauler/neuvector
 
-      - name: Rancher Airgap - Build Harvester
+      - name: Build Harvester
         run: |
           sh hauler/scripts/harvester/hauler-harvester.sh
           mv /opt/rancher/hauler/harvester/rancher-airgap-harvester.yaml hauler/harvester/rancher-airgap-harvester.yaml
-          mv /opt/rancher/hauler/harvester/rancher-airgap-harvester.tar.zst hauler/harvester/rancher-airgap-harvester.tar.zst
           pwd && ls -la hauler/harvester
 
-      - name: Rancher Airgap - Build Harbor
+      - name: Build Harbor
         run: |
           sh hauler/scripts/harbor/hauler-harbor.sh
           mv /opt/rancher/hauler/harbor/rancher-airgap-harbor.yaml hauler/harbor/rancher-airgap-harbor.yaml
-          mv /opt/rancher/hauler/harbor/rancher-airgap-harbor.tar.zst hauler/harbor/rancher-airgap-harbor.tar.zst
           pwd && ls -la hauler/harbor
-
-      - name: Setup AWS Credentials and CLI
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION }}
-
-      - name: Upload Assets to AWS S3 Bucket
-        run: |
-          aws s3 ls s3://rancher-airgap/
-          aws s3 cp hauler s3://rancher-airgap/${GITHUB_REF##*/}/hauler --recursive
-          aws s3 ls s3://rancher-airgap/${GITHUB_REF##*/}/hauler
 
       - name: Commit and Push Repository
         continue-on-error: true
@@ -114,9 +94,9 @@ jobs:
           git push
 
   rancher-airgap-testing:
-    name: Rancher Airgap Test and Lint Job
+    name: Rancher Airgap - Test/Lint Job
     runs-on: [self-hosted, linux, X64, general]
-    needs: [rancher-airgap-hauler]
+    needs: [rancher-airgap-build]
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
@@ -124,72 +104,76 @@ jobs:
           ref: main
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Pre-Build Setup/Checks
+      - name: Dependencies/Setup/Checks
         run: |
+          sudo yum install -y unzip zstd git
+          sudo curl -sfL https://get.hauler.dev | bash
+          hauler version
           pwd && ls -la
 
-      - name: Rancher Airgap - Test/Lint Hauler
+      - name: Test/Lint Hauler
         run: |
-          cd /opt/rancher/hauler/hauler
+          cd hauler/hauler
+          hauler store sync -f rancher-airgap-hauler.yaml
           hauler store info
-          rm -rf /opt/rancher/hauler/hauler
 
-      - name: Rancher Airgap - Test/Lint Helm
+      - name: Test/Lint Helm
         run: |
-          cd /opt/rancher/hauler/helm
+          cd hauler/helm
+          hauler store sync -f rancher-airgap-helm.yaml
           hauler store info
-          rm -rf /opt/rancher/hauler/helm
 
-      - name: Rancher Airgap - Test/Lint Cosign
+      - name: Test/Lint Cosign
         run: |
-          cd /opt/rancher/hauler/cosign
+          cd hauler/cosign
+          hauler store sync -f rancher-airgap-cosign.yaml
           hauler store info
-          rm -rf /opt/rancher/hauler/cosign
 
-      - name: Rancher Airgap - Test/Lint RKE2
+      - name: Test/Lint RKE2
         run: |
-          cd /opt/rancher/hauler/rke2
+          cd hauler/rke2
+          hauler store sync -f rancher-airgap-rke2.yaml
           hauler store info
-          rm -rf /opt/rancher/hauler/rke2
 
-      - name: Rancher Airgap - Test/Lint Rancher
+      - name: Test/Lint Rancher
         run: |
-          cd /opt/rancher/hauler/rancher
+          cd hauler/rancher
+          hauler store sync -f rancher-airgap-rancher.yaml
           hauler store info
-          rm -rf /opt/rancher/hauler/rancher
 
-      - name: Rancher Airgap - Test/Lint Rancher Minimal
+      - name: Test/Lint Rancher Minimal
         run: |
-          cd /opt/rancher/hauler/rancher-minimal
+          cd hauler/rancher
+          rm -rf store
+          hauler store sync -f rancher-airgap-rancher-minimal.yaml
           hauler store info
-          rm -rf /opt/rancher/hauler/rancher-minimal
 
-      - name: Rancher Airgap - Test/Lint Longhorn
+      - name: Test/Lint Longhorn
         run: |
-          cd /opt/rancher/hauler/longhorn
+          cd hauler/longhorn
+          hauler store sync -f rancher-airgap-longhorn.yaml
           hauler store info
-          rm -rf /opt/rancher/hauler/longhorn
 
-      - name: Rancher Airgap - Test/Lint NeuVector
+      - name: Test/Lint NeuVector
         run: |
-          cd /opt/rancher/hauler/neuvector
+          cd hauler/neuvector
+          hauler store sync -f rancher-airgap-neuvector.yaml
           hauler store info
-          rm -rf /opt/rancher/hauler/neuvector
 
-      - name: Rancher Airgap - Test/Lint Harvester
+      - name: Test/Lint Harvester
         run: |
-          cd /opt/rancher/hauler/harvester
+          cd hauler/harvester
+          hauler store sync -f rancher-airgap-harvester.yaml
           hauler store info
-          rm -rf /opt/rancher/hauler/harvester
 
-      - name: Rancher Airgap - Test/Lint Harbor
+      - name: Test/Lint Harbor
         run: |
-          cd /opt/rancher/hauler/harbor
+          cd hauler/harbor
+          hauler store sync -f rancher-airgap-harbor.yaml
           hauler store info
-          rm -rf /opt/rancher/hauler/harbor
 
   rancher-airgap-release:
-    name: Rancher Airgap Release Workflow Job
+    name: Rancher Airgap - Release Job
     runs-on: [self-hosted, linux, X64, general]
     needs: [rancher-airgap-testing]
     steps:
@@ -199,17 +183,20 @@ jobs:
           ref: main
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Pre-Build Setup/Checks
+      - name: Dependencies/Setup/Checks
         run: |
+          sudo yum install -y unzip zstd git
+          sudo curl -sfL https://get.hauler.dev | bash
+          hauler version
           pwd && ls -la
 
-      - name: Rancher Airgap - Create Release Notes
+      - name: Create Release Notes
         run: |
-          echo -e "# Rancher Airgap Release ${GITHUB_REF##*/}\nLatest Release Notes and Asset URLs. We are excited about this latest release of Rancher Airgap! Please review all of the releases notes below and always ensure to download the correct assets. Please utilize GitHub Issues, Forks, and Pull Requests to submit any issues, updates, or fixes! Thank you.\n\nThese Release Notes were generated automatically by [github-actions](https://github.com/apps/github-actions).\n\n## Upgrade Steps\n* No upgrade steps for this release.\n\n## Breaking Changes\n* No breaking changes for this release.\n\n## Features and Improvements\n* No features or improvements for this release.\n\n## Bug Fixes and Additional Notes\n* No bug fixes or additional notes for this release.\n\n## Release Assets for the Rancher Airgap\n\n### Hauler (by Rancher Government Solutions)\n* **Hauler Manifest ->** [s3://rancher-airgap-hauler.yaml](https://rancher-airgap.s3.amazonaws.com/${GITHUB_REF##*/}/hauler/hauler/rancher-airgap-hauler.yaml)\n* **TAR ->** [s3://rancher-airgap-hauler.tar.zst](https://rancher-airgap.s3.amazonaws.com/${GITHUB_REF##*/}/hauler/hauler/rancher-airgap-hauler.tar.zst)\n\n### Rancher Kubernetes Engine 2 (by Rancher)\n* **Hauler Manifest ->** [s3://rancher-airgap-rke2.yaml](https://rancher-airgap.s3.amazonaws.com/${GITHUB_REF##*/}/hauler/rke2/rancher-airgap-rke2.yaml)\n* **TAR ->** [s3://rancher-airgap-rke2.tar.zst](https://rancher-airgap.s3.amazonaws.com/${GITHUB_REF##*/}/hauler/rke2/rancher-airgap-rke2.tar.zst)\n\n### Rancher Multi-Cluster-Manager (by Rancher)\n* **Hauler Manifest ->** [s3://rancher-airgap-rancher.yaml](https://rancher-airgap.s3.amazonaws.com/${GITHUB_REF##*/}/hauler/rancher/rancher-airgap-rancher.yaml)\n* **TAR ->** [s3://rancher-airgap-rancher.tar.zst](https://rancher-airgap.s3.amazonaws.com/${GITHUB_REF##*/}/hauler/rancher/rancher-airgap-rancher.tar.zst)\n* **(Minimal) Hauler Manifest ->** [s3://rancher-airgap-rancher-minimal.yaml](https://rancher-airgap.s3.amazonaws.com/${GITHUB_REF##*/}/hauler/rancher/rancher-airgap-rancher-minimal.yaml)\n* **(Minimal) TAR ->** [s3://rancher-airgap-rancher-minimal.tar.zst](https://rancher-airgap.s3.amazonaws.com/${GITHUB_REF##*/}/hauler/rancher/rancher-airgap-rancher-minimal.tar.zst)\n\n### Rancher Longhorn (by Rancher)\n* **Hauler Manifest ->** [s3://rancher-airgap-longhorn.yaml](https://rancher-airgap.s3.amazonaws.com/${GITHUB_REF##*/}/hauler/longhorn/rancher-airgap-longhorn.yaml)\n* **TAR ->** [s3://rancher-airgap-longhorn.tar.zst](https://rancher-airgap.s3.amazonaws.com/${GITHUB_REF##*/}/hauler/longhorn/rancher-airgap-longhorn.tar.zst)\n\n### Rancher NeuVector (by Rancher)\n* **Hauler Manifest ->** [s3://rancher-airgap-neuvector.yaml](https://rancher-airgap.s3.amazonaws.com/${GITHUB_REF##*/}/hauler/neuvector/rancher-airgap-neuvector.yaml)\n* **TAR ->** [s3://rancher-airgap-neuvector.tar.zst](https://rancher-airgap.s3.amazonaws.com/${GITHUB_REF##*/}/hauler/neuvector/rancher-airgap-neuvector.tar.zst)\n\n### Rancher Harvester (by Rancher)\n* **Hauler Manifest ->** [s3://rancher-airgap-harvester.yaml](https://rancher-airgap.s3.amazonaws.com/${GITHUB_REF##*/}/hauler/harvester/rancher-airgap-harvester.yaml)\n* **NO TAR** - Due to the size of files.\n\n### Harbor (by the CNCF)\n* **Hauler Manifest ->** [s3://rancher-airgap-harbor.yaml](https://rancher-airgap.s3.amazonaws.com/${GITHUB_REF##*/}/hauler/harbor/rancher-airgap-harbor.yaml)\n* **TAR ->** [s3://rancher-airgap-harbor.tar.zst](https://rancher-airgap.s3.amazonaws.com/${GITHUB_REF##*/}/hauler/harbor/rancher-airgap-harbor.tar.zst)\n\n### Helm (by the CNCF)\n* **Hauler Manifest ->** [s3://rancher-airgap-helm.yaml](https://rancher-airgap.s3.amazonaws.com/${GITHUB_REF##*/}/hauler/helm/rancher-airgap-helm.yaml)\n* **TAR ->** [s3://rancher-airgap-helm.tar.zst](https://rancher-airgap.s3.amazonaws.com/${GITHUB_REF##*/}/hauler/helm/rancher-airgap-helm.tar.zst)\n\n### Cosign (by Sigstore)\n* **Hauler Manifest ->** [s3://rancher-airgap-cosign.yaml](https://rancher-airgap.s3.amazonaws.com/${GITHUB_REF##*/}/hauler/cosign/rancher-airgap-cosign.yaml)\n* **TAR ->** [s3://rancher-airgap-rke2.tar.zst](https://rancher-airgap.s3.amazonaws.com/${GITHUB_REF##*/}/hauler/cosign/rancher-airgap-cosign.tar.zst)" > RELEASE-NOTES.MD
-          echo Previewing Release Notes:
+          echo -e "# Rancher Airgap Release \${GITHUB_REF##*/}\nWe are excited about this latest release of Rancher Airgap! Please review all of the releases notes below and always ensure to download the correct assets. Please utilize GitHub Issues, Forks, and Pull Requests to submit any issues, updates, or fixes! Thank you.\n\nThese Release Notes were generated automatically by [github-actions](https://github.com/apps/github-actions).\n\n## Upgrade Steps\n* No upgrade steps for this release.\n\n## Breaking Changes\n* No breaking changes for this release.\n\n## Features and Improvements\n* No features or improvements for this release.\n\n## Bug Fixes and Additional Notes\n* No bug fixes or additional notes for this release.\n\n## Release Assets for the Rancher Airgap\n\n### Hauler (by Rancher Government Solutions)\n* **Hauler Manifest ->** [rancher-airgap-hauler.yaml](https://github.com/zackbradys/rancher-airgap/blob/main/hauler/hauler/rancher-airgap-hauler.yaml)\n* \`curl -#OL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/hauler/rancher-airgap-hauler.yaml\`\n\n### Rancher Kubernetes Engine 2 (by Rancher)\n* **Hauler Manifest ->** [rancher-airgap-rke2.yaml](https://github.com/zackbradys/rancher-airgap/blob/main/hauler/rke2/rancher-airgap-rke2.yaml)\n* \`curl -#OL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/rke2/rancher-airgap-rke2.yaml\`\n\n### Rancher Multi-Cluster-Manager (by Rancher)\n* **Hauler Manifest ->** [rancher-airgap-rancher.yaml](https://github.com/zackbradys/rancher-airgap/blob/main/hauler/rancher/rancher-airgap-rancher.yaml)\n* \`curl -#OL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/rancher/rancher-airgap-rancher.yaml\`\n* **(Minimal) Hauler Manifest ->** [rancher-airgap-rancher-minimal.yaml](https://github.com/zackbradys/rancher-airgap/blob/main/hauler/rancher/rancher-airgap-rancher-minimal.yaml)\n* \`curl -#OL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/rancher/rancher-airgap-rancher-minimal.yaml\`\n\n### Rancher Longhorn (by Rancher)\n* **Hauler Manifest ->** [rancher-airgap-longhorn.yaml](https://github.com/zackbradys/rancher-airgap/blob/main/hauler/longhorn/rancher-airgap-longhorn.yaml)\n* \`curl -#OL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/longhorn/rancher-airgap-longhorn.yaml\`\n\n### Rancher NeuVector (by Rancher)\n* **Hauler Manifest ->** [rancher-airgap-neuvector.yaml](https://github.com/zackbradys/rancher-airgap/blob/main/hauler/neuvector/rancher-airgap-neuvector.yaml)\n* \`curl -#OL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/neuvector/rancher-airgap-neuvector.yaml\`\n\n### Rancher Harvester (by Rancher)\n* **Hauler Manifest ->** [rancher-airgap-harvester.yaml](https://github.com/zackbradys/rancher-airgap/blob/main/hauler/harvester/rancher-airgap-harvester.yaml)\n* \`curl -#OL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/harvester/rancher-airgap-harvester.yaml\`\n\n### Harbor (by the CNCF)\n* **Hauler Manifest ->** [rancher-airgap-harbor.yaml](https://github.com/zackbradys/rancher-airgap/blob/main/hauler/harbor/rancher-airgap-harbor.yaml)\n* \`curl -#OL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/harbor/rancher-airgap-harbor.yaml\`\n\n### Helm (by the CNCF)\n* **Hauler Manifest ->** [rancher-airgap-helm.yaml](https://github.com/zackbradys/rancher-airgap/blob/main/hauler/helm/rancher-airgap-helm.yaml)\n* \`curl -#OL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/helm/rancher-airgap-helm.yaml\`\n\n### Cosign (by Sigstore)\n* **Hauler Manifest ->** [rancher-airgap-cosign.yaml](https://github.com/zackbradys/rancher-airgap/blob/main/hauler/cosign/rancher-airgap-cosign.yaml)\n* \`curl -#OL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/cosign/rancher-airgap-cosign.yaml\`" > RELEASE-NOTES.MD
+          echo "Previewing Release Notes"
           cat RELEASE-NOTES.MD
 
-      - name: Rancher Airgap - Release with Release Notes
+      - name: Release with Release Notes
         id: create_release
         uses: actions/create-release@v1
         env:
