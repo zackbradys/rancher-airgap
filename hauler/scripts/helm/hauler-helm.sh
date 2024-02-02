@@ -18,9 +18,3 @@ spec:
     - path: https://get.helm.sh/helm-v${vHelm}-linux-amd64.tar.gz
       name: helm.tar.gz
 EOF
-
-### Load Hauler Manifest into Store
-hauler store sync -f rancher-airgap-helm.yaml
-
-### Compress Hauler Store Contents
-hauler store save --filename rancher-airgap-helm.tar.zst

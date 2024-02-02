@@ -38,9 +38,3 @@ spec:
   images:
 ${neuvectorImages}
 EOF
-
-### Load Hauler Manifest into Store
-hauler store sync -f rancher-airgap-neuvector.yaml
-
-### Compress Hauler Store Contents
-hauler store save --filename rancher-airgap-neuvector.tar.zst

@@ -18,9 +18,3 @@ spec:
     - path: https://github.com/rancherfederal/hauler/releases/download/v${vHauler}/hauler_${vHauler}_linux_amd64.tar.gz
       name: hauler
 EOF
-
-### Load Hauler Manifest into Store
-hauler store sync -f rancher-airgap-hauler.yaml
-
-### Compress Hauler Store Contents
-hauler store save --filename rancher-airgap-hauler.tar.zst

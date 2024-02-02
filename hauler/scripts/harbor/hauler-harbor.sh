@@ -38,9 +38,3 @@ spec:
   images:
 ${harborImages}
 EOF
-
-### Load Hauler Manifest into Store
-hauler store sync -f rancher-airgap-harbor.yaml
-
-### Compress Hauler Store Contents
-hauler store save --filename rancher-airgap-harbor.tar.zst

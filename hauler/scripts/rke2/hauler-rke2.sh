@@ -65,9 +65,3 @@ spec:
   images:
 ${rke2Images}
 EOF
-
-### Load Hauler Manifest into Store
-hauler store sync -f rancher-airgap-rke2.yaml
-
-### Compress Hauler Store Contents
-hauler store save --filename rancher-airgap-rke2.tar.zst

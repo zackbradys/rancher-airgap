@@ -18,9 +18,3 @@ spec:
     - path: https://github.com/sigstore/cosign/releases/download/v${vCosign}/cosign-linux-amd64
       name: cosign
 EOF
-
-### Load Hauler Manifest into Store
-hauler store sync -f rancher-airgap-cosign.yaml
-
-### Compress Hauler Store Contents
-hauler store save --filename rancher-airgap-cosign.tar.zst
