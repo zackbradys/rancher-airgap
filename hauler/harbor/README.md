@@ -1,15 +1,30 @@
 # Harbor
 
+**Note:** View the [README](https://github.com/zackbradys/rancher-airgap/blob/main/README.md) for the latest versions!
+
 ## Collection and Packaging
 
-### Harbor v2.9.1 - Cloud Native Computing Foundation
+[hauler/harbor/rancher-airgap-harbor.yaml](https://github.com/zackbradys/rancher-airgap/blob/v2.0.0/hauler/harbor/rancher-airgap-harbor.yaml) - provides the content manifest for all the assets.
 
-[hauler/harbor/rancher-airgap-harbor.yaml](https://rancher-airgap.s3.amazonaws.com/v2.0.0/hauler/harbor/rancher-airgap-harbor.yaml) - provides the content manifest for the assets.
+```bash
+# pull the manifest
+curl -#OL https://raw.githubusercontent.com/zackbradys/rancher-airgap/v2.0.0/hauler/harbor/rancher-airgap-harbor.yaml
 
-[hauler/harbor/rancher-airgap-harbor.tar.zst](https://rancher-airgap.s3.amazonaws.com/v2.0.0/hauler/harbor/rancher-airgap-harbor.tar.zst) - provides the compressed content and assets, via the manifest.
+# sync to the store
+hauler store sync --files rancher-airgap-harbor.yaml
 
-**Note:** The [Releases](https://github.com/zackbradys/rancher-airgap/releases) page contain the most up-to-date assets.
+# save to tarball
+hauler store save --filename rancher-airgap-harbor.tar.zst
+```
 
 ## Across the Airgap
 
+```bash
+# coming soon
+```
+
 ## Loading and Distribution
+
+```bash
+# coming soon
+```

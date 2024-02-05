@@ -1,11 +1,11 @@
 # Rancher Airgap Guide
 
 ### Welcome to the Rancher Airgap Guide
-Rancher Airgap is a framework and guide built for collecting, packaging, distributing, and installing the Rancher Product Stack in airgapped environments. Such as RKE2, Rancher Manager, Longhorn and NeuVector.
+Rancher Airgap is a framework and guide built for collecting, packaging, and distributing the Rancher Product Stack for deployment in disconnected or airgapped environments.
 
-We utilize the [Hauler](https://github.com/rancherfederal/hauler) project by [Rancher Government Solutions](https://github.com/rancherfederal) to collect, package, and distribute assets. `Hauler` simplifies the airgap process, by representing assets as content and collections and allows users to easily fetch, store, package, and distribute with declarative manifests or the command line. In this repositry, we generate these manifests and subsequent compressed archives aka `stores` for the Rancher Product Stack.
+We utilize Project [Hauler](https://github.com/rancherfederal/hauler) by [Rancher Government Solutions](https://github.com/rancherfederal) to collect, package, and distribute the assets. `Hauler` simplifies the airgap process, by representing assets as content and collections and allows users to easily fetch, store, package, and distribute with declarative manifests or the command line. In this repositry, we generate these manifests for each of the products.
 
-**Review the most recent *[releases](https://github.com/zackbradys/rancher-airgap/releases)* or the high level *[example use cases](examples)*!**
+**Review the high level *[example use cases](examples)*!**
 
 **High Level Workflow:**
 ```bash
@@ -21,25 +21,25 @@ fetch -> validate -> save -> | <airgap> | -> load -> validate -> distribute
 
 ### Core Components
 * [hauler/rke2](hauler/rke2/README.md) - provides the content manifest for Rancher Kubernetes (RKE2)
-  * currently supports: `RKE2 v1.26.12`
+  * currently supports: `RKE2 v1.26.13`
 * [hauler/rancher](hauler/rancher/README.md) - provides the content manifest for Cert-Manager
-  * currently supports: `Cert-Manager v1.13.3`
+  * currently supports: `Cert-Manager v1.14.1`
 * [hauler/rancher](hauler/rancher/README.md) - provides the content manifest for Rancher Multi-Cluster Manager
-  * currently supports: `Rancher v2.7.9`
+  * currently supports: `Rancher v2.8.1`
 * [hauler/longhorn](hauler/longhorn/README.md) - provides the content manifest for Rancher Longhorn
-  * currently supports: `Longhorn v1.5.3`
+  * currently supports: `Longhorn v1.6.0`
 * [hauler/neuvector](hauler/neuvector/README.md) - provides the content manifest for Rancher NeuVector
-  * currently supports: `NeuVector v5.2.4`
+  * currently supports: `NeuVector v5.3.0`
 * [hauler/harvester](hauler/harvester/README.md) - provides the content manifest for Rancher Harvester
   * currently supports: `Harvester v1.2.1`
 
 ### Addons
 * [hauler/hauler](hauler/hauler/README.md) - provides the content manifest for Hauler
-  * currently supports: `Hauler v0.4.2`
+  * currently supports: `Hauler v0.4.3`
 * [hauler/helm](hauler/helm/README.md) - provides the content manifest for Helm
-  * currently supports: `Helm v3.13.3`
+  * currently supports: `Helm v3.14.0`
 * [hauler/cosign](hauler/cosign/README.md) - provides the content manifest for Cosign
-  * currently supports: `Cosign v2.2.2`
+  * currently supports: `Cosign v2.2.3`
 * [hauler/harbor](hauler/harbor/README.md) - provides the content manifest for Harbor
   * currently supports: `Harbor v2.9.1`
 
@@ -47,6 +47,6 @@ fetch -> validate -> save -> | <airgap> | -> load -> validate -> distribute
 
 ## Hauler Installation
 ```bash
-### https://github.com/rancherfederal/hauler
+# https://github.com/rancherfederal/hauler
 curl -sfL https://get.hauler.dev | bash
 ```

@@ -1,22 +1,44 @@
 # Rancher Multi-Cluster Manager
 
+**Note:** View the [README](https://github.com/zackbradys/rancher-airgap/blob/main/README.md) for the latest versions!
+
 ## Collection and Packaging
 
-### Rancher Multi-Cluster Manager v2.7.9
+[hauler/rancher/rancher-airgap-rancher.yaml](https://github.com/zackbradys/rancher-airgap/blob/v2.0.0/hauler/rancher/rancher-airgap-rancher.yaml) - provides the content manifest for all the assets.
 
-**Cert-Manager v1.13.3:** Included in the Rancher Multi-Cluster Manager content and assets.
+```yaml
+# pull the manifest
+curl -#OL https://raw.githubusercontent.com/zackbradys/rancher-airgap/v2.0.0/hauler/rancher/rancher-airgap-rancher.yaml
 
-**Full:** [hauler/rancher/rancher-airgap-rancher.yaml](https://rancher-airgap.s3.amazonaws.com/v2.0.0/hauler/rancher/rancher-airgap-rancher.yaml) - provides the content manifest for the assets.
+# sync to the store
+hauler store sync --files rancher-airgap-rancher.yaml
 
-**Full:** [hauler/rancher/rancher-airgap-rancher.tar.zst](https://rancher-airgap.s3.amazonaws.com/v2.0.0/hauler/rancher/rancher-airgap-rancher.tar.zst) - provides the compressed content and assets, via the manifest.
+# save to tarball
+hauler store save --filename rancher-airgap-rancher.tar.zst
+```
 
-**Minimal:** [hauler/rancher/rancher-airgap-rancher-minimal.yaml](https://rancher-airgap.s3.amazonaws.com/v2.0.0/hauler/rancher/rancher-airgap-rancher-minimal.yaml) - provides the content manifest for the assets.
-
-**Minimal:** [hauler/rancher/rancher-airgap-rancher-minimal.tar.zst](https://rancher-airgap.s3.amazonaws.com/v2.0.0/hauler/rancher/rancher-airgap-rancher-minimal.tar.zst) - provides the compressed content and assets, via the manifest.
+[hauler/rancher/rancher-airgap-rancher-minimal.yaml](https://github.com/zackbradys/rancher-airgap/blob/v2.0.0/hauler/rancher/rancher-airgap-rancher-minimal.yaml) - provides the content manifest for the minimal assets.
 
 
-**Note:** The [Releases](https://github.com/zackbradys/rancher-airgap/releases) page contain the most up-to-date assets.
+```bash
+# pull the manifest
+curl -#OL https://raw.githubusercontent.com/zackbradys/rancher-airgap/v2.0.0/hauler/rancher/rancher-airgap-rancher-minimal.yaml
+
+# sync to the store
+hauler store sync --files rancher-airgap-rancher-minimal.yaml
+
+# save to tarball
+hauler store save --filename rancher-airgap-rancher-minimal.tar.zst
+```
 
 ## Across the Airgap
 
+```bash
+# coming soon
+```
+
 ## Loading and Distribution
+
+```bash
+# coming soon
+```

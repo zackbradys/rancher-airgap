@@ -1,15 +1,30 @@
 # Rancher Harvester
 
+**Note:** View the [README](https://github.com/zackbradys/rancher-airgap/blob/main/README.md) for the latest versions!
+
 ## Collection and Packaging
 
-### Rancher Harvester v1.2.1
+[hauler/harvester/rancher-airgap-harvester.yaml](https://github.com/zackbradys/rancher-airgap/blob/v2.0.0/hauler/harvester/rancher-airgap-harvester.yaml) - provides the content manifest for all the assets.
 
-[hauler/harvester/rancher-airgap-harvester.yaml](https://rancher-airgap.s3.amazonaws.com/v2.0.0/hauler/harvester/rancher-airgap-harvester.yaml) - provides the content manifest for the assets.
+```bash
+# pull the manifest
+curl -#OL https://raw.githubusercontent.com/zackbradys/rancher-airgap/v2.0.0/hauler/harvester/rancher-airgap-harvester.yaml
 
-[hauler/harvester/rancher-airgap-harvester.tar.zst](https://rancher-airgap.s3.amazonaws.com/v2.0.0/hauler/harvester/rancher-airgap-harvester.tar.zst) - provides the compressed content and assets, via the manifest.
+# sync to the store
+hauler store sync --files rancher-airgap-harvester.yaml
 
-**Note:** The [Releases](https://github.com/zackbradys/rancher-airgap/releases) page contain the most up-to-date assets.
+# save to tarball
+hauler store save --filename rancher-airgap-harvester.tar.zst
+```
 
 ## Across the Airgap
 
+```bash
+# coming soon
+```
+
 ## Loading and Distribution
+
+```bash
+# coming soon
+```
