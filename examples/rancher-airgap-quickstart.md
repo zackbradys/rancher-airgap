@@ -26,26 +26,26 @@ curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/haul
 curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/helm/rancher-airgap-helm.yaml
 
 ### Sync Manifests to Hauler Store
-hauler store sync --store rke2 --platform linux/amd64 --files rancher-airgap-rke2.yaml
-hauler store sync --store rancher --platform linux/amd64 --files rancher-airgap-rancher.yaml
-# hauler store sync --store rancher --platform linux/amd64 --files rancher-airgap-rancher-minimal.yaml
-hauler store sync --store longhorn --platform linux/amd64 --files rancher-airgap-longhorn.yaml
-hauler store sync --store neuvector --platform linux/amd64 --files rancher-airgap-neuvector.yaml
-# hauler store sync --store harvester --platform linux/amd64 --files rancher-airgap-harvester.yaml
-# hauler store sync --store harbor --platform linux/amd64 --files rancher-airgap-harbor.yaml
-hauler store sync --store extras --platform linux/amd64 --files rancher-airgap-hauler.yaml
-hauler store sync --store extras --platform linux/amd64 --files rancher-airgap-helm.yaml
-hauler store sync --store extras --platform linux/amd64 --files rancher-airgap-cosign.yaml
+hauler store sync --store rke2-store --platform linux/amd64 --files rancher-airgap-rke2.yaml
+hauler store sync --store rancher-store --platform linux/amd64 --files rancher-airgap-rancher.yaml
+# hauler store sync --store rancher-store --platform linux/amd64 --files rancher-airgap-rancher-minimal.yaml
+hauler store sync --store longhorn-store --platform linux/amd64 --files rancher-airgap-longhorn.yaml
+hauler store sync --store neuvector-store --platform linux/amd64 --files rancher-airgap-neuvector.yaml
+# hauler store sync --store harvester-store --platform linux/amd64 --files rancher-airgap-harvester.yaml
+# hauler store sync --store harbor-store --platform linux/amd64 --files rancher-airgap-harbor.yaml
+hauler store sync --store extras-store --platform linux/amd64 --files rancher-airgap-hauler.yaml
+hauler store sync --store extras-store --platform linux/amd64 --files rancher-airgap-helm.yaml
+hauler store sync --store extras-store --platform linux/amd64 --files rancher-airgap-cosign.yaml
 
 ### Save Hauler Tarballs
-hauler store save --store rke2 --filename rancher-airgap-rke2.tar.zst
-hauler store save --store rancher --filename rancher-airgap-rancher.tar.zst
-# hauler store save --store rancher --filename rancher-airgap-rancher-minimal.tar.zst
-hauler store save --store longhorn --filename rancher-airgap-longhorn.tar.zst
-hauler store save --store neuvector --filename rancher-airgap-neuvector.tar.zst
-# hauler store save --store harvester --filename rancher-airgap-harvester.tar.zst
-# hauler store save --store harbor --filename rancher-airgap-harbor.tar.zst
-hauler store save --store extras --filename rancher-airgap-extras.tar.zst
+hauler store save --store rke2-store --filename rancher-airgap-rke2.tar.zst
+hauler store save --store rancher-store --filename rancher-airgap-rancher.tar.zst
+# hauler store save --store rancher-store --filename rancher-airgap-rancher-minimal.tar.zst
+hauler store save --store longhorn-store --filename rancher-airgap-longhorn.tar.zst
+hauler store save --store neuvector-store --filename rancher-airgap-neuvector.tar.zst
+# hauler store save --store harvester-store --filename rancher-airgap-harvester.tar.zst
+# hauler store save --store harbor-store --filename rancher-airgap-harbor.tar.zst
+hauler store save --store extras-store --filename rancher-airgap-extras.tar.zst
 
 ### Fetch Hauler Binary
 curl -sfOL https://github.com/rancherfederal/hauler/releases/download/v0.4.4/hauler_0.4.4_linux_amd64.tar.gz
@@ -81,7 +81,7 @@ chmod 755 hauler && mv hauler /usr/bin/hauler
 ### Load Hauler Tarballs
 hauler store load rancher-airgap-rke2.tar.zst
 hauler store load rancher-airgap-rancher.tar.zst
-# hauler store save --store rancher --filename rancher-airgap-rancher-minimal.tar.zst
+# hauler store load rancher-airgap-rancher-minimal.tar.zst
 hauler store load rancher-airgap-longhorn.tar.zst
 hauler store load rancher-airgap-neuvector.tar.zst
 # hauler store load rancher-airgap-harvester.tar.zst
@@ -93,14 +93,14 @@ hauler store info
 
 ### Serve Hauler Content
 hauler store serve registry
-# nohop hauler store serve registry &
+# nohup hauler store serve registry &
 
 ### Test Registry Server Content
 curl ${registry}/v2/_catalog
 
 ### Serve Hauler Content
 hauler store serve fileserver
-# nohop hauler store serve fileserver &
+# nohup hauler store serve fileserver &
 
 ### Test File Server Content
 curl http://${fileserver}
@@ -208,6 +208,7 @@ export KUBECONFIG=/etc/rancher/rke2/rke2.yaml
 export CRI_CONFIG_FILE=/var/lib/rancher/rke2/agent/etc/crictl.yaml
 alias k=kubectl
 EOF
+source ~/.bashrc
 
 ### Verify Node
 kubectl get nodes
@@ -313,7 +314,6 @@ Complete the following commands on the first server node in the cluster.
 sudo su
 
 ### Set Variables
-export vHelm=1.14.2
 export registry=<FQDN or IP>:<PORT>
 export fileserver=<FQDN or IP>:<PORT>
 
@@ -321,8 +321,9 @@ export fileserver=<FQDN or IP>:<PORT>
 curl http://${fileserver}/helm-v${vHelm}-linux-amd64.tar.gz
 
 ### Extract and Install
-tar -xf helm-v${vHelm}-linux-amd64.tar.gz
-chmod 755 linux-amd64 && mv linux-amd64 /usr/bin/helm
+tar -xf helm.tar.gz
+cd linux-amd64 && chmod 755 helm
+mv linux-amd64 /usr/bin/helm
 ```
 
 ### Rancher Manager
@@ -345,7 +346,7 @@ export fileserver=<FQDN or IP>:<PORT>
 kubectl create namespace cert-manager
 
 ### Install via Helm
-helm upgrade -i cert-manager http://${fileserver}/cert-manager-v${vCertManager}.tgz -n cert-manager --set installCRDs=true --set image.repository=$Registry/jetstack/cert-manager-controller --set webhook.image.repository=$Registry/jetstack/cert-manager-webhook --set cainjector.image.repository=$Registry/jetstack/cert-manager-cainjector --set acmesolver.image.repository=$Registry/jetstack/cert-manager-acmesolver --set startupapicheck.image.repository=$Registry/jetstack/cert-manager-ctl
+helm upgrade -i cert-manager http://${fileserver}/cert-manager-v${vCertManager}.tgz -n cert-manager --set installCRDs=true --set image.repository=$registry/jetstack/cert-manager-controller --set webhook.image.repository=$registry/jetstack/cert-manager-webhook --set cainjector.image.repository=$registry/jetstack/cert-manager-cainjector --set acmesolver.image.repository=$registry/jetstack/cert-manager-acmesolver --set startupapicheck.image.repository=$registry/jetstack/cert-manager-ctl
 
 ### Configure Cert Manager
 kubectl apply -f - << EOF
@@ -363,8 +364,8 @@ metadata:
   namespace: cert-manager
 spec:
   issuerRef:
-    name: private-ca-issuer
-    kind: selfsigned-issuer
+    name: selfsigned-issuer
+    kind: ClusterIssuer
   secretName: tls-certs
   commonName: "$DOMAIN"
   dnsNames:
@@ -397,8 +398,8 @@ metadata:
   namespace: cattle-system
 spec:
   issuerRef:
-    name: private-ca-issuer
-    kind: selfsigned-issuer
+    name: selfsigned-issuer
+    kind: ClusterIssuer
   secretName: tls-certs
   commonName: "$DOMAIN"
   dnsNames:
@@ -407,7 +408,7 @@ spec:
 EOF
 
 ### Install via Helm
-helm upgrade -i rancher http://${fileserver}/rancher-${vRancher}.tgz -n cattle-system --set bootstrapPassword=Pa22word --set replicas=1 --set ingress.tls.source=secret --set ingress.tls.secretName=tls-certs --set systemDefaultRegistry=$Registry --set rancherImage=$Registry/rancher/rancher --set hostname=rancher.$DOMAIN
+helm upgrade -i rancher http://${fileserver}/rancher-${vRancher}.tgz -n cattle-system --set bootstrapPassword=Pa22word --set replicas=1 --set ingress.tls.source=secret --set ingress.tls.secretName=tls-certs --set systemDefaultRegistry=$registry --set rancherImage=$registry/rancher/rancher --set hostname=rancher.$DOMAIN
 
 ### Add Classification Banners
 kubectl apply -f http://${fileserver}/rancher-banner-ufouo.yaml
@@ -430,7 +431,7 @@ export fileserver=<FQDN or IP>:<PORT>
 kubectl create namespace longhorn-system
 
 ### Install via Helm
-helm upgrade -i longhorn http://${fileserver}/longhorn-${vLonghorn}.tgz -n longhorn-system --version=$vLonghorn --set global.cattle.systemDefaultRegistry=$Registry
+helm upgrade -i longhorn http://${fileserver}/longhorn-${vLonghorn}.tgz -n longhorn-system --version=$vLonghorn --set global.cattle.systemDefaultRegistry=$registry
 
 ### Create Example SC and Volume
 kubectl apply -f http://${fileserver}/longhorn-encrypted-sc.yaml
@@ -454,5 +455,5 @@ export fileserver=<FQDN or IP>:<PORT>
 kubectl create namespace cattle-neuvector-system
 
 ### Install via Helm
-helm upgrade -i neuvector http://${fileserver}/core-${vNeuVector}.tgz -n cattle-neuvector-system --set k3s.enabled=true --set manager.svc.type=ClusterIP --set internal.certmanager.enabled=true --set controller.pvc.enabled=true --set controller.pvc.capacity=10Gi --set global.cattle.url=https://rancher.$DOMAIN --set controller.ranchersso.enabled=true --set rbac=true --set registry=$Registry
+helm upgrade -i neuvector http://${fileserver}/core-${vNeuVector}.tgz -n cattle-neuvector-system --set k3s.enabled=true --set manager.svc.type=ClusterIP --set internal.certmanager.enabled=true --set controller.pvc.enabled=true --set controller.pvc.capacity=10Gi --set global.cattle.url=https://rancher.$DOMAIN --set controller.ranchersso.enabled=true --set rbac=true --set registry=$registry
 ```
