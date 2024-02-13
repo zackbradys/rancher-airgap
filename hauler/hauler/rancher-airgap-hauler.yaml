@@ -4,5 +4,5 @@ metadata:
   name: rancher-airgap-files-hauler
 spec:
   files:
-    - path: https://github.com/rancherfederal/hauler/releases/download/v0.4.3/hauler_0.4.3_linux_amd64.tar.gz
+    - path: https://github.com/rancherfederal/hauler/releases/download/v0.4.4/hauler_0.4.4_linux_amd64.tar.gz
       name: hauler

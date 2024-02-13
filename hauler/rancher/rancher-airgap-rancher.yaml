@@ -17,10 +17,10 @@ spec:
   charts:
     - name: cert-manager
       repoURL: https://charts.jetstack.io
-      version: v1.14.1
+      version: v1.14.2
     - name: rancher
       repoURL: https://releases.rancher.com/server-charts/latest
-      version: 2.8.1
+      version: 2.8.2
 ---
 apiVersion: content.hauler.cattle.io/v1alpha1
 kind: Images
@@ -28,10 +28,10 @@ metadata:
   name: rancher-airgap-images-rancher
 spec:
   images:
-    - name: quay.io/jetstack/cert-manager-cainjector:v1.14.1
-    - name: quay.io/jetstack/cert-manager-controller:v1.14.1
-    - name: quay.io/jetstack/cert-manager-webhook:v1.14.1
-    - name: quay.io/jetstack/cert-manager-startupapicheck:v1.14.1
+    - name: quay.io/jetstack/cert-manager-cainjector:v1.14.2
+    - name: quay.io/jetstack/cert-manager-controller:v1.14.2
+    - name: quay.io/jetstack/cert-manager-webhook:v1.14.2
+    - name: quay.io/jetstack/cert-manager-startupapicheck:v1.14.2
     - name: rancher/aks-operator:v1.2.0
     - name: rancher/backup-restore-operator:v4.0.0
     - name: rancher/calico-cni:v3.26.3-rancher1
@@ -258,7 +258,7 @@ spec:
     - name: rancher/mirrored-kiwigrid-k8s-sidecar:1.24.6
     - name: rancher/mirrored-kube-rbac-proxy:v0.14.0
     - name: rancher/mirrored-kube-rbac-proxy:v0.5.0
-    - name: rancher/mirrored-kube-state-metrics-kube-state-metrics:v2.0.2
+    - name: rancher/mirrored-kube-state-metrics-kube-state-metrics:v2.0.0
     - name: rancher/mirrored-kube-state-metrics-kube-state-metrics:v2.6.0
     - name: rancher/mirrored-kube-vip-kube-vip-iptables:v0.6.0
     - name: rancher/mirrored-kubernetes-external-dns:v0.7.3
@@ -294,10 +294,10 @@ spec:
     - name: rancher/mirrored-metrics-server:v0.6.3
     - name: rancher/mirrored-minio-mc:RELEASE.2023-06-28T21-54-17Z
     - name: rancher/mirrored-minio-minio:RELEASE.2023-07-07T07-13-57Z
-    - name: rancher/mirrored-neuvector-controller:5.2.2-s1
-    - name: rancher/mirrored-neuvector-enforcer:5.2.2-s1
-    - name: rancher/mirrored-neuvector-manager:5.2.2-s1
-    - name: rancher/mirrored-neuvector-prometheus-exporter:5.2.2
+    - name: rancher/mirrored-neuvector-controller:5.2.4-s1
+    - name: rancher/mirrored-neuvector-enforcer:5.2.4-s1
+    - name: rancher/mirrored-neuvector-manager:5.2.4-s1
+    - name: rancher/mirrored-neuvector-prometheus-exporter:5.2.4
     - name: rancher/mirrored-neuvector-registry-adapter:0.1.1-s1
     - name: rancher/mirrored-neuvector-scanner:latest
     - name: rancher/mirrored-neuvector-updater:latest
@@ -362,10 +362,10 @@ spec:
     - name: rancher/prometheus-federator:v0.3.4
     - name: rancher/pushprox-client:v0.1.0-rancher2-client
     - name: rancher/pushprox-proxy:v0.1.0-rancher2-proxy
-    - name: rancher/rancher-agent:v2.8.1
+    - name: rancher/rancher-agent:v2.8.2
     - name: rancher/rancher-csp-adapter:v3.0.0
     - name: rancher/rancher-webhook:v0.4.2
-    - name: rancher/rancher:v2.8.1
+    - name: rancher/rancher:v2.8.2
     - name: rancher/rke-tools:v0.1.96
     - name: rancher/rke2-cloud-provider:v1.26.3-build20230406
     - name: rancher/rke2-cloud-provider:v1.26.3-build20230608
@@ -520,7 +520,7 @@ spec:
     - name: rancher/system-agent:v0.3.4-suc
     - name: rancher/system-upgrade-controller:v0.13.1
     - name: rancher/thanosio-thanos:v0.15.0
-    - name: rancher/ui-plugin-catalog:1.1.0
+    - name: rancher/ui-plugin-catalog:1.1.1
     - name: rancher/ui-plugin-operator:v0.1.1
     - name: rancher/webhook-receiver:v0.2.4
     - name: rancher/webhook-receiver:v0.2.5

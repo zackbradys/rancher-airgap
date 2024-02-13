@@ -6,7 +6,7 @@ spec:
   charts:
     - name: core
       repoURL: https://neuvector.github.io/neuvector-helm
-      version: 2.7.2
+      version: 2.7.3
 ---
 apiVersion: content.hauler.cattle.io/v1alpha1
 kind: Images
