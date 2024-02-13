@@ -1,5 +1,5 @@
 ### Set Variables
-export vHauler=0.4.3
+export vHauler=0.4.4
 
 ### Setup Working Directory
 rm -rf /opt/rancher/hauler/hauler
