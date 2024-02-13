@@ -1,0 +1,315 @@
+# Rancher Airgap - Hauler Quickstart
+
+## Internet Connected Build Server
+
+```bash
+### Sudo to Root
+sudo su
+
+### Set Variables
+export vRancherAirgap=v2.0.2
+
+### Setup Directories
+mkdir -p /opt/rancher/hauler
+cd /opt/rancher/hauler
+
+### Download and Install Hauler
+curl -sfL https://get.hauler.dev | bash
+
+### Fetch Rancher Airgap Manifests
+curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/${vRancherAirgap}/hauler/rke2/rancher-airgap-rke2.yaml
+curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/${vRancherAirgap}/hauler/rancher/rancher-airgap-rancher.yaml
+# curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/${vRancherAirgap}/hauler/rancher/rancher-airgap-rancher-minimal.yaml
+curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/${vRancherAirgap}/hauler/longhorn/rancher-airgap-longhorn.yaml
+curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/${vRancherAirgap}/hauler/neuvector/rancher-airgap-neuvector.yaml
+# curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/${vRancherAirgap}/hauler/harvester/rancher-airgap-harvester.yaml
+# curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/${vRancherAirgap}/hauler/harbor/rancher-airgap-harbor.yaml
+curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/${vRancherAirgap}/hauler/cosign/rancher-airgap-cosign.yaml
+curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/${vRancherAirgap}/hauler/hauler/rancher-airgap-hauler.yaml
+curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/${vRancherAirgap}/hauler/helm/rancher-airgap-helm.yaml
+
+### Sync Manifests to Hauler Store
+hauler store sync --store rke2 --platform linux/amd64 --files rancher-airgap-rke2.yaml
+hauler store sync --store rancher --platform linux/amd64 --files rancher-airgap-rancher.yaml
+# hauler store sync --store rancher --platform linux/amd64 --files rancher-airgap-rancher-minimal.yaml
+hauler store sync --store longhorn --platform linux/amd64 --files rancher-airgap-longhorn.yaml
+hauler store sync --store neuvector --platform linux/amd64 --files rancher-airgap-neuvector.yaml
+# hauler store sync --store harvester --platform linux/amd64 --files rancher-airgap-harvester.yaml
+# hauler store sync --store harbor --platform linux/amd64 --files rancher-airgap-harbor.yaml
+hauler store sync --store extras --platform linux/amd64 --files rancher-airgap-hauler.yaml
+hauler store sync --store extras --platform linux/amd64 --files rancher-airgap-helm.yaml
+hauler store sync --store extras --platform linux/amd64 --files rancher-airgap-cosign.yaml
+
+### Save Hauler Tarballs
+hauler store save --store rke2 --filename rancher-airgap-rke2.tar.zst
+hauler store save --store rancher --filename rancher-airgap-rancher.tar.zst
+# hauler store save --store rancher --filename rancher-airgap-rancher-minimal.tar.zst
+hauler store save --store longhorn --filename rancher-airgap-longhorn.tar.zst
+hauler store save --store neuvector --filename rancher-airgap-neuvector.tar.zst
+# hauler store save --store harvester --filename rancher-airgap-harvester.tar.zst
+# hauler store save --store harbor --filename rancher-airgap-harbor.tar.zst
+hauler store save --store extras --filename rancher-airgap-extras.tar.zst
+
+### Fetch Hauler Binary
+curl -sfOL https://github.com/rancherfederal/hauler/releases/download/v0.4.4/hauler_0.4.4_linux_amd64.tar.gz
+```
+
+---
+
+**MOVE TAR(s) ACROSS THE AIRGAP**
+
+---
+
+## Disconnected Build Server
+
+```bash
+### Sudo to Root
+sudo su
+
+### Setup Directories
+mkdir -p /opt/rancher/hauler
+cd /opt/rancher/hauler
+
+### SCP TARBALLS HERE
+
+### Untar and Install Hauler
+tar -xf hauler_0.4.4_linux_amd64.tar.gz
+rm -rf LICENSE README.md
+chmod 755 hauler && mv hauler /usr/bin/hauler
+
+### Load Hauler Tarballs
+hauler store load rancher-airgap-rke2.tar.zst
+hauler store load rancher-airgap-rancher.tar.zst
+# hauler store save --store rancher --filename rancher-airgap-rancher-minimal.tar.zst
+hauler store load rancher-airgap-longhorn.tar.zst
+hauler store load rancher-airgap-neuvector.tar.zst
+# hauler store load rancher-airgap-harvester.tar.zst
+# hauler store load rancher-airgap-harbor.tar.zst
+hauler store load rancher-airgap-extras.tar.zst
+
+### Verify Hauler Store Contents
+hauler store info
+
+### Serve Hauler Content
+hauler store serve registry
+# nohop hauler store serve registry &
+
+### Verify Registry Server Content
+curl ${registry}/v2/_catalog
+
+### Serve Hauler Content
+hauler store serve fileserver --store packages
+# nohop hauler store serve fileserver --store packages &
+
+### Verify File Server Content
+curl http://${fileserver}
+
+### Create YUM Repo File
+cat << EOF > /etc/yum.repos.d/rancher-airgap.repo
+[rancher-airgap]
+name=Rancher Airgap YUM Repository
+baseurl=http://${fileserver}
+enabled=1
+exactarch=0
+gpgcheck=0
+EOF
+```
+
+### Rancher RKE2 Nodes
+
+#### RKE2 Server Node (Control Plane Node)
+
+Complete the following commands on the first server node in the cluster. You will need network connectivity to the Disconnected Build Server.
+
+```bash
+### Sudo to Root
+sudo su
+
+### Set Variables
+export vRKE2=1.26.13
+export vPlatform=el9
+export registry=<FQDN or IP>:<PORT>
+export fileserver=<FQDN or IP>:<PORT>
+
+### Apply System Settings
+cat << EOF >> /etc/sysctl.conf
+### Modified System Settings
+vm.swappiness=0
+vm.panic_on_oom=0
+vm.overcommit_memory=1
+kernel.panic=10
+kernel.panic_on_oops=1
+vm.max_map_count = 262144
+net.ipv4.ip_local_port_range=1024 65000
+net.core.somaxconn=10000
+net.ipv4.tcp_tw_reuse=1
+net.ipv4.tcp_fin_timeout=15
+net.core.somaxconn=4096
+net.core.netdev_max_backlog=4096
+net.core.rmem_max=16777216
+net.core.wmem_max=16777216
+net.ipv4.tcp_max_syn_backlog=20480
+net.ipv4.tcp_max_tw_buckets=400000
+net.ipv4.tcp_no_metrics_save=1
+net.ipv4.tcp_rmem=4096 87380 16777216
+net.ipv4.tcp_syn_retries=2
+net.ipv4.tcp_synack_retries=2
+net.ipv4.tcp_wmem=4096 65536 16777216
+net.ipv4.neigh.default.gc_thresh1=8096
+net.ipv4.neigh.default.gc_thresh2=12288
+net.ipv4.neigh.default.gc_thresh3=16384
+net.ipv4.tcp_keepalive_time=600
+net.ipv4.ip_forward=1
+net.ipv6.conf.all.disable_ipv6 = 1
+net.ipv6.conf.default.disable_ipv6 = 1
+fs.inotify.max_user_instances=8192
+fs.inotify.max_user_watches=1048576
+EOF
+sysctl -p > /dev/null 2>&1
+
+### Install Packages
+yum install -y iptables container-selinux libnetfilter_conntrack libnfnetlink libnftnl policycoreutils-python-utils cryptsetup
+yum install -y nfs-utils iscsi-initiator-utils; yum install -y zip zstd tree jq
+
+### Modify Settings
+echo "InitiatorName=$(/sbin/iscsi-iname)" > /etc/iscsi/initiatorname.iscsi && systemctl enable --now iscsid
+systemctl stop firewalld; systemctl disable firewalld; systemctl stop nm-cloud-setup; systemctl disable nm-cloud-setup; systemctl stop nm-cloud-setup.timer; systemctl disable nm-cloud-setup.timer
+echo -e "[keyfile]\nunmanaged-devices=interface-name:cali*;interface-name:flannel*" > /etc/NetworkManager/conf.d/rke2-canal.conf
+
+### Setup Directories
+mkdir -p /etc/rancher/rke2
+
+### Configure RKE2 Config
+cat << EOF >> /etc/rancher/rke2/config.yaml
+node-taint:
+  - CriticalAddonsOnly=true:NoExecute
+token: RancherAirgapRKE2token
+system-default-registry: ${registry}
+EOF
+
+### Configure Local Registry
+cat << EOF >> /etc/rancher/rke2/registries.yaml
+mirrors:
+  "${registry}":
+    endpoint:
+      - "http://${registry}"
+  "docker.io":
+    endpoint:
+      - "http://${registry}"
+EOF
+
+### Install Depedencies
+yum install -y http://${fileserver}/rke2-selinux-0.17-1.${vPlatform}.noarch.rpm http://${fileserver}/rke2-common-${vRKE2}.rke2r1-0.${vPlatform}.x86_64.rpm http://${fileserver}/rke2-server-${vRKE2}.rke2r1-0.${vPlatform}.x86_64.rpm
+
+### Download and Install RKE2 Server
+### curl -sfL http://${fileserver}/install.sh | INSTALL_RKE2_VERSION=${vRKE2} INSTALL_RKE2_TYPE=server sh -
+
+### Enable and Start RKE2 Server
+systemctl enable rke2-server.service && systemctl start rke2-server.service
+
+### Symlink kubectl and containerd binaries
+sudo ln -s /var/lib/rancher/rke2/data/v1*/bin/kubectl /usr/bin/kubectl
+sudo ln -s /var/run/k3s/containerd/containerd.sock /var/run/containerd/containerd.sock
+
+### Update and Source BASHRC
+cat << EOF >> ~/.bashrc
+export PATH=$PATH:/var/lib/rancher/rke2/bin:/usr/local/bin/
+export KUBECONFIG=/etc/rancher/rke2/rke2.yaml
+export CRI_CONFIG_FILE=/var/lib/rancher/rke2/agent/etc/crictl.yaml
+alias k=kubectl
+EOF
+
+### Verify Node
+kubectl get nodes
+```
+
+#### RKE2 Agent Nodes (Worker Nodes)
+
+Complete the following commands on the agent node(s) in the cluster. You will need network connectivity to the Disconnected Build Server.
+
+```bash
+### Sudo to Root
+sudo su
+
+### Set Variables
+export vRKE2=1.26.13
+export vPlatform=el9
+export registry=<FQDN or IP>:<PORT>
+export fileserver=<FQDN or IP>:<PORT>
+export serverNode=<FQDN or IP>
+
+### Apply System Settings
+cat << EOF >> /etc/sysctl.conf
+### Modified System Settings
+vm.swappiness=0
+vm.panic_on_oom=0
+vm.overcommit_memory=1
+kernel.panic=10
+kernel.panic_on_oops=1
+vm.max_map_count = 262144
+net.ipv4.ip_local_port_range=1024 65000
+net.core.somaxconn=10000
+net.ipv4.tcp_tw_reuse=1
+net.ipv4.tcp_fin_timeout=15
+net.core.somaxconn=4096
+net.core.netdev_max_backlog=4096
+net.core.rmem_max=16777216
+net.core.wmem_max=16777216
+net.ipv4.tcp_max_syn_backlog=20480
+net.ipv4.tcp_max_tw_buckets=400000
+net.ipv4.tcp_no_metrics_save=1
+net.ipv4.tcp_rmem=4096 87380 16777216
+net.ipv4.tcp_syn_retries=2
+net.ipv4.tcp_synack_retries=2
+net.ipv4.tcp_wmem=4096 65536 16777216
+net.ipv4.neigh.default.gc_thresh1=8096
+net.ipv4.neigh.default.gc_thresh2=12288
+net.ipv4.neigh.default.gc_thresh3=16384
+net.ipv4.tcp_keepalive_time=600
+net.ipv4.ip_forward=1
+net.ipv6.conf.all.disable_ipv6 = 1
+net.ipv6.conf.default.disable_ipv6 = 1
+fs.inotify.max_user_instances=8192
+fs.inotify.max_user_watches=1048576
+EOF
+sysctl -p > /dev/null 2>&1
+
+### Install Packages
+yum install -y iptables container-selinux libnetfilter_conntrack libnfnetlink libnftnl policycoreutils-python-utils cryptsetup
+yum install -y nfs-utils iscsi-initiator-utils; yum install -y zip zstd tree jq
+
+### Modify Settings
+echo "InitiatorName=$(/sbin/iscsi-iname)" > /etc/iscsi/initiatorname.iscsi && systemctl enable --now iscsid
+systemctl stop firewalld; systemctl disable firewalld; systemctl stop nm-cloud-setup; systemctl disable nm-cloud-setup; systemctl stop nm-cloud-setup.timer; systemctl disable nm-cloud-setup.timer
+echo -e "[keyfile]\nunmanaged-devices=interface-name:cali*;interface-name:flannel*" > /etc/NetworkManager/conf.d/rke2-canal.conf
+
+### Setup Directories
+mkdir -p /etc/rancher/rke2
+
+### Configure RKE2 Config
+cat << EOF >> /etc/rancher/rke2/config.yaml
+server: https://${serverNode}:9345
+token: RancherAirgapRKE2token
+system-default-registry: ${registry}
+EOF
+
+### Configure Local Registry
+cat << EOF >> /etc/rancher/rke2/registries.yaml
+mirrors:
+  "${registry}":
+    endpoint:
+      - "http://${registry}"
+  "docker.io":
+    endpoint:
+      - "http://${registry}"
+EOF
+
+### Install Depedencies
+yum install -y http://${fileserver}/rke2-selinux-0.17-1.${vPlatform}.noarch.rpm http://${fileserver}/rke2-common-${vRKE2}.rke2r1-0.${vPlatform}.x86_64.rpm http://${fileserver}/rke2-agent-${vRKE2}.rke2r1-0.${vPlatform}.x86_64.rpm
+
+### Download and Install RKE2 Server
+### curl -sfL http://${fileserver}/install.sh | INSTALL_RKE2_VERSION=${vRKE2} INSTALL_RKE2_TYPE=agent sh -
+
+### Enable and Start RKE2 Agent
+systemctl enable rke2-agent.service && systemctl start rke2-agent.service
+```

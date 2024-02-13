@@ -3,20 +3,52 @@
 Complete the following commands on the Internet Connected Server. For the initial airgap, we recommend you bring all packages over the airgap and then individual packages as required in the future.
 
 ```bash
-### Setup Package Directory
-mkdir -p /opt/rancher/rancher-airgap-packages
-cd /opt/rancher/rancher-airgap-packages
+### Setup Directories
+mkdir -p /opt/rancher/hauler
+cd /opt/rancher/hauler
+
+### Download and Install Hauler
+curl -sfL https://get.hauler.dev | bash
+
+### Download and Install createrepo
+# https://github.com/rpm-software-management/createrepo
+yum install -y createrepo
+
+### Setup Directories
+mkdir -p /opt/rancher/hauler/repos
+cd /opt/rancher/hauler/repos
 
 ### Download Required Packages
-### https://github.com/rpm-software-management/createrepo
-repotrack git zip zstd tree createrepo container-selinux iptables libnetfilter_conntrack libnfnetlink libnftnl policycoreutils-python-utils cryptsetup iscsi-initiator-utils nfs-utils
+# https://man7.org/linux/man-pages/man1/repotrack.1.html
+repotrack iptables container-selinux libnetfilter_conntrack libnfnetlink libnftnl policycoreutils-python-utils cryptsetup nfs-utils iscsi-initiator-utils git zip zstd tree jq createrepo
+
+### Create YUM Repo
+cd /opt/rancher/hauler
+createrepo /opt/rancher/hauler/repos
 
 ### Compile Package List
-ls /opt/rancher/rancher-airgap-packages > /opt/rancher/rancher-airgap-packages/packages.txt
+find /opt/rancher/hauler/repos -type f -o -type d -not -name '*.rpm' > /opt/rancher/hauler/repos/package-list.txt
 
-### Compress Packages
-tar -czvf /opt/rancher/rancher-airgap-packages.tar.zst /opt/rancher/rancher-airgap-packages
-cd /opt/rancher && rm -rf /opt/rancher/rancher-airgap-packages
+# Generate the Hauler Manifest for Packages
+# may cause issues:  sed '/perl/d' | sed '/libstdc/d'
+cat <<EOF > rancher-airgap-packages.yaml
+apiVersion: content.hauler.cattle.io/v1alpha1
+kind: Files
+metadata:
+  name: rancher-airgap-packages
+spec:
+  files:
+$(cat /opt/rancher/hauler/repos/package-list.txt | sed 's/^/    - path: /')
+EOF
+
+### Sync Manifests to Hauler Store
+hauler store sync --store packages --files rancher-airgap-packages.yaml
+
+### Compress Hauler Store Contents
+hauler store save --store packages --filename rancher-airgap-packages.tar.zst
+
+### Fetch Hauler Binary
+curl -sfOL https://github.com/rancherfederal/hauler/releases/download/v0.4.4/hauler_0.4.4_linux_amd64.tar.gz
 ```
 
 ---
@@ -30,13 +62,37 @@ cd /opt/rancher && rm -rf /opt/rancher/rancher-airgap-packages
 Complete the following commands on the Disconnected Server. We recommend to **not** use this server in the cluster.
 
 ```bash
-### Setup Package Directory
-mkdir -p /opt/rancher/rancher-airgap-packages
-cd /opt/rancher/rancher-airgap-packages
+### Setup Directories
+mkdir -p /opt/rancher/hauler
+cd /opt/rancher/hauler
 
-### Untar Packages
-tar -xf /opt/rancher/rancher-airgap-packages/rancher-airgap-packages.tar.zst
+### SCP TARBALLS HERE
 
-### Install Packages
-rpm -ivh *.rpm
+### Untar and Install Hauler
+tar -xf hauler_0.4.4_linux_amd64.tar.gz
+rm -rf LICENSE README.md
+chmod 755 hauler && mv hauler /usr/bin/hauler
+
+### Load Hauler Tarballs
+hauler store load --store packages rancher-airgap-packages.tar.zst
+
+### Verify Hauler Store Contents
+hauler store info --store packages
+
+### Serve Hauler Content
+hauler store serve fileserver --store packages
+# nohop hauler store serve fileserver --store packages &
+
+### Verify File Server Content
+curl http://<FQDN or IP>:<PORT>
+
+### Create YUM Repo File
+cat << EOF > /etc/yum.repos.d/rancher-airgap.repo
+[rancher-airgap]
+name=Rancher Airgap YUM Repository
+baseurl=http://<FQDN or IP>:<PORT>
+enabled=1
+exactarch=0
+gpgcheck=0
+EOF
 ```
