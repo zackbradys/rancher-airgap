@@ -4,11 +4,11 @@
 
 ## Collection and Packaging
 
-[hauler/rancher/rancher-airgap-rancher.yaml](https://github.com/zackbradys/rancher-airgap/blob/v2.0.0/hauler/rancher/rancher-airgap-rancher.yaml) - provides the content manifest for all the assets.
+[hauler/rancher/rancher-airgap-rancher.yaml](https://github.com/zackbradys/rancher-airgap/blob/v2.0.2/hauler/rancher/rancher-airgap-rancher.yaml) - provides the content manifest for all the assets.
 
 ```yaml
 # pull the manifest
-curl -#OL https://raw.githubusercontent.com/zackbradys/rancher-airgap/v2.0.0/hauler/rancher/rancher-airgap-rancher.yaml
+curl -#OL https://raw.githubusercontent.com/zackbradys/rancher-airgap/v2.0.2/hauler/rancher/rancher-airgap-rancher.yaml
 
 # sync to the store
 hauler store sync --files rancher-airgap-rancher.yaml
@@ -17,12 +17,12 @@ hauler store sync --files rancher-airgap-rancher.yaml
 hauler store save --filename rancher-airgap-rancher.tar.zst
 ```
 
-[hauler/rancher/rancher-airgap-rancher-minimal.yaml](https://github.com/zackbradys/rancher-airgap/blob/v2.0.0/hauler/rancher/rancher-airgap-rancher-minimal.yaml) - provides the content manifest for the minimal assets.
+[hauler/rancher/rancher-airgap-rancher-minimal.yaml](https://github.com/zackbradys/rancher-airgap/blob/v2.0.2/hauler/rancher/rancher-airgap-rancher-minimal.yaml) - provides the content manifest for the minimal assets.
 
 
 ```bash
 # pull the manifest
-curl -#OL https://raw.githubusercontent.com/zackbradys/rancher-airgap/v2.0.0/hauler/rancher/rancher-airgap-rancher-minimal.yaml
+curl -#OL https://raw.githubusercontent.com/zackbradys/rancher-airgap/v2.0.2/hauler/rancher/rancher-airgap-rancher-minimal.yaml
 
 # sync to the store
 hauler store sync --files rancher-airgap-rancher-minimal.yaml

@@ -4,11 +4,11 @@
 
 ## Collection and Packaging
 
-[hauler/helm/rancher-airgap-helm.yaml](https://github.com/zackbradys/rancher-airgap/blob/v2.0.0/hauler/helm/rancher-airgap-helm.yaml) - provides the content manifest for all the assets.
+[hauler/helm/rancher-airgap-helm.yaml](https://github.com/zackbradys/rancher-airgap/blob/v2.0.2/hauler/helm/rancher-airgap-helm.yaml) - provides the content manifest for all the assets.
 
 ```bash
 # pull the manifest
-curl -#OL https://raw.githubusercontent.com/zackbradys/rancher-airgap/v2.0.0/hauler/helm/rancher-airgap-helm.yaml
+curl -#OL https://raw.githubusercontent.com/zackbradys/rancher-airgap/v2.0.2/hauler/helm/rancher-airgap-helm.yaml
 
 # sync to the store
 hauler store sync --files rancher-airgap-helm.yaml

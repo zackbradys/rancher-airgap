@@ -4,11 +4,11 @@
 
 ## Collection and Packaging
 
-[hauler/cosign/rancher-airgap-cosign.yaml](https://github.com/zackbradys/rancher-airgap/blob/v2.0.0/hauler/cosign/rancher-airgap-cosign.yaml) - provides the content manifest for all the assets.
+[hauler/cosign/rancher-airgap-cosign.yaml](https://github.com/zackbradys/rancher-airgap/blob/v2.0.2/hauler/cosign/rancher-airgap-cosign.yaml) - provides the content manifest for all the assets.
 
 ```bash
 # pull the manifest
-curl -#OL https://raw.githubusercontent.com/zackbradys/rancher-airgap/v2.0.0/hauler/cosign/rancher-airgap-cosign.yaml
+curl -#OL https://raw.githubusercontent.com/zackbradys/rancher-airgap/v2.0.2/hauler/cosign/rancher-airgap-cosign.yaml
 
 # sync to the store
 hauler store sync --files rancher-airgap-rke2.yaml
