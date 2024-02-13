@@ -6,9 +6,6 @@
 ### Sudo to Root
 sudo su
 
-### Set Variables
-export vRancherAirgap=v2.0.2
-
 ### Setup Directories
 mkdir -p /opt/rancher/hauler
 cd /opt/rancher/hauler
@@ -17,16 +14,16 @@ cd /opt/rancher/hauler
 curl -sfL https://get.hauler.dev | bash
 
 ### Fetch Rancher Airgap Manifests
-curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/${vRancherAirgap}/hauler/rke2/rancher-airgap-rke2.yaml
-curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/${vRancherAirgap}/hauler/rancher/rancher-airgap-rancher.yaml
-# curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/${vRancherAirgap}/hauler/rancher/rancher-airgap-rancher-minimal.yaml
-curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/${vRancherAirgap}/hauler/longhorn/rancher-airgap-longhorn.yaml
-curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/${vRancherAirgap}/hauler/neuvector/rancher-airgap-neuvector.yaml
-# curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/${vRancherAirgap}/hauler/harvester/rancher-airgap-harvester.yaml
-# curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/${vRancherAirgap}/hauler/harbor/rancher-airgap-harbor.yaml
-curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/${vRancherAirgap}/hauler/cosign/rancher-airgap-cosign.yaml
-curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/${vRancherAirgap}/hauler/hauler/rancher-airgap-hauler.yaml
-curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/${vRancherAirgap}/hauler/helm/rancher-airgap-helm.yaml
+curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/rke2/rancher-airgap-rke2.yaml
+curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/rancher/rancher-airgap-rancher.yaml
+# curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/rancher/rancher-airgap-rancher-minimal.yaml
+curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/longhorn/rancher-airgap-longhorn.yaml
+curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/neuvector/rancher-airgap-neuvector.yaml
+# curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/harvester/rancher-airgap-harvester.yaml
+# curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/harbor/rancher-airgap-harbor.yaml
+curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/cosign/rancher-airgap-cosign.yaml
+curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/hauler/rancher-airgap-hauler.yaml
+curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/helm/rancher-airgap-helm.yaml
 
 ### Sync Manifests to Hauler Store
 hauler store sync --store rke2 --platform linux/amd64 --files rancher-airgap-rke2.yaml
@@ -66,6 +63,10 @@ curl -sfOL https://github.com/rancherfederal/hauler/releases/download/v0.4.4/hau
 ### Sudo to Root
 sudo su
 
+### Set Variables
+export registry=<FQDN or IP>:<PORT>
+export fileserver=<FQDN or IP>:<PORT>
+
 ### Setup Directories
 mkdir -p /opt/rancher/hauler
 cd /opt/rancher/hauler
@@ -94,24 +95,15 @@ hauler store info
 hauler store serve registry
 # nohop hauler store serve registry &
 
-### Verify Registry Server Content
+### Test Registry Server Content
 curl ${registry}/v2/_catalog
 
 ### Serve Hauler Content
-hauler store serve fileserver --store packages
-# nohop hauler store serve fileserver --store packages &
+hauler store serve fileserver
+# nohop hauler store serve fileserver &
 
-### Verify File Server Content
+### Test File Server Content
 curl http://${fileserver}
-
-### Create YUM Repo File
-cat << EOF > /etc/yum.repos.d/rancher-airgap.repo
-[rancher-airgap]
-name=Rancher Airgap YUM Repository
-baseurl=http://${fileserver}
-enabled=1
-exactarch=0
-gpgcheck=0
 EOF
 ```
 
@@ -181,8 +173,6 @@ mkdir -p /etc/rancher/rke2
 
 ### Configure RKE2 Config
 cat << EOF >> /etc/rancher/rke2/config.yaml
-node-taint:
-  - CriticalAddonsOnly=true:NoExecute
 token: RancherAirgapRKE2token
 system-default-registry: ${registry}
 EOF
@@ -232,7 +222,7 @@ Complete the following commands on the agent node(s) in the cluster. You will ne
 sudo su
 
 ### Set Variables
-export vRKE2=1.26.13
+export vRKE2=v1.26.13
 export vPlatform=el9
 export registry=<FQDN or IP>:<PORT>
 export fileserver=<FQDN or IP>:<PORT>
@@ -312,4 +302,157 @@ yum install -y http://${fileserver}/rke2-selinux-0.17-1.${vPlatform}.noarch.rpm 
 
 ### Enable and Start RKE2 Agent
 systemctl enable rke2-agent.service && systemctl start rke2-agent.service
+```
+
+#### Helm
+
+Complete the following commands on the first server node in the cluster.
+
+```bash
+### Sudo to Root
+sudo su
+
+### Set Variables
+export vHelm=1.14.2
+export registry=<FQDN or IP>:<PORT>
+export fileserver=<FQDN or IP>:<PORT>
+
+### Fetch the Helm Tarball
+curl http://${fileserver}/helm-v${vHelm}-linux-amd64.tar.gz
+
+### Extract and Install
+tar -xf helm-v${vHelm}-linux-amd64.tar.gz
+chmod 755 linux-amd64 && mv linux-amd64 /usr/bin/helm
+```
+
+### Rancher Manager
+
+Complete the following commands on the first server node in the cluster.
+
+#### Cert-Manager
+
+```bash
+### Sudo to Root
+sudo su
+
+### Set Variables
+export DOMAIN=<example.com>
+export vCertManager=1.14.2
+export registry=<FQDN or IP>:<PORT>
+export fileserver=<FQDN or IP>:<PORT>
+
+### Create Namespace
+kubectl create namespace cert-manager
+
+### Install via Helm
+helm upgrade -i cert-manager http://${fileserver}/cert-manager-v${vCertManager}.tgz -n cert-manager --set installCRDs=true --set image.repository=$Registry/jetstack/cert-manager-controller --set webhook.image.repository=$Registry/jetstack/cert-manager-webhook --set cainjector.image.repository=$Registry/jetstack/cert-manager-cainjector --set acmesolver.image.repository=$Registry/jetstack/cert-manager-acmesolver --set startupapicheck.image.repository=$Registry/jetstack/cert-manager-ctl
+
+### Configure Cert Manager
+kubectl apply -f - << EOF
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: selfsigned-issuer
+spec:
+  selfSigned: {}
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: tls-certs
+  namespace: cert-manager
+spec:
+  issuerRef:
+    name: private-ca-issuer
+    kind: selfsigned-issuer
+  secretName: tls-certs
+  commonName: "$DOMAIN"
+  dnsNames:
+  - "$DOMAIN"
+  - "*.$DOMAIN"
+EOF
+```
+
+#### Rancher
+
+```bash
+### Sudo to Root
+sudo su
+
+### Set Variables
+export DOMAIN=<example.com>
+export vRancher=2.8.2
+export registry=<FQDN or IP>:<PORT>
+export fileserver=<FQDN or IP>:<PORT>
+
+### Create Namespace
+kubectl create namespace cattle-system
+
+### Configure Cert Manager
+kubectl apply -f - << EOF
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: tls-certs
+  namespace: cattle-system
+spec:
+  issuerRef:
+    name: private-ca-issuer
+    kind: selfsigned-issuer
+  secretName: tls-certs
+  commonName: "$DOMAIN"
+  dnsNames:
+  - "$DOMAIN"
+  - "*.$DOMAIN"
+EOF
+
+### Install via Helm
+helm upgrade -i rancher http://${fileserver}/rancher-${vRancher}.tgz -n cattle-system --set bootstrapPassword=Pa22word --set replicas=1 --set ingress.tls.source=secret --set ingress.tls.secretName=tls-certs --set systemDefaultRegistry=$Registry --set rancherImage=$Registry/rancher/rancher --set hostname=rancher.$DOMAIN
+
+### Add Classification Banners
+kubectl apply -f http://${fileserver}/rancher-banner-ufouo.yaml
+```
+
+### Longhorn
+
+Complete the following commands on the first server node in the cluster.
+
+```bash
+### Sudo to Root
+sudo su
+
+### Set Variables
+export vLonghorn=1.6.0
+export registry=<FQDN or IP>:<PORT>
+export fileserver=<FQDN or IP>:<PORT>
+
+### Create Namespace
+kubectl create namespace longhorn-system
+
+### Install via Helm
+helm upgrade -i longhorn http://${fileserver}/longhorn-${vLonghorn}.tgz -n longhorn-system --version=$vLonghorn --set global.cattle.systemDefaultRegistry=$Registry
+
+### Create Example SC and Volume
+kubectl apply -f http://${fileserver}/longhorn-encrypted-sc.yaml
+kubectl apply -f http://${fileserver}/longhorn-encrypted-volume.yaml
+```
+
+### NeuVector
+
+Complete the following commands on the first server node in the cluster.
+
+```bash
+### Sudo to Root
+sudo su
+
+### Set Variables
+export vNeuVector=2.7.3
+export registry=<FQDN or IP>:<PORT>
+export fileserver=<FQDN or IP>:<PORT>
+
+### Create Namespace
+kubectl create namespace cattle-neuvector-system
+
+### Install via Helm
+helm upgrade -i neuvector http://${fileserver}/core-${vNeuVector}.tgz -n cattle-neuvector-system --set k3s.enabled=true --set manager.svc.type=ClusterIP --set internal.certmanager.enabled=true --set controller.pvc.enabled=true --set controller.pvc.capacity=10Gi --set global.cattle.url=https://rancher.$DOMAIN --set controller.ranchersso.enabled=true --set rbac=true --set registry=$Registry
 ```

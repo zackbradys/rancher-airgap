@@ -74,14 +74,14 @@ rm -rf LICENSE README.md
 chmod 755 hauler && mv hauler /usr/bin/hauler
 
 ### Load Hauler Tarballs
-hauler store load --store packages rancher-airgap-packages.tar.zst
+hauler store load rancher-airgap-packages.tar.zst
 
 ### Verify Hauler Store Contents
-hauler store info --store packages
+hauler store info
 
 ### Serve Hauler Content
-hauler store serve fileserver --store packages
-# nohop hauler store serve fileserver --store packages &
+hauler store serve fileserver
+# nohop hauler store serve fileserver &
 
 ### Verify File Server Content
 curl http://<FQDN or IP>:<PORT>
