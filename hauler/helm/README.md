@@ -1,14 +1,14 @@
-# Helm
+# Helm (by the CNCF)
 
 **Note:** View the [README](https://github.com/zackbradys/rancher-airgap/blob/main/README.md) for the latest versions!
 
 ## Collection and Packaging
 
-[hauler/helm/rancher-airgap-helm.yaml](https://github.com/zackbradys/rancher-airgap/blob/v2.0.2/hauler/helm/rancher-airgap-helm.yaml) - provides the content manifest for all the assets.
+[hauler/helm/rancher-airgap-helm.yaml](https://github.com/zackbradys/rancher-airgap/blob/main/hauler/helm/rancher-airgap-helm.yaml) - provides the content manifest for all the assets.
 
 ```bash
 # pull the manifest
-curl -#OL https://raw.githubusercontent.com/zackbradys/rancher-airgap/v2.0.2/hauler/helm/rancher-airgap-helm.yaml
+curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/helm/rancher-airgap-helm.yaml
 
 # sync to the store
 hauler store sync --files rancher-airgap-helm.yaml

@@ -1,14 +1,14 @@
-# Cosign
+# Cosign (by Sigstore)
 
 **Note:** View the [README](https://github.com/zackbradys/rancher-airgap/blob/main/README.md) for the latest versions!
 
 ## Collection and Packaging
 
-[hauler/cosign/rancher-airgap-cosign.yaml](https://github.com/zackbradys/rancher-airgap/blob/v2.0.2/hauler/cosign/rancher-airgap-cosign.yaml) - provides the content manifest for all the assets.
+[hauler/cosign/rancher-airgap-cosign.yaml](https://github.com/zackbradys/rancher-airgap/blob/main/hauler/cosign/rancher-airgap-cosign.yaml) - provides the content manifest for all the assets.
 
 ```bash
 # pull the manifest
-curl -#OL https://raw.githubusercontent.com/zackbradys/rancher-airgap/v2.0.2/hauler/cosign/rancher-airgap-cosign.yaml
+curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/cosign/rancher-airgap-cosign.yaml
 
 # sync to the store
 hauler store sync --files rancher-airgap-rke2.yaml

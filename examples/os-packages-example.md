@@ -95,4 +95,11 @@ enabled=1
 exactarch=0
 gpgcheck=0
 EOF
+
+### Disable Default YUM Repos
+# useful when simulating airgapped servers
+yum-config-manager --disable appstream baseos extras
+
+### List Available YUM Repos
+yum repolist all
 ```
