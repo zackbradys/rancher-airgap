@@ -2,9 +2,9 @@
 export vLonghorn=1.6.0
 
 ### Setup Working Directory
-rm -rf /opt/rancher/hauler/longhorn
-mkdir -p /opt/rancher/hauler/longhorn
-cd /opt/rancher/hauler/longhorn
+rm -rf /opt/hauler/longhorn
+mkdir -p /opt/hauler/longhorn
+cd /opt/hauler/longhorn
 
 ### Download Longhorn Images
 ### https://github.com/longhorn/longhorn
@@ -15,7 +15,7 @@ sed -i "s#^#    - name: #" longhorn-images.txt
 longhornImages=$(cat longhorn-images.txt)
 
 ### Create Hauler Manifest
-cat << EOF >> /opt/rancher/hauler/longhorn/rancher-airgap-longhorn.yaml
+cat << EOF >> /opt/hauler/longhorn/rancher-airgap-longhorn.yaml
 apiVersion: content.hauler.cattle.io/v1alpha1
 kind: Files
 metadata:

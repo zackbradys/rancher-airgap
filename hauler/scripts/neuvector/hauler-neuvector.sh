@@ -2,9 +2,9 @@
 export vNeuVector=2.7.3
 
 ### Setup Working Directory
-rm -rf /opt/rancher/hauler/neuvector
-mkdir -p /opt/rancher/hauler/neuvector
-cd /opt/rancher/hauler/neuvector
+rm -rf /opt/hauler/neuvector
+mkdir -p /opt/hauler/neuvector
+cd /opt/hauler/neuvector
 
 ### Add NeuVector Helm Chart Repos
 helm repo add neuvector https://neuvector.github.io/neuvector-helm
@@ -19,7 +19,7 @@ sed -i "s#^#    - name: #" neuvector-images.txt
 neuvectorImages=$(cat neuvector-images.txt)
 
 ### Create Hauler Manifest
-cat << EOF >> /opt/rancher/hauler/neuvector/rancher-airgap-neuvector.yaml
+cat << EOF >> /opt/hauler/neuvector/rancher-airgap-neuvector.yaml
 apiVersion: content.hauler.cattle.io/v1alpha1
 kind: Charts
 metadata:

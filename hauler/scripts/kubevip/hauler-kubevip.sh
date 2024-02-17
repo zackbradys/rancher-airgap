@@ -1,12 +1,12 @@
 ### Setup Working Directory
-rm -rf /opt/rancher/hauler/kubevip
-mkdir -p /opt/rancher/hauler/kubevip
-cd /opt/rancher/hauler/kubevip
+rm -rf /opt/hauler/kubevip
+mkdir -p /opt/hauler/kubevip
+cd /opt/hauler/kubevip
 
 kubevipImage=$(curl -sL kube-vip.io/k3s | grep -o 'image:.*' | sed 's/image: /    - name: /')
 
 ### Create Hauler Manifest
-cat << EOF >> /opt/rancher/hauler/kubevip/rancher-airgap-kubevip.yaml
+cat << EOF >> /opt/hauler/kubevip/rancher-airgap-kubevip.yaml
 apiVersion: content.hauler.cattle.io/v1alpha1
 kind: Images
 metadata:

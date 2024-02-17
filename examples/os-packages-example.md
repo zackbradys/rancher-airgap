@@ -4,8 +4,8 @@ Complete the following commands on the Internet Connected Server. For the initia
 
 ```bash
 ### Setup Directories
-mkdir -p /opt/rancher/hauler
-cd /opt/rancher/hauler
+mkdir -p /opt/hauler
+cd /opt/hauler
 
 ### Download and Install Hauler
 curl -sfL https://get.hauler.dev | bash
@@ -15,19 +15,19 @@ curl -sfL https://get.hauler.dev | bash
 yum install -y createrepo
 
 ### Setup Directories
-mkdir -p /opt/rancher/hauler/repos
-cd /opt/rancher/hauler/repos
+mkdir -p /opt/hauler/repos
+cd /opt/hauler/repos
 
 ### Download Required Packages
 # https://man7.org/linux/man-pages/man1/repotrack.1.html
 repotrack iptables container-selinux libnetfilter_conntrack libnfnetlink libnftnl policycoreutils-python-utils cryptsetup nfs-utils iscsi-initiator-utils git zip zstd tree jq createrepo
 
 ### Create YUM Repo
-cd /opt/rancher/hauler
-createrepo /opt/rancher/hauler/repos
+cd /opt/hauler
+createrepo /opt/hauler/repos
 
 ### Compile Package List
-find /opt/rancher/hauler/repos -type f -o -type d -not -name '*.rpm' > /opt/rancher/hauler/repos/package-list.txt
+find /opt/hauler/repos -type f -o -type d -not -name '*.rpm' > /opt/hauler/repos/package-list.txt
 
 # Generate the Hauler Manifest for Packages
 # may cause issues:  sed '/perl/d' | sed '/libstdc/d'
@@ -38,7 +38,7 @@ metadata:
   name: rancher-airgap-packages
 spec:
   files:
-$(cat /opt/rancher/hauler/repos/package-list.txt | sed 's/^/    - path: /')
+$(cat /opt/hauler/repos/package-list.txt | sed 's/^/    - path: /')
 EOF
 
 ### Sync Manifests to Hauler Store
@@ -63,8 +63,8 @@ Complete the following commands on the Disconnected Server. We recommend to **no
 
 ```bash
 ### Setup Directories
-mkdir -p /opt/rancher/hauler
-cd /opt/rancher/hauler
+mkdir -p /opt/hauler
+cd /opt/hauler
 
 ### SCP TARBALLS HERE
 
@@ -81,7 +81,7 @@ hauler store info
 
 ### Serve Hauler Content
 hauler store serve fileserver
-# nohop hauler store serve fileserver &
+# nohup hauler store serve fileserver &
 
 ### Verify File Server Content
 curl http://<FQDN or IP>:<PORT>

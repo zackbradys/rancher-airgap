@@ -23,67 +23,67 @@ jobs:
       - name: Build Hauler
         run: |
           sh hauler/scripts/hauler/hauler-hauler.sh
-          mv /opt/rancher/hauler/hauler/rancher-airgap-hauler.yaml hauler/hauler/rancher-airgap-hauler.yaml
+          mv /opt/hauler/hauler/rancher-airgap-hauler.yaml hauler/hauler/rancher-airgap-hauler.yaml
           pwd && ls -la hauler/hauler
 
       - name: Build Helm
         run: |
           sh hauler/scripts/helm/hauler-helm.sh
-          mv /opt/rancher/hauler/helm/rancher-airgap-helm.yaml hauler/helm/rancher-airgap-helm.yaml
+          mv /opt/hauler/helm/rancher-airgap-helm.yaml hauler/helm/rancher-airgap-helm.yaml
           pwd && ls -la hauler/helm
 
       - name: Build Cosign
         run: |
           sh hauler/scripts/cosign/hauler-cosign.sh
-          mv /opt/rancher/hauler/cosign/rancher-airgap-cosign.yaml hauler/cosign/rancher-airgap-cosign.yaml
+          mv /opt/hauler/cosign/rancher-airgap-cosign.yaml hauler/cosign/rancher-airgap-cosign.yaml
           pwd && ls -la hauler/cosign
 
       - name: Build RKE2
         run: |
           sh hauler/scripts/rke2/hauler-rke2.sh
-          mv /opt/rancher/hauler/rke2/rancher-airgap-rke2.yaml hauler/rke2/rancher-airgap-rke2.yaml
+          mv /opt/hauler/rke2/rancher-airgap-rke2.yaml hauler/rke2/rancher-airgap-rke2.yaml
           pwd && ls -la hauler/rke2
 
       - name: Build Rancher
         run: |
           sh hauler/scripts/rancher/hauler-rancher.sh
-          mv /opt/rancher/hauler/rancher/rancher-airgap-rancher.yaml hauler/rancher/rancher-airgap-rancher.yaml
+          mv /opt/hauler/rancher/rancher-airgap-rancher.yaml hauler/rancher/rancher-airgap-rancher.yaml
           pwd && ls -la hauler/rancher
 
       - name: Build Rancher Minimal
         run: |
           sh hauler/scripts/rancher/hauler-rancher-minimal.sh
-          mv /opt/rancher/hauler/rancher-minimal/rancher-airgap-rancher-minimal.yaml hauler/rancher/rancher-airgap-rancher-minimal.yaml
+          mv /opt/hauler/rancher-minimal/rancher-airgap-rancher-minimal.yaml hauler/rancher/rancher-airgap-rancher-minimal.yaml
           pwd && ls -la hauler/rancher
 
       - name: Build Longhorn
         run: |
           sh hauler/scripts/longhorn/hauler-longhorn.sh
-          mv /opt/rancher/hauler/longhorn/rancher-airgap-longhorn.yaml hauler/longhorn/rancher-airgap-longhorn.yaml
+          mv /opt/hauler/longhorn/rancher-airgap-longhorn.yaml hauler/longhorn/rancher-airgap-longhorn.yaml
           pwd && ls -la hauler/longhorn
 
       - name: Build NeuVector
         run: |
           sh hauler/scripts/neuvector/hauler-neuvector.sh
-          mv /opt/rancher/hauler/neuvector/rancher-airgap-neuvector.yaml hauler/neuvector/rancher-airgap-neuvector.yaml
+          mv /opt/hauler/neuvector/rancher-airgap-neuvector.yaml hauler/neuvector/rancher-airgap-neuvector.yaml
           pwd && ls -la hauler/neuvector
 
       - name: Build Harvester
         run: |
           sh hauler/scripts/harvester/hauler-harvester.sh
-          mv /opt/rancher/hauler/harvester/rancher-airgap-harvester.yaml hauler/harvester/rancher-airgap-harvester.yaml
+          mv /opt/hauler/harvester/rancher-airgap-harvester.yaml hauler/harvester/rancher-airgap-harvester.yaml
           pwd && ls -la hauler/harvester
 
       - name: Build Harbor
         run: |
           sh hauler/scripts/harbor/hauler-harbor.sh
-          mv /opt/rancher/hauler/harbor/rancher-airgap-harbor.yaml hauler/harbor/rancher-airgap-harbor.yaml
+          mv /opt/hauler/harbor/rancher-airgap-harbor.yaml hauler/harbor/rancher-airgap-harbor.yaml
           pwd && ls -la hauler/harbor
 
       - name: Build KubeVip
         run: |
           sh hauler/scripts/kubevip/hauler-kubevip.sh
-          mv /opt/rancher/hauler/kubevip/rancher-airgap-kubevip.yaml hauler/kubevip/rancher-airgap-kubevip.yaml
+          mv /opt/hauler/kubevip/rancher-airgap-kubevip.yaml hauler/kubevip/rancher-airgap-kubevip.yaml
           pwd && ls -la hauler/kubevip
 
       - name: Commit and Push Repository

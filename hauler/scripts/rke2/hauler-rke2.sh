@@ -3,9 +3,9 @@ export vRKE2=1.26.13
 export vRKE2SELinux=0.17
 
 ### Setup Working Directory
-rm -rf /opt/rancher/hauler/rke2
-mkdir -p /opt/rancher/hauler/rke2
-cd /opt/rancher/hauler/rke2
+rm -rf /opt/hauler/rke2
+mkdir -p /opt/hauler/rke2
+cd /opt/hauler/rke2
 
 ### Download RKE2 Images
 ### https://github.com/rancher/rke2
@@ -16,7 +16,7 @@ sed -i "s#^#    - name: #" rke2-images.txt
 rke2Images=$(cat rke2-images.txt)
 
 ### Create Hauler Manifest
-cat << EOF >> /opt/rancher/hauler/rke2/rancher-airgap-rke2.yaml
+cat << EOF >> /opt/hauler/rke2/rancher-airgap-rke2.yaml
 apiVersion: content.hauler.cattle.io/v1alpha1
 kind: Files
 metadata:

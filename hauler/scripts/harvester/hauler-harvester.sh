@@ -2,9 +2,9 @@
 export vHarvester=1.2.1
 
 ### Setup Working Directory
-rm -rf /opt/rancher/hauler/harvester
-mkdir -p /opt/rancher/hauler/harvester
-cd /opt/rancher/hauler/harvester
+rm -rf /opt/hauler/harvester
+mkdir -p /opt/hauler/harvester
+cd /opt/hauler/harvester
 
 ### Download Harvester Images
 ### https://github.com/harvester/harvester
@@ -15,7 +15,7 @@ sed -i "/^\s*#/d" harvester-images.txt && sed -i "/^$/d" harvester-images.txt &&
 harvesterImages=$(cat harvester-images.txt)
 
 ### Create Hauler Manifest
-cat << EOF >> /opt/rancher/hauler/harvester/rancher-airgap-harvester.yaml
+cat << EOF >> /opt/hauler/harvester/rancher-airgap-harvester.yaml
 apiVersion: content.hauler.cattle.io/v1alpha1
 kind: Files
 metadata:

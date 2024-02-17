@@ -2,9 +2,9 @@
 export vHarbor=1.14.0
 
 ### Setup Working Directory
-rm -rf /opt/rancher/hauler/harbor
-mkdir -p /opt/rancher/hauler/harbor
-cd /opt/rancher/hauler/harbor
+rm -rf /opt/hauler/harbor
+mkdir -p /opt/hauler/harbor
+cd /opt/hauler/harbor
 
 ### Add Harbor Helm Chart Repos
 helm repo add harbor https://helm.goharbor.io
@@ -19,7 +19,7 @@ sed -i "s#^#    - name: #" harbor-images.txt
 harborImages=$(cat harbor-images.txt)
 
 ### Create Hauler Manifest
-cat << EOF >> /opt/rancher/hauler/harbor/rancher-airgap-harbor.yaml
+cat << EOF >> /opt/hauler/harbor/rancher-airgap-harbor.yaml
 apiVersion: content.hauler.cattle.io/v1alpha1
 kind: Charts
 metadata:

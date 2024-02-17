@@ -2,13 +2,13 @@
 export vCosign=2.2.3
 
 ### Setup Working Directory
-rm -rf /opt/rancher/hauler/cosign
-mkdir -p /opt/rancher/hauler/cosign
-cd /opt/rancher/hauler/cosign
+rm -rf /opt/hauler/cosign
+mkdir -p /opt/hauler/cosign
+cd /opt/hauler/cosign
 
 ### Create Hauler Manifest
 ### Cosign -> https://github.com/sigstore/cosign
-cat << EOF >> /opt/rancher/hauler/cosign/rancher-airgap-cosign.yaml
+cat << EOF >> /opt/hauler/cosign/rancher-airgap-cosign.yaml
 apiVersion: content.hauler.cattle.io/v1alpha1
 kind: Files
 metadata:

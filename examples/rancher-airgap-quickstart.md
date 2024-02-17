@@ -7,13 +7,14 @@
 sudo su
 
 ### Setup Directories
-mkdir -p /opt/rancher/hauler
-cd /opt/rancher/hauler
+mkdir -p /opt/hauler
+cd /opt/hauler
 
 ### Download and Install Hauler
 curl -sfL https://get.hauler.dev | bash
 
 ### Fetch Rancher Airgap Manifests
+### Optional Assets/Artifacts are Commented Out
 curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/rke2/rancher-airgap-rke2.yaml
 curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/rancher/rancher-airgap-rancher.yaml
 # curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/rancher/rancher-airgap-rancher-minimal.yaml
@@ -33,9 +34,9 @@ hauler store sync --store longhorn-store --platform linux/amd64 --files rancher-
 hauler store sync --store neuvector-store --platform linux/amd64 --files rancher-airgap-neuvector.yaml
 # hauler store sync --store harvester-store --platform linux/amd64 --files rancher-airgap-harvester.yaml
 # hauler store sync --store harbor-store --platform linux/amd64 --files rancher-airgap-harbor.yaml
-hauler store sync --store extras-store --platform linux/amd64 --files rancher-airgap-hauler.yaml
-hauler store sync --store extras-store --platform linux/amd64 --files rancher-airgap-helm.yaml
-hauler store sync --store extras-store --platform linux/amd64 --files rancher-airgap-cosign.yaml
+hauler store sync --store extras --files rancher-airgap-hauler.yaml
+hauler store sync --store extras --files rancher-airgap-helm.yaml
+hauler store sync --store extras --files rancher-airgap-cosign.yaml
 
 ### Save Hauler Tarballs
 hauler store save --store rke2-store --filename rancher-airgap-rke2.tar.zst
@@ -45,7 +46,7 @@ hauler store save --store longhorn-store --filename rancher-airgap-longhorn.tar.
 hauler store save --store neuvector-store --filename rancher-airgap-neuvector.tar.zst
 # hauler store save --store harvester-store --filename rancher-airgap-harvester.tar.zst
 # hauler store save --store harbor-store --filename rancher-airgap-harbor.tar.zst
-hauler store save --store extras-store --filename rancher-airgap-extras.tar.zst
+hauler store save --store extras --filename rancher-airgap-extras.tar.zst
 
 ### Fetch Hauler Binary
 curl -sfOL https://github.com/rancherfederal/hauler/releases/download/v0.4.4/hauler_0.4.4_linux_amd64.tar.gz
@@ -53,7 +54,7 @@ curl -sfOL https://github.com/rancherfederal/hauler/releases/download/v0.4.4/hau
 
 ---
 
-**MOVE TAR(s) ACROSS THE AIRGAP**
+**MOVE TARBALLS ACROSS THE AIRGAP**
 
 ---
 
@@ -64,14 +65,14 @@ curl -sfOL https://github.com/rancherfederal/hauler/releases/download/v0.4.4/hau
 sudo su
 
 ### Set Variables
-export registry=<FQDN or IP>:<PORT>
-export fileserver=<FQDN or IP>:<PORT>
+export registry=<FQDN or IP>:5000
+export fileserver=<FQDN or IP>:8080
 
 ### Setup Directories
-mkdir -p /opt/rancher/hauler
-cd /opt/rancher/hauler
+mkdir -p /opt/hauler
+cd /opt/hauler
 
-### SCP TARBALLS HERE
+### MOVE TARBALLS HERE
 
 ### Untar and Install Hauler
 tar -xf hauler_0.4.4_linux_amd64.tar.gz
@@ -94,6 +95,8 @@ hauler store info
 ### Serve Hauler Content
 hauler store serve registry
 # nohup hauler store serve registry &
+# ps aux | grep hauler
+# kill <PID>
 
 ### Test Registry Server Content
 curl ${registry}/v2/_catalog
@@ -101,10 +104,11 @@ curl ${registry}/v2/_catalog
 ### Serve Hauler Content
 hauler store serve fileserver
 # nohup hauler store serve fileserver &
+# ps aux | grep hauler
+# kill <PID>
 
 ### Test File Server Content
 curl http://${fileserver}
-EOF
 ```
 
 ### Rancher RKE2 Nodes
@@ -120,8 +124,8 @@ sudo su
 ### Set Variables
 export vRKE2=1.26.13
 export vPlatform=el9
-export registry=<FQDN or IP>:<PORT>
-export fileserver=<FQDN or IP>:<PORT>
+export registry=<FQDN or IP>:5000
+export fileserver=<FQDN or IP>:8080
 
 ### Apply System Settings
 cat << EOF >> /etc/sysctl.conf
@@ -225,8 +229,8 @@ sudo su
 ### Set Variables
 export vRKE2=v1.26.13
 export vPlatform=el9
-export registry=<FQDN or IP>:<PORT>
-export fileserver=<FQDN or IP>:<PORT>
+export registry=<FQDN or IP>:5000
+export fileserver=<FQDN or IP>:8080
 export serverNode=<FQDN or IP>
 
 ### Apply System Settings
@@ -314,8 +318,8 @@ Complete the following commands on the first server node in the cluster.
 sudo su
 
 ### Set Variables
-export registry=<FQDN or IP>:<PORT>
-export fileserver=<FQDN or IP>:<PORT>
+export registry=<FQDN or IP>:5000
+export fileserver=<FQDN or IP>:8080
 
 ### Fetch the Helm Tarball
 curl http://${fileserver}/helm-v${vHelm}-linux-amd64.tar.gz
@@ -339,8 +343,8 @@ sudo su
 ### Set Variables
 export DOMAIN=<example.com>
 export vCertManager=1.14.2
-export registry=<FQDN or IP>:<PORT>
-export fileserver=<FQDN or IP>:<PORT>
+export registry=<FQDN or IP>:5000
+export fileserver=<FQDN or IP>:8080
 
 ### Create Namespace
 kubectl create namespace cert-manager
@@ -383,8 +387,8 @@ sudo su
 ### Set Variables
 export DOMAIN=<example.com>
 export vRancher=2.8.2
-export registry=<FQDN or IP>:<PORT>
-export fileserver=<FQDN or IP>:<PORT>
+export registry=<FQDN or IP>:5000
+export fileserver=<FQDN or IP>:8080
 
 ### Create Namespace
 kubectl create namespace cattle-system
@@ -423,9 +427,10 @@ Complete the following commands on the first server node in the cluster.
 sudo su
 
 ### Set Variables
+export DOMAIN=<example.com>
 export vLonghorn=1.6.0
-export registry=<FQDN or IP>:<PORT>
-export fileserver=<FQDN or IP>:<PORT>
+export registry=<FQDN or IP>:5000
+export fileserver=<FQDN or IP>:8080
 
 ### Create Namespace
 kubectl create namespace longhorn-system
@@ -447,9 +452,10 @@ Complete the following commands on the first server node in the cluster.
 sudo su
 
 ### Set Variables
+export DOMAIN=<example.com>
 export vNeuVector=2.7.3
-export registry=<FQDN or IP>:<PORT>
-export fileserver=<FQDN or IP>:<PORT>
+export registry=<FQDN or IP>:5000
+export fileserver=<FQDN or IP>:8080
 
 ### Create Namespace
 kubectl create namespace cattle-neuvector-system

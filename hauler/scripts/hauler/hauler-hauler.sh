@@ -2,13 +2,13 @@
 export vHauler=0.4.4
 
 ### Setup Working Directory
-rm -rf /opt/rancher/hauler/hauler
-mkdir -p /opt/rancher/hauler/hauler
-cd /opt/rancher/hauler/hauler
+rm -rf /opt/hauler/hauler
+mkdir -p /opt/hauler/hauler
+cd /opt/hauler/hauler
 
 ### Create Hauler Manifest
 ### Hauler -> https://github.com/rancherfederal/hauler
-cat << EOF >> /opt/rancher/hauler/hauler/rancher-airgap-hauler.yaml
+cat << EOF >> /opt/hauler/hauler/rancher-airgap-hauler.yaml
 apiVersion: content.hauler.cattle.io/v1alpha1
 kind: Files
 metadata:
