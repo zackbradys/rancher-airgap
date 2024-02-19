@@ -9,7 +9,7 @@ cd /opt/hauler/harvester
 ### Download Harvester Images
 ### https://github.com/harvester/harvester
 curl -#L https://github.com/harvester/harvester/releases/download/v${vHarvester}/harvester-images-list.txt -o harvester-images.txt
-sed -i "/^\s*#/d" harvester-images.txt && sed -i "/^$/d" harvester-images.txt && sed -i "s#^#    - name: #" harvester-images.txt
+sed -i "/^\s*#/d" harvester-images.txt && sed -i "/^$/d" harvester-images.txt && sed -i "s/^/    - name: /" harvester-images.txt
 
 ### Set Harvester Images Variable
 harvesterImages=$(cat harvester-images.txt)

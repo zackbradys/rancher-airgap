@@ -13,7 +13,7 @@ helm repo update
 ### Download Harbor Images
 ### https://github.com/goharbor/harbor-helm
 helm template harbor/harbor --version=${vHarbor} | grep 'image:' | sed 's/"//g' | awk '{ print $2 }' > harbor-images.txt
-sed -i "s#^#    - name: #" harbor-images.txt
+sed -i "s/^/    - name: /" harbor-images.txt
 
 ### Set Harbor Images Variable
 harborImages=$(cat harbor-images.txt)

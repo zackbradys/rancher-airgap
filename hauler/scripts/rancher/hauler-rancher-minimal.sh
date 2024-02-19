@@ -11,7 +11,7 @@ cd /opt/hauler/rancher-minimal
 ### https://github.com/cert-manager/cert-manager
 helm repo add jetstack https://charts.jetstack.io && helm repo update
 helm template jetstack/cert-manager --version=${vCertManager} | grep 'image:' | sed 's/"//g' | awk '{ print $2 }' > cert-manager-images-minimal.txt
-sed -i "s#^#    - name: #" cert-manager-images-minimal.txt
+sed -i "s/^/    - name: /" cert-manager-images-minimal.txt
 
 ### Set Cert-Manager Images Variable
 certmanagerImagesMinimal=$(cat cert-manager-images-minimal.txt)
@@ -27,7 +27,7 @@ awk -F: '{print $1}' rancher-images-minimal.txt | while read -r i; do
 done
 
 sort -u rancher-images-minimal-unsorted.txt > rancher-images-minimal.txt
-sed -i "s#^#    - name: #" rancher-images-minimal.txt
+sed -i "s/^/    - name: /" rancher-images-minimal.txt
 
 ### Set Rancher Images Variable
 rancherImagesMinimal=$(cat rancher-images-minimal.txt)

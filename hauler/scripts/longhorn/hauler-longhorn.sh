@@ -9,7 +9,7 @@ cd /opt/hauler/longhorn
 ### Download Longhorn Images
 ### https://github.com/longhorn/longhorn
 curl -#L https://raw.githubusercontent.com/longhorn/longhorn/v${vLonghorn}/deploy/longhorn-images.txt -o longhorn-images.txt
-sed -i "s#^#    - name: #" longhorn-images.txt
+sed -i "s/^/    - name: /" longhorn-images.txt
 
 ### Set Longhorn Images Variable
 longhornImages=$(cat longhorn-images.txt)
