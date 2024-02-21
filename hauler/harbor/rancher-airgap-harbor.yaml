@@ -5,7 +5,7 @@ metadata:
 spec:
   charts:
     - name: harbor
-      repoURL: https://harbor.github.io/harbor-helm
+      repoURL: https://helm.goharbor.io
       version: 1.14.0
 ---
 apiVersion: content.hauler.cattle.io/v1alpha1

@@ -7,12 +7,12 @@ mkdir -p /opt/hauler/harbor
 cd /opt/hauler/harbor
 
 ### Add Harbor Helm Chart Repos
-helm repo add harbor https://helm.goharbor.io
+helm repo add goharbor https://helm.goharbor.io
 helm repo update
 
 ### Download Harbor Images
 ### https://github.com/goharbor/harbor-helm
-helm template harbor/harbor --version=${vHarbor} | grep 'image:' | sed 's/"//g' | awk '{ print $2 }' > harbor-images.txt
+helm template goharbor/harbor --version=${vHarbor} | grep 'image:' | sed 's/"//g' | awk '{ print $2 }' > harbor-images.txt
 sed -i "s/^/    - name: /" harbor-images.txt
 
 ### Set Harbor Images Variable
@@ -27,7 +27,7 @@ metadata:
 spec:
   charts:
     - name: harbor
-      repoURL: https://harbor.github.io/harbor-helm
+      repoURL: https://helm.goharbor.io
       version: ${vHarbor}
 ---
 apiVersion: content.hauler.cattle.io/v1alpha1
