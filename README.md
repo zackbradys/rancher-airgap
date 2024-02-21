@@ -40,13 +40,13 @@ fetch -> validate -> save -> | <airgap> | -> load -> validate -> distribute
 ### Addons
 
 - [hauler/hauler](hauler/hauler/README.md) - provides the content manifest for Hauler
-  - currently supports: `Hauler: v0.4.4`
+  - currently supports: `Hauler: v1.0.0`
 - [hauler/helm](hauler/helm/README.md) - provides the content manifest for Helm
-  - currently supports: `Helm: v3.14.0`
+  - currently supports: `Helm: v3.14.1`
 - [hauler/cosign](hauler/cosign/README.md) - provides the content manifest for Cosign
   - currently supports: `Cosign: v2.2.3`
 - [hauler/harbor](hauler/harbor/README.md) - provides the content manifest for Harbor
-  - currently supports: `Harbor: v2.9.1`
+  - currently supports: `Harbor: v2.10.0`
 - [hauler/kubevip](hauler/kubevip/README.md) - provides the content manifest for KubeVip
   - currently supports: `KubeVip: Latest`
 
