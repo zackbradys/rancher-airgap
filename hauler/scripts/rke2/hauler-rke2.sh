@@ -33,12 +33,12 @@ spec:
       name: rke2.linux-amd64
     - path: https://raw.githubusercontent.com/rancher/rke2/master/install.sh
       name: install.sh
-    - path: https://github.com/rancher/rke2-selinux/releases/download/v${RKE2SELinux}.stable.1/rke2-selinux-${RKE2SELinux}-1.el9.noarch.rpm
-      name: rke2-selinux-${RKE2SELinux}-1.el9.noarch.rpm
-    - path: https://github.com/rancher/rke2-selinux/releases/download/v${RKE2SELinux}.stable.1/rke2-selinux-${RKE2SELinux}-1.el8.noarch.rpm
-      name: rke2-selinux-${RKE2SELinux}-1.el8.noarch.rpm
-    - path: https://github.com/rancher/rke2-selinux/releases/download/v${RKE2SELinux}.stable.1/rke2-selinux-${RKE2SELinux}-1.el7.noarch.rpm
-      name: rke2-selinux-${RKE2SELinux}-1.el7.noarch.rpm
+    - path: https://github.com/rancher/rke2-selinux/releases/download/v${vRKE2SELinux}.stable.1/rke2-selinux-${vRKE2SELinux}-1.el9.noarch.rpm
+      name: rke2-selinux-${vRKE2SELinux}-1.el9.noarch.rpm
+    - path: https://github.com/rancher/rke2-selinux/releases/download/v${vRKE2SELinux}.stable.1/rke2-selinux-${vRKE2SELinux}-1.el8.noarch.rpm
+      name: rke2-selinux-${vRKE2SELinux}-1.el8.noarch.rpm
+    - path: https://github.com/rancher/rke2-selinux/releases/download/v${vRKE2SELinux}.stable.1/rke2-selinux-${vRKE2SELinux}-1.el7.noarch.rpm
+      name: rke2-selinux-${vRKE2SELinux}-1.el7.noarch.rpm
     - path: https://github.com/rancher/rke2-packaging/releases/download/v${vRKE2}%2Brke2r1.stable.0/rke2-common-${vRKE2}.rke2r1-0.el9.x86_64.rpm
       name: rke2-common-${vRKE2}.rke2r1-0.el9.x86_64.rpm
     - path: https://github.com/rancher/rke2-packaging/releases/download/v${vRKE2}%2Brke2r1.stable.0/rke2-common-${vRKE2}.rke2r1-0.el8.x86_64.rpm
