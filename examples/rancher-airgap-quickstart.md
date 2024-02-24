@@ -184,10 +184,7 @@ EOF
 ### Configure Local Registry
 cat << EOF >> /etc/rancher/rke2/registries.yaml
 mirrors:
-  "${registry}":
-    endpoint:
-      - "http://${registry}"
-  "docker.io":
+  "*":
     endpoint:
       - "http://${registry}"
 EOF
@@ -196,7 +193,7 @@ EOF
 yum install -y http://${fileserver}/rke2-selinux-0.17-1.${vPlatform}.noarch.rpm http://${fileserver}/rke2-common-${vRKE2}.rke2r1-0.${vPlatform}.x86_64.rpm http://${fileserver}/rke2-server-${vRKE2}.rke2r1-0.${vPlatform}.x86_64.rpm
 
 ### Download and Install RKE2 Server
-### curl -sfL http://${fileserver}/install.sh | INSTALL_RKE2_VERSION=${vRKE2} INSTALL_RKE2_TYPE=server sh -
+### curl -sfOL http://${fileserver}/install.sh | INSTALL_RKE2_VERSION=${vRKE2} INSTALL_RKE2_TYPE=server sh -
 
 ### Enable and Start RKE2 Server
 systemctl enable rke2-server.service && systemctl start rke2-server.service
@@ -291,10 +288,7 @@ EOF
 ### Configure Local Registry
 cat << EOF >> /etc/rancher/rke2/registries.yaml
 mirrors:
-  "${registry}":
-    endpoint:
-      - "http://${registry}"
-  "docker.io":
+  "*":
     endpoint:
       - "http://${registry}"
 EOF
@@ -303,7 +297,7 @@ EOF
 yum install -y http://${fileserver}/rke2-selinux-0.17-1.${vPlatform}.noarch.rpm http://${fileserver}/rke2-common-${vRKE2}.rke2r1-0.${vPlatform}.x86_64.rpm http://${fileserver}/rke2-agent-${vRKE2}.rke2r1-0.${vPlatform}.x86_64.rpm
 
 ### Download and Install RKE2 Server
-### curl -sfL http://${fileserver}/install.sh | INSTALL_RKE2_VERSION=${vRKE2} INSTALL_RKE2_TYPE=agent sh -
+### curl -sfOL http://${fileserver}/install.sh | INSTALL_RKE2_VERSION=${vRKE2} INSTALL_RKE2_TYPE=agent sh -
 
 ### Enable and Start RKE2 Agent
 systemctl enable rke2-agent.service && systemctl start rke2-agent.service
@@ -322,12 +316,12 @@ export registry=<FQDN or IP>:5000
 export fileserver=<FQDN or IP>:8080
 
 ### Fetch the Helm Tarball
-curl http://${fileserver}/helm-v${vHelm}-linux-amd64.tar.gz
+curl -sfOL http://${fileserver}/helm.tar.gz
 
 ### Extract and Install
 tar -xf helm.tar.gz
 cd linux-amd64 && chmod 755 helm
-mv linux-amd64 /usr/bin/helm
+mv helm /usr/bin/helm
 ```
 
 ### Rancher Manager
@@ -412,9 +406,9 @@ spec:
 EOF
 
 ### Install via Helm
-helm upgrade -i rancher http://${fileserver}/rancher-${vRancher}.tgz -n cattle-system --set bootstrapPassword=Pa22word --set replicas=1 --set ingress.tls.source=secret --set ingress.tls.secretName=tls-certs --set systemDefaultRegistry=$registry --set rancherImage=$registry/rancher/rancher --set hostname=rancher.$DOMAIN
+helm upgrade -i rancher http://${fileserver}/rancher-${vRancher}.tgz -n cattle-system --set bootstrapPassword=Pa22word --set replicas=1 --set ingress.tls.source=secret --set ingress.tls.secretName=tls-certs --set useBundledSystemChart=true --set systemDefaultRegistry=$registry --set rancherImage=$registry/rancher/rancher --set hostname=rancher.$DOMAIN
 
-### Add Classification Banners
+### Create Classification Banners
 kubectl apply -f http://${fileserver}/rancher-banner-ufouo.yaml
 ```
 
@@ -438,9 +432,8 @@ kubectl create namespace longhorn-system
 ### Install via Helm
 helm upgrade -i longhorn http://${fileserver}/longhorn-${vLonghorn}.tgz -n longhorn-system --version=$vLonghorn --set global.cattle.systemDefaultRegistry=$registry
 
-### Create Example SC and Volume
+### Create Encrypted Storage Class
 kubectl apply -f http://${fileserver}/longhorn-encrypted-sc.yaml
-kubectl apply -f http://${fileserver}/longhorn-encrypted-volume.yaml
 ```
 
 ### NeuVector

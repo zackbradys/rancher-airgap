@@ -27,7 +27,7 @@ cd /opt/hauler
 createrepo /opt/hauler/repos
 
 ### Compile Package List
-find /opt/hauler/repos -type f -o -type d -not -name '*.rpm' > /opt/hauler/repos/package-list.txt
+find /opt/hauler/repos > /opt/hauler/repos/package-list.txt
 
 ### Generate the Hauler Manifest for Packages
 cat <<EOF > rancher-airgap-packages.yaml

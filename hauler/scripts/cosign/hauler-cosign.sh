@@ -16,5 +16,5 @@ metadata:
 spec:
   files:
     - path: https://github.com/sigstore/cosign/releases/download/v${vCosign}/cosign-linux-amd64
-      name: cosign
+      name: cosign-linux-amd64
 EOF
