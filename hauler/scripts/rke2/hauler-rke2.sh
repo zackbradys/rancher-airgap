@@ -7,13 +7,9 @@ rm -rf /opt/hauler/rke2
 mkdir -p /opt/hauler/rke2
 cd /opt/hauler/rke2
 
-### Download RKE2 Images
+### Download RKE2 Images and Modify the List
 ### https://github.com/rancher/rke2
-curl -#L https://github.com/rancher/rke2/releases/download/v${vRKE2}+rke2r1/rke2-images-all.linux-amd64.txt -o rke2-images.txt
-sed -i "s/^/    - name: /" rke2-images.txt
-
-### Set RKE2 Images Variable
-rke2Images=$(cat rke2-images.txt)
+rke2Images=$(curl -sSfL https://github.com/rancher/rke2/releases/download/v${vRKE2}+rke2r1/rke2-images-all.linux-amd64.txt | sed -e "s/docker\.io\///g" -e "s/^/    - name: /")
 
 ### Create Hauler Manifest
 cat << EOF >> /opt/hauler/rke2/rancher-airgap-rke2.yaml

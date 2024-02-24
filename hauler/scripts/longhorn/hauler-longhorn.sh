@@ -6,13 +6,9 @@ rm -rf /opt/hauler/longhorn
 mkdir -p /opt/hauler/longhorn
 cd /opt/hauler/longhorn
 
-### Download Longhorn Images
+### Download Longhorn Images and Modify the List
 ### https://github.com/longhorn/longhorn
-curl -#L https://raw.githubusercontent.com/longhorn/longhorn/v${vLonghorn}/deploy/longhorn-images.txt -o longhorn-images.txt
-sed -i "s/^/    - name: /" longhorn-images.txt
-
-### Set Longhorn Images Variable
-longhornImages=$(cat longhorn-images.txt)
+longhornImages=$(curl -sSfL https://raw.githubusercontent.com/longhorn/longhorn/v${vLonghorn}/deploy/longhorn-images.txt | sed -e "s/^/    - name: /")
 
 ### Create Hauler Manifest
 cat << EOF >> /opt/hauler/longhorn/rancher-airgap-longhorn.yaml

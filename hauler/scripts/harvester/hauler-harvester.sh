@@ -6,13 +6,9 @@ rm -rf /opt/hauler/harvester
 mkdir -p /opt/hauler/harvester
 cd /opt/hauler/harvester
 
-### Download Harvester Images
+### Download Harvester Images and Modify the List
 ### https://github.com/harvester/harvester
-curl -#L https://github.com/harvester/harvester/releases/download/v${vHarvester}/harvester-images-list.txt -o harvester-images.txt
-sed -i "/^\s*#/d" harvester-images.txt && sed -i "/^$/d" harvester-images.txt && sed -i "s/^/    - name: /" harvester-images.txt
-
-### Set Harvester Images Variable
-harvesterImages=$(cat harvester-images.txt)
+harvesterImages=$(curl -sSfL https://github.com/harvester/harvester/releases/download/v${vHarvester}/harvester-images-list.txt | sed -e "/^\s*#/d" -e "/^$/d" -e "s/^/    - name: /" -e "s/docker\.io\///g")
 
 ### Create Hauler Manifest
 cat << EOF >> /opt/hauler/harvester/rancher-airgap-harvester.yaml

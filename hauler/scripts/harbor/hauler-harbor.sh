@@ -6,17 +6,10 @@ rm -rf /opt/hauler/harbor
 mkdir -p /opt/hauler/harbor
 cd /opt/hauler/harbor
 
-### Add Harbor Helm Chart Repos
-helm repo add goharbor https://helm.goharbor.io
-helm repo update
-
-### Download Harbor Images
+### Download Harbor Images and Modify the List
 ### https://github.com/goharbor/harbor-helm
-helm template goharbor/harbor --version=${vHarbor} | grep 'image:' | sed 's/"//g' | awk '{ print $2 }' > harbor-images.txt
-sed -i "s/^/    - name: /" harbor-images.txt
-
-### Set Harbor Images Variable
-harborImages=$(cat harbor-images.txt)
+helm repo add goharbor https://helm.goharbor.io && helm repo update
+harborImages=$(helm template goharbor/harbor --version=${vHarbor} | grep 'image:' | sed 's/"//g' | awk '{ print "    - name: " $2 }' > harbor-images.txt)
 
 ### Create Hauler Manifest
 cat << EOF >> /opt/hauler/harbor/rancher-airgap-harbor.yaml

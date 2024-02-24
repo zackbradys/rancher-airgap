@@ -6,17 +6,10 @@ rm -rf /opt/hauler/neuvector
 mkdir -p /opt/hauler/neuvector
 cd /opt/hauler/neuvector
 
-### Add NeuVector Helm Chart Repos
-helm repo add neuvector https://neuvector.github.io/neuvector-helm
-helm repo update
-
-### Download NeuVector Images
+### Download NeuVector Images and Modify the List
 ### https://github.com/neuvector/neuvector
-helm template neuvector/core --version=${vNeuVector} | grep 'image:' | sed 's/"//g' | awk '{ print $2 }' > neuvector-images.txt
-sed -i "s/^/    - name: /" neuvector-images.txt
-
-### Set NeuVector Images Variable
-neuvectorImages=$(cat neuvector-images.txt)
+helm repo add neuvector https://neuvector.github.io/neuvector-helm && helm repo update
+neuvectorImages=$(helm template neuvector/core --version=${vNeuVector} | grep 'image:' | sed 's/"//g' | sed 's/docker.io\///g' | awk '{ print "    - name: " $2 }')
 
 ### Create Hauler Manifest
 cat << EOF >> /opt/hauler/neuvector/rancher-airgap-neuvector.yaml

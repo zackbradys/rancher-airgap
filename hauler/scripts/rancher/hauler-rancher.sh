@@ -1,28 +1,20 @@
 ### Set Variables
 export vRancher=2.8.2
-export vCertManager=v1.14.2
+export vCertManager=1.14.2
 
 ### Setup Working Directory
 rm -rf /opt/hauler/rancher
 mkdir -p /opt/hauler/rancher
 cd /opt/hauler/rancher
 
-### Download Cert Manager Images
+### Download Cert Manager Images and Modify the List
 ### https://github.com/cert-manager/cert-manager
 helm repo add jetstack https://charts.jetstack.io && helm repo update
-helm template jetstack/cert-manager --version=${vCertManager} | grep 'image:' | sed 's/"//g' | awk '{ print $2 }' > cert-manager-images.txt
-sed -i "s/^/    - name: /" cert-manager-images.txt
+certManagerImages=$(helm template jetstack/cert-manager --version=v${vCertManager} | grep 'image:' | sed 's/"//g' | awk '{ print $2 }' | sed -e "s/^/    - name: /")
 
-### Set Cert-Manager Images Variable
-certmanagerImages=$(cat cert-manager-images.txt)
-
-### Download Rancher Images
+### Download Rancher Images and Modify the List
 ### https://github.com/rancher/rancher
-curl -#L https://github.com/rancher/rancher/releases/download/v${vRancher}/rancher-images.txt -o rancher-images.txt
-sed -i "s/^/    - name: /" rancher-images.txt
-
-### Set Rancher Images Variable
-rancherImages=$(cat rancher-images.txt)
+rancherImages=$(curl -sSfL https://github.com/rancher/rancher/releases/download/v${vRancher}/rancher-images.txt | sed -e "s/^/    - name: /")
 
 ### Create Hauler Manifest
 cat << EOF >> /opt/hauler/rancher/rancher-airgap-rancher.yaml
@@ -45,7 +37,7 @@ spec:
   charts:
     - name: cert-manager
       repoURL: https://charts.jetstack.io
-      version: ${vCertManager}
+      version: v${vCertManager}
     - name: rancher
       repoURL: https://releases.rancher.com/server-charts/latest
       version: ${vRancher}

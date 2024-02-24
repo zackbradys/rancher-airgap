@@ -1,6 +1,6 @@
 ### Set Variables
 export vRancher=2.8.2
-export vCertManager=v1.14.2
+export vCertManager=1.14.2
 
 ### Setup Working Directory
 rm -rf /opt/hauler/rancher-minimal
@@ -10,8 +10,7 @@ cd /opt/hauler/rancher-minimal
 ### Download Cert Manager Images
 ### https://github.com/cert-manager/cert-manager
 helm repo add jetstack https://charts.jetstack.io && helm repo update
-helm template jetstack/cert-manager --version=${vCertManager} | grep 'image:' | sed 's/"//g' | awk '{ print $2 }' > cert-manager-images-minimal.txt
-sed -i "s/^/    - name: /" cert-manager-images-minimal.txt
+certManagerImages=$(helm template jetstack/cert-manager --version=v${vCertManager} | grep 'image:' | sed 's/"//g' | awk '{ print $2 }' | sed -e "s/^/    - name: /")
 
 ### Set Cert-Manager Images Variable
 certmanagerImagesMinimal=$(cat cert-manager-images-minimal.txt)
@@ -53,7 +52,7 @@ spec:
   charts:
     - name: cert-manager
       repoURL: https://charts.jetstack.io
-      version: ${vCertManager}
+      version: v${vCertManager}
     - name: rancher
       repoURL: https://releases.rancher.com/server-charts/latest
       version: ${vRancher}

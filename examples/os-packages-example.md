@@ -29,8 +29,7 @@ createrepo /opt/hauler/repos
 ### Compile Package List
 find /opt/hauler/repos -type f -o -type d -not -name '*.rpm' > /opt/hauler/repos/package-list.txt
 
-# Generate the Hauler Manifest for Packages
-# may cause issues:  sed '/perl/d' | sed '/libstdc/d'
+### Generate the Hauler Manifest for Packages
 cat <<EOF > rancher-airgap-packages.yaml
 apiVersion: content.hauler.cattle.io/v1alpha1
 kind: Files
