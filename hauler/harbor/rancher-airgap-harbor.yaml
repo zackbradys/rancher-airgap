@@ -14,13 +14,4 @@ metadata:
   name: rancher-airgap-images-harbor
 spec:
   images:
-    - name: goharbor/harbor-core:v2.10.0
-    - name: goharbor/harbor-jobservice:v2.10.0
-    - name: goharbor/harbor-portal:v2.10.0
-    - name: goharbor/registry-photon:v2.10.0
-    - name: goharbor/harbor-registryctl:v2.10.0
-    - name: goharbor/harbor-db:v2.10.0
-    - name: goharbor/harbor-db:v2.10.0
-    - name: goharbor/harbor-db:v2.10.0
-    - name: goharbor/redis-photon:v2.10.0
-    - name: goharbor/trivy-adapter-photon:v2.10.0
+

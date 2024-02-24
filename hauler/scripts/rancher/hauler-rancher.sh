@@ -48,6 +48,6 @@ metadata:
   name: rancher-airgap-images-rancher
 spec:
   images:
-${certmanagerImages}
+${certManagerImages}
 ${rancherImages}
 EOF

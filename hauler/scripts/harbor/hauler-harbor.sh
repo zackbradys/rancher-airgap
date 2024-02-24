@@ -9,7 +9,7 @@ cd /opt/hauler/harbor
 ### Download Harbor Images and Modify the List
 ### https://github.com/goharbor/harbor-helm
 helm repo add goharbor https://helm.goharbor.io && helm repo update
-harborImages=$(helm template goharbor/harbor --version=${vHarbor} | grep 'image:' | sed 's/"//g' | awk '{ print "    - name: " $2 }' > harbor-images.txt)
+harborImages=$(helm template goharbor/harbor --version=${vHarbor} | grep 'image:' | sed 's/"//g; s/.*image: //' | sed 's/^/    - name: /')
 
 ### Create Hauler Manifest
 cat << EOF >> /opt/hauler/harbor/rancher-airgap-harbor.yaml

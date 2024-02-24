@@ -14,8 +14,8 @@ metadata:
   name: rancher-airgap-images-neuvector
 spec:
   images:
-    - name: docker.io/neuvector/enforcer:5.3.0
-    - name: docker.io/neuvector/controller:5.3.0
-    - name: docker.io/neuvector/manager:5.3.0
-    - name: docker.io/neuvector/scanner:latest
-    - name: docker.io/neuvector/updater:latest
+    - name: neuvector/enforcer:5.3.0
+    - name: neuvector/controller:5.3.0
+    - name: neuvector/manager:5.3.0
+    - name: neuvector/scanner:latest
+    - name: neuvector/updater:latest
