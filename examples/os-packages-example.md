@@ -47,7 +47,7 @@ hauler store sync --store packages --files rancher-airgap-packages.yaml
 hauler store save --store packages --filename rancher-airgap-packages.tar.zst
 
 ### Fetch Hauler Binary
-curl -sfOL https://github.com/rancherfederal/hauler/releases/download/v1.0.0/hauler_1.0.0_linux_amd64.tar.gz
+curl -sfOL https://github.com/rancherfederal/hauler/releases/download/v1.0.1/hauler_1.0.1_linux_amd64.tar.gz
 ```
 
 ---
@@ -68,7 +68,7 @@ cd /opt/hauler
 ### SCP TARBALLS HERE
 
 ### Untar and Install Hauler
-tar -xf hauler_1.0.0_linux_amd64.tar.gz
+tar -xf hauler_1.0.1_linux_amd64.tar.gz
 rm -rf LICENSE README.md
 chmod 755 hauler && mv hauler /usr/bin/hauler
 

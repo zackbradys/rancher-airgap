@@ -27,7 +27,7 @@ fetch -> validate -> save -> | <airgap> | -> load -> validate -> distribute
 - [hauler/rke2](hauler/rke2/README.md) - provides the content manifest for Rancher Kubernetes (RKE2)
   - currently supports: `RKE2: v1.27.10`
 - [hauler/rancher](hauler/rancher/README.md) - provides the content manifest for Cert-Manager
-  - currently supports: `Cert-Manager: v1.14.2`
+  - currently supports: `Cert-Manager: v1.14.3`
 - [hauler/rancher](hauler/rancher/README.md) - provides the content manifest for Rancher Multi-Cluster Manager
   - currently supports: `Rancher: v2.8.2`
 - [hauler/longhorn](hauler/longhorn/README.md) - provides the content manifest for Rancher Longhorn
@@ -40,9 +40,9 @@ fetch -> validate -> save -> | <airgap> | -> load -> validate -> distribute
 ### Addons
 
 - [hauler/hauler](hauler/hauler/README.md) - provides the content manifest for Hauler
-  - currently supports: `Hauler: v1.0.0`
+  - currently supports: `Hauler: v1.0.1`
 - [hauler/helm](hauler/helm/README.md) - provides the content manifest for Helm
-  - currently supports: `Helm: v3.14.1`
+  - currently supports: `Helm: v3.14.2`
 - [hauler/cosign](hauler/cosign/README.md) - provides the content manifest for Cosign
   - currently supports: `Cosign: v2.2.3`
 - [hauler/harbor](hauler/harbor/README.md) - provides the content manifest for Harbor
