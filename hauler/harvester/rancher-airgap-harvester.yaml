@@ -8,12 +8,30 @@ spec:
       name: harvester-v1.3.0-amd64.iso
     - path: https://releases.rancher.com/harvester/v1.3.0/harvester-v1.3.0-vmlinuz-amd64
       name: harvester-v1.3.0-vmlinuz-amd64
+    - path: https://releases.rancher.com/harvester/v1.3.0/harvester-v1.3.0-initrd-amd64
+      name: harvester-v1.3.0-initrd-amd64
     - path: https://releases.rancher.com/harvester/v1.3.0/harvester-v1.3.0-rootfs-amd64.squashfs
       name: harvester-v1.3.0-rootfs-amd64.squashfs
     - path: https://releases.rancher.com/harvester/v1.3.0/harvester-v1.3.0-amd64.sha512
       name: harvester-v1.3.0-amd64.sha512
     - path: https://releases.rancher.com/harvester/v1.3.0/version.yaml
       name: version.yaml
+    - path: https://releases.rancher.com/harvester/v1.3.0/harvester-v1.3.0-amd64-net-install.iso
+      name: harvester-v1.3.0-amd64-net-install.iso
+    - path: https://releases.rancher.com/harvester/v1.3.0/harvester-v1.3.0-arm64.iso
+      name: harvester-v1.3.0-arm64.iso
+    - path: https://releases.rancher.com/harvester/v1.3.0/harvester-v1.3.0-vmlinuz-arm64
+      name: harvester-v1.3.0-vmlinuz-arm64
+    - path: https://releases.rancher.com/harvester/v1.3.0/harvester-v1.3.0-initrd-arm64
+      name: harvester-v1.3.0-initrd-arm64
+    - path: https://releases.rancher.com/harvester/v1.3.0/harvester-v1.3.0-rootfs-arm64.squashfs
+      name: harvester-v1.3.0-rootfs-arm64.squashfs
+    - path: https://releases.rancher.com/harvester/v1.3.0/harvester-v1.3.0-arm64.sha512
+      name: harvester-v1.3.0-arm64.sha512
+    - path: https://releases.rancher.com/harvester/v1.3.0/version-arm64.yaml
+      name: version-arm64.yaml
+    - path: https://releases.rancher.com/harvester/v1.3.0/harvester-v1.3.0-arm64-net-install.iso
+      name: harvester-v1.3.0-arm64-net-install.iso
 ---
 apiVersion: content.hauler.cattle.io/v1alpha1
 kind: Images
@@ -21,4 +39,180 @@ metadata:
   name: rancher-airgap-images-harvester
 spec:
   images:
-
+    - name: longhornio/backing-image-manager:v1.6.0
+    - name: longhornio/csi-attacher:v4.4.2
+    - name: longhornio/csi-node-driver-registrar:v2.9.2
+    - name: longhornio/csi-provisioner:v3.6.2
+    - name: longhornio/csi-resizer:v1.9.2
+    - name: longhornio/csi-snapshotter:v6.3.2
+    - name: longhornio/livenessprobe:v2.11.0
+    - name: longhornio/longhorn-engine:v1.6.0
+    - name: longhornio/longhorn-instance-manager:v1.6.0
+    - name: longhornio/longhorn-manager:v1.6.0
+    - name: longhornio/longhorn-share-manager:v1.6.0
+    - name: longhornio/longhorn-ui:v1.6.0
+    - name: longhornio/support-bundle-kit:v0.0.33
+    - name: rancher/harvester-eventrouter:v0.1.2
+    - name: rancher/harvester-load-balancer-webhook:v0.2.5
+    - name: rancher/harvester-load-balancer:v0.2.5
+    - name: rancher/harvester-network-controller:v0.3.6
+    - name: rancher/harvester-network-helper:v0.3.6
+    - name: rancher/harvester-network-webhook:v0.3.6
+    - name: rancher/harvester-node-disk-manager:v0.6.1
+    - name: rancher/harvester-node-manager-webhook:v0.2.1
+    - name: rancher/harvester-node-manager:v0.2.1
+    - name: rancher/harvester-pcidevices:v0.3.2
+    - name: rancher/harvester-seeder:v0.1.1
+    - name: rancher/harvester-upgrade:v1.3.0
+    - name: rancher/harvester-vm-import-controller:v0.1.7
+    - name: rancher/harvester-webhook:v1.3.0
+    - name: rancher/harvester:v1.3.0
+    - name: rancher/support-bundle-kit:v0.0.36
+    - name: ghcr.io/k8snetworkplumbingwg/whereabouts:v0.6.3
+    - name: ghcr.io/kube-vip/kube-vip-iptables:v0.6.0
+    - name: registry.k8s.io/sig-storage/snapshot-controller:v6.3.3
+    - name: registry.k8s.io/sig-storage/snapshot-validation-webhook:v6.3.3
+    - name: registry.suse.com/bci/bci-base:15.5
+    - name: registry.suse.com/suse/sles/15.5/libguestfs-tools:1.1.0-150500.8.6.1
+    - name: registry.suse.com/suse/sles/15.5/virt-api:1.1.0-150500.8.6.1
+    - name: registry.suse.com/suse/sles/15.5/virt-controller:1.1.0-150500.8.6.1
+    - name: registry.suse.com/suse/sles/15.5/virt-handler:1.1.0-150500.8.6.1
+    - name: registry.suse.com/suse/sles/15.5/virt-launcher:1.1.0-150500.8.6.1
+    - name: registry.suse.com/suse/sles/15.5/virt-operator:1.1.0-150500.8.6.1
+    - name: registry.suse.com/suse/vmdp/vmdp:2.5.4.2
+    - name: rancher/harvester-cluster-repo:v1.3.0
+    - name: rancher/fleet-agent:v0.9.0
+    - name: rancher/fleet:v0.9.0
+    - name: rancher/gitjob:v0.1.96
+    - name: rancher/kubectl:v1.20.2
+    - name: rancher/kubectl:v1.21.5
+    - name: rancher/mirrored-grafana-grafana:9.1.5
+    - name: rancher/mirrored-ingress-nginx-kube-webhook-certgen:v20221220-controller-v1.5.1-58-g787ea74b6
+    - name: rancher/mirrored-kiwigrid-k8s-sidecar:1.24.6
+    - name: rancher/mirrored-kube-state-metrics-kube-state-metrics:v2.6.0
+    - name: rancher/mirrored-library-busybox:1.31.1
+    - name: rancher/mirrored-library-nginx:1.24.0-alpine
+    - name: rancher/mirrored-prometheus-adapter-prometheus-adapter:v0.10.0
+    - name: rancher/mirrored-prometheus-node-exporter:v1.3.1
+    - name: rancher/mirrored-prometheus-operator-prometheus-config-reloader:v0.65.1
+    - name: rancher/mirrored-prometheus-operator-prometheus-operator:v0.65.1
+    - name: rancher/mirrored-prometheus-prometheus:v2.42.0
+    - name: rancher/mirrored-prometheus-alertmanager:v0.25.0
+    - name: rancher/rancher-webhook:v0.4.2
+    - name: rancher/rancher:v2.8.2
+    - name: rancher/shell:v0.1.22
+    - name: rancher/system-agent:v0.3.4-suc
+    - name: rancher/system-upgrade-controller:v0.13.1
+    - name: rancher/mirrored-banzaicloud-fluentd:v1.14.6-alpine-5
+    - name: rancher/mirrored-banzaicloud-logging-operator:3.17.10
+    - name: rancher/mirrored-fluent-fluent-bit:2.2.0
+    - name: rancher/mirrored-jimmidyson-configmap-reload:v0.4.0
+    - name: rancher/mirrored-cluster-api-controller:v1.4.4
+    - name: rancher/system-agent-installer-rancher:v2.8.2
+    - name: rancher/system-agent-installer-rke2:v1.27.10-rke2r1
+    - name: rancher/hardened-cni-plugins:v1.2.0-build20231009
+    - name: rancher/hardened-multus-cni:v4.0.2-build20231009
+    - name: rancher/rke2-runtime:v1.27.10-rke2r1
+    - name: rancher/hardened-kubernetes:v1.27.10-rke2r1-build20240117
+    - name: rancher/hardened-coredns:v1.10.1-build20231009
+    - name: rancher/hardened-cluster-autoscaler:v1.8.6-build20231009
+    - name: rancher/hardened-dns-node-cache:1.22.20-build20231010
+    - name: rancher/hardened-etcd:v3.5.9-k3s1-build20230802
+    - name: rancher/hardened-k8s-metrics-server:v0.6.3-build20231009
+    - name: rancher/klipper-helm:v0.8.2-build20230815
+    - name: rancher/klipper-lb:v0.4.5
+    - name: rancher/mirrored-pause:3.6
+    - name: rancher/mirrored-ingress-nginx-kube-webhook-certgen:v20230312-helm-chart-4.5.2-28-g66a760794
+    - name: rancher/nginx-ingress-controller:nginx-1.9.3-hardened1
+    - name: rancher/rke2-cloud-provider:v1.28.2-build20231016
+    - name: rancher/mirrored-sig-storage-snapshot-controller:v6.2.1
+    - name: rancher/mirrored-sig-storage-snapshot-validation-webhook:v6.2.2
+    - name: rancher/hardened-calico:v3.26.3-build20231109
+    - name: rancher/hardened-flannel:v0.23.0-build20231109
+    - name: longhornio/backing-image-manager:v1.6.0
+    - name: longhornio/csi-attacher:v4.4.2
+    - name: longhornio/csi-node-driver-registrar:v2.9.2
+    - name: longhornio/csi-provisioner:v3.6.2
+    - name: longhornio/csi-resizer:v1.9.2
+    - name: longhornio/csi-snapshotter:v6.3.2
+    - name: longhornio/livenessprobe:v2.11.0
+    - name: longhornio/longhorn-engine:v1.6.0
+    - name: longhornio/longhorn-instance-manager:v1.6.0
+    - name: longhornio/longhorn-manager:v1.6.0
+    - name: longhornio/longhorn-share-manager:v1.6.0
+    - name: longhornio/longhorn-ui:v1.6.0
+    - name: longhornio/support-bundle-kit:v0.0.33
+    - name: rancher/harvester-eventrouter:v0.1.2
+    - name: rancher/harvester-load-balancer-webhook:v0.2.5
+    - name: rancher/harvester-load-balancer:v0.2.5
+    - name: rancher/harvester-network-controller:v0.3.6
+    - name: rancher/harvester-network-helper:v0.3.6
+    - name: rancher/harvester-network-webhook:v0.3.6
+    - name: rancher/harvester-node-disk-manager:v0.6.1
+    - name: rancher/harvester-node-manager-webhook:v0.2.1
+    - name: rancher/harvester-node-manager:v0.2.1
+    - name: rancher/harvester-upgrade:v1.3.0
+    - name: rancher/harvester-webhook:v1.3.0
+    - name: rancher/harvester:v1.3.0
+    - name: rancher/support-bundle-kit:v0.0.36
+    - name: ghcr.io/k8snetworkplumbingwg/whereabouts:v0.6.3
+    - name: ghcr.io/kube-vip/kube-vip-iptables:v0.6.0
+    - name: quay.io/kubevirt/libguestfs-tools:v1.1.0
+    - name: quay.io/kubevirt/virt-api:v1.1.0
+    - name: quay.io/kubevirt/virt-controller:v1.1.0
+    - name: quay.io/kubevirt/virt-handler:v1.1.0
+    - name: quay.io/kubevirt/virt-launcher:v1.1.0
+    - name: quay.io/kubevirt/virt-operator:v1.1.0
+    - name: registry.k8s.io/sig-storage/snapshot-controller:v6.3.3
+    - name: registry.k8s.io/sig-storage/snapshot-validation-webhook:v6.3.3
+    - name: registry.suse.com/bci/bci-base:15.5
+    - name: registry.suse.com/suse/vmdp/vmdp:2.5.4.2
+    - name: rancher/harvester-cluster-repo:v1.3.0
+    - name: rancher/fleet-agent:v0.9.0
+    - name: rancher/fleet:v0.9.0
+    - name: rancher/gitjob:v0.1.96
+    - name: rancher/kubectl:v1.20.2
+    - name: rancher/kubectl:v1.21.5
+    - name: rancher/mirrored-grafana-grafana:9.1.5
+    - name: rancher/mirrored-ingress-nginx-kube-webhook-certgen:v20221220-controller-v1.5.1-58-g787ea74b6
+    - name: rancher/mirrored-kiwigrid-k8s-sidecar:1.24.6
+    - name: rancher/mirrored-kube-state-metrics-kube-state-metrics:v2.6.0
+    - name: rancher/mirrored-library-busybox:1.31.1
+    - name: rancher/mirrored-library-nginx:1.24.0-alpine
+    - name: rancher/mirrored-prometheus-adapter-prometheus-adapter:v0.10.0
+    - name: rancher/mirrored-prometheus-node-exporter:v1.3.1
+    - name: rancher/mirrored-prometheus-operator-prometheus-config-reloader:v0.65.1
+    - name: rancher/mirrored-prometheus-operator-prometheus-operator:v0.65.1
+    - name: rancher/mirrored-prometheus-prometheus:v2.42.0
+    - name: rancher/mirrored-prometheus-alertmanager:v0.25.0
+    - name: rancher/rancher-webhook:v0.4.2
+    - name: rancher/rancher:v2.8.2
+    - name: rancher/shell:v0.1.22
+    - name: rancher/system-agent:v0.3.4-suc
+    - name: rancher/system-upgrade-controller:v0.13.1
+    - name: rancher/mirrored-banzaicloud-fluentd:v1.14.6-alpine-5
+    - name: rancher/mirrored-banzaicloud-logging-operator:3.17.10
+    - name: rancher/mirrored-fluent-fluent-bit:2.2.0
+    - name: rancher/mirrored-jimmidyson-configmap-reload:v0.4.0
+    - name: rancher/mirrored-cluster-api-controller:v1.4.4
+    - name: rancher/system-agent-installer-rancher:v2.8.2
+    - name: rancher/system-agent-installer-rke2:v1.27.10-rke2r1
+    - name: rancher/hardened-cni-plugins:v1.2.0-build20231009
+    - name: rancher/hardened-multus-cni:v4.0.2-build20231009
+    - name: rancher/rke2-runtime:v1.27.10-rke2r1
+    - name: rancher/hardened-kubernetes:v1.27.10-rke2r1-build20240117
+    - name: rancher/hardened-coredns:v1.10.1-build20231009
+    - name: rancher/hardened-cluster-autoscaler:v1.8.6-build20231009
+    - name: rancher/hardened-dns-node-cache:1.22.20-build20231010
+    - name: rancher/hardened-etcd:v3.5.9-k3s1-build20230802
+    - name: rancher/hardened-k8s-metrics-server:v0.6.3-build20231009
+    - name: rancher/klipper-helm:v0.8.2-build20230815
+    - name: rancher/klipper-lb:v0.4.5
+    - name: rancher/mirrored-pause:3.6
+    - name: rancher/mirrored-ingress-nginx-kube-webhook-certgen:v20230312-helm-chart-4.5.2-28-g66a760794
+    - name: rancher/nginx-ingress-controller:nginx-1.9.3-hardened1
+    - name: rancher/rke2-cloud-provider:v1.28.2-build20231016
+    - name: rancher/mirrored-sig-storage-snapshot-controller:v6.2.1
+    - name: rancher/mirrored-sig-storage-snapshot-validation-webhook:v6.2.2
+    - name: rancher/hardened-calico:v3.26.3-build20231109
+    - name: rancher/hardened-flannel:v0.23.0-build20231109
