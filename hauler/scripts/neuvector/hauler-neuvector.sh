@@ -1,5 +1,5 @@
 ### Set Variables
-export vNeuVector=2.7.3
+export vNeuVector=2.7.5
 
 ### Setup Working Directory
 rm -rf /opt/hauler/neuvector

@@ -122,7 +122,7 @@ Complete the following commands on the first server node in the cluster. You wil
 sudo su
 
 ### Set Variables
-export vRKE2=v1.27.11
+export vRKE2=v1.27.12
 export vPlatform=el9
 export registry=<FQDN or IP>:5000
 export fileserver=<FQDN or IP>:8080
@@ -224,7 +224,7 @@ Complete the following commands on the agent node(s) in the cluster. You will ne
 sudo su
 
 ### Set Variables
-export vRKE2=v1.27.11
+export vRKE2=v1.27.12
 export vPlatform=el9
 export registry=<FQDN or IP>:5000
 export fileserver=<FQDN or IP>:8080
@@ -336,7 +336,7 @@ sudo su
 
 ### Set Variables
 export DOMAIN=<example.com>
-export vCertManager=1.14.2
+export vCertManager=1.14.4
 export registry=<FQDN or IP>:5000
 export fileserver=<FQDN or IP>:8080
 
@@ -422,7 +422,7 @@ sudo su
 
 ### Set Variables
 export DOMAIN=<example.com>
-export vLonghorn=1.6.0
+export vLonghorn=1.6.1
 export registry=<FQDN or IP>:5000
 export fileserver=<FQDN or IP>:8080
 
@@ -446,7 +446,7 @@ sudo su
 
 ### Set Variables
 export DOMAIN=<example.com>
-export vNeuVector=2.7.3
+export vNeuVector=2.7.5
 export registry=<FQDN or IP>:5000
 export fileserver=<FQDN or IP>:8080
 
