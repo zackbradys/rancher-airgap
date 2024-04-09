@@ -29,7 +29,7 @@ fetch -> validate -> save -> | <airgap> | -> load -> validate -> distribute
 - [hauler/rancher](hauler/rancher/README.md) - provides the content manifest for Cert-Manager
   - currently supports: `Cert-Manager: v1.14.4`
 - [hauler/rancher](hauler/rancher/README.md) - provides the content manifest for Rancher Multi-Cluster Manager
-  - currently supports: `Rancher: v2.8.2`
+  - currently supports: `Rancher: v2.8.3`
 - [hauler/longhorn](hauler/longhorn/README.md) - provides the content manifest for Rancher Longhorn
   - currently supports: `Longhorn: v1.6.1`
 - [hauler/neuvector](hauler/neuvector/README.md) - provides the content manifest for Rancher NeuVector

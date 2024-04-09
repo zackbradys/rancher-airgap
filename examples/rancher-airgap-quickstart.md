@@ -380,7 +380,7 @@ sudo su
 
 ### Set Variables
 export DOMAIN=<example.com>
-export vRancher=2.8.2
+export vRancher=2.8.3
 export registry=<FQDN or IP>:5000
 export fileserver=<FQDN or IP>:8080
 
