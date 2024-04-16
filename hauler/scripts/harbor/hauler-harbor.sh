@@ -1,5 +1,5 @@
 ### Set Variables
-export vHarbor=1.14.1
+export vHarbor=1.14.2
 
 ### Setup Working Directory
 rm -rf /opt/hauler/harbor

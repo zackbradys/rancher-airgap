@@ -33,20 +33,20 @@ fetch -> validate -> save -> | <airgap> | -> load -> validate -> distribute
 - [hauler/longhorn](hauler/longhorn/README.md) - provides the content manifest for Rancher Longhorn
   - currently supports: `Longhorn: v1.6.1`
 - [hauler/neuvector](hauler/neuvector/README.md) - provides the content manifest for Rancher NeuVector
-  - currently supports: `NeuVector: v5.3.0`
+  - currently supports: `NeuVector: v5.3.2`
 - [hauler/harvester](hauler/harvester/README.md) - provides the content manifest for Rancher Harvester
   - currently supports: `Harvester: v1.3.0`
 
 ### Addons
 
 - [hauler/hauler](hauler/hauler/README.md) - provides the content manifest for Hauler
-  - currently supports: `Hauler: v1.0.1`
+  - currently supports: `Hauler: v1.0.2`
 - [hauler/helm](hauler/helm/README.md) - provides the content manifest for Helm
-  - currently supports: `Helm: v3.14.3`
+  - currently supports: `Helm: v3.14.4`
 - [hauler/cosign](hauler/cosign/README.md) - provides the content manifest for Cosign
-  - currently supports: `Cosign: v2.2.3`
+  - currently supports: `Cosign: v2.2.4`
 - [hauler/harbor](hauler/harbor/README.md) - provides the content manifest for Harbor
-  - currently supports: `Harbor: v2.10.1`
+  - currently supports: `Harbor: v2.10.2`
 - [hauler/kubevip](hauler/kubevip/README.md) - provides the content manifest for KubeVip
   - currently supports: `KubeVip: Latest`
 

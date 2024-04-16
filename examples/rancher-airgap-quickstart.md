@@ -49,7 +49,7 @@ hauler store save --store neuvector-store --filename rancher-airgap-neuvector.ta
 hauler store save --store extras --filename rancher-airgap-extras.tar.zst
 
 ### Fetch Hauler Binary
-curl -sfOL https://github.com/rancherfederal/hauler/releases/download/v1.0.1/hauler_1.0.1_linux_amd64.tar.gz
+curl -sfOL https://github.com/rancherfederal/hauler/releases/download/v1.0.2/hauler_1.0.2_linux_amd64.tar.gz
 ```
 
 ---
@@ -75,7 +75,7 @@ cd /opt/hauler
 ### MOVE TARBALLS HERE
 
 ### Untar and Install Hauler
-tar -xf hauler_1.0.1_linux_amd64.tar.gz
+tar -xf hauler_1.0.2_linux_amd64.tar.gz
 rm -rf LICENSE README.md
 chmod 755 hauler && mv hauler /usr/bin/hauler
 
@@ -446,7 +446,7 @@ sudo su
 
 ### Set Variables
 export DOMAIN=<example.com>
-export vNeuVector=2.7.5
+export vNeuVector=2.7.6
 export registry=<FQDN or IP>:5000
 export fileserver=<FQDN or IP>:8080
 
