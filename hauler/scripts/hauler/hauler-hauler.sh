@@ -16,5 +16,7 @@ metadata:
 spec:
   files:
     - path: https://github.com/rancherfederal/hauler/releases/download/v${vHauler}/hauler_${vHauler}_linux_amd64.tar.gz
-      name: hauler.tar.gz
+      name: hauler-linux-amd64.tar.gz
+    - path: https://github.com/rancherfederal/hauler/releases/download/v${vHauler}/hauler_${vHauler}_linux_arm64.tar.gz
+      name: hauler-linux-arm64.tar.gz
 EOF

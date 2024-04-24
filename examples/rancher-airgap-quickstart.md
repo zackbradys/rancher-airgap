@@ -22,6 +22,7 @@ curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/haul
 curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/neuvector/rancher-airgap-neuvector.yaml
 # curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/harvester/rancher-airgap-harvester.yaml
 # curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/harbor/rancher-airgap-harbor.yaml
+# curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/kubevip/rancher-airgap-kubevip.yaml
 curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/cosign/rancher-airgap-cosign.yaml
 curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/hauler/rancher-airgap-hauler.yaml
 curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/helm/rancher-airgap-helm.yaml
@@ -34,6 +35,7 @@ hauler store sync --store longhorn-store --platform linux/amd64 --files rancher-
 hauler store sync --store neuvector-store --platform linux/amd64 --files rancher-airgap-neuvector.yaml
 # hauler store sync --store harvester-store --platform linux/amd64 --files rancher-airgap-harvester.yaml
 # hauler store sync --store harbor-store --platform linux/amd64 --files rancher-airgap-harbor.yaml
+# hauler store sync --store kubevip-store --platform linux/amd64 --files rancher-airgap-kubevip.yaml
 hauler store sync --store extras --files rancher-airgap-hauler.yaml
 hauler store sync --store extras --files rancher-airgap-helm.yaml
 hauler store sync --store extras --files rancher-airgap-cosign.yaml
@@ -46,6 +48,7 @@ hauler store save --store longhorn-store --filename rancher-airgap-longhorn.tar.
 hauler store save --store neuvector-store --filename rancher-airgap-neuvector.tar.zst
 # hauler store save --store harvester-store --filename rancher-airgap-harvester.tar.zst
 # hauler store save --store harbor-store --filename rancher-airgap-harbor.tar.zst
+# hauler store save --store kubevip-store --filename rancher-airgap-kubevip.tar.zst
 hauler store save --store extras --filename rancher-airgap-extras.tar.zst
 
 ### Fetch Hauler Binary
@@ -87,6 +90,7 @@ hauler store load rancher-airgap-longhorn.tar.zst
 hauler store load rancher-airgap-neuvector.tar.zst
 # hauler store load rancher-airgap-harvester.tar.zst
 # hauler store load rancher-airgap-harbor.tar.zst
+# hauler store load rancher-airgap-kubevip.tar.zst
 hauler store load rancher-airgap-extras.tar.zst
 
 ### Verify Hauler Store Contents
@@ -316,10 +320,10 @@ export registry=<FQDN or IP>:5000
 export fileserver=<FQDN or IP>:8080
 
 ### Fetch the Helm Tarball
-curl -sfOL http://${fileserver}/helm.tar.gz
+curl -sfOL http://${fileserver}/helm-linux-amd64.tar.gz
 
 ### Extract and Install
-tar -xf helm.tar.gz
+tar -xf helm-linux-amd64.tar.gz
 cd linux-amd64 && chmod 755 helm
 mv helm /usr/bin/helm
 ```

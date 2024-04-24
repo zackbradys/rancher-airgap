@@ -17,4 +17,6 @@ spec:
   files:
     - path: https://github.com/sigstore/cosign/releases/download/v${vCosign}/cosign-linux-amd64
       name: cosign-linux-amd64
+    - path: https://github.com/sigstore/cosign/releases/download/v${vCosign}/cosign-linux-arm64
+      name: cosign-linux-arm64
 EOF

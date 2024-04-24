@@ -16,5 +16,7 @@ metadata:
 spec:
   files:
     - path: https://get.helm.sh/helm-v${vHelm}-linux-amd64.tar.gz
-      name: helm.tar.gz
+      name: helm-linux-amd64.tar.gz
+    - path: https://get.helm.sh/helm-v${vHelm}-linux-arm64.tar.gz
+      name: helm-linux-amd64.tar.gz
 EOF
