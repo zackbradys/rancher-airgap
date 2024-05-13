@@ -52,7 +52,7 @@ hauler store save --store neuvector-store --filename rancher-airgap-neuvector.ta
 hauler store save --store extras --filename rancher-airgap-extras.tar.zst
 
 ### Fetch Hauler Binary
-curl -sfOL https://github.com/rancherfederal/hauler/releases/download/v1.0.2/hauler_1.0.2_linux_amd64.tar.gz
+curl -sfOL https://github.com/rancherfederal/hauler/releases/download/v1.0.3/hauler_1.0.3_linux_amd64.tar.gz
 ```
 
 ---
@@ -78,7 +78,7 @@ cd /opt/hauler
 ### MOVE TARBALLS HERE
 
 ### Untar and Install Hauler
-tar -xf hauler_1.0.2_linux_amd64.tar.gz
+tar -xf hauler_1.0.3_linux_amd64.tar.gz
 rm -rf LICENSE README.md
 chmod 755 hauler && mv hauler /usr/bin/hauler
 
@@ -126,7 +126,7 @@ Complete the following commands on the first server node in the cluster. You wil
 sudo su
 
 ### Set Variables
-export vRKE2=v1.27.12
+export vRKE2=v1.27.13
 export vPlatform=el9
 export registry=<FQDN or IP>:5000
 export fileserver=<FQDN or IP>:8080
@@ -228,7 +228,7 @@ Complete the following commands on the agent node(s) in the cluster. You will ne
 sudo su
 
 ### Set Variables
-export vRKE2=v1.27.12
+export vRKE2=v1.27.13
 export vPlatform=el9
 export registry=<FQDN or IP>:5000
 export fileserver=<FQDN or IP>:8080
@@ -340,7 +340,7 @@ sudo su
 
 ### Set Variables
 export DOMAIN=<example.com>
-export vCertManager=1.14.4
+export vCertManager=1.14.5
 export registry=<FQDN or IP>:5000
 export fileserver=<FQDN or IP>:8080
 
