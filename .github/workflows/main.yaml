@@ -7,7 +7,7 @@ on:
 jobs:
   rancher-airgap-build:
     name: Rancher Airgap - Build Job
-    runs-on: [self-hosted, linux, X64, general]
+    runs-on: [self-hosted, linux, X64]
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
@@ -99,7 +99,7 @@ jobs:
 
   rancher-airgap-testing:
     name: Rancher Airgap - Test/Lint Job
-    runs-on: [self-hosted, linux, X64, general]
+    runs-on: [self-hosted, linux, X64]
     needs: [rancher-airgap-build]
     steps:
       - name: Checkout Repository
@@ -204,7 +204,7 @@ jobs:
 
   rancher-airgap-release:
     name: Rancher Airgap - Release Job
-    runs-on: [self-hosted, linux, X64, general]
+    runs-on: [self-hosted, linux, X64]
     needs: [rancher-airgap-testing]
     steps:
       - name: Checkout Repository
