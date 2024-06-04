@@ -1,6 +1,6 @@
 ### Set Variables
-export vRKE2=1.27.13
-export vRKE2SELinux=0.17
+export vRKE2=1.27.14
+export vRKE2SELinux=0.18
 
 ### Setup Working Directory
 rm -rf /opt/hauler/rke2
