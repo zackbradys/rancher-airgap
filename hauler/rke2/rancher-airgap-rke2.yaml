@@ -4,40 +4,40 @@ metadata:
   name: rancher-airgap-files-rke2
 spec:
   files:
-    - path: https://github.com/rancher/rke2/releases/download/v1.27.13%2Brke2r1/rke2-images.linux-amd64.tar.zst
+    - path: https://github.com/rancher/rke2/releases/download/v1.27.14%2Brke2r1/rke2-images.linux-amd64.tar.zst
       name: rke2-images.linux-amd64.tar.zst
-    - path: https://github.com/rancher/rke2/releases/download/v1.27.13%2Brke2r1/rke2.linux-amd64.tar.gz
+    - path: https://github.com/rancher/rke2/releases/download/v1.27.14%2Brke2r1/rke2.linux-amd64.tar.gz
       name: rke2.linux-amd64.tar.gz
-    - path: https://github.com/rancher/rke2/releases/download/v1.27.13%2Brke2r1/sha256sum-amd64.txt
+    - path: https://github.com/rancher/rke2/releases/download/v1.27.14%2Brke2r1/sha256sum-amd64.txt
       name: sha256sum-amd64.txt
-    - path: https://github.com/rancher/rke2/releases/download/v1.27.13%2Brke2r1/rke2.linux-amd64
+    - path: https://github.com/rancher/rke2/releases/download/v1.27.14%2Brke2r1/rke2.linux-amd64
       name: rke2.linux-amd64
     - path: https://raw.githubusercontent.com/rancher/rke2/master/install.sh
       name: install.sh
-    - path: https://github.com/rancher/rke2-selinux/releases/download/v0.17.stable.1/rke2-selinux-0.17-1.el9.noarch.rpm
-      name: rke2-selinux-0.17-1.el9.noarch.rpm
-    - path: https://github.com/rancher/rke2-selinux/releases/download/v0.17.stable.1/rke2-selinux-0.17-1.el8.noarch.rpm
-      name: rke2-selinux-0.17-1.el8.noarch.rpm
-    - path: https://github.com/rancher/rke2-selinux/releases/download/v0.17.stable.1/rke2-selinux-0.17-1.el7.noarch.rpm
-      name: rke2-selinux-0.17-1.el7.noarch.rpm
-    - path: https://github.com/rancher/rke2-packaging/releases/download/v1.27.13%2Brke2r1.stable.0/rke2-common-1.27.13.rke2r1-0.el9.x86_64.rpm
-      name: rke2-common-1.27.13.rke2r1-0.el9.x86_64.rpm
-    - path: https://github.com/rancher/rke2-packaging/releases/download/v1.27.13%2Brke2r1.stable.0/rke2-common-1.27.13.rke2r1-0.el8.x86_64.rpm
-      name: rke2-common-1.27.13.rke2r1-0.el8.x86_64.rpm
-    - path: https://github.com/rancher/rke2-packaging/releases/download/v1.27.13%2Brke2r1.stable.0/rke2-common-1.27.13.rke2r1-0.el7.x86_64.rpm
-      name: rke2-common-1.27.13.rke2r1-0.el7.x86_64.rpm
-    - path: https://github.com/rancher/rke2-packaging/releases/download/v1.27.13%2Brke2r1.stable.0/rke2-server-1.27.13.rke2r1-0.el9.x86_64.rpm
-      name: rke2-server-1.27.13.rke2r1-0.el9.x86_64.rpm
-    - path: https://github.com/rancher/rke2-packaging/releases/download/v1.27.13%2Brke2r1.stable.0/rke2-server-1.27.13.rke2r1-0.el8.x86_64.rpm
-      name: rke2-server-1.27.13.rke2r1-0.el8.x86_64.rpm
-    - path: https://github.com/rancher/rke2-packaging/releases/download/v1.27.13%2Brke2r1.stable.0/rke2-server-1.27.13.rke2r1-0.el7.x86_64.rpm
-      name: rke2-server-1.27.13.rke2r1-0.el7.x86_64.rpm
-    - path: https://github.com/rancher/rke2-packaging/releases/download/v1.27.13%2Brke2r1.stable.0/rke2-agent-1.27.13.rke2r1-0.el9.x86_64.rpm
-      name: rke2-agent-1.27.13.rke2r1-0.el9.x86_64.rpm
-    - path: https://github.com/rancher/rke2-packaging/releases/download/v1.27.13%2Brke2r1.stable.0/rke2-agent-1.27.13.rke2r1-0.el8.x86_64.rpm
-      name: rke2-agent-1.27.13.rke2r1-0.el8.x86_64.rpm
-    - path: https://github.com/rancher/rke2-packaging/releases/download/v1.27.13%2Brke2r1.stable.0/rke2-agent-1.27.13.rke2r1-0.el7.x86_64.rpm
-      name: rke2-agent-1.27.13.rke2r1-0.el7.x86_64.rpm
+    - path: https://github.com/rancher/rke2-selinux/releases/download/v0.18.stable.1/rke2-selinux-0.18-1.el9.noarch.rpm
+      name: rke2-selinux-0.18-1.el9.noarch.rpm
+    - path: https://github.com/rancher/rke2-selinux/releases/download/v0.18.stable.1/rke2-selinux-0.18-1.el8.noarch.rpm
+      name: rke2-selinux-0.18-1.el8.noarch.rpm
+    - path: https://github.com/rancher/rke2-selinux/releases/download/v0.18.stable.1/rke2-selinux-0.18-1.el7.noarch.rpm
+      name: rke2-selinux-0.18-1.el7.noarch.rpm
+    - path: https://github.com/rancher/rke2-packaging/releases/download/v1.27.14%2Brke2r1.stable.0/rke2-common-1.27.14.rke2r1-0.el9.x86_64.rpm
+      name: rke2-common-1.27.14.rke2r1-0.el9.x86_64.rpm
+    - path: https://github.com/rancher/rke2-packaging/releases/download/v1.27.14%2Brke2r1.stable.0/rke2-common-1.27.14.rke2r1-0.el8.x86_64.rpm
+      name: rke2-common-1.27.14.rke2r1-0.el8.x86_64.rpm
+    - path: https://github.com/rancher/rke2-packaging/releases/download/v1.27.14%2Brke2r1.stable.0/rke2-common-1.27.14.rke2r1-0.el7.x86_64.rpm
+      name: rke2-common-1.27.14.rke2r1-0.el7.x86_64.rpm
+    - path: https://github.com/rancher/rke2-packaging/releases/download/v1.27.14%2Brke2r1.stable.0/rke2-server-1.27.14.rke2r1-0.el9.x86_64.rpm
+      name: rke2-server-1.27.14.rke2r1-0.el9.x86_64.rpm
+    - path: https://github.com/rancher/rke2-packaging/releases/download/v1.27.14%2Brke2r1.stable.0/rke2-server-1.27.14.rke2r1-0.el8.x86_64.rpm
+      name: rke2-server-1.27.14.rke2r1-0.el8.x86_64.rpm
+    - path: https://github.com/rancher/rke2-packaging/releases/download/v1.27.14%2Brke2r1.stable.0/rke2-server-1.27.14.rke2r1-0.el7.x86_64.rpm
+      name: rke2-server-1.27.14.rke2r1-0.el7.x86_64.rpm
+    - path: https://github.com/rancher/rke2-packaging/releases/download/v1.27.14%2Brke2r1.stable.0/rke2-agent-1.27.14.rke2r1-0.el9.x86_64.rpm
+      name: rke2-agent-1.27.14.rke2r1-0.el9.x86_64.rpm
+    - path: https://github.com/rancher/rke2-packaging/releases/download/v1.27.14%2Brke2r1.stable.0/rke2-agent-1.27.14.rke2r1-0.el8.x86_64.rpm
+      name: rke2-agent-1.27.14.rke2r1-0.el8.x86_64.rpm
+    - path: https://github.com/rancher/rke2-packaging/releases/download/v1.27.14%2Brke2r1.stable.0/rke2-agent-1.27.14.rke2r1-0.el7.x86_64.rpm
+      name: rke2-agent-1.27.14.rke2r1-0.el7.x86_64.rpm
 ---
 apiVersion: content.hauler.cattle.io/v1alpha1
 kind: Images
@@ -56,7 +56,7 @@ spec:
     - name: rancher/hardened-flannel:v0.25.1-build20240423
     - name: rancher/hardened-ib-sriov-cni:v1.0.2-build20231009
     - name: rancher/hardened-k8s-metrics-server:v0.7.1-build20240401
-    - name: rancher/hardened-kubernetes:v1.27.13-rke2r1-build20240416
+    - name: rancher/hardened-kubernetes:v1.27.14-rke2r1-build20240515
     - name: rancher/hardened-multus-cni:v4.0.2-build20240208
     - name: rancher/hardened-sriov-cni:v2.6.3-build20231009
     - name: rancher/hardened-sriov-network-config-daemon:v1.2.0-build20231010
@@ -79,16 +79,16 @@ spec:
     - name: rancher/mirrored-calico-operator:v1.32.7
     - name: rancher/mirrored-calico-pod2daemon-flexvol:v3.27.3
     - name: rancher/mirrored-calico-typha:v3.27.3
-    - name: rancher/mirrored-cilium-certgen:v0.1.11
-    - name: rancher/mirrored-cilium-cilium-envoy:v1.27.4-21905253931655328edaacf3cd16aeda73bbea2f
-    - name: rancher/mirrored-cilium-cilium:v1.15.4
-    - name: rancher/mirrored-cilium-clustermesh-apiserver:v1.15.4
-    - name: rancher/mirrored-cilium-hubble-relay:v1.15.4
+    - name: rancher/mirrored-cilium-certgen:v0.1.12
+    - name: rancher/mirrored-cilium-cilium-envoy:v1.28.3-31ec52ec5f2e4d28a8e19a0bfb872fa48cf7a515
+    - name: rancher/mirrored-cilium-cilium:v1.15.5
+    - name: rancher/mirrored-cilium-clustermesh-apiserver:v1.15.5
+    - name: rancher/mirrored-cilium-hubble-relay:v1.15.5
     - name: rancher/mirrored-cilium-hubble-ui-backend:v0.13.0
     - name: rancher/mirrored-cilium-hubble-ui:v0.13.0
-    - name: rancher/mirrored-cilium-operator-aws:v1.15.4
-    - name: rancher/mirrored-cilium-operator-azure:v1.15.4
-    - name: rancher/mirrored-cilium-operator-generic:v1.15.4
+    - name: rancher/mirrored-cilium-operator-aws:v1.15.5
+    - name: rancher/mirrored-cilium-operator-azure:v1.15.5
+    - name: rancher/mirrored-cilium-operator-generic:v1.15.5
     - name: rancher/mirrored-cloud-provider-vsphere-cpi-release-manager:v1.27.0
     - name: rancher/mirrored-cloud-provider-vsphere-csi-release-driver:v3.1.2
     - name: rancher/mirrored-cloud-provider-vsphere-csi-release-syncer:v3.1.2
@@ -110,4 +110,4 @@ spec:
     - name: rancher/mirrored-sig-storage-snapshot-validation-webhook:v6.2.2
     - name: rancher/nginx-ingress-controller:nginx-1.9.6-hardened1
     - name: rancher/rke2-cloud-provider:v1.29.3-build20240412
-    - name: rancher/rke2-runtime:v1.27.13-rke2r1
+    - name: rancher/rke2-runtime:v1.27.14-rke2r1
