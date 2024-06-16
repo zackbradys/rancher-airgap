@@ -1,5 +1,5 @@
 ### Set Variables
-export vHarvester=1.3.0
+export vHarvester=1.3.1
 
 ### Setup Working Directory
 rm -rf /opt/hauler/harvester
