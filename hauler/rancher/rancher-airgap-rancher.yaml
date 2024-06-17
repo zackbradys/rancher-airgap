@@ -25,13 +25,20 @@ spec:
 apiVersion: content.hauler.cattle.io/v1alpha1
 kind: Images
 metadata:
-  name: rancher-airgap-images-rancher
+  name: rancher-airgap-cert-manager-images-rancher
 spec:
   images:
     - name: quay.io/jetstack/cert-manager-cainjector:v1.15.0
     - name: quay.io/jetstack/cert-manager-controller:v1.15.0
     - name: quay.io/jetstack/cert-manager-webhook:v1.15.0
     - name: quay.io/jetstack/cert-manager-startupapicheck:v1.15.0
+---
+apiVersion: content.hauler.cattle.io/v1alpha1
+kind: Images
+metadata:
+  name: rancher-airgap-rancher-images-rancher
+spec:
+  images:
     - name: rancher/aks-operator:v1.2.1
     - name: rancher/backup-restore-operator:v4.0.2
     - name: rancher/calico-cni:v3.26.3-rancher1
