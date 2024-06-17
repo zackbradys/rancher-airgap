@@ -60,9 +60,16 @@ spec:
 apiVersion: content.hauler.cattle.io/v1alpha1
 kind: Images
 metadata:
-  name: rancher-airgap-images-rancher-minimal
+  name: rancher-airgap-cert-manager-images-rancher-minimal
 spec:
   images:
 ${certManagerImagesMinimal}
+---
+apiVersion: content.hauler.cattle.io/v1alpha1
+kind: Images
+metadata:
+  name: rancher-airgap-rancher-images-rancher-minimal
+spec:
+  images:
 ${rancherImagesMinimal}
 EOF
