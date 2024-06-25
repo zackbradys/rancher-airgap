@@ -340,7 +340,7 @@ sudo su
 
 ### Set Variables
 export DOMAIN=<example.com>
-export vCertManager=1.14.5
+export vCertManager=1.15.0
 export registry=<FQDN or IP>:5000
 export fileserver=<FQDN or IP>:8080
 
@@ -426,7 +426,7 @@ sudo su
 
 ### Set Variables
 export DOMAIN=<example.com>
-export vLonghorn=1.6.1
+export vLonghorn=1.6.2
 export registry=<FQDN or IP>:5000
 export fileserver=<FQDN or IP>:8080
 
@@ -450,7 +450,7 @@ sudo su
 
 ### Set Variables
 export DOMAIN=<example.com>
-export vNeuVector=2.7.6
+export vNeuVector=2.7.7
 export registry=<FQDN or IP>:5000
 export fileserver=<FQDN or IP>:8080
 
