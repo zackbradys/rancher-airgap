@@ -1,5 +1,5 @@
 ### Set Variables
-export vHauler=1.0.3
+export vHauler=1.0.4
 
 ### Setup Working Directory
 rm -rf /opt/hauler/hauler
@@ -19,6 +19,16 @@ spec:
       name: hauler-linux-amd64.tar.gz
     - path: https://github.com/rancherfederal/hauler/releases/download/v${vHauler}/hauler_${vHauler}_linux_arm64.tar.gz
       name: hauler-linux-arm64.tar.gz
+---
+apiVersion: content.hauler.cattle.io/v1alpha1
+kind: Charts
+metadata:
+  name: rancher-airgap-charts-hauler
+spec:
+  charts:
+    - name: hauler
+      repoURL: oci://ghcr.io/rancherfederal/charts
+      version: ${vHauler}
 ---
 apiVersion: content.hauler.cattle.io/v1alpha1
 kind: Images
