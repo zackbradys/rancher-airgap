@@ -45,8 +45,8 @@ fetch -> validate -> save -> | <airgap> | -> load -> validate -> distribute
   - currently supports: `Helm: v3.15.2`
 - [hauler/cosign](hauler/cosign/README.md) - provides the content manifest for Cosign
   - currently supports: `Cosign: v2.2.4`
-- [hauler/harbor](hauler/harbor/README.md) - provides the content manifest for Harbor
-  - currently supports: `Harbor: v2.11.0`
+- [hauler/gitea](hauler/gitea/README.md) - provides the content manifest for Gitea
+  - currently supports: `Gitea: v2.11.0`
 - [hauler/kubevip](hauler/kubevip/README.md) - provides the content manifest for KubeVip
   - currently supports: `KubeVip: Latest`
 

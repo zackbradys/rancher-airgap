@@ -21,7 +21,7 @@ curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/haul
 curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/longhorn/rancher-airgap-longhorn.yaml
 curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/neuvector/rancher-airgap-neuvector.yaml
 # curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/harvester/rancher-airgap-harvester.yaml
-# curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/harbor/rancher-airgap-harbor.yaml
+# curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/gitea/rancher-airgap-gitea.yaml
 # curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/kubevip/rancher-airgap-kubevip.yaml
 curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/cosign/rancher-airgap-cosign.yaml
 curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/hauler/rancher-airgap-hauler.yaml
@@ -34,7 +34,7 @@ hauler store sync --store rancher-store --platform linux/amd64 --files rancher-a
 hauler store sync --store longhorn-store --platform linux/amd64 --files rancher-airgap-longhorn.yaml
 hauler store sync --store neuvector-store --platform linux/amd64 --files rancher-airgap-neuvector.yaml
 # hauler store sync --store harvester-store --platform linux/amd64 --files rancher-airgap-harvester.yaml
-# hauler store sync --store harbor-store --platform linux/amd64 --files rancher-airgap-harbor.yaml
+# hauler store sync --store gitea-store --platform linux/amd64 --files rancher-airgap-gitea.yaml
 # hauler store sync --store kubevip-store --platform linux/amd64 --files rancher-airgap-kubevip.yaml
 hauler store sync --store extras --files rancher-airgap-hauler.yaml
 hauler store sync --store extras --files rancher-airgap-helm.yaml
@@ -47,7 +47,7 @@ hauler store save --store rancher-store --filename rancher-airgap-rancher.tar.zs
 hauler store save --store longhorn-store --filename rancher-airgap-longhorn.tar.zst
 hauler store save --store neuvector-store --filename rancher-airgap-neuvector.tar.zst
 # hauler store save --store harvester-store --filename rancher-airgap-harvester.tar.zst
-# hauler store save --store harbor-store --filename rancher-airgap-harbor.tar.zst
+# hauler store save --store gitea-store --filename rancher-airgap-gitea.tar.zst
 # hauler store save --store kubevip-store --filename rancher-airgap-kubevip.tar.zst
 hauler store save --store extras --filename rancher-airgap-extras.tar.zst
 
@@ -89,7 +89,7 @@ hauler store load rancher-airgap-rancher.tar.zst
 hauler store load rancher-airgap-longhorn.tar.zst
 hauler store load rancher-airgap-neuvector.tar.zst
 # hauler store load rancher-airgap-harvester.tar.zst
-# hauler store load rancher-airgap-harbor.tar.zst
+# hauler store load rancher-airgap-gitea.tar.zst
 # hauler store load rancher-airgap-kubevip.tar.zst
 hauler store load rancher-airgap-extras.tar.zst
 
