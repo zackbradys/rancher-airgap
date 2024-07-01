@@ -46,7 +46,7 @@ fetch -> validate -> save -> | <airgap> | -> load -> validate -> distribute
 - [hauler/cosign](hauler/cosign/README.md) - provides the content manifest for Cosign
   - currently supports: `Cosign: v2.2.4`
 - [hauler/gitea](hauler/gitea/README.md) - provides the content manifest for Gitea
-  - currently supports: `Gitea: v2.11.0`
+  - currently supports: `Gitea: v1.22.0`
 - [hauler/kubevip](hauler/kubevip/README.md) - provides the content manifest for KubeVip
   - currently supports: `KubeVip: Latest`
 
