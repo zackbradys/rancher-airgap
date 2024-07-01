@@ -1,25 +1,24 @@
 apiVersion: content.hauler.cattle.io/v1alpha1
 kind: Charts
 metadata:
-  name: rancher-airgap-charts-harbor
+  name: rancher-airgap-charts-gitea
 spec:
   charts:
-    - name: harbor
-      repoURL: https://helm.goharbor.io
-      version: 1.15.0
+    - name: gitea
+      repoURL: https://dl.gitea.com/charts
+      version: 10.2.0
 ---
 apiVersion: content.hauler.cattle.io/v1alpha1
 kind: Images
 metadata:
-  name: rancher-airgap-images-harbor
+  name: rancher-airgap-images-gitea
 spec:
   images:
-    - name: goharbor/harbor-core:v2.11.0
-    - name: goharbor/harbor-jobservice:v2.11.0
-    - name: goharbor/harbor-portal:v2.11.0
-    - name: goharbor/registry-photon:v2.11.0
-    - name: goharbor/harbor-registryctl:v2.11.0
-    - name: goharbor/harbor-db:v2.11.0
-    - name: goharbor/harbor-db:v2.11.0
-    - name: goharbor/redis-photon:v2.11.0
-    - name: goharbor/trivy-adapter-photon:v2.11.0
+    - name: docker.io/bitnami/pgpool:4.5.2-debian-12-r0
+    - name: gitea/gitea:1.22.0-rootless
+    - name: gitea/gitea:1.22.0-rootless
+    - name: gitea/gitea:1.22.0-rootless
+    - name: gitea/gitea:1.22.0-rootless
+    - name: docker.io/bitnami/postgresql-repmgr:16.3.0-debian-12-r9
+    - name: docker.io/bitnami/redis-cluster:7.2.5-debian-12-r0
+    - name: busybox:latest
