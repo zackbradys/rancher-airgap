@@ -191,6 +191,10 @@ mirrors:
   "*":
     endpoint:
       - "http://${registry}"
+configs:
+  "$Registry":
+    tls:
+      insecure_skip_verify: true
 EOF
 
 ### Install Depedencies
@@ -348,7 +352,7 @@ export fileserver=<FQDN or IP>:8080
 kubectl create namespace cert-manager
 
 ### Install via Helm
-helm upgrade -i cert-manager http://${fileserver}/cert-manager-v${vCertManager}.tgz -n cert-manager --set installCRDs=true --set image.repository=$registry/jetstack/cert-manager-controller --set webhook.image.repository=$registry/jetstack/cert-manager-webhook --set cainjector.image.repository=$registry/jetstack/cert-manager-cainjector --set acmesolver.image.repository=$registry/jetstack/cert-manager-acmesolver --set startupapicheck.image.repository=$registry/jetstack/cert-manager-startupapicheck
+helm upgrade -i cert-manager oci://${registry}/hauler/cert-manager:${vCertManager} -n cert-manager --set installCRDs=true --set image.repository=$registry/jetstack/cert-manager-controller --set webhook.image.repository=$registry/jetstack/cert-manager-webhook --set cainjector.image.repository=$registry/jetstack/cert-manager-cainjector --set acmesolver.image.repository=$registry/jetstack/cert-manager-acmesolver --set startupapicheck.image.repository=$registry/jetstack/cert-manager-startupapicheck
 
 ### Configure Cert Manager
 kubectl apply -f - << EOF
@@ -384,7 +388,7 @@ sudo su
 
 ### Set Variables
 export DOMAIN=<example.com>
-export vRancher=2.8.3
+export vRancher=2.8.5
 export registry=<FQDN or IP>:5000
 export fileserver=<FQDN or IP>:8080
 
@@ -410,7 +414,7 @@ spec:
 EOF
 
 ### Install via Helm
-helm upgrade -i rancher http://${fileserver}/rancher-${vRancher}.tgz -n cattle-system --set bootstrapPassword=Pa22word --set replicas=1 --set ingress.tls.source=secret --set ingress.tls.secretName=tls-certs --set useBundledSystemChart=true --set systemDefaultRegistry=$registry --set rancherImage=$registry/rancher/rancher --set hostname=rancher.$DOMAIN
+helm upgrade -i rancher oci://${registry}/hauler/rancher:${vRancher} -n cattle-system --set bootstrapPassword=Pa22word --set replicas=1 --set ingress.tls.source=secret --set ingress.tls.secretName=tls-certs --set useBundledSystemChart=true --set systemDefaultRegistry=$registry --set rancherImage=$registry/rancher/rancher --set hostname=rancher.$DOMAIN
 
 ### Create Classification Banners
 kubectl apply -f http://${fileserver}/rancher-banner-ufouo.yaml
@@ -434,7 +438,7 @@ export fileserver=<FQDN or IP>:8080
 kubectl create namespace longhorn-system
 
 ### Install via Helm
-helm upgrade -i longhorn http://${fileserver}/longhorn-${vLonghorn}.tgz -n longhorn-system --version=$vLonghorn --set global.cattle.systemDefaultRegistry=$registry
+helm upgrade -i longhorn oci://${registry}/hauler/longhorn:${vLonghorn} -n longhorn-system --version=$vLonghorn --set global.cattle.systemDefaultRegistry=$registry
 
 ### Create Encrypted Storage Class
 kubectl apply -f http://${fileserver}/longhorn-encrypted-sc.yaml
@@ -458,5 +462,44 @@ export fileserver=<FQDN or IP>:8080
 kubectl create namespace cattle-neuvector-system
 
 ### Install via Helm
-helm upgrade -i neuvector http://${fileserver}/core-${vNeuVector}.tgz -n cattle-neuvector-system --set k3s.enabled=true --set manager.svc.type=ClusterIP --set internal.certmanager.enabled=true --set controller.pvc.enabled=true --set controller.pvc.capacity=10Gi --set global.cattle.url=https://rancher.$DOMAIN --set controller.ranchersso.enabled=true --set rbac=true --set registry=$registry
+helm upgrade -i neuvector oci://${registry}/hauler/core:${vNeuVector} -n cattle-neuvector-system --set k3s.enabled=true --set manager.svc.type=ClusterIP --set internal.certmanager.enabled=true --set controller.pvc.enabled=true --set controller.pvc.capacity=10Gi --set global.cattle.url=https://rancher.$DOMAIN --set controller.ranchersso.enabled=true --set rbac=true --set registry=$registry
+```
+
+### Gitea
+
+Complete the following commands on the first server node in the cluster.
+
+```bash
+### Sudo to Root
+sudo su
+
+### Set Variables
+export DOMAIN=<example.com>
+export vGitea=10.3.0
+export registry=<FQDN or IP>:5000
+export fileserver=<FQDN or IP>:8080
+
+### Create Namespace
+kubectl create namespace gitea-system
+
+### Configure Cert Manager
+kubectl apply -f - << EOF
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: tls-certs
+  namespace: gitea-system
+spec:
+  issuerRef:
+    name: selfsigned-issuer
+    kind: ClusterIssuer
+  secretName: tls-certs
+  commonName: "$DOMAIN"
+  dnsNames:
+  - "$DOMAIN"
+  - "*.$DOMAIN"
+EOF
+
+### Install via Helm
+helm upgrade -i gitea oci://${registry}/hauler/gitea:${vGitea} -n gitea-system --set gitea.admin.username=gitea --set gitea.admin.password=Pa22word --set gitea.admin.email=gitea@$DOMAIN --set persistence.size=20Gi --set ingress.enabled=true --set ingress.hosts[0].host=gitea.$DOMAIN --set ingress.hosts[0].paths[0].path=/ --set ingress.hosts[0].paths[0].pathType=Prefix -set ingress.tls[0].secretName=tls-certs --set ingress.tls[0].hosts[0]=gitea.$DOMAIN --set gitea.config.server.DOMAIN=gitea.$DOMAIN --set global.imageRegistry=$registry
 ```
