@@ -6,7 +6,7 @@ spec:
   charts:
     - name: gitea
       repoURL: https://dl.gitea.com/charts
-      version: 10.2.0
+      version: 10.3.0
 ---
 apiVersion: content.hauler.cattle.io/v1alpha1
 kind: Images
@@ -14,11 +14,11 @@ metadata:
   name: rancher-airgap-images-gitea
 spec:
   images:
-    - name: docker.io/bitnami/pgpool:4.5.2-debian-12-r0
+    - name: docker.io/bitnami/pgpool:4.5.2-debian-12-r2
     - name: gitea/gitea:1.22.0-rootless
     - name: gitea/gitea:1.22.0-rootless
     - name: gitea/gitea:1.22.0-rootless
     - name: gitea/gitea:1.22.0-rootless
-    - name: docker.io/bitnami/postgresql-repmgr:16.3.0-debian-12-r9
-    - name: docker.io/bitnami/redis-cluster:7.2.5-debian-12-r0
+    - name: docker.io/bitnami/postgresql-repmgr:16.3.0-debian-12-r15
+    - name: docker.io/bitnami/redis-cluster:7.2.5-debian-12-r2
     - name: busybox:latest
