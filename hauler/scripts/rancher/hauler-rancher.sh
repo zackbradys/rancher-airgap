@@ -58,3 +58,6 @@ spec:
   images:
 ${rancherImages}
 EOF
+
+### Add the Hauler Manifest
+hauler store add file rancher-airgap-rancher.yaml

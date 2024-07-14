@@ -26,3 +26,6 @@ spec:
     - path: https://kube-vip.io/manifests/rbac.yaml
       name: kubevip-rbac-manifest.yaml
 EOF
+
+### Add the Hauler Manifest
+hauler store add file rancher-airgap-kubevip.yaml

@@ -60,3 +60,6 @@ spec:
 ${harvesterImagesAMD64}
 ${harvesterImagesARM64}
 EOF
+
+### Add the Hauler Manifest
+hauler store add file rancher-airgap-harvester.yaml

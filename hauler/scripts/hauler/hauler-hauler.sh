@@ -38,3 +38,6 @@ spec:
   images:
     - name: ghcr.io/rancherfederal/hauler:v${vHauler}
 EOF
+
+### Add the Hauler Manifest
+hauler store add file rancher-airgap-hauler.yaml
