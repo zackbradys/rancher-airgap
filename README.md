@@ -25,15 +25,15 @@ fetch -> validate -> save -> | <airgap> | -> load -> validate -> distribute
 ### Core Components
 
 - [hauler/rke2](hauler/rke2/README.md) - provides the content manifest for Rancher Kubernetes (RKE2)
-  - currently supports: `RKE2: v1.28.11`
+  - currently supports: `RKE2: v1.28.12`
 - [hauler/rancher](hauler/rancher/README.md) - provides the content manifest for Cert-Manager
-  - currently supports: `Cert-Manager: v1.15.1`
+  - currently supports: `Cert-Manager: v1.15.2`
 - [hauler/rancher](hauler/rancher/README.md) - provides the content manifest for Rancher Multi-Cluster Manager
-  - currently supports: `Rancher: v2.8.5`
+  - currently supports: `Rancher: v2.9.0`
 - [hauler/longhorn](hauler/longhorn/README.md) - provides the content manifest for Rancher Longhorn
   - currently supports: `Longhorn: v1.6.2`
 - [hauler/neuvector](hauler/neuvector/README.md) - provides the content manifest for Rancher NeuVector
-  - currently supports: `NeuVector: v5.3.3`
+  - currently supports: `NeuVector: v5.3.4`
 - [hauler/harvester](hauler/harvester/README.md) - provides the content manifest for Rancher Harvester
   - currently supports: `Harvester: v1.3.1`
 
@@ -42,13 +42,13 @@ fetch -> validate -> save -> | <airgap> | -> load -> validate -> distribute
 - [hauler/hauler](hauler/hauler/README.md) - provides the content manifest for Hauler
   - currently supports: `Hauler: v1.0.4`
 - [hauler/helm](hauler/helm/README.md) - provides the content manifest for Helm
-  - currently supports: `Helm: v3.15.2`
+  - currently supports: `Helm: v3.15.3`
 - [hauler/cosign](hauler/cosign/README.md) - provides the content manifest for Cosign
-  - currently supports: `Cosign: v2.2.4`
+  - currently supports: `Cosign: v2.4.0`
 - [hauler/gitea](hauler/gitea/README.md) - provides the content manifest for Gitea
-  - currently supports: `Gitea: v1.22.0`
+  - currently supports: `Gitea: v1.22.1`
 - [hauler/kubevip](hauler/kubevip/README.md) - provides the content manifest for KubeVip
-  - currently supports: `KubeVip: Latest`
+  - currently supports: `KubeVip: v0.5.11`
 
 **Note:** We are currently planning and working towards supporting every major version of our products. We will continue to update to the latest until we implement previous major verions.
 
