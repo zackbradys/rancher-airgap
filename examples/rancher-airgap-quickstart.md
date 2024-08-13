@@ -52,7 +52,7 @@ hauler store save --store neuvector-store --filename rancher-airgap-neuvector.ta
 hauler store save --store extras --filename rancher-airgap-extras.tar.zst
 
 ### Fetch Hauler Binary
-curl -sfOL https://github.com/rancherfederal/hauler/releases/download/v1.0.3/hauler_1.0.3_linux_amd64.tar.gz
+curl -sfOL https://github.com/hauler-dev/hauler/releases/download/v1.0.6/hauler_1.0.6_linux_amd64.tar.gz
 ```
 
 ---

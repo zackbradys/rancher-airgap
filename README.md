@@ -4,7 +4,7 @@
 
 Rancher Airgap is a framework and guide built for collecting, packaging, and distributing the Rancher Product Stack for deployment in disconnected or airgapped environments.
 
-We utilize Project [Hauler](https://github.com/rancherfederal/hauler) by [Rancher Government Solutions](https://github.com/rancherfederal) to collect, package, and distribute the assets. `Hauler` simplifies the airgap process, by representing assets as content and collections and allows users to easily fetch, store, package, and distribute with declarative manifests or the command line. In this repositry, we generate these manifests for each of the products.
+We utilize Project [Hauler](https://github.com/hauler-dev/hauler) by [Rancher Government Solutions](https://github.com/rancherfederal) to collect, package, and distribute the assets. `Hauler` simplifies the airgap process, by representing assets as content and collections and allows users to easily fetch, store, package, and distribute with declarative manifests or the command line. In this repositry, we generate these manifests for each of the products.
 
 **Review the high level *[example use cases](examples)*!**
 
@@ -40,7 +40,7 @@ fetch -> validate -> save -> | <airgap> | -> load -> validate -> distribute
 ### Addons
 
 - [hauler/hauler](hauler/hauler/README.md) - provides the content manifest for Hauler
-  - currently supports: `Hauler: v1.0.4`
+  - currently supports: `Hauler: v1.0.6`
 - [hauler/helm](hauler/helm/README.md) - provides the content manifest for Helm
   - currently supports: `Helm: v3.15.3`
 - [hauler/cosign](hauler/cosign/README.md) - provides the content manifest for Cosign
@@ -55,6 +55,6 @@ fetch -> validate -> save -> | <airgap> | -> load -> validate -> distribute
 ## Hauler Installation
 
 ```bash
-# https://github.com/rancherfederal/hauler
+# https://github.com/hauler-dev/hauler
 curl -sfL https://get.hauler.dev | bash
 ```
