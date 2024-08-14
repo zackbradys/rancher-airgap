@@ -141,7 +141,7 @@ jobs:
       - name: Test/Lint RKE2
         run: |
           cd hauler/rke2
-          hauler store sync -f rancher-airgap-rke2.yaml --platform linux/amd64
+          hauler store sync -f rancher-airgap-rke2.yaml
           hauler store save -f rke2.tar.zst
           hauler store info
           ls -lh && rm -rf store rke2.tar.zst
@@ -149,7 +149,7 @@ jobs:
       - name: Test/Lint Rancher
         run: |
           cd hauler/rancher
-          hauler store sync -f rancher-airgap-rancher.yaml --platform linux/amd64
+          hauler store sync -f rancher-airgap-rancher.yaml
           hauler store save -f rancher.tar.zst
           hauler store info
           ls -lh && rm -rf store rancher.tar.zst
@@ -158,7 +158,7 @@ jobs:
         run: |
           cd hauler/rancher
           rm -rf store
-          hauler store sync -f rancher-airgap-rancher-minimal.yaml --platform linux/amd64
+          hauler store sync -f rancher-airgap-rancher-minimal.yaml
           hauler store save -f rancher-minimal.tar.zst
           hauler store info
           ls -lh && rm -rf store rancher-minimal.tar.zst
@@ -166,7 +166,7 @@ jobs:
       - name: Test/Lint Longhorn
         run: |
           cd hauler/longhorn
-          hauler store sync -f rancher-airgap-longhorn.yaml --platform linux/amd64
+          hauler store sync -f rancher-airgap-longhorn.yaml
           hauler store save -f longhorn.tar.zst
           hauler store info
           ls -lh && rm -rf store longhorn.tar.zst
@@ -174,7 +174,7 @@ jobs:
       - name: Test/Lint NeuVector
         run: |
           cd hauler/neuvector
-          hauler store sync -f rancher-airgap-neuvector.yaml --platform linux/amd64
+          hauler store sync -f rancher-airgap-neuvector.yaml
           hauler store save -f neuvector.tar.zst
           hauler store info
           ls -lh && rm -rf store neuvector.tar.zst
@@ -182,7 +182,7 @@ jobs:
       - name: Test/Lint Harvester
         run: |
           cd hauler/harvester
-          hauler store sync -f rancher-airgap-harvester.yaml --platform linux/amd64
+          hauler store sync -f rancher-airgap-harvester.yaml
           hauler store save -f harvester.tar.zst
           hauler store info
           ls -lh && rm -rf store harvester.tar.zst
@@ -190,7 +190,7 @@ jobs:
       - name: Test/Lint Gitea
         run: |
           cd hauler/gitea
-          hauler store sync -f rancher-airgap-gitea.yaml --platform linux/amd64
+          hauler store sync -f rancher-airgap-gitea.yaml
           hauler store save -f gitea.tar.zst
           hauler store info
           ls -lh && rm -rf store gitea.tar.zst
@@ -198,7 +198,7 @@ jobs:
       - name: Test/Lint KubeVip
         run: |
           cd hauler/kubevip
-          hauler store sync -f rancher-airgap-kubevip.yaml --platform linux/amd64
+          hauler store sync -f rancher-airgap-kubevip.yaml
           hauler store save -f kubevip.tar.zst
           hauler store info
           ls -lh && rm -rf store kubevip.tar.zst
