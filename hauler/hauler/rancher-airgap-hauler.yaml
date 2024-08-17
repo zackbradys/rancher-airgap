@@ -4,13 +4,13 @@ metadata:
   name: rancher-airgap-files-hauler
 spec:
   files:
-    - path: https://github.com/hauler-dev/hauler/releases/download/v1.0.6/hauler_1.0.6_linux_amd64.tar.gz
+    - path: https://github.com/hauler-dev/hauler/releases/download/v1.0.7/hauler_1.0.7_linux_amd64.tar.gz
       name: hauler-linux-amd64.tar.gz
-    - path: https://github.com/hauler-dev/hauler/releases/download/v1.0.6/hauler_1.0.6_linux_arm64.tar.gz
+    - path: https://github.com/hauler-dev/hauler/releases/download/v1.0.7/hauler_1.0.7_linux_arm64.tar.gz
       name: hauler-linux-arm64.tar.gz
-    - path: https://github.com/hauler-dev/hauler/releases/download/v1.0.6/hauler_1.0.6_windows_amd64.tar.gz
+    - path: https://github.com/hauler-dev/hauler/releases/download/v1.0.7/hauler_1.0.7_windows_amd64.tar.gz
       name: hauler-windows-amd64.tar.gz
-    - path: https://github.com/hauler-dev/hauler/releases/download/v1.0.6/hauler_1.0.6_windows_arm64.tar.gz
+    - path: https://github.com/hauler-dev/hauler/releases/download/v1.0.7/hauler_1.0.7_windows_arm64.tar.gz
       name: hauler-windows-arm64.tar.gz
 ---
 apiVersion: content.hauler.cattle.io/v1alpha1
@@ -21,7 +21,7 @@ spec:
   charts:
     - name: hauler-helm
       repoURL: oci://ghcr.io/hauler-dev
-      version: 1.0.6
+      version: 1.0.7
 ---
 apiVersion: content.hauler.cattle.io/v1alpha1
 kind: Images
@@ -29,5 +29,5 @@ metadata:
   name: rancher-airgap-images-hauler
 spec:
   images:
-    - name: ghcr.io/hauler-dev/hauler:v1.0.6
-    - name: ghcr.io/hauler-dev/hauler-debug:v1.0.6
+    - name: ghcr.io/hauler-dev/hauler:v1.0.7
+    - name: ghcr.io/hauler-dev/hauler-debug:v1.0.7
