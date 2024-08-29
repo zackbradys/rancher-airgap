@@ -22,7 +22,8 @@ curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/haul
 curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/neuvector/rancher-airgap-neuvector.yaml
 # curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/harvester/rancher-airgap-harvester.yaml
 # curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/gitea/rancher-airgap-gitea.yaml
-# curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/kubevip/rancher-airgap-kubevip.yaml
+# curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/vault/rancher-airgap-vault.yaml
+curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/kubevip/rancher-airgap-kubevip.yaml
 curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/cosign/rancher-airgap-cosign.yaml
 curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/hauler/rancher-airgap-hauler.yaml
 curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/helm/rancher-airgap-helm.yaml
@@ -35,7 +36,8 @@ hauler store sync --store longhorn-store --platform linux/amd64 --files rancher-
 hauler store sync --store neuvector-store --platform linux/amd64 --files rancher-airgap-neuvector.yaml
 # hauler store sync --store harvester-store --platform linux/amd64 --files rancher-airgap-harvester.yaml
 # hauler store sync --store gitea-store --platform linux/amd64 --files rancher-airgap-gitea.yaml
-# hauler store sync --store kubevip-store --platform linux/amd64 --files rancher-airgap-kubevip.yaml
+# hauler store sync --store vault-store --platform linux/amd64 --files rancher-airgap-vault.yaml
+hauler store sync --store kubevip-store --platform linux/amd64 --files rancher-airgap-kubevip.yaml
 hauler store sync --store extras --files rancher-airgap-hauler.yaml
 hauler store sync --store extras --files rancher-airgap-helm.yaml
 hauler store sync --store extras --files rancher-airgap-cosign.yaml
@@ -48,7 +50,8 @@ hauler store save --store longhorn-store --filename rancher-airgap-longhorn.tar.
 hauler store save --store neuvector-store --filename rancher-airgap-neuvector.tar.zst
 # hauler store save --store harvester-store --filename rancher-airgap-harvester.tar.zst
 # hauler store save --store gitea-store --filename rancher-airgap-gitea.tar.zst
-# hauler store save --store kubevip-store --filename rancher-airgap-kubevip.tar.zst
+# hauler store save --store vault-store --filename rancher-airgap-vault.tar.zst
+hauler store save --store kubevip-store --filename rancher-airgap-kubevip.tar.zst
 hauler store save --store extras --filename rancher-airgap-extras.tar.zst
 
 ### Fetch Hauler Binary
@@ -126,7 +129,7 @@ Complete the following commands on the first server node in the cluster. You wil
 sudo su
 
 ### Set Variables
-export vRKE2=v1.28.12
+export vRKE2=v1.29.8
 export vPlatform=el9
 export registry=<FQDN or IP>:5000
 export fileserver=<FQDN or IP>:8080
@@ -232,7 +235,7 @@ Complete the following commands on the agent node(s) in the cluster. You will ne
 sudo su
 
 ### Set Variables
-export vRKE2=v1.28.12
+export vRKE2=v1.29.8
 export vPlatform=el9
 export registry=<FQDN or IP>:5000
 export fileserver=<FQDN or IP>:8080
