@@ -1,8 +1,9 @@
 name: rancher-airgap-workflow
 on:
-   push:
-     tags:
-       - '*'
+  workflow_dispatch:
+  push:
+    tags:
+      - '*'
 
 jobs:
   rancher-airgap-build:
@@ -10,87 +11,87 @@ jobs:
     runs-on: [self-hosted, linux, X64]
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: main
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Dependencies/Setup/Checks
         run: |
-          curl -sfL https://get.hauler.dev | sudo HAULER_INSTALL_DIR=/usr/bin bash
+          curl -sfL https://get.hauler.dev | sudo HAULER_VERSION=${{ secrets.HAULER_VERSION }} HAULER_INSTALL_DIR=/usr/bin bash
           hauler version
-          pwd && ls -lh
+          pwd && ls -laR
 
       - name: Build Hauler
         run: |
           sh hauler/scripts/hauler/hauler-hauler.sh
           mv /opt/hauler/hauler/rancher-airgap-hauler.yaml hauler/hauler/rancher-airgap-hauler.yaml
-          pwd && ls -la hauler/hauler
+          pwd && ls -laR hauler/hauler
 
       - name: Build Helm
         run: |
           sh hauler/scripts/helm/hauler-helm.sh
           mv /opt/hauler/helm/rancher-airgap-helm.yaml hauler/helm/rancher-airgap-helm.yaml
-          pwd && ls -la hauler/helm
+          pwd && ls -laR hauler/helm
 
       - name: Build Cosign
         run: |
           sh hauler/scripts/cosign/hauler-cosign.sh
           mv /opt/hauler/cosign/rancher-airgap-cosign.yaml hauler/cosign/rancher-airgap-cosign.yaml
-          pwd && ls -la hauler/cosign
+          pwd && ls -laR hauler/cosign
 
       - name: Build RKE2
         run: |
           sh hauler/scripts/rke2/hauler-rke2.sh
           mv /opt/hauler/rke2/rancher-airgap-rke2.yaml hauler/rke2/rancher-airgap-rke2.yaml
-          pwd && ls -la hauler/rke2
+          pwd && ls -laR hauler/rke2
 
       - name: Build Rancher
         run: |
           sh hauler/scripts/rancher/hauler-rancher.sh
           mv /opt/hauler/rancher/rancher-airgap-rancher.yaml hauler/rancher/rancher-airgap-rancher.yaml
-          pwd && ls -la hauler/rancher
+          pwd && ls -laR hauler/rancher
 
       - name: Build Rancher Minimal
         run: |
           sh hauler/scripts/rancher/hauler-rancher-minimal.sh
           mv /opt/hauler/rancher-minimal/rancher-airgap-rancher-minimal.yaml hauler/rancher/rancher-airgap-rancher-minimal.yaml
-          pwd && ls -la hauler/rancher
+          pwd && ls -laR hauler/rancher
 
       - name: Build Longhorn
         run: |
           sh hauler/scripts/longhorn/hauler-longhorn.sh
           mv /opt/hauler/longhorn/rancher-airgap-longhorn.yaml hauler/longhorn/rancher-airgap-longhorn.yaml
-          pwd && ls -la hauler/longhorn
+          pwd && ls -laR hauler/longhorn
 
       - name: Build NeuVector
         run: |
           sh hauler/scripts/neuvector/hauler-neuvector.sh
           mv /opt/hauler/neuvector/rancher-airgap-neuvector.yaml hauler/neuvector/rancher-airgap-neuvector.yaml
-          pwd && ls -la hauler/neuvector
+          pwd && ls -laR hauler/neuvector
 
       - name: Build Harvester
         run: |
           sh hauler/scripts/harvester/hauler-harvester.sh
           mv /opt/hauler/harvester/rancher-airgap-harvester.yaml hauler/harvester/rancher-airgap-harvester.yaml
-          pwd && ls -la hauler/harvester
+          pwd && ls -laR hauler/harvester
 
       - name: Build Gitea
         run: |
           sh hauler/scripts/gitea/hauler-gitea.sh
           mv /opt/hauler/gitea/rancher-airgap-gitea.yaml hauler/gitea/rancher-airgap-gitea.yaml
-          pwd && ls -la hauler/gitea
+          pwd && ls -laR hauler/gitea
 
       - name: Build KubeVip
         run: |
           sh hauler/scripts/kubevip/hauler-kubevip.sh
           mv /opt/hauler/kubevip/rancher-airgap-kubevip.yaml hauler/kubevip/rancher-airgap-kubevip.yaml
-          pwd && ls -la hauler/kubevip
+          pwd && ls -laR hauler/kubevip
 
       - name: Commit and Push Repository
         continue-on-error: true
         run: |
-          pwd && ls -la
+          pwd && ls -laR
           git status
           git config --global user.name "${GITHUB_ACTOR}"
           git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
@@ -104,7 +105,7 @@ jobs:
     needs: [rancher-airgap-build]
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: main
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -112,96 +113,104 @@ jobs:
       - name: Dependencies/Setup/Checks
         run: |
           hauler version
-          pwd && ls -lh
+          pwd && ls -laR
 
       - name: Test/Lint Hauler
         run: |
           cd hauler/hauler
-          hauler store sync -f rancher-airgap-hauler.yaml
-          hauler store save -f hauler.tar.zst
+          time hauler store sync --files rancher-airgap-hauler.yaml
+          time hauler store save --filename hauler.tar.zst
           hauler store info
-          ls -lh && rm -rf store hauler.tar.zst
+          ls -laR && rm -rf store hauler.tar.zst
 
       - name: Test/Lint Helm
         run: |
           cd hauler/helm
-          hauler store sync -f rancher-airgap-helm.yaml
-          hauler store save -f helm.tar.zst
+          time hauler store sync --files rancher-airgap-helm.yaml
+          time hauler store save --filename helm.tar.zst
           hauler store info
-          ls -lh && rm -rf store helm.tar.zst
+          ls -laR && rm -rf store helm.tar.zst
 
       - name: Test/Lint Cosign
         run: |
           cd hauler/cosign
-          hauler store sync -f rancher-airgap-cosign.yaml
-          hauler store save -f cosign.tar.zst
+          time hauler store sync --files rancher-airgap-cosign.yaml
+          time hauler store save --filename cosign.tar.zst
           hauler store info
-          ls -lh && rm -rf store cosign.tar.zst
+          ls -laR && rm -rf store cosign.tar.zst
 
       - name: Test/Lint RKE2
         run: |
           cd hauler/rke2
-          hauler store sync -f rancher-airgap-rke2.yaml
-          hauler store save -f rke2.tar.zst
+          time hauler store sync --files rancher-airgap-rke2.yaml
+          time hauler store save --filename rke2.tar.zst
           hauler store info
-          ls -lh && rm -rf store rke2.tar.zst
+          ls -laR && rm -rf store rke2.tar.zst
 
       - name: Test/Lint Rancher
         run: |
           cd hauler/rancher
-          hauler store sync -f rancher-airgap-rancher.yaml
-          hauler store save -f rancher.tar.zst
+          time hauler store sync --files rancher-airgap-rancher.yaml
+          time hauler store save --filename rancher.tar.zst
           hauler store info
-          ls -lh && rm -rf store rancher.tar.zst
+          ls -laR && rm -rf store rancher.tar.zst
 
       - name: Test/Lint Rancher Minimal
         run: |
           cd hauler/rancher
           rm -rf store
-          hauler store sync -f rancher-airgap-rancher-minimal.yaml
-          hauler store save -f rancher-minimal.tar.zst
+          time hauler store sync --files rancher-airgap-rancher-minimal.yaml
+          time hauler store save --filename rancher-minimal.tar.zst
           hauler store info
-          ls -lh && rm -rf store rancher-minimal.tar.zst
+          ls -laR && rm -rf store rancher-minimal.tar.zst
 
       - name: Test/Lint Longhorn
         run: |
           cd hauler/longhorn
-          hauler store sync -f rancher-airgap-longhorn.yaml
-          hauler store save -f longhorn.tar.zst
+          time hauler store sync --files rancher-airgap-longhorn.yaml
+          time hauler store save --filename longhorn.tar.zst
           hauler store info
-          ls -lh && rm -rf store longhorn.tar.zst
+          ls -laR && rm -rf store longhorn.tar.zst
 
       - name: Test/Lint NeuVector
         run: |
           cd hauler/neuvector
-          hauler store sync -f rancher-airgap-neuvector.yaml
-          hauler store save -f neuvector.tar.zst
+          time hauler store sync --files rancher-airgap-neuvector.yaml
+          time hauler store save --filename neuvector.tar.zst
           hauler store info
-          ls -lh && rm -rf store neuvector.tar.zst
+          ls -laR && rm -rf store neuvector.tar.zst
 
       - name: Test/Lint Harvester
         run: |
           cd hauler/harvester
-          hauler store sync -f rancher-airgap-harvester.yaml
-          hauler store save -f harvester.tar.zst
+          time hauler store sync --files rancher-airgap-harvester.yaml
+          time hauler store save --filename harvester.tar.zst
           hauler store info
-          ls -lh && rm -rf store harvester.tar.zst
+          ls -laR && rm -rf store harvester.tar.zst
 
       - name: Test/Lint Gitea
         run: |
           cd hauler/gitea
-          hauler store sync -f rancher-airgap-gitea.yaml
-          hauler store save -f gitea.tar.zst
+          time hauler store sync --files rancher-airgap-gitea.yaml
+          time hauler store save --filename gitea.tar.zst
           hauler store info
-          ls -lh && rm -rf store gitea.tar.zst
+          ls -laR && rm -rf store gitea.tar.zst
 
       - name: Test/Lint KubeVip
         run: |
           cd hauler/kubevip
-          hauler store sync -f rancher-airgap-kubevip.yaml
-          hauler store save -f kubevip.tar.zst
+          time hauler store sync --files rancher-airgap-kubevip.yaml
+          time hauler store save --filename kubevip.tar.zst
           hauler store info
-          ls -lh && rm -rf store kubevip.tar.zst
+          ls -laR && rm -rf store kubevip.tar.zst
+
+      - name: Test/Lint Vault
+        run: |
+          cd hauler/vault
+          time hauler store sync --files rancher-airgap-vault.yaml
+          time hauler store save --filename vault.tar.zst
+          hauler store info
+          ls -laR && rm -rf store vault.tar.zst
 
   rancher-airgap-release:
     name: Rancher Airgap - Release Job
@@ -209,7 +218,7 @@ jobs:
     needs: [rancher-airgap-build, rancher-airgap-testing]
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: main
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -217,7 +226,7 @@ jobs:
       - name: Dependencies/Setup/Checks
         run: |
           hauler version
-          pwd && ls -la
+          pwd && ls -laR
 
       - name: Create Release Notes
         run: |
