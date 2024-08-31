@@ -18,7 +18,7 @@ jobs:
 
       - name: Dependencies/Setup/Checks
         run: |
-          curl -sfL https://get.hauler.dev | sudo HAULER_VERSION=${{ secrets.HAULER_VERSION }} HAULER_INSTALL_DIR=/usr/bin bash
+          curl -sfL https://get.hauler.dev | sudo HAULER_VERSION=${HaulerVersion} HAULER_INSTALL_DIR=/usr/bin bash
           hauler version
           pwd && ls -laR
 
@@ -245,3 +245,201 @@ jobs:
           draft: false
           prerelease: false
           body_path: RELEASE-NOTES.MD
+
+  rancher-airgap-private:
+    name: Rancher Airgap - Private Job
+    runs-on: [self-hosted, linux, X64]
+    needs: [rancher-airgap-build]
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Dependencies/Setup/Checks
+        run: |
+          hauler version
+          pwd && ls -lh
+
+      - name: Set Up Variables
+        run: |
+          RancherAirgapVersion=$(curl -sI https://github.com/zackbradys/rancher-airgap/releases/latest | grep -i location | sed -e 's#.*tag/v##' -e 's/^[[:space:]]*//g' -e 's/[[:space:]]*$//g')
+
+      - name: Fetch Public Key
+        run: curl -sfOL https://raw.githubusercontent.com/rancherfederal/carbide-releases/main/carbide-key.pub
+
+      - name: Authenticate to Private Registry
+        run: hauler login ${Registry} --username ${RegistryUsername} --pasword ${RegistryPassword}
+
+      - name: Set Up AWS CLI and Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: ${{ secrets.AWS_REGION }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+      - name: Build Hauler
+        run: |
+          cd hauler/hauler
+          time hauler store sync --files rancher-airgap-hauler.yaml
+          time hauler store save --filename hauler-carbide.tar.zst
+
+      - name: Build Helm
+        run: |
+          cd hauler/helm
+          time hauler store sync --files rancher-airgap-helm.yaml
+          time hauler store save --filename helm-carbide.tar.zst
+
+      - name: Build Cosign
+        run: |
+          cd hauler/cosign
+          time hauler store sync --files rancher-airgap-cosign.yaml
+          time hauler store save --filename cosign-carbide.tar.zst
+
+      - name: Build RKE2
+        run: |
+          cd hauler/rke2
+          time hauler store sync --platform linux/amd64 --registry ${Registry} --key carbide-key.pub --files rancher-airgap-rke2.yaml
+          time hauler store save --filename rke2-carbide.tar.zst
+
+      - name: Build Rancher
+        run: |
+          cd hauler/rancher
+          time hauler store sync --platform linux/amd64 --registry ${Registry} --key carbide-key.pub --files rancher-airgap-rancher.yaml
+          time hauler store save --filename rancher-carbide.tar.zst
+
+      - name: Build Rancher Minimal
+        run: |
+          cd hauler/rancher
+          rm -rf store
+          time hauler store sync --platform linux/amd64 --registry ${Registry} --key carbide-key.pub --files rancher-airgap-rancher-minimal.yaml
+          time hauler store save --filename rancher-minimal-carbide.tar.zst
+
+      - name: Build Longhorn
+        run: |
+          cd hauler/longhorn
+          time hauler store sync --platform linux/amd64 --registry ${Registry} --key carbide-key.pub --files rancher-airgap-longhorn.yaml
+          time hauler store save --filename longhorn-carbide.tar.zst
+
+      - name: Build NeuVector
+        run: |
+          cd hauler/neuvector
+          time hauler store sync --platform linux/amd64 --registry ${Registry} --key carbide-key.pub --files rancher-airgap-neuvector.yaml
+          time hauler store save --filename neuvector-carbide.tar.zst
+
+      - name: Build Harvester
+        run: |
+          cd hauler/harvester
+          time hauler store sync --platform linux/amd64 --registry ${Registry} --key carbide-key.pub --files rancher-airgap-harvester.yaml
+          time hauler store save --filename harvester-carbide.tar.zst
+
+      - name: Build Gitea
+        run: |
+          cd hauler/gitea
+          time hauler store sync --platform linux/amd64 --registry ${Registry} --key carbide-key.pub --files rancher-airgap-gitea.yaml
+          time hauler store save --filename gitea-carbide.tar.zst
+
+      - name: Build Kubevip
+        run: |
+          cd hauler/kubevip
+          time hauler store sync --platform linux/amd64 --registry ${Registry} --key carbide-key.pub --files rancher-airgap-kubevip.yaml
+          time hauler store save --filename kubevip-carbide.tar.zst
+
+      - name: Build Vault
+        run: |
+          cd hauler/vault
+          time hauler store sync --platform linux/amd64 --registry ${Registry} --key carbide-key.pub --files rancher-airgap-kubevip.yaml
+          time hauler store save --filename vault-carbide.tar.zst
+
+      - name: Fetch Hauler Binaries
+        run: |
+          mkdir hauler/binaries
+          cd hauler/binaries
+          curl -sfOL https://github.com/hauler-dev/hauler/releases/download/v${HaulerVersion}/hauler_${HaulerVersion}_checksums.txt
+          curl -sfOL https://github.com/hauler-dev/hauler/releases/download/v${HaulerVersion}/hauler_${HaulerVersion}_darwin_all.tar.gz
+          curl -sfOL https://github.com/hauler-dev/hauler/releases/download/v${HaulerVersion}/hauler_${HaulerVersion}_darwin_amd64.tar.gz
+          curl -sfOL https://github.com/hauler-dev/hauler/releases/download/v${HaulerVersion}/hauler_${HaulerVersion}_darwin_arm64.tar.gz
+          curl -sfOL https://github.com/hauler-dev/hauler/releases/download/v${HaulerVersion}/hauler_${HaulerVersion}_linux_amd64.tar.gz
+          curl -sfOL https://github.com/hauler-dev/hauler/releases/download/v${HaulerVersion}/hauler_${HaulerVersion}_linux_arm64.tar.gz
+          curl -sfOL https://github.com/hauler-dev/hauler/releases/download/v${HaulerVersion}/hauler_${HaulerVersion}_windows_amd64.tar.gz
+          curl -sfOL https://github.com/hauler-dev/hauler/releases/download/v${HaulerVersion}/hauler_${HaulerVersion}_windows_arm64.tar.gz
+
+      - name: Package Hauler Binaries
+        run: |
+          for file in *.tar.gz; do
+            folder_name="${file%.tar.gz}"
+
+            mkdir -p "$folder_name"
+
+            tar -xzf "$file" -C "$folder_name"
+
+            rm -f "$file"
+          done
+          zip -r hauler-binaries.zip ./*_checksums.txt */
+
+      - name: Prepare AWS S3 and Repository
+        run: |
+          cd ${{ github.workspace }}
+          aws s3 ls s3://carbide/
+          ls -lh
+
+      - name: Upload Hauler
+        run: |
+          aws s3 cp hauler/hauler/hauler-cabide.tar.zst s3://carbide/${{ github.ref }}/
+          aws s3 ls s3://carbide/${{ github.ref }}
+
+      - name: Upload Helm
+        run: |
+          aws s3 cp hauler/helm/helm-carbide.tar.zst s3://carbide/${{ github.ref }}/
+          aws s3 ls s3://carbide/${{ github.ref }}
+
+      - name: Upload Cosign
+        run: |
+          aws s3 cp hauler/cosign/hauler s3://carbide/${{ github.ref }}/
+          aws s3 ls s3://carbide/${{ github.ref }}
+
+      - name: Upload Rancher
+        run: |
+          aws s3 cp hauler/rancher/hauler s3://carbide/${{ github.ref }}/
+          aws s3 ls s3://carbide/${{ github.ref }}
+
+      - name: Upload Rancher Minimal
+        run: |
+          aws s3 cp hauler/rancher/rancher-minimal-carbide.tar.zst s3://carbide/${{ github.ref }}/
+          aws s3 ls s3://carbide/${{ github.ref }}
+
+      - name: Upload Longhorn
+        run: |
+          aws s3 cp hauler/longhorn/longhorn-carbide.tar.zst s3://carbide/${{ github.ref }}/
+          aws s3 ls s3://carbide/${{ github.ref }}
+
+      - name: Upload NeuVector
+        run: |
+          aws s3 cp hauler/neuvector/neuvector-carbide.tar.zst s3://carbide/${{ github.ref }}/
+          aws s3 ls s3://carbide/${{ github.ref }}
+
+      - name: Upload Harvester
+        run: |
+          aws s3 cp hauler/harvester/harvester-carbide.tar.zst s3://carbide/${{ github.ref }}/
+          aws s3 ls s3://carbide/${{ github.ref }}
+
+      - name: Upload Gitea
+        run: |
+          aws s3 cp hauler/gitea/gitea-carbide.tar.zst s3://carbide/${{ github.ref }}/
+          aws s3 ls s3://carbide/${{ github.ref }}
+
+      - name: Upload KubeVip
+        run: |
+          aws s3 cp hauler/kubevip/kubevip-carbide.tar.zst s3://carbide/${{ github.ref }}/
+          aws s3 ls s3://carbide/${{ github.ref }}
+
+      - name: Upload Vault
+        run: |
+          aws s3 cp haulter/vault/vault-carbide.tar.zst s3://carbide/${{ github.ref }}/
+          aws s3 ls s3://carbide/${{ github.ref }}
+
+      - name: Upload Hauler Binaries
+        run: |
+          aws s3 cp hauler/binaries/hauler-binaries.zip s3://carbide/${{ github.ref }}/
+          aws s3 ls s3://carbide/${{ github.ref }}
