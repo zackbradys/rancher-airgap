@@ -18,6 +18,7 @@ jobs:
 
       - name: Dependencies/Setup/Checks
         run: |
+          source ~/.bashrc
           curl -sfL https://get.hauler.dev | sudo HAULER_VERSION=${HaulerVersion} HAULER_INSTALL_DIR=/usr/bin bash
           hauler version
           pwd && ls -laR
@@ -88,6 +89,12 @@ jobs:
           mv /opt/hauler/kubevip/rancher-airgap-kubevip.yaml hauler/kubevip/rancher-airgap-kubevip.yaml
           pwd && ls -laR hauler/kubevip
 
+      - name: Build Vault
+        run: |
+          sh hauler/scripts/vault/hauler-vault.sh
+          mv /opt/hauler/vault/rancher-airgap-vault.yaml hauler/vault/rancher-airgap-vault.yaml
+          pwd && ls -laR hauler/vault
+
       - name: Commit and Push Repository
         continue-on-error: true
         run: |
@@ -112,6 +119,7 @@ jobs:
 
       - name: Dependencies/Setup/Checks
         run: |
+          source ~/.bashrc
           hauler version
           pwd && ls -laR
 
@@ -225,6 +233,7 @@ jobs:
 
       - name: Dependencies/Setup/Checks
         run: |
+          source ~/.bashrc
           hauler version
           pwd && ls -laR
 
@@ -259,6 +268,7 @@ jobs:
 
       - name: Dependencies/Setup/Checks
         run: |
+          source ~/.bashrc
           hauler version
           pwd && ls -lh
 
