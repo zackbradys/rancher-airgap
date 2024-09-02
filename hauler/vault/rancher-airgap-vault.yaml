@@ -1,0 +1,19 @@
+apiVersion: content.hauler.cattle.io/v1alpha1
+kind: Charts
+metadata:
+  name: rancher-airgap-charts-vault
+spec:
+  charts:
+    - name: vault
+      repoURL: https://helm.releases.hashicorp.com
+      version: 0.28.1
+---
+apiVersion: content.hauler.cattle.io/v1alpha1
+kind: Images
+metadata:
+  name: rancher-airgap-images-vault
+spec:
+  images:
+    - name: hashicorp/vault-k8s:1.4.2
+    - name: hashicorp/vault:1.17.2
+    - name: hashicorp/vault:1.17.2
