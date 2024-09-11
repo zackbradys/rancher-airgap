@@ -4,6 +4,8 @@ metadata:
   name: rancher-airgap-files-rke2
 spec:
   files:
+    - path: https://raw.githubusercontent.com/rancher/rke2/release-1.29/install.sh
+      name: install.sh
     - path: https://github.com/rancher/rke2/releases/download/v1.29.8%2Brke2r1/rke2-images.linux-amd64.tar.zst
       name: rke2-images.linux-amd64.tar.zst
     - path: https://github.com/rancher/rke2/releases/download/v1.29.8%2Brke2r1/rke2.linux-amd64.tar.gz
@@ -12,8 +14,14 @@ spec:
       name: sha256sum-amd64.txt
     - path: https://github.com/rancher/rke2/releases/download/v1.29.8%2Brke2r1/rke2.linux-amd64
       name: rke2.linux-amd64
-    - path: https://raw.githubusercontent.com/rancher/rke2/master/install.sh
-      name: install.sh
+    - path: https://github.com/rancher/rke2/releases/download/v1.29.8%2Brke2r1/rke2-images.linux-arm64.tar.zst
+      name: rke2-images.linux-arm64.tar.zst
+    - path: https://github.com/rancher/rke2/releases/download/v1.29.8%2Brke2r1/rke2.linux-arm64.tar.gz
+      name: rke2.linux-arm64.tar.gz
+    - path: https://github.com/rancher/rke2/releases/download/v1.29.8%2Brke2r1/sha256sum-arm64.txt
+      name: sha256sum-arm64.txt
+    - path: https://github.com/rancher/rke2/releases/download/v1.29.8%2Brke2r1/rke2.linux-arm64
+      name: rke2.linux-arm64
     - path: https://github.com/rancher/rke2-selinux/releases/download/v0.18.stable.1/rke2-selinux-0.18-1.el9.noarch.rpm
       name: rke2-selinux-0.18-1.el9.noarch.rpm
     - path: https://github.com/rancher/rke2-selinux/releases/download/v0.18.stable.1/rke2-selinux-0.18-1.el8.noarch.rpm
