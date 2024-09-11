@@ -35,7 +35,7 @@ fetch -> validate -> save -> | <airgap> | -> load -> validate -> distribute
 - [hauler/neuvector](hauler/neuvector/README.md) - provides the content manifest for Rancher NeuVector
   - currently supports: `NeuVector: v5.3.4`
 - [hauler/harvester](hauler/harvester/README.md) - provides the content manifest for Rancher Harvester
-  - currently supports: `Harvester: v1.3.1`
+  - currently supports: `Harvester: v1.3.2`
 
 ### Addons
 

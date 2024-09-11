@@ -1,5 +1,5 @@
 ### Set Variables
-export vHarvester=1.3.1
+export vHarvester=1.3.2
 
 ### Setup Working Directory
 rm -rf /opt/hauler/harvester
@@ -13,6 +13,9 @@ harvesterImagesAMD64=$(curl -sSfL https://github.com/harvester/harvester/release
 ### Download Harvester Images and Modify the List
 ### https://github.com/harvester/harvester
 harvesterImagesARM64=$(curl -sSfL https://github.com/harvester/harvester/releases/download/v${vHarvester}/harvester-images-list-arm64.txt | sed -e "/^\s*#/d" -e "/^$/d" -e "s/^/    - name: /" -e "s/docker\.io\///g")
+
+### Combine Harvester Image Lists
+harvesterImages=$(echo -e "${harvesterImagesAMD64}\n${harvesterImagesARM64}" | sort | uniq)
 
 ### Create Hauler Manifest
 cat << EOF >> /opt/hauler/harvester/rancher-airgap-harvester.yaml
@@ -57,8 +60,7 @@ metadata:
   name: rancher-airgap-images-harvester
 spec:
   images:
-${harvesterImagesAMD64}
-${harvesterImagesARM64}
+${harvesterImages}
 EOF
 
 ### Add the Hauler Manifest
