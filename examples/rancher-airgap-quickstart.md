@@ -433,7 +433,7 @@ sudo su
 
 ### Set Variables
 export DOMAIN=<example.com>
-export vLonghorn=1.7.0
+export vLonghorn=1.7.1
 export registry=<FQDN or IP>:5000
 export fileserver=<FQDN or IP>:8080
 
