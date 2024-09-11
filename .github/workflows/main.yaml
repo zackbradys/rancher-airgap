@@ -239,7 +239,7 @@ jobs:
 
       - name: Create Release Notes
         run: |
-          echo -e "# Rancher Airgap Release ${GITHUB_REF##*/}\nWe are excited about this latest release of Rancher Airgap! Please review all of the releases notes below and always ensure to download the correct assets. Please utilize GitHub Issues, Forks, and Pull Requests to submit any issues, updates, or fixes! Thank you.\n\nThese Release Notes were generated automatically by [github-actions](https://github.com/apps/github-actions).\n\n## Upgrade Steps\n* No upgrade steps for this release.\n\n## Breaking Changes\n* No breaking changes for this release.\n\n## Features and Improvements\n* No features or improvements for this release.\n\n## Bug Fixes and Additional Notes\n* No bug fixes or additional notes for this release.\n\n## Release Assets for the Rancher Airgap\n\n### Hauler (by Rancher Government Solutions)\n* **Hauler Manifest ->** [rancher-airgap-hauler.yaml](https://github.com/zackbradys/rancher-airgap/blob/main/hauler/hauler/rancher-airgap-hauler.yaml)\n* \`curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/hauler/rancher-airgap-hauler.yaml\`\n\n### Rancher Kubernetes Engine 2 (by Rancher)\n* **Hauler Manifest ->** [rancher-airgap-rke2.yaml](https://github.com/zackbradys/rancher-airgap/blob/main/hauler/rke2/rancher-airgap-rke2.yaml)\n* \`curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/rke2/rancher-airgap-rke2.yaml\`\n\n### Rancher Multi-Cluster-Manager (by Rancher)\n* **Hauler Manifest ->** [rancher-airgap-rancher.yaml](https://github.com/zackbradys/rancher-airgap/blob/main/hauler/rancher/rancher-airgap-rancher.yaml)\n* \`curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/rancher/rancher-airgap-rancher.yaml\`\n* **(Minimal) Hauler Manifest ->** [rancher-airgap-rancher-minimal.yaml](https://github.com/zackbradys/rancher-airgap/blob/main/hauler/rancher/rancher-airgap-rancher-minimal.yaml)\n* \`curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/rancher/rancher-airgap-rancher-minimal.yaml\`\n\n### Rancher Longhorn (by Rancher)\n* **Hauler Manifest ->** [rancher-airgap-longhorn.yaml](https://github.com/zackbradys/rancher-airgap/blob/main/hauler/longhorn/rancher-airgap-longhorn.yaml)\n* \`curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/longhorn/rancher-airgap-longhorn.yaml\`\n\n### Rancher NeuVector (by Rancher)\n* **Hauler Manifest ->** [rancher-airgap-neuvector.yaml](https://github.com/zackbradys/rancher-airgap/blob/main/hauler/neuvector/rancher-airgap-neuvector.yaml)\n* \`curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/neuvector/rancher-airgap-neuvector.yaml\`\n\n### Rancher Harvester (by Rancher)\n* **Hauler Manifest ->** [rancher-airgap-harvester.yaml](https://github.com/zackbradys/rancher-airgap/blob/main/hauler/harvester/rancher-airgap-harvester.yaml)\n* \`curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/harvester/rancher-airgap-harvester.yaml\`\n\n### Helm (by the CNCF)\n* **Hauler Manifest ->** [rancher-airgap-helm.yaml](https://github.com/zackbradys/rancher-airgap/blob/main/hauler/helm/rancher-airgap-helm.yaml)\n* \`curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/helm/rancher-airgap-helm.yaml\`\n\n### Cosign (by Sigstore)\n* **Hauler Manifest ->** [rancher-airgap-cosign.yaml](https://github.com/zackbradys/rancher-airgap/blob/main/hauler/cosign/rancher-airgap-cosign.yaml)\n* \`curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/cosign/rancher-airgap-cosign.yaml\`\n\n### Gitea (by the CNCF)\n* **Hauler Manifest ->** [rancher-airgap-gitea.yaml](https://github.com/zackbradys/rancher-airgap/blob/main/hauler/gitea/rancher-airgap-gitea.yaml)\n* \`curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/gitea/rancher-airgap-gitea.yaml\`\n\n### KubeVip (by the CNCF)\n* **Hauler Manifest ->** [rancher-airgap-kubevip.yaml](https://github.com/zackbradys/rancher-airgap/blob/main/hauler/kubevip/rancher-airgap-kubevip.yaml)\n* \`curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/kubevip/rancher-airgap-kubevip.yaml\`\n\n### Vault (by HashiCorp)\n* **Hauler Manifest ->** [rancher-airgap-vault.yaml](https://github.com/zackbradys/rancher-airgap/blob/main/hauler/vault/rancher-airgap-vault.yaml)\n* \`curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/vault/rancher-airgap-vault.yaml\`" > RELEASE-NOTES.MD
+          echo -e "# Rancher Airgap Release ${{ github.ref_name }}\nWe are excited about this latest release of Rancher Airgap! Please review all of the releases notes below and always ensure to download the correct assets. Please utilize GitHub Issues, Forks, and Pull Requests to submit any issues, updates, or fixes! Thank you.\n\nThese Release Notes were generated automatically by [github-actions](https://github.com/apps/github-actions).\n\n## Upgrade Steps\n* No upgrade steps for this release.\n\n## Breaking Changes\n* No breaking changes for this release.\n\n## Features and Improvements\n* No features or improvements for this release.\n\n## Bug Fixes and Additional Notes\n* No bug fixes or additional notes for this release.\n\n## Release Assets for the Rancher Airgap\n\n### Hauler (by Rancher Government Solutions)\n* **Hauler Manifest ->** [rancher-airgap-hauler.yaml](https://github.com/zackbradys/rancher-airgap/blob/main/hauler/hauler/rancher-airgap-hauler.yaml)\n* \`curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/hauler/rancher-airgap-hauler.yaml\`\n\n### Rancher Kubernetes Engine 2 (by Rancher)\n* **Hauler Manifest ->** [rancher-airgap-rke2.yaml](https://github.com/zackbradys/rancher-airgap/blob/main/hauler/rke2/rancher-airgap-rke2.yaml)\n* \`curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/rke2/rancher-airgap-rke2.yaml\`\n\n### Rancher Multi-Cluster-Manager (by Rancher)\n* **Hauler Manifest ->** [rancher-airgap-rancher.yaml](https://github.com/zackbradys/rancher-airgap/blob/main/hauler/rancher/rancher-airgap-rancher.yaml)\n* \`curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/rancher/rancher-airgap-rancher.yaml\`\n* **(Minimal) Hauler Manifest ->** [rancher-airgap-rancher-minimal.yaml](https://github.com/zackbradys/rancher-airgap/blob/main/hauler/rancher/rancher-airgap-rancher-minimal.yaml)\n* \`curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/rancher/rancher-airgap-rancher-minimal.yaml\`\n\n### Rancher Longhorn (by Rancher)\n* **Hauler Manifest ->** [rancher-airgap-longhorn.yaml](https://github.com/zackbradys/rancher-airgap/blob/main/hauler/longhorn/rancher-airgap-longhorn.yaml)\n* \`curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/longhorn/rancher-airgap-longhorn.yaml\`\n\n### Rancher NeuVector (by Rancher)\n* **Hauler Manifest ->** [rancher-airgap-neuvector.yaml](https://github.com/zackbradys/rancher-airgap/blob/main/hauler/neuvector/rancher-airgap-neuvector.yaml)\n* \`curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/neuvector/rancher-airgap-neuvector.yaml\`\n\n### Rancher Harvester (by Rancher)\n* **Hauler Manifest ->** [rancher-airgap-harvester.yaml](https://github.com/zackbradys/rancher-airgap/blob/main/hauler/harvester/rancher-airgap-harvester.yaml)\n* \`curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/harvester/rancher-airgap-harvester.yaml\`\n\n### Helm (by the CNCF)\n* **Hauler Manifest ->** [rancher-airgap-helm.yaml](https://github.com/zackbradys/rancher-airgap/blob/main/hauler/helm/rancher-airgap-helm.yaml)\n* \`curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/helm/rancher-airgap-helm.yaml\`\n\n### Cosign (by Sigstore)\n* **Hauler Manifest ->** [rancher-airgap-cosign.yaml](https://github.com/zackbradys/rancher-airgap/blob/main/hauler/cosign/rancher-airgap-cosign.yaml)\n* \`curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/cosign/rancher-airgap-cosign.yaml\`\n\n### Gitea (by the CNCF)\n* **Hauler Manifest ->** [rancher-airgap-gitea.yaml](https://github.com/zackbradys/rancher-airgap/blob/main/hauler/gitea/rancher-airgap-gitea.yaml)\n* \`curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/gitea/rancher-airgap-gitea.yaml\`\n\n### KubeVip (by the CNCF)\n* **Hauler Manifest ->** [rancher-airgap-kubevip.yaml](https://github.com/zackbradys/rancher-airgap/blob/main/hauler/kubevip/rancher-airgap-kubevip.yaml)\n* \`curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/kubevip/rancher-airgap-kubevip.yaml\`\n\n### Vault (by HashiCorp)\n* **Hauler Manifest ->** [rancher-airgap-vault.yaml](https://github.com/zackbradys/rancher-airgap/blob/main/hauler/vault/rancher-airgap-vault.yaml)\n* \`curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/vault/rancher-airgap-vault.yaml\`" > RELEASE-NOTES.MD
           echo "Previewing Release Notes"
           cat RELEASE-NOTES.MD
 
@@ -293,101 +293,77 @@ jobs:
           cd hauler/hauler && source ~/.bashrc
           time hauler store sync --files rancher-airgap-hauler.yaml
           time hauler store save --filename hauler-carbide.tar.zst
-          aws s3 cp hauler-carbide.tar.zst s3://carbide/${{ github.ref }}/
-          aws s3 ls s3://carbide/${{ github.ref }}
 
       - name: Build/Upload Helm
         run: |
           cd hauler/helm && source ~/.bashrc
           time hauler store sync --files rancher-airgap-helm.yaml
           time hauler store save --filename helm-carbide.tar.zst
-          aws s3 cp helm-carbide.tar.zst s3://carbide/${{ github.ref }}/
-          aws s3 ls s3://carbide/${{ github.ref }}
 
       - name: Build/Upload Cosign
         run: |
           cd hauler/cosign && source ~/.bashrc
           time hauler store sync --files rancher-airgap-cosign.yaml
           time hauler store save --filename cosign-carbide.tar.zst
-          aws s3 cp cosign-carbide.tar.zst s3://carbide/${{ github.ref }}/
-          aws s3 ls s3://carbide/${{ github.ref }}
 
       - name: Build/Upload RKE2
         run: |
           cd hauler/rke2 && source ~/.bashrc
-          time hauler store sync --registry ${Registry} --key ../../carbide-key.pub --platform linux/amd64 --files rancher-airgap-rke2.yaml
+          time hauler store sync --registry ${Registry} --key ../../carbide-key.pub --files rancher-airgap-rke2.yaml
           time hauler store save --filename rke2-carbide.tar.zst
-          aws s3 cp rke2-carbide.tar.zst s3://carbide/${{ github.ref }}/
-          aws s3 ls s3://carbide/${{ github.ref }}
 
       - name: Build/Upload Rancher
         run: |
           cd hauler/rancher && source ~/.bashrc
-          time hauler store sync --registry ${Registry} --key ../../carbide-key.pub --platform linux/amd64 --files rancher-airgap-rancher.yaml
+          time hauler store sync --registry ${Registry} --key ../../carbide-key.pub --files rancher-airgap-rancher.yaml
           time hauler store save --filename rancher-carbide.tar.zst
-          aws s3 cp rancher-carbide.tar.zst s3://carbide/${{ github.ref }}/
-          aws s3 ls s3://carbide/${{ github.ref }}
 
       - name: Build/Upload Rancher Minimal
         run: |
           cd hauler/rancher && source ~/.bashrc
           rm -rf store
-          time hauler store sync --registry ${Registry} --key ../../carbide-key.pub --platform linux/amd64 --files rancher-airgap-rancher-minimal.yaml
+          time hauler store sync --registry ${Registry} --key ../../carbide-key.pub --files rancher-airgap-rancher-minimal.yaml
           time hauler store save --filename rancher-minimal-carbide.tar.zst
-          aws s3 cp rancher-minimal-carbide.tar.zst s3://carbide/${{ github.ref }}/
-          aws s3 ls s3://carbide/${{ github.ref }}
 
       - name: Build/Upload Longhorn
         run: |
           cd hauler/longhorn && source ~/.bashrc
-          time hauler store sync --registry ${Registry} --key ../../carbide-key.pub --platform linux/amd64 --files rancher-airgap-longhorn.yaml
+          time hauler store sync --registry ${Registry} --key ../../carbide-key.pub --files rancher-airgap-longhorn.yaml
           time hauler store save --filename longhorn-carbide.tar.zst
-          aws s3 cp longhorn-carbide.tar.zst s3://carbide/${{ github.ref }}/
-          aws s3 ls s3://carbide/${{ github.ref }}
 
       - name: Build/Upload NeuVector
         run: |
           cd hauler/neuvector && source ~/.bashrc
-          time hauler store sync --registry ${Registry} --key ../../carbide-key.pub --platform linux/amd64 --files rancher-airgap-neuvector.yaml
+          time hauler store sync --registry ${Registry} --key ../../carbide-key.pub --files rancher-airgap-neuvector.yaml
           time hauler store save --filename neuvector-carbide.tar.zst
-          aws s3 cp neuvector-carbide.tar.zst s3://carbide/${{ github.ref }}/
-          aws s3 ls s3://carbide/${{ github.ref }}
 
       - name: Build/Upload Harvester
         run: |
           cd hauler/harvester && source ~/.bashrc
-          time hauler store sync --registry ${Registry} --key ../../carbide-key.pub --platform linux/amd64 --files rancher-airgap-harvester.yaml
+          time hauler store sync --registry ${Registry} --key ../../carbide-key.pub --files rancher-airgap-harvester.yaml
           time hauler store save --filename harvester-carbide.tar.zst
-          aws s3 cp harvester-carbide.tar.zst s3://carbide/${{ github.ref }}/
-          aws s3 ls s3://carbide/${{ github.ref }}
 
       - name: Build/Upload Gitea
         run: |
           cd hauler/gitea && source ~/.bashrc
-          time hauler store sync --platform linux/amd64 --files rancher-airgap-gitea.yaml
+          time hauler store sync --files rancher-airgap-gitea.yaml
           time hauler store save --filename gitea-carbide.tar.zst
-          aws s3 cp gitea-carbide.tar.zst s3://carbide/${{ github.ref }}/
-          aws s3 ls s3://carbide/${{ github.ref }}
 
       - name: Build/Upload Kubevip
         run: |
           cd hauler/kubevip && source ~/.bashrc
-          time hauler store sync --platform linux/amd64 --files rancher-airgap-kubevip.yaml
+          time hauler store sync --files rancher-airgap-kubevip.yaml
           time hauler store save --filename kubevip-carbide.tar.zst
-          aws s3 cp kubevip-carbide.tar.zst s3://carbide/${{ github.ref }}/
-          aws s3 ls s3://carbide/${{ github.ref }}
 
       - name: Build/Upload Vault
         run: |
           cd hauler/vault && source ~/.bashrc
-          time hauler store sync --platform linux/amd64 --files rancher-airgap-vault.yaml
+          time hauler store sync --files rancher-airgap-vault.yaml
           time hauler store save --filename vault-carbide.tar.zst
-          aws s3 cp vault-carbide.tar.zst s3://carbide/${{ github.ref }}/
-          aws s3 ls s3://carbide/${{ github.ref }}
 
       - name: Fetch/Package/Upload Hauler Binaries
         run: |
-          mkdir -p hauler/binaries && cd hauler/binaries && source ~/.bashrc
+          mkdir -p hauler/hauler/binaries && cd hauler/hauler/binaries && source ~/.bashrc
           curl -sfOL https://github.com/hauler-dev/hauler/releases/download/v${HaulerVersion}/hauler_${HaulerVersion}_checksums.txt
           curl -sfOL https://github.com/hauler-dev/hauler/releases/download/v${HaulerVersion}/hauler_${HaulerVersion}_darwin_all.tar.gz
           curl -sfOL https://github.com/hauler-dev/hauler/releases/download/v${HaulerVersion}/hauler_${HaulerVersion}_darwin_amd64.tar.gz
@@ -406,5 +382,77 @@ jobs:
             rm -f "$file"
           done
           zip -r hauler-binaries.zip ./*_checksums.txt */
-          aws s3 cp hauler-binaries.zip s3://carbide/${{ github.ref }}/
-          aws s3 ls s3://carbide/${{ github.ref }}
+          aws s3 cp hauler-binaries.zip s3://carbide/${{ github.ref_name }}/
+          aws s3 ls s3://carbide/${{ github.ref_name }}
+
+      - name: Build/Upload Hauler
+        run: |
+          source ~/.bashrc
+          aws s3 cp hauler/hauler/hauler-carbide.tar.zst s3://carbide/${{ github.ref_name }}/
+          aws s3 ls s3://carbide/${{ github.ref_name }}
+
+      - name: Build/Upload Helm
+        run: |
+          source ~/.bashrc
+          aws s3 cp hauler/helm/helm-carbide.tar.zst s3://carbide/${{ github.ref_name }}/
+          aws s3 ls s3://carbide/${{ github.ref_name }}
+
+      - name: Build/Upload Cosign
+        run: |
+          cd hauler/cosign && source ~/.bashrc
+          aws s3 cp cosign-carbide.tar.zst s3://carbide/${{ github.ref_name }}/
+          aws s3 ls s3://carbide/${{ github.ref_name }}
+
+      - name: Build/Upload RKE2
+        run: |
+          cd hauler/rke2 && source ~/.bashrc
+          aws s3 cp rke2-carbide.tar.zst s3://carbide/${{ github.ref_name }}/
+          aws s3 ls s3://carbide/${{ github.ref_name }}
+
+      - name: Build/Upload Rancher
+        run: |
+          source ~/.bashrc
+          aws s3 cp hauler/rancher/rancher-carbide.tar.zst s3://carbide/${{ github.ref_name }}/
+          aws s3 ls s3://carbide/${{ github.ref_name }}
+
+      - name: Build/Upload Rancher Minimal
+        run: |
+          source ~/.bashrc
+          aws s3 cp hauler/rancher/rancher-minimal-carbide.tar.zst s3://carbide/${{ github.ref_name }}/
+          aws s3 ls s3://carbide/${{ github.ref_name }}
+
+      - name: Build/Upload Longhorn
+        run: |
+          source ~/.bashrc
+          aws s3 cp hauler/longhorn/longhorn-carbide.tar.zst s3://carbide/${{ github.ref_name }}/
+          aws s3 ls s3://carbide/${{ github.ref_name }}
+
+      - name: Build/Upload NeuVector
+        run: |
+          source ~/.bashrc
+          aws s3 cp hauler/neuvector/neuvector-carbide.tar.zst s3://carbide/${{ github.ref_name }}/
+          aws s3 ls s3://carbide/${{ github.ref_name }}
+
+      - name: Build/Upload Harvester
+        run: |
+          source ~/.bashrc
+          aws s3 cp hauler/harvester/harvester-carbide.tar.zst s3://carbide/${{ github.ref_name }}/
+          aws s3 ls s3://carbide/${{ github.ref_name }}
+
+      - name: Build/Upload Gitea
+        run: |
+          source ~/.bashrc
+          aws s3 cp hauler/gitea/gitea-carbide.tar.zst s3://carbide/${{ github.ref_name }}/
+          aws s3 ls s3://carbide/${{ github.ref_name }}
+
+      - name: Build/Upload Kubevip
+        run: |
+          source ~/.bashrc
+          aws s3 cp hauler/kubevip/kubevip-carbide.tar.zst s3://carbide/${{ github.ref_name }}/
+          aws s3 ls s3://carbide/${{ github.ref_name }}
+
+      - name: Build/Upload Vault
+        run: |
+          source ~/.bashrc
+          aws s3 cp hauler/vault/vault-carbide.tar.zst s3://carbide/${{ github.ref_name }}/
+          aws s3 ls s3://carbide/${{ github.ref_name }}
