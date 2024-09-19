@@ -315,6 +315,8 @@ jobs:
       - name: Build/Upload Rancher
         run: |
           cd hauler/rancher && source ~/.bashrc
+          sed -i 's#quay.io/##g' rancher-airgap-rancher.yaml
+          sed -i 's#https://releases.rancher.com/server-charts/latest#https://rancherfederal.github.io/carbide-charts#g' rancher-airgap-rancher.yaml
           time hauler store sync --registry ${Registry} --key ../../carbide-key.pub --files rancher-airgap-rancher.yaml
           time hauler store save --filename rancher-carbide.tar.zst
 
@@ -322,6 +324,8 @@ jobs:
         run: |
           cd hauler/rancher && source ~/.bashrc
           rm -rf store
+          sed -i 's#quay.io/##g' rancher-airgap-rancher-minimal.yaml
+          sed -i 's#https://releases.rancher.com/server-charts/latest#https://rancherfederal.github.io/carbide-charts#g' rancher-airgap-rancher-minimal.yaml
           time hauler store sync --registry ${Registry} --key ../../carbide-key.pub --files rancher-airgap-rancher-minimal.yaml
           time hauler store save --filename rancher-minimal-carbide.tar.zst
 
@@ -340,6 +344,8 @@ jobs:
       - name: Build/Upload Harvester
         run: |
           cd hauler/harvester && source ~/.bashrc
+          sed -i -e 's#quay.io/##g' -e 's#ghcr.io/##g' -e 's#registry.k8s.io/##g' -e 's#registry.suse.com/##g' rancher-airgap-harvester.yaml
+          sed -i '1,/---/c\apiVersion: content.hauler.cattle.io/v1alpha1\nkind: Images\nmetadata:\n  name: rancher-airgap-images-harvester\nspec:\n  images:\n    - name: rgcrprod.azurecr.us/carbide/harvester/harvester-v1.3.2-carbide-1-amd64.iso:v1.3.2-carbide-1\n    - name: rgcrprod.azurecr.us/carbide/harvester/harvester-v1.3.2-carbide-1-amd64-net-install.iso:v1.3.2-carbide-1\n    - name: rgcrprod.azurecr.us/carbide/harvester/harvester-v1.3.2-carbide-1-vmlinuz-amd64:v1.3.2-carbide-1\n    - name: rgcrprod.azurecr.us/carbide/harvester/harvester-v1.3.2-carbide-1-initrd-amd64:v1.3.2-carbide-1\n    - name: rgcrprod.azurecr.us/carbide/harvester/harvester-v1.3.2-carbide-1-rootfs-amd64.squashfs:v1.3.2-carbide-1\n    - name: rgcrprod.azurecr.us/carbide/harvester/harvester-v1.3.2-carbide-1-amd64.sha512:v1.3.2-carbide-1\n    - name: rgcrprod.azurecr.us/carbide/harvester/harvester-v1.3.2-carbide-1-arm64.iso:v1.3.2-carbide-1\n    - name: rgcrprod.azurecr.us/carbide/harvester/harvester-v1.3.2-carbide-1-vmlinuz-arm64:v1.3.2-carbide-1\n    - name: rgcrprod.azurecr.us/carbide/harvester/harvester-v1.3.2-carbide-1-initrd-arm64:v1.3.2-carbide-1\n    - name: rgcrprod.azurecr.us/carbide/harvester/harvester-v1.3.2-carbide-1-rootfs-arm64.squashfs:v1.3.2-carbide-1\n    - name: rgcrprod.azurecr.us/carbide/harvester/harvester-v1.3.2-carbide-1-arm64.sha512:v1.3.2-carbide-1\n---' rancher-airgap-harvester.yaml
           time hauler store sync --registry ${Registry} --key ../../carbide-key.pub --files rancher-airgap-harvester.yaml
           time hauler store save --filename harvester-carbide.tar.zst
 
