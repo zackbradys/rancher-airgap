@@ -47,7 +47,7 @@ hauler store sync --store packages --files rancher-airgap-packages.yaml
 hauler store save --store packages --filename rancher-airgap-packages.tar.zst
 
 ### Fetch Hauler Binary
-curl -sfOL https://github.com/hauler-dev/hauler/releases/download/v1.0.7/hauler_1.0.7_linux_amd64.tar.gz
+curl -sfOL https://github.com/hauler-dev/hauler/releases/download/v1.0.8/hauler_1.0.8_linux_amd64.tar.gz
 ```
 
 ---

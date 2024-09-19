@@ -55,7 +55,7 @@ hauler store save --store kubevip-store --filename rancher-airgap-kubevip.tar.zs
 hauler store save --store extras --filename rancher-airgap-extras.tar.zst
 
 ### Fetch Hauler Binary
-curl -sfOL https://github.com/hauler-dev/hauler/releases/download/v1.0.7/hauler_1.0.7_linux_amd64.tar.gz
+curl -sfOL https://github.com/hauler-dev/hauler/releases/download/v1.0.8/hauler_1.0.8_linux_amd64.tar.gz
 ```
 
 ---
@@ -457,7 +457,7 @@ sudo su
 
 ### Set Variables
 export DOMAIN=<example.com>
-export vNeuVector=2.7.8
+export vNeuVector=2.8.0
 export registry=<FQDN or IP>:5000
 export fileserver=<FQDN or IP>:8080
 
