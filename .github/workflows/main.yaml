@@ -19,7 +19,6 @@ jobs:
       - name: Dependencies/Setup/Checks
         run: |
           source ~/.bashrc
-          curl -sfL https://get.hauler.dev | sudo HAULER_VERSION=${HaulerVersion} HAULER_INSTALL_DIR=/usr/bin bash
           hauler version
           pwd && ls -laR
 
@@ -367,6 +366,17 @@ jobs:
           time hauler store sync --files rancher-airgap-vault.yaml
           time hauler store save --filename vault-carbide.tar.zst
 
+      - name: Build/Upload Private
+        run: |
+          mkdir -p hauler/carbide && cd hauler/carbide && source ~/.bashrc
+          echo -e "apiVersion: content.hauler.cattle.io/v1alpha1\nkind: Images\nmetadata:\n  name: carbide-images\nspec:\n  images:\n$(curl -sfL https://raw.githubusercontent.com/rancherfederal/carbide-releases/main/carbide-images.txt | sed '/nats/d' | sed 's/^/    - name: /')" > carbide-images.yaml
+          echo -e "apiVersion: content.hauler.cattle.io/v1alpha1\nkind: Images\nmetadata:\n  name: carbide-dependency-images\nspec:\n  images:\n$(curl -sfL https://raw.githubusercontent.com/rancherfederal/carbide-releases/main/carbide-images.txt | sed '/rgcr/d' | sed 's/^/    - name: /')" > carbide-dependency-images.yaml
+          echo -e "apiVersion: content.hauler.cattle.io/v1alpha1\nkind: Charts\nmetadata:\n  name: carbide-charts\nspec:\n  charts:\n    - name: airgapped-docs\n      repoURL: https://rancherfederal.github.io/carbide-charts\n      version: 0.1.51\n    - name: stigatron\n      repoURL: https://rancherfederal.github.io/carbide-charts\n      version: 0.3.0\n    - name: stigatron-ui\n      repoURL: https://rancherfederal.github.io/carbide-charts\n      version: 0.2.3\n---\napiVersion: content.hauler.cattle.io/v1alpha1\nkind: Charts\nmetadata:\n  name: carbide-dependency-charts\nspec:\n  charts:\n    - name: heimdall2\n      repoURL: https://rancherfederal.github.io/carbide-charts\n      version: 0.1.45\n    - name: nats\n      repoURL: https://nats-io.github.io/k8s/helm/charts\n      version: 1.1.5" > carbide-charts.yaml
+          time hauler store sync --key ../../carbide-key.pub --files carbide-images.yaml
+          time hauler store sync --files carbide-dependency-images.yaml
+          time hauler store sync --files carbide-charts.yaml
+          time hauler store save --filename carbide-carbide.tar.zst
+
       - name: Fetch/Package/Upload Hauler Binaries
         run: |
           mkdir -p hauler/hauler/binaries && cd hauler/hauler/binaries && source ~/.bashrc
@@ -461,4 +471,10 @@ jobs:
         run: |
           source ~/.bashrc
           aws s3 cp hauler/vault/vault-carbide.tar.zst s3://carbide/${{ github.ref_name }}/
+          aws s3 ls s3://carbide/${{ github.ref_name }}
+
+      - name: Build/Upload Private
+        run: |
+          source ~/.bashrc
+          aws s3 cp hauler/carbide/carbide-carbide.tar.zst s3://carbide/${{ github.ref_name }}/
           aws s3 ls s3://carbide/${{ github.ref_name }}
