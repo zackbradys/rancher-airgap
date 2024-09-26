@@ -292,28 +292,32 @@ jobs:
           cd hauler/hauler && source ~/.bashrc
           time hauler store sync --platform linux/amd64 --files rancher-airgap-hauler.yaml
           time hauler store sync --platform linux/arm64 --files rancher-airgap-hauler.yaml
-          time hauler store save --filename hauler-carbide.tar.zst
+          time hauler store save --platform linux/amd64 --filename hauler-carbide-amd64.tar.zst
+          time hauler store save --platform linux/arm64 --filename hauler-carbide-arm64.tar.zst
 
       - name: Fetch/Build Helm
         run: |
           cd hauler/helm && source ~/.bashrc
           time hauler store sync --platform linux/amd64 --files rancher-airgap-helm.yaml
           time hauler store sync --platform linux/arm64 --files rancher-airgap-helm.yaml
-          time hauler store save --filename helm-carbide.tar.zst
+          time hauler store save --platform linux/amd64 --filename helm-carbide-amd64.tar.zst
+          time hauler store save --platform linux/arm64 --filename helm-carbide-arm64.tar.zst
 
       - name: Fetch/Build Cosign
         run: |
           cd hauler/cosign && source ~/.bashrc
           time hauler store sync --platform linux/amd64 --files rancher-airgap-cosign.yaml
           time hauler store sync --platform linux/arm64 --files rancher-airgap-cosign.yaml
-          time hauler store save --filename cosign-carbide.tar.zst
+          time hauler store save --platform linux/amd64 --filename cosign-carbide-amd64.tar.zst
+          time hauler store save --platform linux/arm64 --filename cosign-carbide-arm64.tar.zst
 
       - name: Fetch/Build RKE2
         run: |
           cd hauler/rke2 && source ~/.bashrc
           time hauler store sync --registry ${Registry} --key ../../carbide-key.pub --platform linux/amd64 --files rancher-airgap-rke2.yaml
           time hauler store sync --registry ${Registry} --key ../../carbide-key.pub --platform linux/arm64 --files rancher-airgap-rke2.yaml
-          time hauler store save --filename rke2-carbide.tar.zst
+          time hauler store save --platform linux/amd64 --filename rke2-carbide-amd64.tar.zst
+          time hauler store save --platform linux/arm64 --filename rke2-carbide-arm64.tar.zst
 
       - name: Fetch/Build Rancher
         run: |
@@ -322,7 +326,8 @@ jobs:
           sed -i 's#https://releases.rancher.com/server-charts/latest#https://rancherfederal.github.io/carbide-charts#g' rancher-airgap-rancher.yaml
           time hauler store sync --registry ${Registry} --key ../../carbide-key.pub --platform linux/amd64 --files rancher-airgap-rancher.yaml
           time hauler store sync --registry ${Registry} --key ../../carbide-key.pub --platform linux/arm64 --files rancher-airgap-rancher.yaml
-          time hauler store save --filename rancher-carbide.tar.zst
+          time hauler store save --platform linux/amd64 --filename rancher-carbide-amd64.tar.zst
+          time hauler store save --platform linux/arm64 --filename rancher-carbide-arm64.tar.zst
 
       - name: Fetch/Build Rancher Minimal
         run: |
@@ -332,21 +337,24 @@ jobs:
           sed -i 's#https://releases.rancher.com/server-charts/latest#https://rancherfederal.github.io/carbide-charts#g' rancher-airgap-rancher-minimal.yaml
           time hauler store sync --registry ${Registry} --key ../../carbide-key.pub --platform linux/amd64 --files rancher-airgap-rancher-minimal.yaml
           time hauler store sync --registry ${Registry} --key ../../carbide-key.pub --platform linux/arm64 --files rancher-airgap-rancher-minimal.yaml
-          time hauler store save --filename rancher-minimal-carbide.tar.zst
+          time hauler store save --platform linux/amd64 --filename rancher-minimal-carbide-amd64.tar.zst
+          time hauler store save --platform linux/arm64 --filename rancher-minimal-carbide-arm64.tar.zst
 
       - name: Fetch/Build Longhorn
         run: |
           cd hauler/longhorn && source ~/.bashrc
           time hauler store sync --registry ${Registry} --key ../../carbide-key.pub --platform linux/amd64 --files rancher-airgap-longhorn.yaml
           time hauler store sync --registry ${Registry} --key ../../carbide-key.pub --platform linux/arm64 --files rancher-airgap-longhorn.yaml
-          time hauler store save --filename longhorn-carbide.tar.zst
+          time hauler store save --platform linux/amd64 --filename longhorn-carbide-amd64.tar.zst
+          time hauler store save --platform linux/arm64 --filename longhorn-carbide-arm64.tar.zst
 
       - name: Fetch/Build NeuVector
         run: |
           cd hauler/neuvector && source ~/.bashrc
           time hauler store sync --registry ${Registry} --key ../../carbide-key.pub --platform linux/amd64 --files rancher-airgap-neuvector.yaml
           time hauler store sync --registry ${Registry} --key ../../carbide-key.pub --platform linux/arm64 --files rancher-airgap-neuvector.yaml
-          time hauler store save --filename neuvector-carbide.tar.zst
+          time hauler store save --platform linux/amd64 --filename neuvector-carbide-amd64.tar.zst
+          time hauler store save --platform linux/arm64 --filename neuvector-carbide-arm64.tar.zst
 
       - name: Fetch/Build Harvester
         run: |
@@ -355,28 +363,32 @@ jobs:
           sed -i '1,/---/c\apiVersion: content.hauler.cattle.io/v1alpha1\nkind: Images\nmetadata:\n  name: rancher-airgap-images-harvester\nspec:\n  images:\n    - name: rgcrprod.azurecr.us/carbide/harvester/harvester-v1.3.2-carbide-1-amd64.iso:v1.3.2-carbide-1\n    - name: rgcrprod.azurecr.us/carbide/harvester/harvester-v1.3.2-carbide-1-amd64-net-install.iso:v1.3.2-carbide-1\n    - name: rgcrprod.azurecr.us/carbide/harvester/harvester-v1.3.2-carbide-1-vmlinuz-amd64:v1.3.2-carbide-1\n    - name: rgcrprod.azurecr.us/carbide/harvester/harvester-v1.3.2-carbide-1-initrd-amd64:v1.3.2-carbide-1\n    - name: rgcrprod.azurecr.us/carbide/harvester/harvester-v1.3.2-carbide-1-rootfs-amd64.squashfs:v1.3.2-carbide-1\n    - name: rgcrprod.azurecr.us/carbide/harvester/harvester-v1.3.2-carbide-1-amd64.sha512:v1.3.2-carbide-1\n    - name: rgcrprod.azurecr.us/carbide/harvester/harvester-v1.3.2-carbide-1-arm64.iso:v1.3.2-carbide-1\n    - name: rgcrprod.azurecr.us/carbide/harvester/harvester-v1.3.2-carbide-1-vmlinuz-arm64:v1.3.2-carbide-1\n    - name: rgcrprod.azurecr.us/carbide/harvester/harvester-v1.3.2-carbide-1-initrd-arm64:v1.3.2-carbide-1\n    - name: rgcrprod.azurecr.us/carbide/harvester/harvester-v1.3.2-carbide-1-rootfs-arm64.squashfs:v1.3.2-carbide-1\n    - name: rgcrprod.azurecr.us/carbide/harvester/harvester-v1.3.2-carbide-1-arm64.sha512:v1.3.2-carbide-1\n---' rancher-airgap-harvester.yaml
           time hauler store sync --registry ${Registry} --key ../../carbide-key.pub --platform linux/amd64 --files rancher-airgap-harvester.yaml
           time hauler store sync --registry ${Registry} --key ../../carbide-key.pub --platform linux/arm64 --files rancher-airgap-harvester.yaml
-          time hauler store save --filename harvester-carbide.tar.zst
+          time hauler store save --platform linux/amd64 --filename harvester-carbide-amd64.tar.zst
+          time hauler store save --platform linux/arm64 --filename harvester-carbide-arm64.tar.zst
 
       - name: Fetch/Build Gitea
         run: |
           cd hauler/gitea && source ~/.bashrc
           time hauler store sync --platform linux/amd64 --files rancher-airgap-gitea.yaml
           time hauler store sync --platform linux/arm64 --files rancher-airgap-gitea.yaml
-          time hauler store save --filename gitea-carbide.tar.zst
+          time hauler store save --platform linux/amd64 --filename gitea-carbide-amd64.tar.zst
+          time hauler store save --platform linux/arm64 --filename gitea-carbide-arm64.tar.zst
 
       - name: Fetch/Build Kubevip
         run: |
           cd hauler/kubevip && source ~/.bashrc
           time hauler store sync --platform linux/amd64 --files rancher-airgap-kubevip.yaml
           time hauler store sync --platform linux/arm64 --files rancher-airgap-kubevip.yaml
-          time hauler store save --filename kubevip-carbide.tar.zst
+          time hauler store save --platform linux/amd64 --filename kubevip-carbide-amd64.tar.zst
+          time hauler store save --platform linux/arm64 --filename kubevip-carbide-arm64.tar.zst
 
       - name: Fetch/Build Vault
         run: |
           cd hauler/vault && source ~/.bashrc
           time hauler store sync --platform linux/amd64 --files rancher-airgap-vault.yaml
           time hauler store sync --platform linux/arm64 --files rancher-airgap-vault.yaml
-          time hauler store save --filename vault-carbide.tar.zst
+          time hauler store save --platform linux/amd64 --filename vault-carbide-amd64.tar.zst
+          time hauler store save --platform linux/arm64 --filename vault-carbide-arm64.tar.zst
 
       - name: Fetch/Build Private
         run: |
@@ -390,7 +402,8 @@ jobs:
           time hauler store sync --platform linux/arm64 --files carbide-dependency-images.yaml
           time hauler store sync --platform linux/amd64 --files carbide-charts.yaml
           time hauler store sync --platform linux/arm64 --files carbide-charts.yaml
-          time hauler store save --filename carbide-carbide.tar.zst
+          time hauler store save --platform linux/amd64 --filename carbide-carbide-amd64.tar.zst
+          time hauler store save --platform linux/arm64 --filename carbide-carbide-arm64.tar.zst
 
       - name: Fetch/Build/Upload Hauler Binaries
         run: |
