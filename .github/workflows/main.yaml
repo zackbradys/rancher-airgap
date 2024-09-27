@@ -360,7 +360,7 @@ jobs:
         run: |
           cd hauler/harvester && source ~/.bashrc
           sed -i -e 's#quay.io/##g' -e 's#ghcr.io/##g' -e 's#registry.k8s.io/##g' -e 's#registry.suse.com/##g' rancher-airgap-harvester.yaml
-          sed -i '1,/---/c\apiVersion: content.hauler.cattle.io/v1alpha1\nkind: Images\nmetadata:\n  name: rancher-airgap-images-harvester\nspec:\n  images:\n    - name: rgcrprod.azurecr.us/carbide/harvester/harvester-v1.3.2-carbide-1-amd64.iso:v1.3.2-carbide-1\n    - name: rgcrprod.azurecr.us/carbide/harvester/harvester-v1.3.2-carbide-1-amd64-net-install.iso:v1.3.2-carbide-1\n    - name: rgcrprod.azurecr.us/carbide/harvester/harvester-v1.3.2-carbide-1-vmlinuz-amd64:v1.3.2-carbide-1\n    - name: rgcrprod.azurecr.us/carbide/harvester/harvester-v1.3.2-carbide-1-initrd-amd64:v1.3.2-carbide-1\n    - name: rgcrprod.azurecr.us/carbide/harvester/harvester-v1.3.2-carbide-1-rootfs-amd64.squashfs:v1.3.2-carbide-1\n    - name: rgcrprod.azurecr.us/carbide/harvester/harvester-v1.3.2-carbide-1-amd64.sha512:v1.3.2-carbide-1\n    - name: rgcrprod.azurecr.us/carbide/harvester/harvester-v1.3.2-carbide-1-arm64.iso:v1.3.2-carbide-1\n    - name: rgcrprod.azurecr.us/carbide/harvester/harvester-v1.3.2-carbide-1-vmlinuz-arm64:v1.3.2-carbide-1\n    - name: rgcrprod.azurecr.us/carbide/harvester/harvester-v1.3.2-carbide-1-initrd-arm64:v1.3.2-carbide-1\n    - name: rgcrprod.azurecr.us/carbide/harvester/harvester-v1.3.2-carbide-1-rootfs-arm64.squashfs:v1.3.2-carbide-1\n    - name: rgcrprod.azurecr.us/carbide/harvester/harvester-v1.3.2-carbide-1-arm64.sha512:v1.3.2-carbide-1\n---' rancher-airgap-harvester.yaml
+          sed -i '1,/---/c\apiVersion: content.hauler.cattle.io/v1alpha1\nkind: Images\nmetadata:\n  name: rancher-airgap-images-harvester\nspec:\n  images:\n    - name: rgcrprod.azurecr.us/carbide/harvester/harvester-v1.3.2-carbide-2-amd64.iso:v1.3.2-carbide-2\n    - name: rgcrprod.azurecr.us/carbide/harvester/harvester-v1.3.2-carbide-2-amd64-net-install.iso:v1.3.2-carbide-2\n    - name: rgcrprod.azurecr.us/carbide/harvester/harvester-v1.3.2-carbide-2-vmlinuz-amd64:v1.3.2-carbide-2\n    - name: rgcrprod.azurecr.us/carbide/harvester/harvester-v1.3.2-carbide-2-initrd-amd64:v1.3.2-carbide-2\n    - name: rgcrprod.azurecr.us/carbide/harvester/harvester-v1.3.2-carbide-2-rootfs-amd64.squashfs:v1.3.2-carbide-2\n    - name: rgcrprod.azurecr.us/carbide/harvester/harvester-v1.3.2-carbide-2-amd64.sha512:v1.3.2-carbide-2\n    - name: rgcrprod.azurecr.us/carbide/harvester/harvester-v1.3.2-carbide-2-arm64.iso:v1.3.2-carbide-2\n    - name: rgcrprod.azurecr.us/carbide/harvester/harvester-v1.3.2-carbide-2-vmlinuz-arm64:v1.3.2-carbide-2\n    - name: rgcrprod.azurecr.us/carbide/harvester/harvester-v1.3.2-carbide-2-initrd-arm64:v1.3.2-carbide-2\n    - name: rgcrprod.azurecr.us/carbide/harvester/harvester-v1.3.2-carbide-2-rootfs-arm64.squashfs:v1.3.2-carbide-2\n    - name: rgcrprod.azurecr.us/carbide/harvester/harvester-v1.3.2-carbide-2-arm64.sha512:v1.3.2-carbide-2\n---' rancher-airgap-harvester.yaml
           time hauler store sync --registry ${Registry} --key ../../carbide-key.pub --platform linux/amd64 --files rancher-airgap-harvester.yaml
           time hauler store sync --registry ${Registry} --key ../../carbide-key.pub --platform linux/arm64 --files rancher-airgap-harvester.yaml
           time hauler store save --platform linux/amd64 --filename harvester-carbide-amd64.tar.zst
@@ -417,92 +417,88 @@ jobs:
           curl -sfOL https://github.com/hauler-dev/hauler/releases/download/v${HaulerVersion}/hauler_${HaulerVersion}_windows_amd64.tar.gz
           curl -sfOL https://github.com/hauler-dev/hauler/releases/download/v${HaulerVersion}/hauler_${HaulerVersion}_windows_arm64.tar.gz
           for file in *.tar.gz; do
-            folder_name="${file%.tar.gz}"
-
-            mkdir -p "$folder_name"
-
-            tar -xzf "$file" -C "$folder_name"
-
-            rm -f "$file"
+              folder_name="${file%.tar.gz}"
+              mkdir -p "$folder_name"
+              tar -xzf "$file" -C "$folder_name"
+              rm -f "$file"
           done
-          zip -r hauler-binaries.zip ./*_checksums.txt */
-          aws s3 cp hauler-binaries.zip s3://carbide/${{ github.ref_name }}/
-          aws s3 ls s3://carbide/${{ github.ref_name }}
+          tar --zstd -cvf hauler-binaries.tar.zst ./*_checksums.txt */
+          aws s3 cp --no-progress hauler-binaries.tar.zst s3://carbide/${{ github.ref_name }}/
 
       - name: Upload Hauler
         run: |
-          source ~/.bashrc
-          aws s3 cp hauler/hauler/hauler-carbide.tar.zst s3://carbide/${{ github.ref_name }}/
-          aws s3 ls s3://carbide/${{ github.ref_name }}
+          cd hauler/hauler && source ~/.bashrc
+          aws s3 cp --no-progress hauler-carbide-amd64.tar.zst s3://carbide/${{ github.ref_name }}/
+          aws s3 cp --no-progress hauler-carbide-arm64.tar.zst s3://carbide/${{ github.ref_name }}/
 
       - name: Upload Helm
         run: |
-          source ~/.bashrc
-          aws s3 cp hauler/helm/helm-carbide.tar.zst s3://carbide/${{ github.ref_name }}/
-          aws s3 ls s3://carbide/${{ github.ref_name }}
+          cd hauler/helm && source ~/.bashrc
+          aws s3 cp --no-progress helm-carbide-amd64.tar.zst s3://carbide/${{ github.ref_name }}/
+          aws s3 cp --no-progress helm-carbide-arm64.tar.zst s3://carbide/${{ github.ref_name }}/
 
       - name: Upload Cosign
         run: |
           cd hauler/cosign && source ~/.bashrc
-          aws s3 cp cosign-carbide.tar.zst s3://carbide/${{ github.ref_name }}/
-          aws s3 ls s3://carbide/${{ github.ref_name }}
+          aws s3 cp --no-progress cosign-carbide-amd64.tar.zst s3://carbide/${{ github.ref_name }}/
+          aws s3 cp --no-progress cosign-carbide-arm64.tar.zst s3://carbide/${{ github.ref_name }}/
 
       - name: Upload RKE2
         run: |
           cd hauler/rke2 && source ~/.bashrc
-          aws s3 cp rke2-carbide.tar.zst s3://carbide/${{ github.ref_name }}/
-          aws s3 ls s3://carbide/${{ github.ref_name }}
+          aws s3 cp --no-progress rke2-carbide-amd64.tar.zst s3://carbide/${{ github.ref_name }}/
+          aws s3 cp --no-progress rke2-carbide-arm64.tar.zst s3://carbide/${{ github.ref_name }}/
 
       - name: Upload Rancher
         run: |
-          source ~/.bashrc
-          aws s3 cp hauler/rancher/rancher-carbide.tar.zst s3://carbide/${{ github.ref_name }}/
-          aws s3 ls s3://carbide/${{ github.ref_name }}
+          cd hauler/rancher && source ~/.bashrc
+          aws s3 cp --no-progress rancher-carbide-amd64.tar.zst s3://carbide/${{ github.ref_name }}/
+          aws s3 cp --no-progress rancher-carbide-arm64.tar.zst s3://carbide/${{ github.ref_name }}/
 
       - name: Upload Rancher Minimal
         run: |
-          source ~/.bashrc
-          aws s3 cp hauler/rancher/rancher-minimal-carbide.tar.zst s3://carbide/${{ github.ref_name }}/
-          aws s3 ls s3://carbide/${{ github.ref_name }}
+          cd hauler/rancher && source ~/.bashrc
+          aws s3 cp --no-progress rancher-minimal-carbide-amd64.tar.zst s3://carbide/${{ github.ref_name }}/
+          aws s3 cp --no-progress rancher-minimal-carbide-arm64.tar.zst s3://carbide/${{ github.ref_name }}/
 
       - name: Upload Longhorn
         run: |
-          source ~/.bashrc
-          aws s3 cp hauler/longhorn/longhorn-carbide.tar.zst s3://carbide/${{ github.ref_name }}/
-          aws s3 ls s3://carbide/${{ github.ref_name }}
+          cd hauler/longhorn && source ~/.bashrc
+          aws s3 cp --no-progress longhorn-carbide-amd64.tar.zst s3://carbide/${{ github.ref_name }}/
+          aws s3 cp --no-progress longhorn-carbide-arm64.tar.zst s3://carbide/${{ github.ref_name }}/
 
       - name: Upload NeuVector
         run: |
-          source ~/.bashrc
-          aws s3 cp hauler/neuvector/neuvector-carbide.tar.zst s3://carbide/${{ github.ref_name }}/
-          aws s3 ls s3://carbide/${{ github.ref_name }}
+          cd hauler/neuvector && source ~/.bashrc
+          aws s3 cp --no-progress neuvector-carbide-amd64.tar.zst s3://carbide/${{ github.ref_name }}/
+          aws s3 cp --no-progress neuvector-carbide-arm64.tar.zst s3://carbide/${{ github.ref_name }}/
 
       - name: Upload Harvester
         run: |
-          source ~/.bashrc
-          aws s3 cp hauler/harvester/harvester-carbide.tar.zst s3://carbide/${{ github.ref_name }}/
-          aws s3 ls s3://carbide/${{ github.ref_name }}
+          cd hauler/harvester && source ~/.bashrc
+          aws s3 cp --no-progress harvester-carbide-amd64.tar.zst s3://carbide/${{ github.ref_name }}/
+          aws s3 cp --no-progress harvester-carbide-arm64.tar.zst s3://carbide/${{ github.ref_name }}/
 
       - name: Upload Gitea
         run: |
-          source ~/.bashrc
-          aws s3 cp hauler/gitea/gitea-carbide.tar.zst s3://carbide/${{ github.ref_name }}/
-          aws s3 ls s3://carbide/${{ github.ref_name }}
+          cd hauler/gitea && source ~/.bashrc
+          aws s3 cp --no-progress gitea-carbide-amd64.tar.zst s3://carbide/${{ github.ref_name }}/
+          aws s3 cp --no-progress gitea-carbide-arm64.tar.zst s3://carbide/${{ github.ref_name }}/
 
       - name: Upload Kubevip
         run: |
-          source ~/.bashrc
-          aws s3 cp hauler/kubevip/kubevip-carbide.tar.zst s3://carbide/${{ github.ref_name }}/
-          aws s3 ls s3://carbide/${{ github.ref_name }}
+          cd hauler/kubevip && source ~/.bashrc
+          aws s3 cp --no-progress kubevip-carbide-amd64.tar.zst s3://carbide/${{ github.ref_name }}/
+          aws s3 cp --no-progress kubevip-carbide-arm64.tar.zst s3://carbide/${{ github.ref_name }}/
 
       - name: Upload Vault
         run: |
-          source ~/.bashrc
-          aws s3 cp hauler/vault/vault-carbide.tar.zst s3://carbide/${{ github.ref_name }}/
-          aws s3 ls s3://carbide/${{ github.ref_name }}
+          cd hauler/vault && source ~/.bashrc
+          aws s3 cp --no-progress vault-carbide-amd64.tar.zst s3://carbide/${{ github.ref_name }}/
+          aws s3 cp --no-progress vault-carbide-arm64.tar.zst s3://carbide/${{ github.ref_name }}/
 
       - name: Upload Private
         run: |
-          source ~/.bashrc
-          aws s3 cp hauler/carbide/carbide-carbide.tar.zst s3://carbide/${{ github.ref_name }}/
-          aws s3 ls s3://carbide/${{ github.ref_name }}
+          cd hauler/carbide && source ~/.bashrc
+          aws s3 cp --no-progress carbide-carbide-amd64.tar.zst s3://carbide/${{ github.ref_name }}/
+          aws s3 cp --no-progress carbide-carbide-arm64.tar.zst s3://carbide/${{ github.ref_name }}/
