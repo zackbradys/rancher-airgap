@@ -128,7 +128,7 @@ jobs:
           time hauler store sync --files rancher-airgap-hauler.yaml
           time hauler store save --filename hauler.tar.zst
           hauler store info
-          ls -laR && rm -rf store hauler.tar.zst
+          ls -laR
 
       - name: Test/Lint Helm
         run: |
@@ -136,7 +136,7 @@ jobs:
           time hauler store sync --files rancher-airgap-helm.yaml
           time hauler store save --filename helm.tar.zst
           hauler store info
-          ls -laR && rm -rf store helm.tar.zst
+          ls -laR
 
       - name: Test/Lint Cosign
         run: |
@@ -144,7 +144,7 @@ jobs:
           time hauler store sync --files rancher-airgap-cosign.yaml
           time hauler store save --filename cosign.tar.zst
           hauler store info
-          ls -laR && rm -rf store cosign.tar.zst
+          ls -laR
 
       - name: Test/Lint RKE2
         run: |
@@ -152,7 +152,7 @@ jobs:
           time hauler store sync --files rancher-airgap-rke2.yaml
           time hauler store save --filename rke2.tar.zst
           hauler store info
-          ls -laR && rm -rf store rke2.tar.zst
+          ls -laR
 
       - name: Test/Lint Rancher
         run: |
@@ -160,7 +160,7 @@ jobs:
           time hauler store sync --files rancher-airgap-rancher.yaml
           time hauler store save --filename rancher.tar.zst
           hauler store info
-          ls -laR && rm -rf store rancher.tar.zst
+          ls -laR
 
       - name: Test/Lint Rancher Minimal
         run: |
@@ -169,7 +169,7 @@ jobs:
           time hauler store sync --files rancher-airgap-rancher-minimal.yaml
           time hauler store save --filename rancher-minimal.tar.zst
           hauler store info
-          ls -laR && rm -rf store rancher-minimal.tar.zst
+          ls -laR
 
       - name: Test/Lint Longhorn
         run: |
@@ -177,7 +177,7 @@ jobs:
           time hauler store sync --files rancher-airgap-longhorn.yaml
           time hauler store save --filename longhorn.tar.zst
           hauler store info
-          ls -laR && rm -rf store longhorn.tar.zst
+          ls -laR
 
       - name: Test/Lint NeuVector
         run: |
@@ -185,7 +185,7 @@ jobs:
           time hauler store sync --files rancher-airgap-neuvector.yaml
           time hauler store save --filename neuvector.tar.zst
           hauler store info
-          ls -laR && rm -rf store neuvector.tar.zst
+          ls -laR
 
       - name: Test/Lint Harvester
         run: |
@@ -193,7 +193,7 @@ jobs:
           time hauler store sync --files rancher-airgap-harvester.yaml
           time hauler store save --filename harvester.tar.zst
           hauler store info
-          ls -laR && rm -rf store harvester.tar.zst
+          ls -laR
 
       - name: Test/Lint Gitea
         run: |
@@ -201,7 +201,7 @@ jobs:
           time hauler store sync --files rancher-airgap-gitea.yaml
           time hauler store save --filename gitea.tar.zst
           hauler store info
-          ls -laR && rm -rf store gitea.tar.zst
+          ls -laR
 
       - name: Test/Lint KubeVip
         run: |
@@ -209,7 +209,7 @@ jobs:
           time hauler store sync --files rancher-airgap-kubevip.yaml
           time hauler store save --filename kubevip.tar.zst
           hauler store info
-          ls -laR && rm -rf store kubevip.tar.zst
+          ls -laR
 
       - name: Test/Lint Vault
         run: |
@@ -217,7 +217,7 @@ jobs:
           time hauler store sync --files rancher-airgap-vault.yaml
           time hauler store save --filename vault.tar.zst
           hauler store info
-          ls -laR && rm -rf store vault.tar.zst
+          ls -laR
 
   rancher-airgap-release:
     name: Rancher Airgap - Release Job
@@ -342,7 +342,7 @@ jobs:
       - name: Fetch/Build Rancher Minimal
         run: |
           cd hauler/rancher && source ~/.bashrc
-          rm -rf store
+          rm -rf store amd64 arm64
           sed -i 's#quay.io/##g' rancher-airgap-rancher-minimal.yaml
           sed -i 's#https://releases.rancher.com/server-charts/latest#https://rancherfederal.github.io/carbide-charts#g' rancher-airgap-rancher-minimal.yaml
           time hauler store sync --store amd64 --registry ${Registry} --key ../../carbide-key.pub --platform linux/amd64 --files rancher-airgap-rancher-minimal.yaml
