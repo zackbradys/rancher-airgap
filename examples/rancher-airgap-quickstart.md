@@ -355,7 +355,7 @@ export fileserver=<FQDN or IP>:8080
 kubectl create namespace cert-manager
 
 ### Install via Helm
-helm upgrade -i cert-manager oci://${registry}/hauler/cert-manager:${vCertManager} -n cert-manager --set installCRDs=true --set image.repository=$registry/jetstack/cert-manager-controller --set webhook.image.repository=$registry/jetstack/cert-manager-webhook --set cainjector.image.repository=$registry/jetstack/cert-manager-cainjector --set acmesolver.image.repository=$registry/jetstack/cert-manager-acmesolver --set startupapicheck.image.repository=$registry/jetstack/cert-manager-startupapicheck
+helm upgrade -i cert-manager oci://${registry}/hauler/cert-manager:${vCertManager} -n cert-manager --set crds.enabled=true --set image.repository=$registry/jetstack/cert-manager-controller --set webhook.image.repository=$registry/jetstack/cert-manager-webhook --set cainjector.image.repository=$registry/jetstack/cert-manager-cainjector --set acmesolver.image.repository=$registry/jetstack/cert-manager-acmesolver --set startupapicheck.image.repository=$registry/jetstack/cert-manager-startupapicheck
 
 ### Configure Cert Manager
 kubectl apply -f - << EOF
