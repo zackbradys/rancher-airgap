@@ -347,7 +347,7 @@ sudo su
 
 ### Set Variables
 export DOMAIN=<example.com>
-export vCertManager=1.15.3
+export vCertManager=1.16.1
 export registry=<FQDN or IP>:5000
 export fileserver=<FQDN or IP>:8080
 
