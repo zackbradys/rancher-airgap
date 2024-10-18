@@ -4,7 +4,7 @@ metadata:
   name: rancher-airgap-files-cosign
 spec:
   files:
-    - path: https://github.com/sigstore/cosign/releases/download/v2.4.0/cosign-linux-amd64
+    - path: https://github.com/sigstore/cosign/releases/download/v2.4.1/cosign-linux-amd64
       name: cosign-linux-amd64
-    - path: https://github.com/sigstore/cosign/releases/download/v2.4.0/cosign-linux-arm64
+    - path: https://github.com/sigstore/cosign/releases/download/v2.4.1/cosign-linux-arm64
       name: cosign-linux-arm64
