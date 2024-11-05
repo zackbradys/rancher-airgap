@@ -25,13 +25,13 @@ fetch -> validate -> save -> | <airgap> | -> load -> validate -> distribute
 ### Core Components
 
 - [hauler/rke2](hauler/rke2/README.md) - provides the content manifest for Rancher Kubernetes (RKE2)
-  - currently supports: `RKE2: v1.29.9`
+  - currently supports: `RKE2: v1.29.10`
 - [hauler/rancher](hauler/rancher/README.md) - provides the content manifest for Cert-Manager
   - currently supports: `Cert-Manager: v1.16.1`
 - [hauler/rancher](hauler/rancher/README.md) - provides the content manifest for Rancher Multi-Cluster Manager
-  - currently supports: `Rancher: v2.9.2`
+  - currently supports: `Rancher: v2.9.3`
 - [hauler/longhorn](hauler/longhorn/README.md) - provides the content manifest for Rancher Longhorn
-  - currently supports: `Longhorn: v1.7.1`
+  - currently supports: `Longhorn: v1.7.2`
 - [hauler/neuvector](hauler/neuvector/README.md) - provides the content manifest for Rancher NeuVector
   - currently supports: `NeuVector: v5.4.0`
 - [hauler/harvester](hauler/harvester/README.md) - provides the content manifest for Rancher Harvester
@@ -46,7 +46,7 @@ fetch -> validate -> save -> | <airgap> | -> load -> validate -> distribute
 - [hauler/cosign](hauler/cosign/README.md) - provides the content manifest for Cosign
   - currently supports: `Cosign: v2.4.1`
 - [hauler/gitea](hauler/gitea/README.md) - provides the content manifest for Gitea
-  - currently supports: `Gitea: v1.22.2`
+  - currently supports: `Gitea: v1.22.3`
 - [hauler/vault](hauler/vault/README.md) - provides the content manifest for Vault
   - currently supports: `Vault: v1.17.2`
 - [hauler/kubevip](hauler/kubevip/README.md) - provides the content manifest for KubeVip
