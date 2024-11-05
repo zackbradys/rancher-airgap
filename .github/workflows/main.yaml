@@ -290,129 +290,141 @@ jobs:
       - name: Fetch/Build Hauler
         run: |
           cd hauler/hauler && source ~/.bashrc
+          source <(grep "export vHauler=" ../scripts/hauler/hauler-hauler.sh)
           time hauler store sync --store amd64 --platform linux/amd64 --files rancher-airgap-hauler.yaml
           time hauler store sync --store arm64 --platform linux/arm64 --files rancher-airgap-hauler.yaml
-          time hauler store save --store amd64 --platform linux/amd64 --filename hauler-carbide-amd64.tar.zst
-          time hauler store save --store arm64 --platform linux/arm64 --filename hauler-carbide-arm64.tar.zst
+          time hauler store save --store amd64 --platform linux/amd64 --filename hauler-carbide-v${vHauler}-amd64.tar.zst
+          time hauler store save --store arm64 --platform linux/arm64 --filename hauler-carbide-v${vHauler}-arm64.tar.zst
           hauler store info --store amd64
           hauler store info --store arm64
 
       - name: Fetch/Build Helm
         run: |
           cd hauler/helm && source ~/.bashrc
+          source <(grep "export vHelm=" ../scripts/helm/hauler-helm.sh)
           time hauler store sync --store amd64 --platform linux/amd64 --files rancher-airgap-helm.yaml
           time hauler store sync --store arm64 --platform linux/arm64 --files rancher-airgap-helm.yaml
-          time hauler store save --store amd64 --platform linux/amd64 --filename helm-carbide-amd64.tar.zst
-          time hauler store save --store arm64 --platform linux/arm64 --filename helm-carbide-arm64.tar.zst
+          time hauler store save --store amd64 --platform linux/amd64 --filename helm-carbide-v${vHelm}-amd64.tar.zst
+          time hauler store save --store arm64 --platform linux/arm64 --filename helm-carbide-v${vHelm}-arm64.tar.zst
           hauler store info --store amd64
           hauler store info --store arm64
 
       - name: Fetch/Build Cosign
         run: |
           cd hauler/cosign && source ~/.bashrc
+          source <(grep "export vCosign=" ../scripts/cosign/hauler-cosign.sh)
           time hauler store sync --store amd64 --platform linux/amd64 --files rancher-airgap-cosign.yaml
           time hauler store sync --store arm64 --platform linux/arm64 --files rancher-airgap-cosign.yaml
-          time hauler store save --store amd64 --platform linux/amd64 --filename cosign-carbide-amd64.tar.zst
-          time hauler store save --store arm64 --platform linux/arm64 --filename cosign-carbide-arm64.tar.zst
+          time hauler store save --store amd64 --platform linux/amd64 --filename cosign-carbide-v${vCosign}-amd64.tar.zst
+          time hauler store save --store arm64 --platform linux/arm64 --filename cosign-carbide-v${vCosign}-arm64.tar.zst
           hauler store info --store amd64
           hauler store info --store arm64
 
       - name: Fetch/Build RKE2
         run: |
           cd hauler/rke2 && source ~/.bashrc
+          source <(grep "export vRKE2=" ../scripts/rke2/hauler-rke2.sh)
           time hauler store sync --store amd64 --registry ${Registry} --key ../../carbide-key.pub --platform linux/amd64 --files rancher-airgap-rke2.yaml
           time hauler store sync --store arm64 --registry ${Registry} --key ../../carbide-key.pub --platform linux/arm64 --files rancher-airgap-rke2.yaml
-          time hauler store save --store amd64 --platform linux/amd64 --filename rke2-carbide-amd64.tar.zst
-          time hauler store save --store arm64 --platform linux/arm64 --filename rke2-carbide-arm64.tar.zst
+          time hauler store save --store amd64 --platform linux/amd64 --filename rke2-carbide-v${vRKE2}-amd64.tar.zst
+          time hauler store save --store arm64 --platform linux/arm64 --filename rke2-carbide-v${vRKE2}-arm64.tar.zst
           hauler store info --store amd64
           hauler store info --store arm64
 
       - name: Fetch/Build Rancher
         run: |
           cd hauler/rancher && source ~/.bashrc
+          source <(grep "export vRancher=" ../scripts/rancher/hauler-rancher.sh)
           sed -i 's#quay.io/##g' rancher-airgap-rancher.yaml
           sed -i 's#https://releases.rancher.com/server-charts/latest#https://rancherfederal.github.io/carbide-charts#g' rancher-airgap-rancher.yaml
           time hauler store sync --store amd64 --registry ${Registry} --key ../../carbide-key.pub --platform linux/amd64 --files rancher-airgap-rancher.yaml
           time hauler store sync --store arm64 --registry ${Registry} --key ../../carbide-key.pub --platform linux/arm64 --files rancher-airgap-rancher.yaml
-          time hauler store save --store amd64 --platform linux/amd64 --filename rancher-carbide-amd64.tar.zst
-          time hauler store save --store arm64 --platform linux/arm64 --filename rancher-carbide-arm64.tar.zst
+          time hauler store save --store amd64 --platform linux/amd64 --filename rancher-carbide-v${vRancher}-amd64.tar.zst
+          time hauler store save --store arm64 --platform linux/arm64 --filename rancher-carbide-v${vRancher}-arm64.tar.zst
           hauler store info --store amd64
           hauler store info --store arm64
 
       - name: Fetch/Build Rancher Minimal
         run: |
           cd hauler/rancher && source ~/.bashrc
+          source <(grep "export vRancher=" ../scripts/rancher/hauler-rancher-minimal.sh)
           rm -rf store amd64 arm64
           sed -i 's#quay.io/##g' rancher-airgap-rancher-minimal.yaml
           sed -i 's#https://releases.rancher.com/server-charts/latest#https://rancherfederal.github.io/carbide-charts#g' rancher-airgap-rancher-minimal.yaml
           time hauler store sync --store amd64 --registry ${Registry} --key ../../carbide-key.pub --platform linux/amd64 --files rancher-airgap-rancher-minimal.yaml
           time hauler store sync --store arm64 --registry ${Registry} --key ../../carbide-key.pub --platform linux/arm64 --files rancher-airgap-rancher-minimal.yaml
-          time hauler store save --store amd64 --platform linux/amd64 --filename rancher-minimal-carbide-amd64.tar.zst
-          time hauler store save --store arm64 --platform linux/arm64 --filename rancher-minimal-carbide-arm64.tar.zst
+          time hauler store save --store amd64 --platform linux/amd64 --filename rancher-minimal-carbide-v${vRancher}-amd64.tar.zst
+          time hauler store save --store arm64 --platform linux/arm64 --filename rancher-minimal-carbide-v${vRancher}-arm64.tar.zst
           hauler store info --store amd64
           hauler store info --store arm64
 
       - name: Fetch/Build Longhorn
         run: |
           cd hauler/longhorn && source ~/.bashrc
+          source <(grep "export vLonghorn=" ../scripts/longhorn/hauler-longhorn.sh)
           time hauler store sync --store amd64 --registry ${Registry} --key ../../carbide-key.pub --platform linux/amd64 --files rancher-airgap-longhorn.yaml
           time hauler store sync --store arm64 --registry ${Registry} --key ../../carbide-key.pub --platform linux/arm64 --files rancher-airgap-longhorn.yaml
-          time hauler store save --store amd64 --platform linux/amd64 --filename longhorn-carbide-amd64.tar.zst
-          time hauler store save --store arm64 --platform linux/arm64 --filename longhorn-carbide-arm64.tar.zst
+          time hauler store save --store amd64 --platform linux/amd64 --filename longhorn-carbide-v${vLonghorn}-amd64.tar.zst
+          time hauler store save --store arm64 --platform linux/arm64 --filename longhorn-carbide-v${vLonghorn}-arm64.tar.zst
           hauler store info --store amd64
           hauler store info --store arm64
 
       - name: Fetch/Build NeuVector
         run: |
           cd hauler/neuvector && source ~/.bashrc
+          source <(grep "export vNeuVector=" ../scripts/neuvector/hauler-neuvector.sh)
           time hauler store sync --store amd64 --registry ${Registry} --key ../../carbide-key.pub --platform linux/amd64 --files rancher-airgap-neuvector.yaml
           time hauler store sync --store arm64 --registry ${Registry} --key ../../carbide-key.pub --platform linux/arm64 --files rancher-airgap-neuvector.yaml
-          time hauler store save --store amd64 --platform linux/amd64 --filename neuvector-carbide-amd64.tar.zst
-          time hauler store save --store arm64 --platform linux/arm64 --filename neuvector-carbide-arm64.tar.zst
+          time hauler store save --store amd64 --platform linux/amd64 --filename neuvector-carbide-v${vNeuVector}-amd64.tar.zst
+          time hauler store save --store arm64 --platform linux/arm64 --filename neuvector-carbide-v${vNeuVector}-arm64.tar.zst
           hauler store info --store amd64
           hauler store info --store arm64
 
       - name: Fetch/Build Harvester
         run: |
           cd hauler/harvester && source ~/.bashrc
+          source <(grep "export vHarvester=" ../scripts/harvester/hauler-harvester.sh)
           sed -e "s#quay.io/##g" -e "s#ghcr.io/##g" -e "s#registry.k8s.io/##g" -e "s#registry.suse.com/##g" rancher-airgap-harvester.yaml > rancher-airgap-harvester-amd64.yaml
           sed -e "s#quay.io/##g" -e "s#ghcr.io/##g" -e "s#registry.k8s.io/##g" -e "s#registry.suse.com/##g" rancher-airgap-harvester.yaml > rancher-airgap-harvester-arm64.yaml
           sed -i "1,/---/c\apiVersion: content.hauler.cattle.io/v1alpha1\nkind: Images\nmetadata:\n  name: rancher-airgap-images-harvester\nspec:\n  images:\n    - name: ${Registry}/carbide/harvester/harvester-v1.3.2-govt.1-amd64.iso:v1.3.2-govt.1\n    - name: ${Registry}/carbide/harvester/harvester-v1.3.2-govt.1-amd64-net-install.iso:v1.3.2-govt.1\n    - name: ${Registry}/carbide/harvester/harvester-v1.3.2-govt.1-vmlinuz-amd64:v1.3.2-govt.1\n    - name: ${Registry}/carbide/harvester/harvester-v1.3.2-govt.1-initrd-amd64:v1.3.2-govt.1\n    - name: ${Registry}/carbide/harvester/harvester-v1.3.2-govt.1-rootfs-amd64.squashfs:v1.3.2-govt.1\n    - name: ${Registry}/carbide/harvester/harvester-v1.3.2-govt.1-amd64.sha512:v1.3.2-govt.1\n---" rancher-airgap-harvester-amd64.yaml
           sed -i "1,/---/c\apiVersion: content.hauler.cattle.io/v1alpha1\nkind: Images\nmetadata:\n  name: rancher-airgap-images-harvester\nspec:\n  images:\n    - name: ${Registry}/carbide/harvester/harvester-v1.3.2-govt.1-arm64.iso:v1.3.2-govt.1\n    - name: ${Registry}/carbide/harvester/harvester-v1.3.2-govt.1-vmlinuz-arm64:v1.3.2-govt.1\n    - name: ${Registry}/carbide/harvester/harvester-v1.3.2-govt.1-initrd-arm64:v1.3.2-govt.1\n    - name: ${Registry}/carbide/harvester/harvester-v1.3.2-govt.1-rootfs-arm64.squashfs:v1.3.2-govt.1\n    - name: ${Registry}/carbide/harvester/harvester-v1.3.2-govt.1-arm64.sha512:v1.3.2-govt.1\n---" rancher-airgap-harvester-arm64.yaml
           time hauler store sync --store amd64 --registry ${Registry} --key ../../carbide-key.pub --platform linux/amd64 --files rancher-airgap-harvester-amd64.yaml
           time hauler store sync --store arm64 --registry ${Registry} --key ../../carbide-key.pub --platform linux/arm64 --files rancher-airgap-harvester-arm64.yaml
-          time hauler store save --store amd64 --platform linux/amd64 --filename harvester-carbide-amd64.tar.zst
-          time hauler store save --store arm64 --platform linux/arm64 --filename harvester-carbide-arm64.tar.zst
+          time hauler store save --store amd64 --platform linux/amd64 --filename harvester-carbide-v${vHarvester}-amd64.tar.zst
+          time hauler store save --store arm64 --platform linux/arm64 --filename harvester-carbide-v${vHarvester}-arm64.tar.zst
           hauler store info --store amd64
           hauler store info --store arm64
 
       - name: Fetch/Build Gitea
         run: |
           cd hauler/gitea && source ~/.bashrc
+          source <(grep "export vGitea=" ../scripts/gitea/hauler-gitea.sh)
           time hauler store sync --store amd64 --platform linux/amd64 --files rancher-airgap-gitea.yaml
           time hauler store sync --store arm64 --platform linux/arm64 --files rancher-airgap-gitea.yaml
-          time hauler store save --store amd64 --platform linux/amd64 --filename gitea-carbide-amd64.tar.zst
-          time hauler store save --store arm64 --platform linux/arm64 --filename gitea-carbide-arm64.tar.zst
+          time hauler store save --store amd64 --platform linux/amd64 --filename gitea-carbide-v${vGitea}-amd64.tar.zst
+          time hauler store save --store arm64 --platform linux/arm64 --filename gitea-carbide-v${vGitea}-arm64.tar.zst
           hauler store info --store amd64
           hauler store info --store arm64
 
-      - name: Fetch/Build Kubevip
+      - name: Fetch/Build KubeVip
         run: |
           cd hauler/kubevip && source ~/.bashrc
+          source <(grep "export vKubeVip=" ../scripts/kubevip/hauler-kubevip.sh)
           time hauler store sync --store amd64 --platform linux/amd64 --files rancher-airgap-kubevip.yaml
           time hauler store sync --store arm64 --platform linux/arm64 --files rancher-airgap-kubevip.yaml
-          time hauler store save --store amd64 --platform linux/amd64 --filename kubevip-carbide-amd64.tar.zst
-          time hauler store save --store arm64 --platform linux/arm64 --filename kubevip-carbide-arm64.tar.zst
+          time hauler store save --store amd64 --platform linux/amd64 --filename kubevip-carbide-v${KubeVip}-amd64.tar.zst
+          time hauler store save --store arm64 --platform linux/arm64 --filename kubevip-carbide-v${KubeVip}-arm64.tar.zst
           hauler store info --store amd64
           hauler store info --store arm64
 
       - name: Fetch/Build Vault
         run: |
           cd hauler/vault && source ~/.bashrc
+          source <(grep "export vVault=" ../scripts/vault/hauler-vault.sh)
           time hauler store sync --store amd64 --platform linux/amd64 --files rancher-airgap-vault.yaml
           time hauler store sync --store arm64 --platform linux/arm64 --files rancher-airgap-vault.yaml
-          time hauler store save --store amd64 --platform linux/amd64 --filename vault-carbide-amd64.tar.zst
-          time hauler store save --store arm64 --platform linux/arm64 --filename vault-carbide-arm64.tar.zst
+          time hauler store save --store amd64 --platform linux/amd64 --filename vault-carbide-v${vVault}-amd64.tar.zst
+          time hauler store save --store arm64 --platform linux/arm64 --filename vault-carbide-v${vVault}-arm64.tar.zst
           hauler store info --store amd64
           hauler store info --store arm64
 
@@ -433,172 +445,185 @@ jobs:
           time hauler store sync --store arm64 --platform linux/arm64 --files carbide-charts.yaml
           time hauler store sync --store amd64 --platform linux/amd64 --files carbide-provisioning.yaml
           time hauler store sync --store arm64 --platform linux/arm64 --files carbide-provisioning.yaml
-          time hauler store save --store amd64 --platform linux/amd64 --filename carbide-carbide-amd64.tar.zst
-          time hauler store save --store arm64 --platform linux/arm64 --filename carbide-carbide-arm64.tar.zst
+          time hauler store save --store amd64 --platform linux/amd64 --filename carbide-carbide-$(date +"%m%d%Y")-amd64.tar.zst
+          time hauler store save --store arm64 --platform linux/arm64 --filename carbide-carbide-$(date +"%m%d%Y")-arm64.tar.zst
           hauler store info --store amd64
           hauler store info --store arm64
 
       - name: Fetch/Build/Upload Hauler Binaries
         run: |
           mkdir -p hauler/hauler/binaries && cd hauler/hauler/binaries && source ~/.bashrc
-          curl -sfOL https://github.com/hauler-dev/hauler/releases/download/v${HaulerVersion}/hauler_${HaulerVersion}_checksums.txt
-          curl -sfOL https://github.com/hauler-dev/hauler/releases/download/v${HaulerVersion}/hauler_${HaulerVersion}_darwin_all.tar.gz
-          curl -sfOL https://github.com/hauler-dev/hauler/releases/download/v${HaulerVersion}/hauler_${HaulerVersion}_darwin_amd64.tar.gz
-          curl -sfOL https://github.com/hauler-dev/hauler/releases/download/v${HaulerVersion}/hauler_${HaulerVersion}_darwin_arm64.tar.gz
-          curl -sfOL https://github.com/hauler-dev/hauler/releases/download/v${HaulerVersion}/hauler_${HaulerVersion}_linux_amd64.tar.gz
-          curl -sfOL https://github.com/hauler-dev/hauler/releases/download/v${HaulerVersion}/hauler_${HaulerVersion}_linux_arm64.tar.gz
-          curl -sfOL https://github.com/hauler-dev/hauler/releases/download/v${HaulerVersion}/hauler_${HaulerVersion}_windows_amd64.tar.gz
-          curl -sfOL https://github.com/hauler-dev/hauler/releases/download/v${HaulerVersion}/hauler_${HaulerVersion}_windows_arm64.tar.gz
+          source <(grep "export vHauler=" ../../scripts/hauler/hauler-hauler.sh)
+          curl -sfOL https://github.com/hauler-dev/hauler/releases/download/v${vHauler}/hauler_${vHauler}_checksums.txt
+          curl -sfOL https://github.com/hauler-dev/hauler/releases/download/v${vHauler}/hauler_${vHauler}_darwin_all.tar.gz
+          curl -sfOL https://github.com/hauler-dev/hauler/releases/download/v${vHauler}/hauler_${vHauler}_darwin_amd64.tar.gz
+          curl -sfOL https://github.com/hauler-dev/hauler/releases/download/v${vHauler}/hauler_${vHauler}_darwin_arm64.tar.gz
+          curl -sfOL https://github.com/hauler-dev/hauler/releases/download/v${vHauler}/hauler_${vHauler}_linux_amd64.tar.gz
+          curl -sfOL https://github.com/hauler-dev/hauler/releases/download/v${vHauler}/hauler_${vHauler}_linux_arm64.tar.gz
+          curl -sfOL https://github.com/hauler-dev/hauler/releases/download/v${vHauler}/hauler_${vHauler}_windows_amd64.tar.gz
+          curl -sfOL https://github.com/hauler-dev/hauler/releases/download/v${vHauler}/hauler_${vHauler}_windows_arm64.tar.gz
           for file in *.tar.gz; do
               folder_name="${file%.tar.gz}"
               mkdir -p "$folder_name"
               tar -xzf "$file" -C "$folder_name"
               rm -f "$file"
           done
-          time tar --zstd -cvf hauler-binaries.tar.zst ./*_checksums.txt */
-          time aws s3 cp --no-progress hauler-binaries.tar.zst s3://carbide/${{ github.ref_name }}/
+          time tar --zstd -cvf hauler-binaries-v${vHauler}.tar.zst ./*_checksums.txt */
+          time aws s3 cp --no-progress hauler-binaries-v${vHauler}.tar.zst s3://carbide/${{ github.ref_name }}/
 
-          time 7z a -v999m hauler-binaries.tar hauler-binaries.tar.zst
-          time for file in hauler-binaries.tar.0*; do
+          time 7z a -v999m hauler-binaries-v${vHauler}.tar hauler-binaries-v${vHauler}.tar.zst
+          time for file in hauler-binaries-v${vHauler}.tar.0*; do
             aws s3 cp --no-progress "$file" s3://carbide/${{ github.ref_name }}/spilts/
           done
 
       - name: Upload Hauler
         run: |
           cd hauler/hauler && source ~/.bashrc
-          time aws s3 cp --no-progress hauler-carbide-amd64.tar.zst s3://carbide/${{ github.ref_name }}/
-          time aws s3 cp --no-progress hauler-carbide-arm64.tar.zst s3://carbide/${{ github.ref_name }}/
+          source <(grep "export vHauler=" ../scripts/hauler/hauler-hauler.sh)
+          time aws s3 cp --no-progress hauler-carbide-v${vHauler}-amd64.tar.zst s3://carbide/${{ github.ref_name }}/
+          time aws s3 cp --no-progress hauler-carbide-v${vHauler}-arm64.tar.zst s3://carbide/${{ github.ref_name }}/
 
       - name: Upload Helm
         run: |
           cd hauler/helm && source ~/.bashrc
-          time aws s3 cp --no-progress helm-carbide-amd64.tar.zst s3://carbide/${{ github.ref_name }}/
-          time aws s3 cp --no-progress helm-carbide-arm64.tar.zst s3://carbide/${{ github.ref_name }}/
+          source <(grep "export vHelm=" ../scripts/helm/hauler-helm.sh)
+          time aws s3 cp --no-progress helm-carbide-v${vHelm}-amd64.tar.zst s3://carbide/${{ github.ref_name }}/
+          time aws s3 cp --no-progress helm-carbide-v${vHelm}-arm64.tar.zst s3://carbide/${{ github.ref_name }}/
 
       - name: Upload Cosign
         run: |
           cd hauler/cosign && source ~/.bashrc
-          time aws s3 cp --no-progress cosign-carbide-amd64.tar.zst s3://carbide/${{ github.ref_name }}/
-          time aws s3 cp --no-progress cosign-carbide-arm64.tar.zst s3://carbide/${{ github.ref_name }}/
+          source <(grep "export vCosign=" ../scripts/cosign/hauler-cosign.sh)
+          time aws s3 cp --no-progress cosign-carbide-v${vCosign}-amd64.tar.zst s3://carbide/${{ github.ref_name }}/
+          time aws s3 cp --no-progress cosign-carbide-v${vCosign}-arm64.tar.zst s3://carbide/${{ github.ref_name }}/
 
       - name: Upload RKE2
         run: |
           cd hauler/rke2 && source ~/.bashrc
-          time aws s3 cp --no-progress rke2-carbide-amd64.tar.zst s3://carbide/${{ github.ref_name }}/
-          time aws s3 cp --no-progress rke2-carbide-arm64.tar.zst s3://carbide/${{ github.ref_name }}/
-          time 7z a -v999m rke2-carbide-amd64.tar rke2-carbide-amd64.tar.zst
-          time for file in rke2-carbide-amd64.tar.0*; do
+          source <(grep "export vRKE2=" ../scripts/rke2/hauler-rke2.sh)
+          time aws s3 cp --no-progress rke2-carbide-v${vRKE2}-amd64.tar.zst s3://carbide/${{ github.ref_name }}/
+          time aws s3 cp --no-progress rke2-carbide-v${vRKE2}-arm64.tar.zst s3://carbide/${{ github.ref_name }}/
+          time 7z a -v999m rke2-carbide-v${vRKE2}-amd64.tar rke2-carbide-v${vRKE2}-amd64.tar.zst
+          time for file in rke2-carbide-v${vRKE2}-amd64.tar.0*; do
             aws s3 cp --no-progress "$file" s3://carbide/${{ github.ref_name }}/spilts/
           done
-          time 7z a -v999m rke2-carbide-arm64.tar rke2-carbide-arm64.tar.zst
-          time for file in rke2-carbide-arm64.tar.0*; do
+          time 7z a -v999m rke2-carbide-v${vRKE2}-arm64.tar rke2-carbide-v${vRKE2}-arm64.tar.zst
+          time for file in rke2-carbide-v${vRKE2}-arm64.tar.0*; do
             aws s3 cp --no-progress "$file" s3://carbide/${{ github.ref_name }}/spilts/
           done
 
       - name: Upload Rancher
         run: |
           cd hauler/rancher && source ~/.bashrc
-          time aws s3 cp --no-progress rancher-carbide-amd64.tar.zst s3://carbide/${{ github.ref_name }}/
-          time aws s3 cp --no-progress rancher-carbide-arm64.tar.zst s3://carbide/${{ github.ref_name }}/
+          source <(grep "export vRancher=" ../scripts/rancher/hauler-rancher.sh)
+          time aws s3 cp --no-progress rancher-carbide-v${vRancher}-amd64.tar.zst s3://carbide/${{ github.ref_name }}/
+          time aws s3 cp --no-progress rancher-carbide-v${vRancher}-arm64.tar.zst s3://carbide/${{ github.ref_name }}/
 
-          time 7z a -v999m rancher-carbide-amd64.tar rancher-carbide-amd64.tar.zst
-          time for file in rancher-carbide-amd64.tar.0*; do
+          time 7z a -v999m rancher-carbide-v${vRancher}-amd64.tar rancher-carbide-v${vRancher}-amd64.tar.zst
+          time for file in rancher-carbide-v${vRancher}-amd64.tar.0*; do
             aws s3 cp --no-progress "$file" s3://carbide/${{ github.ref_name }}/spilts/
           done
-          time 7z a -v999m rancher-carbide-arm64.tar rancher-carbide-arm64.tar.zst
-          time for file in rancher-carbide-arm64.tar.0*; do
+          time 7z a -v999m rancher-carbide-v${vRancher}-arm64.tar rancher-carbide-v${vRancher}-arm64.tar.zst
+          time for file in rancher-carbide-v${vRancher}-arm64.tar.0*; do
             aws s3 cp --no-progress "$file" s3://carbide/${{ github.ref_name }}/spilts/
           done
 
       - name: Upload Rancher Minimal
         run: |
           cd hauler/rancher && source ~/.bashrc
-          time aws s3 cp --no-progress rancher-minimal-carbide-amd64.tar.zst s3://carbide/${{ github.ref_name }}/
-          time aws s3 cp --no-progress rancher-minimal-carbide-arm64.tar.zst s3://carbide/${{ github.ref_name }}/
+          source <(grep "export vRancher=" ../scripts/rancher/hauler-rancher-minimal.sh)
+          time aws s3 cp --no-progress rancher-minimal-carbide-v${vRancher}-amd64.tar.zst s3://carbide/${{ github.ref_name }}/
+          time aws s3 cp --no-progress rancher-minimal-carbide-v${vRancher}-arm64.tar.zst s3://carbide/${{ github.ref_name }}/
 
-          time 7z a -v999m rancher-minimal-carbide-amd64.tar rancher-minimal-carbide-amd64.tar.zst
-          time for file in rancher-minimal-carbide-amd64.tar.0*; do
+          time 7z a -v999m rancher-minimal-carbide-v${vRancher}-amd64.tar rancher-minimal-carbide-v${vRancher}-amd64.tar.zst
+          time for file in rancher-minimal-carbide-v${vRancher}-amd64.tar.0*; do
             aws s3 cp --no-progress "$file" s3://carbide/${{ github.ref_name }}/spilts/
           done
-          time 7z a -v999m rancher-minimal-carbide-arm64.tar rancher-minimal-carbide-arm64.tar.zst
-          time for file in rancher-minimal-carbide-arm64.tar.0*; do
+          time 7z a -v999m rancher-minimal-carbide-v${vRancher}-arm64.tar rancher-minimal-carbide-v${vRancher}-arm64.tar.zst
+          time for file in rancher-minimal-carbide-v${vRancher}-arm64.tar.0*; do
             aws s3 cp --no-progress "$file" s3://carbide/${{ github.ref_name }}/spilts/
           done
 
       - name: Upload Longhorn
         run: |
           cd hauler/longhorn && source ~/.bashrc
-          time aws s3 cp --no-progress longhorn-carbide-amd64.tar.zst s3://carbide/${{ github.ref_name }}/
-          time aws s3 cp --no-progress longhorn-carbide-arm64.tar.zst s3://carbide/${{ github.ref_name }}/
+          source <(grep "export vLonghorn=" ../scripts/longhorn/hauler-longhorn.sh)
+          time aws s3 cp --no-progress longhorn-carbide-v${vLonghorn}-amd64.tar.zst s3://carbide/${{ github.ref_name }}/
+          time aws s3 cp --no-progress longhorn-carbide-v${vLonghorn}-arm64.tar.zst s3://carbide/${{ github.ref_name }}/
 
-          time 7z a -v999m longhorn-carbide-amd64.tar longhorn-carbide-amd64.tar.zst
-          time for file in longhorn-carbide-amd64.tar.0*; do
+          time 7z a -v999m longhorn-carbide-v${vLonghorn}-amd64.tar longhorn-carbide-v${vLonghorn}-amd64.tar.zst
+          time for file in longhorn-carbide-v${vLonghorn}-amd64.tar.0*; do
             aws s3 cp --no-progress "$file" s3://carbide/${{ github.ref_name }}/spilts/
           done
-          time 7z a -v999m longhorn-carbide-arm64.tar longhorn-carbide-arm64.tar.zst
-          time for file in longhorn-carbide-arm64.tar.0*; do
+          time 7z a -v999m longhorn-carbide-v${vLonghorn}-arm64.tar longhorn-carbide-v${vLonghorn}-arm64.tar.zst
+          time for file in longhorn-carbide-v${vLonghorn}-arm64.tar.0*; do
             aws s3 cp --no-progress "$file" s3://carbide/${{ github.ref_name }}/spilts/
           done
 
       - name: Upload NeuVector
         run: |
           cd hauler/neuvector && source ~/.bashrc
-          time aws s3 cp --no-progress neuvector-carbide-amd64.tar.zst s3://carbide/${{ github.ref_name }}/
-          time aws s3 cp --no-progress neuvector-carbide-arm64.tar.zst s3://carbide/${{ github.ref_name }}/
+          source <(grep "export vNeuVector=" ../scripts/neuvector/hauler-neuvector.sh)
+          time aws s3 cp --no-progress neuvector-carbide-v${vNeuVector}-amd64.tar.zst s3://carbide/${{ github.ref_name }}/
+          time aws s3 cp --no-progress neuvector-carbide-v${vNeuVector}-arm64.tar.zst s3://carbide/${{ github.ref_name }}/
 
-          time 7z a -v999m neuvector-carbide-amd64.tar neuvector-carbide-amd64.tar.zst
-          time for file in neuvector-carbide-amd64.tar.0*; do
+          time 7z a -v999m neuvector-carbide-v${vNeuVector}-amd64.tar neuvector-carbide-v${vNeuVector}-amd64.tar.zst
+          time for file in neuvector-carbide-v${vNeuVector}-amd64.tar.0*; do
             aws s3 cp --no-progress "$file" s3://carbide/${{ github.ref_name }}/spilts/
           done
-          time 7z a -v999m neuvector-carbide-arm64.tar neuvector-carbide-arm64.tar.zst
-          time for file in neuvector-carbide-arm64.tar.0*; do
+          time 7z a -v999m neuvector-carbide-v${vNeuVector}-arm64.tar neuvector-carbide-v${vNeuVector}-arm64.tar.zst
+          time for file in neuvector-carbide-v${vNeuVector}-arm64.tar.0*; do
             aws s3 cp --no-progress "$file" s3://carbide/${{ github.ref_name }}/spilts/
           done
 
       - name: Upload Harvester
         run: |
           cd hauler/harvester && source ~/.bashrc
-          time aws s3 cp --no-progress harvester-carbide-amd64.tar.zst s3://carbide/${{ github.ref_name }}/
-          time aws s3 cp --no-progress harvester-carbide-arm64.tar.zst s3://carbide/${{ github.ref_name }}/
+          source <(grep "export vHarvester=" ../scripts/harvester/hauler-harvester.sh)
+          time aws s3 cp --no-progress harvester-carbide-v${vHarvester}-amd64.tar.zst s3://carbide/${{ github.ref_name }}/
+          time aws s3 cp --no-progress harvester-carbide-v${vHarvester}-arm64.tar.zst s3://carbide/${{ github.ref_name }}/
 
-          time 7z a -v999m harvester-carbide-amd64.tar harvester-carbide-amd64.tar.zst
-          time for file in harvester-carbide-amd64.tar.0*; do
+          time 7z a -v999m harvester-carbide-v${vHarvester}-amd64.tar harvester-carbide-v${vHarvester}-amd64.tar.zst
+          time for file in harvester-carbide-v${vHarvester}-amd64.tar.0*; do
             aws s3 cp --no-progress "$file" s3://carbide/${{ github.ref_name }}/spilts/
           done
-          time 7z a -v999m harvester-carbide-arm64.tar harvester-carbide-arm64.tar.zst
-          time for file in harvester-carbide-arm64.tar.0*; do
+          time 7z a -v999m harvester-carbide-v${vHarvester}-arm64.tar harvester-carbide-v${vHarvester}-arm64.tar.zst
+          time for file in harvester-carbide-v${vHarvester}-arm64.tar.0*; do
             aws s3 cp --no-progress "$file" s3://carbide/${{ github.ref_name }}/spilts/
           done
 
       - name: Upload Gitea
         run: |
           cd hauler/gitea && source ~/.bashrc
-          time aws s3 cp --no-progress gitea-carbide-amd64.tar.zst s3://carbide/${{ github.ref_name }}/
-          time aws s3 cp --no-progress gitea-carbide-arm64.tar.zst s3://carbide/${{ github.ref_name }}/
+          source <(grep "export vGitea=" ../scripts/gitea/hauler-gitea.sh)
+          time aws s3 cp --no-progress gitea-carbide-v${vGitea}-amd64.tar.zst s3://carbide/${{ github.ref_name }}/
+          time aws s3 cp --no-progress gitea-carbide-v${vGitea}-arm64.tar.zst s3://carbide/${{ github.ref_name }}/
 
-      - name: Upload Kubevip
+      - name: Upload KubeVip
         run: |
           cd hauler/kubevip && source ~/.bashrc
-          time aws s3 cp --no-progress kubevip-carbide-amd64.tar.zst s3://carbide/${{ github.ref_name }}/
-          time aws s3 cp --no-progress kubevip-carbide-arm64.tar.zst s3://carbide/${{ github.ref_name }}/
+          source <(grep "export vKubeVip=" ../scripts/kubevip/hauler-kubevip.sh)
+          time aws s3 cp --no-progress kubevip-carbide-v${KubeVip}-amd64.tar.zst s3://carbide/${{ github.ref_name }}/
+          time aws s3 cp --no-progress kubevip-carbide-v${KubeVip}-arm64.tar.zst s3://carbide/${{ github.ref_name }}/
 
       - name: Upload Vault
         run: |
           cd hauler/vault && source ~/.bashrc
-          time aws s3 cp --no-progress vault-carbide-amd64.tar.zst s3://carbide/${{ github.ref_name }}/
-          time aws s3 cp --no-progress vault-carbide-arm64.tar.zst s3://carbide/${{ github.ref_name }}/
+          source <(grep "export vVault=" ../scripts/vault/hauler-vault.sh)
+          time aws s3 cp --no-progress vault-carbide-v${vVault}-amd64.tar.zst s3://carbide/${{ github.ref_name }}/
+          time aws s3 cp --no-progress vault-carbide-v${vVault}-arm64.tar.zst s3://carbide/${{ github.ref_name }}/
 
       - name: Upload Private
         run: |
           cd hauler/carbide && source ~/.bashrc
-          time aws s3 cp --no-progress carbide-carbide-amd64.tar.zst s3://carbide/${{ github.ref_name }}/
-          time aws s3 cp --no-progress carbide-carbide-arm64.tar.zst s3://carbide/${{ github.ref_name }}/
+          time aws s3 cp --no-progress carbide-carbide-$(date +"%m%d%Y")-amd64.tar.zst s3://carbide/${{ github.ref_name }}/
+          time aws s3 cp --no-progress carbide-carbide-$(date +"%m%d%Y")-arm64.tar.zst s3://carbide/${{ github.ref_name }}/
 
-          time 7z a -v999m carbide-carbide-amd64.tar carbide-carbide-amd64.tar.zst
-          time for file in carbide-carbide-amd64.tar.0*; do
+          time 7z a -v999m carbide-carbide-$(date +"%m%d%Y")-amd64.tar carbide-carbide-$(date +"%m%d%Y")-amd64.tar.zst
+          time for file in carbide-carbide-$(date +"%m%d%Y")-amd64.tar.0*; do
             aws s3 cp --no-progress "$file" s3://carbide/${{ github.ref_name }}/spilts/
           done
-          time 7z a -v999m carbide-carbide-arm64.tar carbide-carbide-arm64.tar.zst
-          time for file in carbide-carbide-arm64.tar.0*; do
+          time 7z a -v999m carbide-carbide-$(date +"%m%d%Y")-arm64.tar carbide-carbide-$(date +"%m%d%Y")-arm64.tar.zst
+          time for file in carbide-carbide-$(date +"%m%d%Y")-arm64.tar.0*; do
             aws s3 cp --no-progress "$file" s3://carbide/${{ github.ref_name }}/spilts/
           done

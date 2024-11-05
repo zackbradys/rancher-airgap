@@ -1,3 +1,6 @@
+### Set Variables
+export vKubeVip=$(curl -sL kube-vip.io/k3s | grep -o 'image:.*' | sed -E 's/image: .*:(v[0-9]+\.[0-9]+\.[0-9]+).*/\1/')
+
 ### Setup Working Directory
 rm -rf /opt/hauler/kubevip
 mkdir -p /opt/hauler/kubevip

@@ -12,9 +12,6 @@ cd /opt/hauler/rancher-minimal
 helm repo add jetstack https://charts.jetstack.io && helm repo update
 certManagerImagesMinimal=$(helm template jetstack/cert-manager --version=v${vCertManager} | grep 'image:' | sed 's/"//g' | awk '{ print $2 }' | sed -e "s/^/    - name: /")
 
-### Set Cert-Manager Images Variable
-certmanagerImagesMinimal=$(cat cert-manager-images-minimal.txt)
-
 ### Download Rancher Images
 ### https://github.com/rancher/rancher
 curl -#L https://github.com/rancher/rancher/releases/download/v${vRancher}/rancher-images.txt -o rancher-images-minimal.txt
