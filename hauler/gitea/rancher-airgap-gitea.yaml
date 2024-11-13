@@ -6,7 +6,7 @@ spec:
   charts:
     - name: gitea
       repoURL: https://dl.gitea.com/charts
-      version: 10.5.0
+      version: 10.6.0
 ---
 apiVersion: content.hauler.cattle.io/v1alpha1
 kind: Images
