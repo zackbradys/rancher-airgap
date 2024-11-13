@@ -48,7 +48,7 @@ fetch -> validate -> save -> | <airgap> | -> load -> validate -> distribute
 - [hauler/gitea](hauler/gitea/README.md) - provides the content manifest for Gitea
   - currently supports: `Gitea: v1.22.3`
 - [hauler/vault](hauler/vault/README.md) - provides the content manifest for Vault
-  - currently supports: `Vault: v1.17.2`
+  - currently supports: `Vault: v1.18.1`
 - [hauler/kubevip](hauler/kubevip/README.md) - provides the content manifest for KubeVip
   - currently supports: `KubeVip: v0.5.11`
 
