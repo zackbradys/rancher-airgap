@@ -55,7 +55,7 @@ hauler store save --store kubevip-store --filename rancher-airgap-kubevip.tar.zs
 hauler store save --store extras --filename rancher-airgap-extras.tar.zst
 
 ### Fetch Hauler Binary
-curl -sfOL https://github.com/hauler-dev/hauler/releases/download/v1.0.8/hauler_1.0.8_linux_amd64.tar.gz
+curl -sfOL https://github.com/hauler-dev/hauler/releases/download/v1.1.0/hauler_1.1.0_linux_amd64.tar.gz
 ```
 
 ---
@@ -201,7 +201,7 @@ configs:
 EOF
 
 ### Install Depedencies
-yum install -y http://${fileserver}/rke2-selinux-0.17-1.${vPlatform}.noarch.rpm http://${fileserver}/rke2-common-${vRKE2}.rke2r1-0.${vPlatform}.x86_64.rpm http://${fileserver}/rke2-server-${vRKE2}.rke2r1-0.${vPlatform}.x86_64.rpm
+yum install -y http://${fileserver}/rke2-selinux-0.18-1.${vPlatform}.noarch.rpm http://${fileserver}/rke2-common-${vRKE2}.rke2r1-0.${vPlatform}.x86_64.rpm http://${fileserver}/rke2-server-${vRKE2}.rke2r1-0.${vPlatform}.x86_64.rpm
 
 ### Download and Install RKE2 Server
 ### curl -sfOL http://${fileserver}/install.sh | INSTALL_RKE2_VERSION=${vRKE2} INSTALL_RKE2_TYPE=server sh -
@@ -305,7 +305,7 @@ mirrors:
 EOF
 
 ### Install Depedencies
-yum install -y http://${fileserver}/rke2-selinux-0.17-1.${vPlatform}.noarch.rpm http://${fileserver}/rke2-common-${vRKE2}.rke2r1-0.${vPlatform}.x86_64.rpm http://${fileserver}/rke2-agent-${vRKE2}.rke2r1-0.${vPlatform}.x86_64.rpm
+yum install -y http://${fileserver}/rke2-selinux-0.18-1.${vPlatform}.noarch.rpm http://${fileserver}/rke2-common-${vRKE2}.rke2r1-0.${vPlatform}.x86_64.rpm http://${fileserver}/rke2-agent-${vRKE2}.rke2r1-0.${vPlatform}.x86_64.rpm
 
 ### Download and Install RKE2 Server
 ### curl -sfOL http://${fileserver}/install.sh | INSTALL_RKE2_VERSION=${vRKE2} INSTALL_RKE2_TYPE=agent sh -
@@ -347,7 +347,7 @@ sudo su
 
 ### Set Variables
 export DOMAIN=<example.com>
-export vCertManager=1.16.1
+export vCertManager=1.16.2
 export registry=<FQDN or IP>:5000
 export fileserver=<FQDN or IP>:8080
 
@@ -391,7 +391,7 @@ sudo su
 
 ### Set Variables
 export DOMAIN=<example.com>
-export vRancher=2.8.6
+export vRancher=2.9.4
 export registry=<FQDN or IP>:5000
 export fileserver=<FQDN or IP>:8080
 
@@ -433,7 +433,7 @@ sudo su
 
 ### Set Variables
 export DOMAIN=<example.com>
-export vLonghorn=1.7.1
+export vLonghorn=1.7.2
 export registry=<FQDN or IP>:5000
 export fileserver=<FQDN or IP>:8080
 
@@ -457,7 +457,7 @@ sudo su
 
 ### Set Variables
 export DOMAIN=<example.com>
-export vNeuVector=2.8.0
+export vNeuVector=2.8.3
 export registry=<FQDN or IP>:5000
 export fileserver=<FQDN or IP>:8080
 
