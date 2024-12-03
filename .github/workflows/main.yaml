@@ -412,8 +412,8 @@ jobs:
           source <(grep "export vKubeVip=" ../scripts/kubevip/hauler-kubevip.sh)
           time hauler store sync --store amd64 --platform linux/amd64 --files rancher-airgap-kubevip.yaml
           time hauler store sync --store arm64 --platform linux/arm64 --files rancher-airgap-kubevip.yaml
-          time hauler store save --store amd64 --platform linux/amd64 --filename kubevip-carbide-v${vKubeVip}-amd64.tar.zst
-          time hauler store save --store arm64 --platform linux/arm64 --filename kubevip-carbide-v${vKubeVip}-arm64.tar.zst
+          time hauler store save --store amd64 --platform linux/amd64 --filename kubevip-carbide-${vKubeVip}-amd64.tar.zst
+          time hauler store save --store arm64 --platform linux/arm64 --filename kubevip-carbide-${vKubeVip}-arm64.tar.zst
           hauler store info --store amd64
           hauler store info --store arm64
 
@@ -603,8 +603,8 @@ jobs:
         run: |
           cd hauler/kubevip && source ~/.bashrc
           source <(grep "export vKubeVip=" ../scripts/kubevip/hauler-kubevip.sh)
-          time aws s3 cp --no-progress kubevip-carbide-v${vKubeVip}-amd64.tar.zst s3://carbide/${{ github.ref_name }}/
-          time aws s3 cp --no-progress kubevip-carbide-v${vKubeVip}-arm64.tar.zst s3://carbide/${{ github.ref_name }}/
+          time aws s3 cp --no-progress kubevip-carbide-${vKubeVip}-amd64.tar.zst s3://carbide/${{ github.ref_name }}/
+          time aws s3 cp --no-progress kubevip-carbide-${vKubeVip}-arm64.tar.zst s3://carbide/${{ github.ref_name }}/
 
       - name: Upload Vault
         run: |
