@@ -55,7 +55,7 @@ hauler store save --store kubevip-store --filename rancher-airgap-kubevip.tar.zs
 hauler store save --store extras --filename rancher-airgap-extras.tar.zst
 
 ### Fetch Hauler Binary
-curl -sfOL https://github.com/hauler-dev/hauler/releases/download/v1.1.0/hauler_1.1.0_linux_amd64.tar.gz
+curl -sfOL https://github.com/hauler-dev/hauler/releases/download/v1.1.1/hauler_1.1.1_linux_amd64.tar.gz
 ```
 
 ---

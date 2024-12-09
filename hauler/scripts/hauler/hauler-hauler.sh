@@ -1,5 +1,5 @@
 ### Set Variables
-export vHauler=1.1.0
+export vHauler=1.1.1
 
 ### Setup Working Directory
 rm -rf /opt/hauler/hauler
@@ -19,6 +19,10 @@ spec:
       name: hauler-linux-amd64.tar.gz
     - path: https://github.com/hauler-dev/hauler/releases/download/v${vHauler}/hauler_${vHauler}_linux_arm64.tar.gz
       name: hauler-linux-arm64.tar.gz
+    - path: https://github.com/hauler-dev/hauler/releases/download/v${vHauler}/hauler_${vHauler}_darwin_amd64.tar.gz
+      name: hauler-darwin-amd64.tar.gz
+    - path: https://github.com/hauler-dev/hauler/releases/download/v${vHauler}/hauler_${vHauler}_darwin_arm64.tar.gz
+      name: hauler-darwin-arm64.tar.gz
     - path: https://github.com/hauler-dev/hauler/releases/download/v${vHauler}/hauler_${vHauler}_windows_amd64.tar.gz
       name: hauler-windows-amd64.tar.gz
     - path: https://github.com/hauler-dev/hauler/releases/download/v${vHauler}/hauler_${vHauler}_windows_arm64.tar.gz
