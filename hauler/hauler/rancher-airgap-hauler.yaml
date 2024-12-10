@@ -33,5 +33,5 @@ metadata:
   name: rancher-airgap-images-hauler
 spec:
   images:
-    - name: ghcr.io/hauler-dev/hauler:v1.1.1
-    - name: ghcr.io/hauler-dev/hauler-debug:v1.1.1
+    - name: ghcr.io/hauler-dev/hauler:1.1.1
+    - name: ghcr.io/hauler-dev/hauler-debug:1.1.1
