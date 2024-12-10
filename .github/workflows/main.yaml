@@ -24,78 +24,91 @@ jobs:
           pwd && ls -laR
 
       - name: Build Hauler
+        if: always()
         run: |
           sh hauler/scripts/hauler/hauler-hauler.sh
           mv /opt/hauler/hauler/rancher-airgap-hauler.yaml hauler/hauler/rancher-airgap-hauler.yaml
           pwd && ls -laR hauler/hauler
 
       - name: Build Helm
+        if: always()
         run: |
           sh hauler/scripts/helm/hauler-helm.sh
           mv /opt/hauler/helm/rancher-airgap-helm.yaml hauler/helm/rancher-airgap-helm.yaml
           pwd && ls -laR hauler/helm
 
       - name: Build Cosign
+        if: always()
         run: |
           sh hauler/scripts/cosign/hauler-cosign.sh
           mv /opt/hauler/cosign/rancher-airgap-cosign.yaml hauler/cosign/rancher-airgap-cosign.yaml
           pwd && ls -laR hauler/cosign
 
       - name: Build RKE2
+        if: always()
         run: |
           sh hauler/scripts/rke2/hauler-rke2.sh
           mv /opt/hauler/rke2/rancher-airgap-rke2.yaml hauler/rke2/rancher-airgap-rke2.yaml
           pwd && ls -laR hauler/rke2
 
       - name: Build Rancher
+        if: always()
         run: |
           sh hauler/scripts/rancher/hauler-rancher.sh
           mv /opt/hauler/rancher/rancher-airgap-rancher.yaml hauler/rancher/rancher-airgap-rancher.yaml
           pwd && ls -laR hauler/rancher
 
       - name: Build Rancher Minimal
+        if: always()
         run: |
           sh hauler/scripts/rancher/hauler-rancher-minimal.sh
           mv /opt/hauler/rancher-minimal/rancher-airgap-rancher-minimal.yaml hauler/rancher/rancher-airgap-rancher-minimal.yaml
           pwd && ls -laR hauler/rancher
 
       - name: Build Longhorn
+        if: always()
         run: |
           sh hauler/scripts/longhorn/hauler-longhorn.sh
           mv /opt/hauler/longhorn/rancher-airgap-longhorn.yaml hauler/longhorn/rancher-airgap-longhorn.yaml
           pwd && ls -laR hauler/longhorn
 
       - name: Build NeuVector
+        if: always()
         run: |
           sh hauler/scripts/neuvector/hauler-neuvector.sh
           mv /opt/hauler/neuvector/rancher-airgap-neuvector.yaml hauler/neuvector/rancher-airgap-neuvector.yaml
           pwd && ls -laR hauler/neuvector
 
       - name: Build Harvester
+        if: always()
         run: |
           sh hauler/scripts/harvester/hauler-harvester.sh
           mv /opt/hauler/harvester/rancher-airgap-harvester.yaml hauler/harvester/rancher-airgap-harvester.yaml
           pwd && ls -laR hauler/harvester
 
       - name: Build Gitea
+        if: always()
         run: |
           sh hauler/scripts/gitea/hauler-gitea.sh
           mv /opt/hauler/gitea/rancher-airgap-gitea.yaml hauler/gitea/rancher-airgap-gitea.yaml
           pwd && ls -laR hauler/gitea
 
       - name: Build KubeVip
+        if: always()
         run: |
           sh hauler/scripts/kubevip/hauler-kubevip.sh
           mv /opt/hauler/kubevip/rancher-airgap-kubevip.yaml hauler/kubevip/rancher-airgap-kubevip.yaml
           pwd && ls -laR hauler/kubevip
 
       - name: Build Vault
+        if: always()
         run: |
           sh hauler/scripts/vault/hauler-vault.sh
           mv /opt/hauler/vault/rancher-airgap-vault.yaml hauler/vault/rancher-airgap-vault.yaml
           pwd && ls -laR hauler/vault
 
       - name: Commit and Push Repository
+        if: always()
         run: |
           pwd && ls -laR
           git status
@@ -124,6 +137,7 @@ jobs:
           pwd && ls -laR
 
       - name: Test/Lint Hauler
+        if: always()
         run: |
           cd hauler/hauler
           time hauler store sync --files rancher-airgap-hauler.yaml
@@ -132,6 +146,7 @@ jobs:
           ls -laR
 
       - name: Test/Lint Helm
+        if: always()
         run: |
           cd hauler/helm
           time hauler store sync --files rancher-airgap-helm.yaml
@@ -140,6 +155,7 @@ jobs:
           ls -laR
 
       - name: Test/Lint Cosign
+        if: always()
         run: |
           cd hauler/cosign
           time hauler store sync --files rancher-airgap-cosign.yaml
@@ -148,6 +164,7 @@ jobs:
           ls -laR
 
       - name: Test/Lint RKE2
+        if: always()
         run: |
           cd hauler/rke2
           time hauler store sync --files rancher-airgap-rke2.yaml
@@ -156,6 +173,7 @@ jobs:
           ls -laR
 
       - name: Test/Lint Rancher
+        if: always()
         run: |
           cd hauler/rancher
           time hauler store sync --files rancher-airgap-rancher.yaml
@@ -164,6 +182,7 @@ jobs:
           ls -laR
 
       - name: Test/Lint Rancher Minimal
+        if: always()
         run: |
           cd hauler/rancher
           rm -rf store
@@ -173,6 +192,7 @@ jobs:
           ls -laR
 
       - name: Test/Lint Longhorn
+        if: always()
         run: |
           cd hauler/longhorn
           time hauler store sync --files rancher-airgap-longhorn.yaml
@@ -181,6 +201,7 @@ jobs:
           ls -laR
 
       - name: Test/Lint NeuVector
+        if: always()
         run: |
           cd hauler/neuvector
           time hauler store sync --files rancher-airgap-neuvector.yaml
@@ -189,6 +210,7 @@ jobs:
           ls -laR
 
       - name: Test/Lint Harvester
+        if: always()
         run: |
           cd hauler/harvester
           time hauler store sync --files rancher-airgap-harvester.yaml
@@ -197,6 +219,7 @@ jobs:
           ls -laR
 
       - name: Test/Lint Gitea
+        if: always()
         run: |
           cd hauler/gitea
           time hauler store sync --files rancher-airgap-gitea.yaml
@@ -205,6 +228,7 @@ jobs:
           ls -laR
 
       - name: Test/Lint KubeVip
+        if: always()
         run: |
           cd hauler/kubevip
           time hauler store sync --files rancher-airgap-kubevip.yaml
@@ -213,6 +237,7 @@ jobs:
           ls -laR
 
       - name: Test/Lint Vault
+        if: always()
         run: |
           cd hauler/vault
           time hauler store sync --files rancher-airgap-vault.yaml
@@ -223,7 +248,6 @@ jobs:
   rancher-airgap-release:
     name: Rancher Airgap - Release Job
     runs-on: [self-hosted, linux, X64]
-    continue-on-error: true
     needs: [rancher-airgap-build, rancher-airgap-testing]
     steps:
       - name: Checkout Repository
@@ -291,6 +315,7 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
       - name: Fetch/Build Hauler
+        if: always()
         run: |
           cd hauler/hauler && source ~/.bashrc
           source <(grep "export vHauler=" ../scripts/hauler/hauler-hauler.sh)
@@ -302,6 +327,7 @@ jobs:
           hauler store info --store arm64
 
       - name: Fetch/Build Helm
+        if: always()
         run: |
           cd hauler/helm && source ~/.bashrc
           source <(grep "export vHelm=" ../scripts/helm/hauler-helm.sh)
@@ -313,6 +339,7 @@ jobs:
           hauler store info --store arm64
 
       - name: Fetch/Build Cosign
+        if: always()
         run: |
           cd hauler/cosign && source ~/.bashrc
           source <(grep "export vCosign=" ../scripts/cosign/hauler-cosign.sh)
@@ -324,6 +351,7 @@ jobs:
           hauler store info --store arm64
 
       - name: Fetch/Build RKE2
+        if: always()
         run: |
           cd hauler/rke2 && source ~/.bashrc
           source <(grep "export vRKE2=" ../scripts/rke2/hauler-rke2.sh)
@@ -335,6 +363,7 @@ jobs:
           hauler store info --store arm64
 
       - name: Fetch/Build Rancher
+        if: always()
         run: |
           cd hauler/rancher && source ~/.bashrc
           source <(grep "export vRancher=" ../scripts/rancher/hauler-rancher.sh)
@@ -348,6 +377,7 @@ jobs:
           hauler store info --store arm64
 
       - name: Fetch/Build Rancher Minimal
+        if: always()
         run: |
           cd hauler/rancher && source ~/.bashrc
           source <(grep "export vRancher=" ../scripts/rancher/hauler-rancher-minimal.sh)
@@ -362,6 +392,7 @@ jobs:
           hauler store info --store arm64
 
       - name: Fetch/Build Longhorn
+        if: always()
         run: |
           cd hauler/longhorn && source ~/.bashrc
           source <(grep "export vLonghorn=" ../scripts/longhorn/hauler-longhorn.sh)
@@ -373,6 +404,7 @@ jobs:
           hauler store info --store arm64
 
       - name: Fetch/Build NeuVector
+        if: always()
         run: |
           cd hauler/neuvector && source ~/.bashrc
           source <(grep "export vNeuVector=" ../scripts/neuvector/hauler-neuvector.sh)
@@ -384,6 +416,7 @@ jobs:
           hauler store info --store arm64
 
       - name: Fetch/Build Harvester
+        if: always()
         run: |
           cd hauler/harvester && source ~/.bashrc
           source <(grep "export vHarvester=" ../scripts/harvester/hauler-harvester.sh)
@@ -399,6 +432,7 @@ jobs:
           hauler store info --store arm64
 
       - name: Fetch/Build Gitea
+        if: always()
         run: |
           cd hauler/gitea && source ~/.bashrc
           source <(grep "export vGitea=" ../scripts/gitea/hauler-gitea.sh)
@@ -410,6 +444,7 @@ jobs:
           hauler store info --store arm64
 
       - name: Fetch/Build KubeVip
+        if: always()
         run: |
           cd hauler/kubevip && source ~/.bashrc
           source <(grep "export vKubeVip=" ../scripts/kubevip/hauler-kubevip.sh)
@@ -421,6 +456,7 @@ jobs:
           hauler store info --store arm64
 
       - name: Fetch/Build Vault
+        if: always()
         run: |
           cd hauler/vault && source ~/.bashrc
           source <(grep "export vVault=" ../scripts/vault/hauler-vault.sh)
@@ -432,14 +468,13 @@ jobs:
           hauler store info --store arm64
 
       - name: Fetch/Build Private
+        if: always()
         run: |
           mkdir -p hauler/carbide && cd hauler/carbide && source ~/.bashrc
           echo -e "apiVersion: content.hauler.cattle.io/v1alpha1\nkind: Images\nmetadata:\n  name: carbide-images\nspec:\n  images:\n$(curl -sfL https://raw.githubusercontent.com/rancherfederal/carbide-releases/main/carbide-images.txt | sed '/nats/d' | sed 's/^/    - name: /')" > carbide-images.yaml
-          sed -i "s/rgcrprod.azurecr.us/registry.ranchercarbide.dev/g" carbide-images.yaml
           echo -e "apiVersion: content.hauler.cattle.io/v1alpha1\nkind: Images\nmetadata:\n  name: carbide-dependency-images\nspec:\n  images:\n$(curl -sfL https://raw.githubusercontent.com/rancherfederal/carbide-releases/main/carbide-images.txt | sed '/rgcr/d' | sed 's/^/    - name: /')" > carbide-dependency-images.yaml
           echo -e "apiVersion: content.hauler.cattle.io/v1alpha1\nkind: Charts\nmetadata:\n  name: carbide-charts\nspec:\n  charts:\n    - name: rancher\n      repoURL: https://rancherfederal.github.io/carbide-charts\n      version: 2.9.3\n    - name: airgapped-docs\n      repoURL: https://rancherfederal.github.io/carbide-charts\n      version: 0.1.53\n    - name: stigatron\n      repoURL: https://rancherfederal.github.io/carbide-charts\n      version: 0.3.0\n    - name: stigatron-ui\n      repoURL: https://rancherfederal.github.io/carbide-charts\n      version: 0.3.0\n---\napiVersion: content.hauler.cattle.io/v1alpha1\nkind: Charts\nmetadata:\n  name: carbide-dependency-charts\nspec:\n  charts:\n    - name: heimdall2\n      repoURL: https://rancherfederal.github.io/carbide-charts\n      version: 0.1.41\n    - name: nats\n      repoURL: https://nats-io.github.io/k8s/helm/charts\n      version: 1.1.5" > carbide-charts.yaml
           echo -e "apiVersion: content.hauler.cattle.io/v1alpha1\nkind: Images\nmetadata:\n  name: carbide-provisioning-images\n  annotations:\n    hauler.dev/key: /tmp/carbide-key.pub\n    # hauler.dev/platform: linux/amd64 # only fetch specific platform/architecture\nspec:\n  images:\n    - name: rgcrprod.azurecr.us/rancher/machine:v0.15.0-rancher118-carbide-1\n    - name: rgcrprod.azurecr.us/rancher/rancher:v2.9.3-carbide-1\n    - name: rgcrprod.azurecr.us/rancher/rancher-agent:v2.9.3-carbide-1\n    - name: rgcrprod.azurecr.us/carbide/carbide-docs:0.1.7-carbide-1\n---\napiVersion: content.hauler.cattle.io/v1alpha1\nkind: Charts\nmetadata:\n  name: carbide-provisioning-charts\nspec:\n  charts:\n    - name: rancher\n      repoURL: https://rancherfederal.github.io/carbide-charts\n      version: 2.9.3" > carbide-provisioning.yaml
-          sed -i "s/rgcrprod.azurecr.us/registry.ranchercarbide.dev/g" carbide-provisioning.yaml
           time hauler store sync --store amd64 --key ../../carbide-key.pub --platform linux/amd64 --files carbide-images.yaml
           time hauler store sync --store arm64 --key ../../carbide-key.pub --platform linux/arm64 --files carbide-images.yaml
           time hauler store sync --store amd64 --platform linux/amd64 --files carbide-dependency-images.yaml
@@ -454,6 +489,7 @@ jobs:
           hauler store info --store arm64
 
       - name: Fetch/Build/Upload Hauler Binaries
+        if: always()
         run: |
           mkdir -p hauler/hauler/binaries && cd hauler/hauler/binaries && source ~/.bashrc
           source <(grep "export vHauler=" ../../scripts/hauler/hauler-hauler.sh)
@@ -480,6 +516,7 @@ jobs:
           done
 
       - name: Upload Hauler
+        if: always()
         run: |
           cd hauler/hauler && source ~/.bashrc
           source <(grep "export vHauler=" ../scripts/hauler/hauler-hauler.sh)
@@ -487,6 +524,7 @@ jobs:
           time aws s3 cp --no-progress hauler-carbide-v${vHauler}-arm64.tar.zst s3://carbide/${{ github.ref_name }}/
 
       - name: Upload Helm
+        if: always()
         run: |
           cd hauler/helm && source ~/.bashrc
           source <(grep "export vHelm=" ../scripts/helm/hauler-helm.sh)
@@ -494,6 +532,7 @@ jobs:
           time aws s3 cp --no-progress helm-carbide-v${vHelm}-arm64.tar.zst s3://carbide/${{ github.ref_name }}/
 
       - name: Upload Cosign
+        if: always()
         run: |
           cd hauler/cosign && source ~/.bashrc
           source <(grep "export vCosign=" ../scripts/cosign/hauler-cosign.sh)
@@ -501,6 +540,7 @@ jobs:
           time aws s3 cp --no-progress cosign-carbide-v${vCosign}-arm64.tar.zst s3://carbide/${{ github.ref_name }}/
 
       - name: Upload RKE2
+        if: always()
         run: |
           cd hauler/rke2 && source ~/.bashrc
           source <(grep "export vRKE2=" ../scripts/rke2/hauler-rke2.sh)
@@ -516,6 +556,7 @@ jobs:
           done
 
       - name: Upload Rancher
+        if: always()
         run: |
           cd hauler/rancher && source ~/.bashrc
           source <(grep "export vRancher=" ../scripts/rancher/hauler-rancher.sh)
@@ -532,6 +573,7 @@ jobs:
           done
 
       - name: Upload Rancher Minimal
+        if: always()
         run: |
           cd hauler/rancher && source ~/.bashrc
           source <(grep "export vRancher=" ../scripts/rancher/hauler-rancher-minimal.sh)
@@ -548,6 +590,7 @@ jobs:
           done
 
       - name: Upload Longhorn
+        if: always()
         run: |
           cd hauler/longhorn && source ~/.bashrc
           source <(grep "export vLonghorn=" ../scripts/longhorn/hauler-longhorn.sh)
@@ -564,6 +607,7 @@ jobs:
           done
 
       - name: Upload NeuVector
+        if: always()
         run: |
           cd hauler/neuvector && source ~/.bashrc
           source <(grep "export vNeuVector=" ../scripts/neuvector/hauler-neuvector.sh)
@@ -580,6 +624,7 @@ jobs:
           done
 
       - name: Upload Harvester
+        if: always()
         run: |
           cd hauler/harvester && source ~/.bashrc
           source <(grep "export vHarvester=" ../scripts/harvester/hauler-harvester.sh)
@@ -596,6 +641,7 @@ jobs:
           done
 
       - name: Upload Gitea
+        if: always()
         run: |
           cd hauler/gitea && source ~/.bashrc
           source <(grep "export vGitea=" ../scripts/gitea/hauler-gitea.sh)
@@ -603,6 +649,7 @@ jobs:
           time aws s3 cp --no-progress gitea-carbide-v${vGitea}-arm64.tar.zst s3://carbide/${{ github.ref_name }}/
 
       - name: Upload KubeVip
+        if: always()
         run: |
           cd hauler/kubevip && source ~/.bashrc
           source <(grep "export vKubeVip=" ../scripts/kubevip/hauler-kubevip.sh)
@@ -610,6 +657,7 @@ jobs:
           time aws s3 cp --no-progress kubevip-carbide-${vKubeVip}-arm64.tar.zst s3://carbide/${{ github.ref_name }}/
 
       - name: Upload Vault
+        if: always()
         run: |
           cd hauler/vault && source ~/.bashrc
           source <(grep "export vVault=" ../scripts/vault/hauler-vault.sh)
@@ -617,6 +665,7 @@ jobs:
           time aws s3 cp --no-progress vault-carbide-v${vVault}-arm64.tar.zst s3://carbide/${{ github.ref_name }}/
 
       - name: Upload Private
+        if: always()
         run: |
           cd hauler/carbide && source ~/.bashrc
           time aws s3 cp --no-progress carbide-carbide-$(date +"%m%d%Y")-amd64.tar.zst s3://carbide/${{ github.ref_name }}/
