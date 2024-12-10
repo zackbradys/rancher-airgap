@@ -41,6 +41,3 @@ spec:
   images:
 ${longhornImages}
 EOF
-
-### Add the Hauler Manifest
-hauler store add file rancher-airgap-longhorn.yaml

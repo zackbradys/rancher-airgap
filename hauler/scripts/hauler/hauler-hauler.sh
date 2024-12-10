@@ -47,6 +47,3 @@ spec:
     - name: ghcr.io/hauler-dev/hauler:${vHauler}
     - name: ghcr.io/hauler-dev/hauler-debug:${vHauler}
 EOF
-
-### Add the Hauler Manifest
-hauler store add file rancher-airgap-hauler.yaml

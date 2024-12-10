@@ -77,6 +77,3 @@ spec:
   images:
 ${rke2Images}
 EOF
-
-### Add the Hauler Manifest
-hauler store add file rancher-airgap-rke2.yaml

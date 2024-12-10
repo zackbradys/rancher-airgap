@@ -14,7 +14,7 @@ certManagerImagesMinimal=$(helm template jetstack/cert-manager --version=v${vCer
 
 ### Download Rancher Images
 ### https://github.com/rancher/rancher
-curl -#L https://github.com/rancher/rancher/releases/download/v${vRancher}/rancher-images.txt -o rancher-images-minimal.txt
+curl -sSfL https://prime.ribs.rancher.io/rancher/v${vRancher}/rancher-images.txt -o rancher-images-minimal.txt
 
 sed -i '/neuvector\|minio\|gke\|aks\|eks\|sriov\|harvester\|longhorn\|thanos\|tekton\|istio\|multus\|hyper\|jenkins\|prom\|grafana\|windows/d' rancher-images-minimal.txt
 
@@ -70,6 +70,3 @@ spec:
   images:
 ${rancherImagesMinimal}
 EOF
-
-### Add the Hauler Manifest
-hauler store add file rancher-airgap-rancher-minimal.yaml

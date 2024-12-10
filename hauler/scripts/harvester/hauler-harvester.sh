@@ -62,6 +62,3 @@ spec:
   images:
 ${harvesterImages}
 EOF
-
-### Add the Hauler Manifest
-hauler store add file rancher-airgap-harvester.yaml

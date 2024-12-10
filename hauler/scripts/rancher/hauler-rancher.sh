@@ -14,7 +14,7 @@ certManagerImages=$(helm template jetstack/cert-manager --version=v${vCertManage
 
 ### Download Rancher Images and Modify the List
 ### https://github.com/rancher/rancher
-rancherImages=$(curl -sSfL https://github.com/rancher/rancher/releases/download/v${vRancher}/rancher-images.txt | sed -e "s/^/    - name: /")
+rancherImages=$(curl -sSfL https://prime.ribs.rancher.io/rancher/v${vRancher}/rancher-images.txt | sed -e "s/^/    - name: /")
 
 ### Create Hauler Manifest
 cat << EOF >> /opt/hauler/rancher/rancher-airgap-rancher.yaml
@@ -58,6 +58,3 @@ spec:
   images:
 ${rancherImages}
 EOF
-
-### Add the Hauler Manifest
-hauler store add file rancher-airgap-rancher.yaml

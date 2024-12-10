@@ -31,6 +31,3 @@ spec:
   images:
 ${neuvectorImages}
 EOF
-
-### Add the Hauler Manifest
-hauler store add file rancher-airgap-neuvector.yaml

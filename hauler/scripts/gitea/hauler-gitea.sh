@@ -31,6 +31,3 @@ spec:
   images:
 ${giteaImages}
 EOF
-
-### Add the Hauler Manifest
-hauler store add file rancher-airgap-gitea.yaml
