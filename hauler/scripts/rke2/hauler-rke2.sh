@@ -1,5 +1,5 @@
 ### Set Variables
-export vRKE2=1.30.7
+export vRKE2=1.30.6
 export vRKE2SELinux=0.18
 
 ### Setup Working Directory
