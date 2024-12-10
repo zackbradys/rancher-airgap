@@ -4,13 +4,17 @@ metadata:
   name: rancher-airgap-files-hauler
 spec:
   files:
-    - path: https://github.com/hauler-dev/hauler/releases/download/v1.1.0/hauler_1.1.0_linux_amd64.tar.gz
+    - path: https://github.com/hauler-dev/hauler/releases/download/v1.1.1/hauler_1.1.1_linux_amd64.tar.gz
       name: hauler-linux-amd64.tar.gz
-    - path: https://github.com/hauler-dev/hauler/releases/download/v1.1.0/hauler_1.1.0_linux_arm64.tar.gz
+    - path: https://github.com/hauler-dev/hauler/releases/download/v1.1.1/hauler_1.1.1_linux_arm64.tar.gz
       name: hauler-linux-arm64.tar.gz
-    - path: https://github.com/hauler-dev/hauler/releases/download/v1.1.0/hauler_1.1.0_windows_amd64.tar.gz
+    - path: https://github.com/hauler-dev/hauler/releases/download/v1.1.1/hauler_1.1.1_darwin_amd64.tar.gz
+      name: hauler-darwin-amd64.tar.gz
+    - path: https://github.com/hauler-dev/hauler/releases/download/v1.1.1/hauler_1.1.1_darwin_arm64.tar.gz
+      name: hauler-darwin-arm64.tar.gz
+    - path: https://github.com/hauler-dev/hauler/releases/download/v1.1.1/hauler_1.1.1_windows_amd64.tar.gz
       name: hauler-windows-amd64.tar.gz
-    - path: https://github.com/hauler-dev/hauler/releases/download/v1.1.0/hauler_1.1.0_windows_arm64.tar.gz
+    - path: https://github.com/hauler-dev/hauler/releases/download/v1.1.1/hauler_1.1.1_windows_arm64.tar.gz
       name: hauler-windows-arm64.tar.gz
 ---
 apiVersion: content.hauler.cattle.io/v1alpha1
@@ -21,7 +25,7 @@ spec:
   charts:
     - name: hauler-helm
       repoURL: oci://ghcr.io/hauler-dev
-      version: 1.1.0
+      version: 1.1.1
 ---
 apiVersion: content.hauler.cattle.io/v1alpha1
 kind: Images
@@ -29,5 +33,5 @@ metadata:
   name: rancher-airgap-images-hauler
 spec:
   images:
-    - name: ghcr.io/hauler-dev/hauler:v1.1.0
-    - name: ghcr.io/hauler-dev/hauler-debug:v1.1.0
+    - name: ghcr.io/hauler-dev/hauler:v1.1.1
+    - name: ghcr.io/hauler-dev/hauler-debug:v1.1.1
