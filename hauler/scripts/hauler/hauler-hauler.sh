@@ -44,8 +44,8 @@ metadata:
   name: rancher-airgap-images-hauler
 spec:
   images:
-    - name: ghcr.io/hauler-dev/hauler:v${vHauler}
-    - name: ghcr.io/hauler-dev/hauler-debug:v${vHauler}
+    - name: ghcr.io/hauler-dev/hauler:${vHauler}
+    - name: ghcr.io/hauler-dev/hauler-debug:${vHauler}
 EOF
 
 ### Add the Hauler Manifest
