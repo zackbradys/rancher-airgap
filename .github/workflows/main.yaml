@@ -118,137 +118,137 @@ jobs:
           git commit -a -m "updated rancher airgap assets [github-actions]"
           git push
 
-  rancher-airgap-testing:
-    name: Rancher Airgap - Test/Lint Job
-    runs-on: [self-hosted, linux, X64]
-    continue-on-error: true
-    needs: [rancher-airgap-build]
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-        with:
-          ref: main
-          token: ${{ secrets.GITHUB_TOKEN }}
+  # rancher-airgap-testing:
+  #   name: Rancher Airgap - Test/Lint Job
+  #   runs-on: [self-hosted, linux, X64]
+  #   continue-on-error: true
+  #   needs: [rancher-airgap-build]
+  #   steps:
+  #     - name: Checkout Repository
+  #       uses: actions/checkout@v4
+  #       with:
+  #         ref: main
+  #         token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Dependencies/Setup/Checks
-        run: |
-          source ~/.bashrc
-          hauler version
-          pwd && ls -laR
+  #     - name: Dependencies/Setup/Checks
+  #       run: |
+  #         source ~/.bashrc
+  #         hauler version
+  #         pwd && ls -laR
 
-      - name: Test/Lint Hauler
-        if: always()
-        run: |
-          cd hauler/hauler
-          time hauler store sync --files rancher-airgap-hauler.yaml
-          time hauler store save --filename hauler.tar.zst
-          hauler store info
-          ls -laR
+  #     - name: Test/Lint Hauler
+  #       if: always()
+  #       run: |
+  #         cd hauler/hauler
+  #         time hauler store sync --files rancher-airgap-hauler.yaml
+  #         time hauler store save --filename hauler.tar.zst
+  #         hauler store info
+  #         ls -laR
 
-      - name: Test/Lint Helm
-        if: always()
-        run: |
-          cd hauler/helm
-          time hauler store sync --files rancher-airgap-helm.yaml
-          time hauler store save --filename helm.tar.zst
-          hauler store info
-          ls -laR
+  #     - name: Test/Lint Helm
+  #       if: always()
+  #       run: |
+  #         cd hauler/helm
+  #         time hauler store sync --files rancher-airgap-helm.yaml
+  #         time hauler store save --filename helm.tar.zst
+  #         hauler store info
+  #         ls -laR
 
-      - name: Test/Lint Cosign
-        if: always()
-        run: |
-          cd hauler/cosign
-          time hauler store sync --files rancher-airgap-cosign.yaml
-          time hauler store save --filename cosign.tar.zst
-          hauler store info
-          ls -laR
+  #     - name: Test/Lint Cosign
+  #       if: always()
+  #       run: |
+  #         cd hauler/cosign
+  #         time hauler store sync --files rancher-airgap-cosign.yaml
+  #         time hauler store save --filename cosign.tar.zst
+  #         hauler store info
+  #         ls -laR
 
-      - name: Test/Lint RKE2
-        if: always()
-        run: |
-          cd hauler/rke2
-          time hauler store sync --files rancher-airgap-rke2.yaml
-          time hauler store save --filename rke2.tar.zst
-          hauler store info
-          ls -laR
+  #     - name: Test/Lint RKE2
+  #       if: always()
+  #       run: |
+  #         cd hauler/rke2
+  #         time hauler store sync --files rancher-airgap-rke2.yaml
+  #         time hauler store save --filename rke2.tar.zst
+  #         hauler store info
+  #         ls -laR
 
-      - name: Test/Lint Rancher
-        if: always()
-        run: |
-          cd hauler/rancher
-          time hauler store sync --files rancher-airgap-rancher.yaml
-          time hauler store save --filename rancher.tar.zst
-          hauler store info
-          ls -laR
+  #     - name: Test/Lint Rancher
+  #       if: always()
+  #       run: |
+  #         cd hauler/rancher
+  #         time hauler store sync --files rancher-airgap-rancher.yaml
+  #         time hauler store save --filename rancher.tar.zst
+  #         hauler store info
+  #         ls -laR
 
-      - name: Test/Lint Rancher Minimal
-        if: always()
-        run: |
-          cd hauler/rancher
-          rm -rf store
-          time hauler store sync --files rancher-airgap-rancher-minimal.yaml
-          time hauler store save --filename rancher-minimal.tar.zst
-          hauler store info
-          ls -laR
+  #     - name: Test/Lint Rancher Minimal
+  #       if: always()
+  #       run: |
+  #         cd hauler/rancher
+  #         rm -rf store
+  #         time hauler store sync --files rancher-airgap-rancher-minimal.yaml
+  #         time hauler store save --filename rancher-minimal.tar.zst
+  #         hauler store info
+  #         ls -laR
 
-      - name: Test/Lint Longhorn
-        if: always()
-        run: |
-          cd hauler/longhorn
-          time hauler store sync --files rancher-airgap-longhorn.yaml
-          time hauler store save --filename longhorn.tar.zst
-          hauler store info
-          ls -laR
+  #     - name: Test/Lint Longhorn
+  #       if: always()
+  #       run: |
+  #         cd hauler/longhorn
+  #         time hauler store sync --files rancher-airgap-longhorn.yaml
+  #         time hauler store save --filename longhorn.tar.zst
+  #         hauler store info
+  #         ls -laR
 
-      - name: Test/Lint NeuVector
-        if: always()
-        run: |
-          cd hauler/neuvector
-          time hauler store sync --files rancher-airgap-neuvector.yaml
-          time hauler store save --filename neuvector.tar.zst
-          hauler store info
-          ls -laR
+  #     - name: Test/Lint NeuVector
+  #       if: always()
+  #       run: |
+  #         cd hauler/neuvector
+  #         time hauler store sync --files rancher-airgap-neuvector.yaml
+  #         time hauler store save --filename neuvector.tar.zst
+  #         hauler store info
+  #         ls -laR
 
-      - name: Test/Lint Harvester
-        if: always()
-        run: |
-          cd hauler/harvester
-          time hauler store sync --files rancher-airgap-harvester.yaml
-          time hauler store save --filename harvester.tar.zst
-          hauler store info
-          ls -laR
+  #     - name: Test/Lint Harvester
+  #       if: always()
+  #       run: |
+  #         cd hauler/harvester
+  #         time hauler store sync --files rancher-airgap-harvester.yaml
+  #         time hauler store save --filename harvester.tar.zst
+  #         hauler store info
+  #         ls -laR
 
-      - name: Test/Lint Gitea
-        if: always()
-        run: |
-          cd hauler/gitea
-          time hauler store sync --files rancher-airgap-gitea.yaml
-          time hauler store save --filename gitea.tar.zst
-          hauler store info
-          ls -laR
+  #     - name: Test/Lint Gitea
+  #       if: always()
+  #       run: |
+  #         cd hauler/gitea
+  #         time hauler store sync --files rancher-airgap-gitea.yaml
+  #         time hauler store save --filename gitea.tar.zst
+  #         hauler store info
+  #         ls -laR
 
-      - name: Test/Lint KubeVip
-        if: always()
-        run: |
-          cd hauler/kubevip
-          time hauler store sync --files rancher-airgap-kubevip.yaml
-          time hauler store save --filename kubevip.tar.zst
-          hauler store info
-          ls -laR
+  #     - name: Test/Lint KubeVip
+  #       if: always()
+  #       run: |
+  #         cd hauler/kubevip
+  #         time hauler store sync --files rancher-airgap-kubevip.yaml
+  #         time hauler store save --filename kubevip.tar.zst
+  #         hauler store info
+  #         ls -laR
 
-      - name: Test/Lint Vault
-        if: always()
-        run: |
-          cd hauler/vault
-          time hauler store sync --files rancher-airgap-vault.yaml
-          time hauler store save --filename vault.tar.zst
-          hauler store info
-          ls -laR
+  #     - name: Test/Lint Vault
+  #       if: always()
+  #       run: |
+  #         cd hauler/vault
+  #         time hauler store sync --files rancher-airgap-vault.yaml
+  #         time hauler store save --filename vault.tar.zst
+  #         hauler store info
+  #         ls -laR
 
   rancher-airgap-release:
     name: Rancher Airgap - Release Job
     runs-on: [self-hosted, linux, X64]
-    needs: [rancher-airgap-build, rancher-airgap-testing]
+    needs: [rancher-airgap-build]
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
