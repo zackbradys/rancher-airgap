@@ -14,6 +14,4 @@ metadata:
   name: rancher-airgap-images-vault
 spec:
   images:
-    - name: hashicorp/vault-k8s:1.5.0
-    - name: hashicorp/vault:1.18.1
-    - name: hashicorp/vault:1.18.1
+
