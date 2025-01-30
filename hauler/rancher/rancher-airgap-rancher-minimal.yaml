@@ -17,7 +17,7 @@ spec:
   charts:
     - name: cert-manager
       repoURL: https://charts.jetstack.io
-      version: v1.16.2
+      version: v1.16.3
     - name: rancher
       repoURL: https://releases.rancher.com/server-charts/latest
       version: 2.10.1
