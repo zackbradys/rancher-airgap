@@ -274,11 +274,207 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
+          tag_name: ${{ github.ref_name }}
+          release_name: Release ${{ github.ref_name }}
           draft: false
           prerelease: false
           body_path: RELEASE-NOTES.MD
+
+  rancher-airgap-portal:
+    name: Rancher Airgap - Portal Job
+    runs-on: [self-hosted, linux, X64]
+    continue-on-error: true
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Dependencies/Setup/Checks
+        run: |
+          source ~/.bashrc
+          hauler version
+          pwd && ls -lh
+
+      - name: Fetch Public Key
+        run: |
+          curl -sfOL https://raw.githubusercontent.com/rancherfederal/carbide-releases/main/carbide-key.pub
+
+      - name: Authenticate to Private Registry
+        run: |
+          source ~/.bashrc
+          hauler login ${Registry} --username ${RegistryUsername} --password ${RegistryPassword}
+
+      - name: Set Up AWS CLI and Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: ${{ secrets.AWS_REGION }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+      - name: Fetch/Build RKE2
+        if: always()
+        run: |
+          cd hauler/rke2 && source ~/.bashrc
+          source <(grep "export vRKE2=" ../scripts/rke2/hauler-rke2.sh)
+          time hauler store sync --store store --registry ${Registry} --key ../../carbide-key.pub --products rke2=v${vRKE2}+rke2r1
+          time hauler store save --store store --filename rke2-carbide-v${vRKE2}.tar.zst
+          hauler store info --store store
+
+      - name: Fetch/Build Rancher
+        if: always()
+        run: |
+          cd hauler/rancher && source ~/.bashrc
+          source <(grep "export vRancher=" ../scripts/rancher/hauler-rancher.sh)
+          time hauler store sync --store store --registry ${Registry} --key ../../carbide-key.pub --products rancher=v${vRancher}
+          time hauler store save --store store --filename rancher-carbide-v${vRancher}.tar.zst
+          hauler store info --store store
+
+      - name: Fetch/Build Longhorn
+        if: always()
+        run: |
+          cd hauler/longhorn && source ~/.bashrc
+          source <(grep "export vLonghorn=" ../scripts/longhorn/hauler-longhorn.sh)
+          time hauler store sync --store store --registry ${Registry} --key ../../carbide-key.pub --products longhorn=v${vLonghorn}
+          time hauler store save --store store --filename longhorn-carbide-v${vLonghorn}.tar.zst
+          hauler store info --store store
+
+      - name: Fetch/Build NeuVector
+        if: always()
+        run: |
+          cd hauler/neuvector && source ~/.bashrc
+          source <(grep "export vNeuVector=" ../scripts/neuvector/hauler-neuvector.sh)
+          time hauler store sync --store store --registry ${Registry} --key ../../carbide-key.pub --products neuvector=v${vNeuVector}
+          time hauler store save --store store --filename neuvector-carbide-v${vNeuVector}.tar.zst
+          hauler store info --store store
+
+      - name: Fetch/Build Harvester
+        if: always()
+        run: |
+          cd hauler/harvester && source ~/.bashrc
+          source <(grep "export vHarvester=" ../scripts/harvester/hauler-harvester.sh)
+          time hauler store sync --store store --registry ${Registry} --key ../../carbide-key.pub --products harvester=v${vHarvester}
+          time hauler store sync --store isos --registry ${Registry} --key ../../carbide-key.pub --products harvester=v${vHarvester}-amd64-govt.1
+          time hauler store sync --store isos --registry ${Registry} --key ../../carbide-key.pub --products harvester=v${vHarvester}-arm64-govt.1
+          time hauler store save --store store --filename harvester-carbide-v${vHarvester}.tar.zst
+          time hauler store save --store isos --filename harvester-carbide-v${vHarvester}-iso.tar.zst
+          hauler store info --store store
+          hauler store info --store isos
+
+      # - name: Fetch/Build Private
+      #   if: always()
+      #   run: |
+      #     mkdir -p hauler/carbide && cd hauler/carbide && source ~/.bashrc
+      #     time hauler store sync --store store --registry ${Registry} --key ../../carbide-key.pub --products carbide=v$(date +"%m%d%Y")
+      #     time hauler store save --store store --filename carbide-carbide-$(date +"%m%d%Y").tar.zst
+      #     hauler store info --store store
+
+      - name: Upload RKE2
+        if: always()
+        run: |
+          cd hauler/rke2 && source ~/.bashrc
+          source <(grep "export vRKE2=" ../scripts/rke2/hauler-rke2.sh)
+          time aws s3 cp --no-progress portal/rke2-carbide-v${vRKE2}.tar.zst s3://carbide/${{ github.ref_name }}/portal/
+
+          time 7z a -v999m rke2-carbide-v${vRKE2}.tar rke2-carbide-v${vRKE2}.tar.zst
+          time for file in rke2-carbide-v${vRKE2}.tar.0*; do
+            aws s3 cp --no-progress "$file" s3://carbide/${{ github.ref_name }}/portal/spilts/
+          done
+          time 7z a -v999m rke2-carbide-v${vRKE2}.tar rke2-carbide-v${vRKE2}.tar.zst
+          time for file in rke2-carbide-v${vRKE2}.tar.0*; do
+            aws s3 cp --no-progress "$file" s3://carbide/${{ github.ref_name }}/portal/spilts/
+          done
+
+      - name: Upload Rancher
+        if: always()
+        run: |
+          cd hauler/rancher && source ~/.bashrc
+          source <(grep "export vRancher=" ../scripts/rancher/hauler-rancher.sh)
+          time aws s3 cp --no-progress rancher-carbide-v${vRancher}.tar.zst s3://carbide/${{ github.ref_name }}/portal/
+
+          time 7z a -v999m rancher-carbide-v${vRancher}.tar rancher-carbide-v${vRancher}.tar.zst
+          time for file in rancher-carbide-v${vRancher}.tar.0*; do
+            aws s3 cp --no-progress "$file" s3://carbide/${{ github.ref_name }}/portal/spilts/
+          done
+          time 7z a -v999m rancher-carbide-v${vRancher}.tar rancher-carbide-v${vRancher}.tar.zst
+          time for file in rancher-carbide-v${vRancher}.tar.0*; do
+            aws s3 cp --no-progress "$file" s3://carbide/${{ github.ref_name }}/portal/spilts/
+          done
+
+      - name: Upload Longhorn
+        if: always()
+        run: |
+          cd hauler/longhorn && source ~/.bashrc
+          source <(grep "export vLonghorn=" ../scripts/longhorn/hauler-longhorn.sh)
+          time aws s3 cp --no-progress longhorn-carbide-v${vLonghorn}.tar.zst s3://carbide/${{ github.ref_name }}/portal/
+
+          time 7z a -v999m longhorn-carbide-v${vLonghorn}.tar longhorn-carbide-v${vLonghorn}.tar.zst
+          time for file in longhorn-carbide-v${vLonghorn}.tar.0*; do
+            aws s3 cp --no-progress "$file" s3://carbide/${{ github.ref_name }}/portal/spilts/
+          done
+          time 7z a -v999m longhorn-carbide-v${vLonghorn}.tar longhorn-carbide-v${vLonghorn}.tar.zst
+          time for file in longhorn-carbide-v${vLonghorn}.tar.0*; do
+            aws s3 cp --no-progress "$file" s3://carbide/${{ github.ref_name }}/portal/spilts/
+          done
+
+      - name: Upload NeuVector
+        if: always()
+        run: |
+          cd hauler/neuvector && source ~/.bashrc
+          source <(grep "export vNeuVector=" ../scripts/neuvector/hauler-neuvector.sh)
+          time aws s3 cp --no-progress neuvector-carbide-v${vNeuVector}.tar.zst s3://carbide/${{ github.ref_name }}/portal/
+
+          time 7z a -v999m neuvector-carbide-v${vNeuVector}.tar neuvector-carbide-v${vNeuVector}.tar.zst
+          time for file in neuvector-carbide-v${vNeuVector}.tar.0*; do
+            aws s3 cp --no-progress "$file" s3://carbide/${{ github.ref_name }}/portal/spilts/
+          done
+          time 7z a -v999m neuvector-carbide-v${vNeuVector}.tar neuvector-carbide-v${vNeuVector}.tar.zst
+          time for file in neuvector-carbide-v${vNeuVector}.tar.0*; do
+            aws s3 cp --no-progress "$file" s3://carbide/${{ github.ref_name }}/portal/spilts/
+          done
+
+      - name: Upload Harvester
+        if: always()
+        run: |
+          cd hauler/harvester && source ~/.bashrc
+          source <(grep "export vHarvester=" ../scripts/harvester/hauler-harvester.sh)
+          time aws s3 cp --no-progress harvester-carbide-v${vHarvester}.tar.zst s3://carbide/${{ github.ref_name }}/portal/
+
+          time 7z a -v999m harvester-carbide-v${vHarvester}.tar harvester-carbide-v${vHarvester}.tar.zst
+          time for file in harvester-carbide-v${vHarvester}.tar.0*; do
+            aws s3 cp --no-progress "$file" s3://carbide/${{ github.ref_name }}/portal/spilts/
+          done
+          time 7z a -v999m harvester-carbide-v${vHarvester}.tar harvester-carbide-v${vHarvester}.tar.zst
+          time for file in harvester-carbide-v${vHarvester}.tar.0*; do
+            aws s3 cp --no-progress "$file" s3://carbide/${{ github.ref_name }}/portal/spilts/
+          done
+
+          time aws s3 cp --no-progress harvester-carbide-v${vHarvester}-iso.tar.zst s3://carbide/${{ github.ref_name }}/portal/
+
+          time 7z a -v999m harvester-carbide-v${vHarvester}-iso.tar harvester-carbide-v${vHarvester}-iso.tar.zst
+          time for file in harvester-carbide-v${vHarvester}-iso.tar.0*; do
+            aws s3 cp --no-progress "$file" s3://carbide/${{ github.ref_name }}/portal/spilts/
+          done
+          time 7z a -v999m harvester-carbide-v${vHarvester}-iso.tar harvester-carbide-v${vHarvester}-iso.tar.zst
+          time for file in harvester-carbide-v${vHarvester}-iso.tar.0*; do
+            aws s3 cp --no-progress "$file" s3://carbide/${{ github.ref_name }}/portal/spilts/
+          done
+
+      # - name: Upload Private
+      #   if: always()
+      #   run: |
+      #     cd hauler/carbide && source ~/.bashrc
+      #     time aws s3 cp --no-progress carbide-carbide-$(date +"%m%d%Y").tar.zst s3://carbide/${{ github.ref_name }}/
+
+      #     time 7z a -v999m carbide-carbide-$(date +"%m%d%Y").tar carbide-carbide-$(date +"%m%d%Y").tar.zst
+      #     time for file in carbide-carbide-$(date +"%m%d%Y").tar.0*; do
+      #       aws s3 cp --no-progress "$file" s3://carbide/${{ github.ref_name }}/spilts/
+      #     done
+      #     time 7z a -v999m carbide-carbide-$(date +"%m%d%Y").tar carbide-carbide-$(date +"%m%d%Y").tar.zst
+      #     time for file in carbide-carbide-$(date +"%m%d%Y").tar.0*; do
+      #       aws s3 cp --no-progress "$file" s3://carbide/${{ github.ref_name }}/spilts/
+      #     done
 
   rancher-airgap-private:
     name: Rancher Airgap - Private Job
