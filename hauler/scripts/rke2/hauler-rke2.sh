@@ -1,6 +1,7 @@
 ### Set Variables
 export vRKE2=1.30.8
 export vRKE2SELinux=0.18
+export vRKE2modified=$(echo "$vRKE2" | cut -d'.' -f1,2)
 
 ### Setup Working Directory
 rm -rf /opt/hauler/rke2
@@ -26,7 +27,7 @@ metadata:
   name: rancher-airgap-files-rke2
 spec:
   files:
-    - path: https://raw.githubusercontent.com/rancher/rke2/release-1.29/install.sh
+    - path: https://raw.githubusercontent.com/rancher/rke2/refs/heads/release-${vRKE2modified}/install.sh
       name: install.sh
     - path: https://github.com/rancher/rke2/releases/download/v${vRKE2}%2Brke2r1/rke2-images.linux-amd64.tar.zst
       name: rke2-images.linux-amd64.tar.zst
