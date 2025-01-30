@@ -51,6 +51,13 @@ jobs:
           mv /opt/hauler/rke2/rancher-airgap-rke2.yaml hauler/rke2/rancher-airgap-rke2.yaml
           pwd && ls -laR hauler/rke2
 
+      - name: Build K3S
+        if: always()
+        run: |
+          sh hauler/scripts/k3s/hauler-k3s.sh
+          mv /opt/hauler/k3s/rancher-airgap-k3s.yaml hauler/k3s/rancher-airgap-k3s.yaml
+          pwd && ls -laR hauler/k3s
+
       - name: Build Rancher
         if: always()
         run: |
@@ -169,6 +176,15 @@ jobs:
   #         cd hauler/rke2
   #         time hauler store sync --files rancher-airgap-rke2.yaml
   #         time hauler store save --filename rke2.tar.zst
+  #         hauler store info
+  #         ls -laR
+
+  #     - name: Test/Lint K3S
+  #       if: always()
+  #       run: |
+  #         cd hauler/k3s
+  #         time hauler store sync --files rancher-airgap-k3s.yaml
+  #         time hauler store save --filename k3s.tar.zst
   #         hauler store info
   #         ls -laR
 
@@ -322,6 +338,15 @@ jobs:
           time hauler store save --store store --filename rke2-carbide-v${vRKE2}.tar.zst
           hauler store info --store store
 
+      - name: Fetch/Build K3S
+        if: always()
+        run: |
+          cd hauler/k3s && source ~/.bashrc
+          source <(grep "export vK3S=" ../scripts/k3s/hauler-k3s.sh)
+          time hauler store sync --store store --registry ${Registry} --key ../../carbide-key.pub --products k3s=v${vK3S}+k3r1
+          time hauler store save --store store --filename k3s-carbide-v${vK3S}.tar.zst
+          hauler store info --store store
+
       - name: Fetch/Build Rancher
         if: always()
         run: |
@@ -383,6 +408,22 @@ jobs:
           done
           time 7z a -v999m rke2-carbide-v${vRKE2}.tar rke2-carbide-v${vRKE2}.tar.zst
           time for file in rke2-carbide-v${vRKE2}.tar.0*; do
+            aws s3 cp --no-progress "$file" s3://carbide/${{ github.ref_name }}/portal/spilts/
+          done
+
+      - name: Upload K3S
+        if: always()
+        run: |
+          cd hauler/k3s && source ~/.bashrc
+          source <(grep "export vK3S=" ../scripts/k3s/hauler-k3s.sh)
+          time aws s3 cp --no-progress portal/k3s-carbide-v${vK3S}.tar.zst s3://carbide/${{ github.ref_name }}/portal/
+
+          time 7z a -v999m k3s-carbide-v${vK3S}.tar k3s-carbide-v${vK3S}.tar.zst
+          time for file in k3s-carbide-v${vK3S}.tar.0*; do
+            aws s3 cp --no-progress "$file" s3://carbide/${{ github.ref_name }}/portal/spilts/
+          done
+          time 7z a -v999m k3s-carbide-v${vK3S}.tar k3s-carbide-v${vK3S}.tar.zst
+          time for file in k3s-carbide-v${vK3S}.tar.0*; do
             aws s3 cp --no-progress "$file" s3://carbide/${{ github.ref_name }}/portal/spilts/
           done
 
@@ -555,6 +596,18 @@ jobs:
           time hauler store sync --store arm64 --registry ${Registry} --key ../../carbide-key.pub --platform linux/arm64 --files rancher-airgap-rke2.yaml
           time hauler store save --store amd64 --platform linux/amd64 --filename rke2-carbide-v${vRKE2}-amd64.tar.zst
           time hauler store save --store arm64 --platform linux/arm64 --filename rke2-carbide-v${vRKE2}-arm64.tar.zst
+          hauler store info --store amd64
+          hauler store info --store arm64
+
+      - name: Fetch/Build K3S
+        if: always()
+        run: |
+          cd hauler/k3s && source ~/.bashrc
+          source <(grep "export vK3S=" ../scripts/k3s/hauler-k3s.sh)
+          time hauler store sync --store amd64 --registry ${Registry} --key ../../carbide-key.pub --platform linux/amd64 --files rancher-airgap-k3s.yaml
+          time hauler store sync --store arm64 --registry ${Registry} --key ../../carbide-key.pub --platform linux/arm64 --files rancher-airgap-k3s.yaml
+          time hauler store save --store amd64 --platform linux/amd64 --filename k3s-carbide-v${vK3S}-amd64.tar.zst
+          time hauler store save --store arm64 --platform linux/arm64 --filename k3s-carbide-v${vK3S}-arm64.tar.zst
           hauler store info --store amd64
           hauler store info --store arm64
 
@@ -745,6 +798,22 @@ jobs:
           done
           time 7z a -v999m rke2-carbide-v${vRKE2}-arm64.tar rke2-carbide-v${vRKE2}-arm64.tar.zst
           time for file in rke2-carbide-v${vRKE2}-arm64.tar.0*; do
+            aws s3 cp --no-progress "$file" s3://carbide/${{ github.ref_name }}/spilts/
+          done
+
+      - name: Upload K3S
+        if: always()
+        run: |
+          cd hauler/k3s && source ~/.bashrc
+          source <(grep "export vK3S=" ../scripts/k3s/hauler-k3s.sh)
+          time aws s3 cp --no-progress k3s-carbide-v${vK3S}-amd64.tar.zst s3://carbide/${{ github.ref_name }}/
+          time aws s3 cp --no-progress k3s-carbide-v${vK3S}-arm64.tar.zst s3://carbide/${{ github.ref_name }}/
+          time 7z a -v999m k3s-carbide-v${vK3S}-amd64.tar k3s-carbide-v${vK3S}-amd64.tar.zst
+          time for file in k3s-carbide-v${vK3S}-amd64.tar.0*; do
+            aws s3 cp --no-progress "$file" s3://carbide/${{ github.ref_name }}/spilts/
+          done
+          time 7z a -v999m k3s-carbide-v${vK3S}-arm64.tar k3s-carbide-v${vK3S}-arm64.tar.zst
+          time for file in k3s-carbide-v${vK3S}-arm64.tar.0*; do
             aws s3 cp --no-progress "$file" s3://carbide/${{ github.ref_name }}/spilts/
           done
 
