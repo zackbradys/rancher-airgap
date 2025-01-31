@@ -343,7 +343,7 @@ jobs:
         run: |
           cd hauler/k3s && source ~/.bashrc
           source <(grep "export vK3S=" ../scripts/k3s/hauler-k3s.sh)
-          time hauler store sync --store store --registry ${Registry} --key ../../carbide-key.pub --products k3s=v${vK3S}+k3r1
+          time hauler store sync --store store --registry ${Registry} --key ../../carbide-key.pub --products k3s=v${vK3S}+k3s1
           time hauler store save --store store --filename k3s-carbide-v${vK3S}.tar.zst
           hauler store info --store store
 
@@ -370,6 +370,7 @@ jobs:
         run: |
           cd hauler/neuvector && source ~/.bashrc
           source <(grep "export vNeuVector=" ../scripts/neuvector/hauler-neuvector.sh)
+          source <(grep "export vNeuVectorHelm=" ../scripts/neuvector/hauler-neuvector.sh)
           time hauler store sync --store store --registry ${Registry} --key ../../carbide-key.pub --products neuvector=v${vNeuVector}
           time hauler store save --store store --filename neuvector-carbide-v${vNeuVector}.tar.zst
           hauler store info --store store
@@ -381,31 +382,35 @@ jobs:
           source <(grep "export vHarvester=" ../scripts/harvester/hauler-harvester.sh)
           time hauler store sync --store store --registry ${Registry} --key ../../carbide-key.pub --products harvester=v${vHarvester}
           time hauler store sync --store isos --registry ${Registry} --key ../../carbide-key.pub --products harvester=v${vHarvester}-amd64-govt.1
-          time hauler store sync --store isos --registry ${Registry} --key ../../carbide-key.pub --products harvester=v${vHarvester}-arm64-govt.1
+          # time hauler store sync --store isos --registry ${Registry} --key ../../carbide-key.pub --products harvester=v${vHarvester}-arm64-govt.1
           time hauler store save --store store --filename harvester-carbide-v${vHarvester}.tar.zst
           time hauler store save --store isos --filename harvester-carbide-v${vHarvester}-iso.tar.zst
           hauler store info --store store
           hauler store info --store isos
 
-      # - name: Fetch/Build Private
-      #   if: always()
-      #   run: |
-      #     mkdir -p hauler/carbide && cd hauler/carbide && source ~/.bashrc
-      #     time hauler store sync --store store --registry ${Registry} --key ../../carbide-key.pub --products carbide=v$(date +"%m%d%Y")
-      #     time hauler store save --store store --filename carbide-carbide-$(date +"%m%d%Y").tar.zst
-      #     hauler store info --store store
+      - name: Fetch/Build Private
+        if: always()
+        run: |
+          mkdir -p hauler/carbide && cd hauler/carbide && source ~/.bashrc
+          # time hauler store sync --store store --registry ${Registry} --key ../../carbide-key.pub --products carbide=v$(date +"%m%d%Y")
+          # time hauler store save --store store --filename carbide-carbide-$(date +"%m%d%Y").tar.zst
+          # hauler store info --store store
+          echo -e "apiVersion: content.hauler.cattle.io/v1alpha1\nkind: Images\nmetadata:\n  name: carbide-images\nspec:\n  images:\n$(curl -sfL https://raw.githubusercontent.com/rancherfederal/carbide-releases/main/carbide-images.txt | sed 's/^/    - name: /')" > carbide-images.yaml
+          echo -e "apiVersion: content.hauler.cattle.io/v1alpha1\nkind: Images\nmetadata:\n  name: carbide-provisioning-images\nspec:\n  images:\n    - name: rgcrprod.azurecr.us/rancher/machine:v0.15.0-rancher124-carbide-1\n    - name: rgcrprod.azurecr.us/rancher/rancher:v2.10.1-carbide-1\n    - name: rgcrprod.azurecr.us/rancher/rancher-agent:v2.10.1-carbide-1\n    - name: rgcrprod.azurecr.us/carbide/carbide-docs:0.1.7-carbide-1\n---\napiVersion: content.hauler.cattle.io/v1alpha1\nkind: Charts\nmetadata:\n  name: carbide-provisioning-charts\nspec:\n  charts:\n    - name: rancher\n      repoURL: https://rancherfederal.github.io/carbide-charts\n      version: 2.10.1" > carbide-provisioning.yaml
+          echo -e "apiVersion: content.hauler.cattle.io/v1alpha1\nkind: Charts\nmetadata:\n  name: carbide-charts\nspec:\n  charts:\n    - name: rancher\n      repoURL: https://rancherfederal.github.io/carbide-charts\n      version: 2.10.1\n    - name: airgapped-docs\n      repoURL: https://rancherfederal.github.io/carbide-charts\n      version: 0.1.54\n    - name: stigatron\n      repoURL: https://rancherfederal.github.io/carbide-charts\n      version: 0.3.0\n    - name: stigatron-ui\n      repoURL: https://rancherfederal.github.io/carbide-charts\n      version: 0.3.0\n---\napiVersion: content.hauler.cattle.io/v1alpha1\nkind: Charts\nmetadata:\n  name: carbide-dependency-charts\nspec:\n  charts:\n    - name: heimdall2\n      repoURL: https://rancherfederal.github.io/carbide-charts\n      version: 0.1.41\n    - name: nats\n      repoURL: https://nats-io.github.io/k8s/helm/charts\n      version: 1.1.5" > carbide-charts.yaml
+          time hauler store sync --store store --key ../../carbide-key.pub --files carbide-images.yaml
+          time hauler store sync --store store --key ../../carbide-key.pub --files carbide-provisioning.yaml
+          time hauler store sync --store amd64 --files carbide-charts.yaml
+          time hauler store save --store store --platform linux/amd64 --filename carbide-carbide-$(date +"%m%d%Y").tar.zst
+          hauler store info --store store
 
       - name: Upload RKE2
         if: always()
         run: |
           cd hauler/rke2 && source ~/.bashrc
           source <(grep "export vRKE2=" ../scripts/rke2/hauler-rke2.sh)
-          time aws s3 cp --no-progress portal/rke2-carbide-v${vRKE2}.tar.zst s3://carbide/${{ github.ref_name }}/portal/
+          time aws s3 cp --no-progress rke2-carbide-v${vRKE2}.tar.zst s3://carbide/${{ github.ref_name }}/portal/
 
-          time 7z a -v999m rke2-carbide-v${vRKE2}.tar rke2-carbide-v${vRKE2}.tar.zst
-          time for file in rke2-carbide-v${vRKE2}.tar.0*; do
-            aws s3 cp --no-progress "$file" s3://carbide/${{ github.ref_name }}/portal/spilts/
-          done
           time 7z a -v999m rke2-carbide-v${vRKE2}.tar rke2-carbide-v${vRKE2}.tar.zst
           time for file in rke2-carbide-v${vRKE2}.tar.0*; do
             aws s3 cp --no-progress "$file" s3://carbide/${{ github.ref_name }}/portal/spilts/
@@ -416,12 +421,8 @@ jobs:
         run: |
           cd hauler/k3s && source ~/.bashrc
           source <(grep "export vK3S=" ../scripts/k3s/hauler-k3s.sh)
-          time aws s3 cp --no-progress portal/k3s-carbide-v${vK3S}.tar.zst s3://carbide/${{ github.ref_name }}/portal/
+          time aws s3 cp --no-progress k3s-carbide-v${vK3S}.tar.zst s3://carbide/${{ github.ref_name }}/portal/
 
-          time 7z a -v999m k3s-carbide-v${vK3S}.tar k3s-carbide-v${vK3S}.tar.zst
-          time for file in k3s-carbide-v${vK3S}.tar.0*; do
-            aws s3 cp --no-progress "$file" s3://carbide/${{ github.ref_name }}/portal/spilts/
-          done
           time 7z a -v999m k3s-carbide-v${vK3S}.tar k3s-carbide-v${vK3S}.tar.zst
           time for file in k3s-carbide-v${vK3S}.tar.0*; do
             aws s3 cp --no-progress "$file" s3://carbide/${{ github.ref_name }}/portal/spilts/
@@ -438,10 +439,6 @@ jobs:
           time for file in rancher-carbide-v${vRancher}.tar.0*; do
             aws s3 cp --no-progress "$file" s3://carbide/${{ github.ref_name }}/portal/spilts/
           done
-          time 7z a -v999m rancher-carbide-v${vRancher}.tar rancher-carbide-v${vRancher}.tar.zst
-          time for file in rancher-carbide-v${vRancher}.tar.0*; do
-            aws s3 cp --no-progress "$file" s3://carbide/${{ github.ref_name }}/portal/spilts/
-          done
 
       - name: Upload Longhorn
         if: always()
@@ -450,10 +447,6 @@ jobs:
           source <(grep "export vLonghorn=" ../scripts/longhorn/hauler-longhorn.sh)
           time aws s3 cp --no-progress longhorn-carbide-v${vLonghorn}.tar.zst s3://carbide/${{ github.ref_name }}/portal/
 
-          time 7z a -v999m longhorn-carbide-v${vLonghorn}.tar longhorn-carbide-v${vLonghorn}.tar.zst
-          time for file in longhorn-carbide-v${vLonghorn}.tar.0*; do
-            aws s3 cp --no-progress "$file" s3://carbide/${{ github.ref_name }}/portal/spilts/
-          done
           time 7z a -v999m longhorn-carbide-v${vLonghorn}.tar longhorn-carbide-v${vLonghorn}.tar.zst
           time for file in longhorn-carbide-v${vLonghorn}.tar.0*; do
             aws s3 cp --no-progress "$file" s3://carbide/${{ github.ref_name }}/portal/spilts/
@@ -470,10 +463,6 @@ jobs:
           time for file in neuvector-carbide-v${vNeuVector}.tar.0*; do
             aws s3 cp --no-progress "$file" s3://carbide/${{ github.ref_name }}/portal/spilts/
           done
-          time 7z a -v999m neuvector-carbide-v${vNeuVector}.tar neuvector-carbide-v${vNeuVector}.tar.zst
-          time for file in neuvector-carbide-v${vNeuVector}.tar.0*; do
-            aws s3 cp --no-progress "$file" s3://carbide/${{ github.ref_name }}/portal/spilts/
-          done
 
       - name: Upload Harvester
         if: always()
@@ -486,10 +475,6 @@ jobs:
           time for file in harvester-carbide-v${vHarvester}.tar.0*; do
             aws s3 cp --no-progress "$file" s3://carbide/${{ github.ref_name }}/portal/spilts/
           done
-          time 7z a -v999m harvester-carbide-v${vHarvester}.tar harvester-carbide-v${vHarvester}.tar.zst
-          time for file in harvester-carbide-v${vHarvester}.tar.0*; do
-            aws s3 cp --no-progress "$file" s3://carbide/${{ github.ref_name }}/portal/spilts/
-          done
 
           time aws s3 cp --no-progress harvester-carbide-v${vHarvester}-iso.tar.zst s3://carbide/${{ github.ref_name }}/portal/
 
@@ -497,25 +482,17 @@ jobs:
           time for file in harvester-carbide-v${vHarvester}-iso.tar.0*; do
             aws s3 cp --no-progress "$file" s3://carbide/${{ github.ref_name }}/portal/spilts/
           done
-          time 7z a -v999m harvester-carbide-v${vHarvester}-iso.tar harvester-carbide-v${vHarvester}-iso.tar.zst
-          time for file in harvester-carbide-v${vHarvester}-iso.tar.0*; do
-            aws s3 cp --no-progress "$file" s3://carbide/${{ github.ref_name }}/portal/spilts/
+
+      - name: Upload Private
+        if: always()
+        run: |
+          cd hauler/carbide && source ~/.bashrc
+          time aws s3 cp --no-progress carbide-carbide-$(date +"%m%d%Y").tar.zst s3://carbide/${{ github.ref_name }}/
+
+          time 7z a -v999m carbide-carbide-$(date +"%m%d%Y").tar carbide-carbide-$(date +"%m%d%Y").tar.zst
+          time for file in carbide-carbide-$(date +"%m%d%Y").tar.0*; do
+            aws s3 cp --no-progress "$file" s3://carbide/${{ github.ref_name }}/spilts/
           done
-
-      # - name: Upload Private
-      #   if: always()
-      #   run: |
-      #     cd hauler/carbide && source ~/.bashrc
-      #     time aws s3 cp --no-progress carbide-carbide-$(date +"%m%d%Y").tar.zst s3://carbide/${{ github.ref_name }}/
-
-      #     time 7z a -v999m carbide-carbide-$(date +"%m%d%Y").tar carbide-carbide-$(date +"%m%d%Y").tar.zst
-      #     time for file in carbide-carbide-$(date +"%m%d%Y").tar.0*; do
-      #       aws s3 cp --no-progress "$file" s3://carbide/${{ github.ref_name }}/spilts/
-      #     done
-      #     time 7z a -v999m carbide-carbide-$(date +"%m%d%Y").tar carbide-carbide-$(date +"%m%d%Y").tar.zst
-      #     time for file in carbide-carbide-$(date +"%m%d%Y").tar.0*; do
-      #       aws s3 cp --no-progress "$file" s3://carbide/${{ github.ref_name }}/spilts/
-      #     done
 
   rancher-airgap-private:
     name: Rancher Airgap - Private Job
@@ -721,14 +698,14 @@ jobs:
         run: |
           mkdir -p hauler/carbide && cd hauler/carbide && source ~/.bashrc
           echo -e "apiVersion: content.hauler.cattle.io/v1alpha1\nkind: Images\nmetadata:\n  name: carbide-images\nspec:\n  images:\n$(curl -sfL https://raw.githubusercontent.com/rancherfederal/carbide-releases/main/carbide-images.txt | sed 's/^/    - name: /')" > carbide-images.yaml
+          echo -e "apiVersion: content.hauler.cattle.io/v1alpha1\nkind: Images\nmetadata:\n  name: carbide-provisioning-images\nspec:\n  images:\n    - name: rgcrprod.azurecr.us/rancher/machine:v0.15.0-rancher124-carbide-1\n    - name: rgcrprod.azurecr.us/rancher/rancher:v2.10.1-carbide-1\n    - name: rgcrprod.azurecr.us/rancher/rancher-agent:v2.10.1-carbide-1\n    - name: rgcrprod.azurecr.us/carbide/carbide-docs:0.1.7-carbide-1\n---\napiVersion: content.hauler.cattle.io/v1alpha1\nkind: Charts\nmetadata:\n  name: carbide-provisioning-charts\nspec:\n  charts:\n    - name: rancher\n      repoURL: https://rancherfederal.github.io/carbide-charts\n      version: 2.10.1" > carbide-provisioning.yaml
           echo -e "apiVersion: content.hauler.cattle.io/v1alpha1\nkind: Charts\nmetadata:\n  name: carbide-charts\nspec:\n  charts:\n    - name: rancher\n      repoURL: https://rancherfederal.github.io/carbide-charts\n      version: 2.10.1\n    - name: airgapped-docs\n      repoURL: https://rancherfederal.github.io/carbide-charts\n      version: 0.1.54\n    - name: stigatron\n      repoURL: https://rancherfederal.github.io/carbide-charts\n      version: 0.3.0\n    - name: stigatron-ui\n      repoURL: https://rancherfederal.github.io/carbide-charts\n      version: 0.3.0\n---\napiVersion: content.hauler.cattle.io/v1alpha1\nkind: Charts\nmetadata:\n  name: carbide-dependency-charts\nspec:\n  charts:\n    - name: heimdall2\n      repoURL: https://rancherfederal.github.io/carbide-charts\n      version: 0.1.41\n    - name: nats\n      repoURL: https://nats-io.github.io/k8s/helm/charts\n      version: 1.1.5" > carbide-charts.yaml
-          echo -e "apiVersion: content.hauler.cattle.io/v1alpha1\nkind: Images\nmetadata:\n  name: carbide-provisioning-images\n  annotations:\n    hauler.dev/key: ../../carbide-key.pub\n    # hauler.dev/platform: linux/amd64 # only fetch specific platform/architecture\nspec:\n  images:\n    - name: rgcrprod.azurecr.us/rancher/machine:v0.15.0-rancher118-carbide-1\n    - name: rgcrprod.azurecr.us/rancher/rancher:v2.9.4-carbide-2\n    - name: rgcrprod.azurecr.us/rancher/rancher-agent:v2.9.4-carbide-2\n    - name: rgcrprod.azurecr.us/carbide/carbide-docs:0.1.7-carbide-1\n---\napiVersion: content.hauler.cattle.io/v1alpha1\nkind: Charts\nmetadata:\n  name: carbide-provisioning-charts\nspec:\n  charts:\n    - name: rancher\n      repoURL: https://rancherfederal.github.io/carbide-charts\n      version: 2.9.4" > carbide-provisioning.yaml
           time hauler store sync --store amd64 --key ../../carbide-key.pub --platform linux/amd64 --files carbide-images.yaml
           time hauler store sync --store arm64 --key ../../carbide-key.pub --platform linux/arm64 --files carbide-images.yaml
-          time hauler store sync --store amd64 --platform linux/amd64 --files carbide-charts.yaml
-          time hauler store sync --store arm64 --platform linux/arm64 --files carbide-charts.yaml
-          time hauler store sync --store amd64 --platform linux/amd64 --files carbide-provisioning.yaml
-          time hauler store sync --store arm64 --platform linux/arm64 --files carbide-provisioning.yaml
+          time hauler store sync --store amd64 --key ../../carbide-key.pub --platform linux/amd64 --files carbide-provisioning.yaml
+          time hauler store sync --store arm64 --key ../../carbide-key.pub --platform linux/arm64 --files carbide-provisioning.yaml
+          time hauler store sync --store amd64 --files carbide-charts.yaml
+          time hauler store sync --store arm64 --files carbide-charts.yaml
           time hauler store save --store amd64 --platform linux/amd64 --filename carbide-carbide-$(date +"%m%d%Y")-amd64.tar.zst
           time hauler store save --store arm64 --platform linux/arm64 --filename carbide-carbide-$(date +"%m%d%Y")-arm64.tar.zst
           hauler store info --store amd64
