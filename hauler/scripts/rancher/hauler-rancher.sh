@@ -1,22 +1,22 @@
-### Set Variables
+# Set Variables
 export vRancher=2.10.1
 export vCertManager=1.16.3
 
-### Setup Working Directory
+# Setup Working Directory
 rm -rf /opt/hauler/rancher
 mkdir -p /opt/hauler/rancher
 cd /opt/hauler/rancher
 
-### Download Cert Manager Images and Modify the List
-### https://github.com/cert-manager/cert-manager
+# Download Cert Manager Images and Modify the List
+# https://github.com/cert-manager/cert-manager
 helm repo add jetstack https://charts.jetstack.io && helm repo update
 certManagerImages=$(helm template jetstack/cert-manager --version=v${vCertManager} | grep 'image:' | sed 's/"//g' | awk '{ print $2 }' | sed -e "s/^/    - name: /")
 
-### Download Rancher Images and Modify the List
-### https://github.com/rancher/rancher
+# Download Rancher Images and Modify the List
+# https://github.com/rancher/rancher
 rancherImages=$(curl -sSfL https://prime.ribs.rancher.io/rancher/v${vRancher}/rancher-images.txt | sed -e "s/^/    - name: /")
 
-### Create Hauler Manifest
+# Create Hauler Manifest
 cat << EOF >> /opt/hauler/rancher/rancher-airgap-rancher.yaml
 apiVersion: content.hauler.cattle.io/v1alpha1
 kind: Files

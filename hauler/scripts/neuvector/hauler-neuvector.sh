@@ -1,18 +1,18 @@
-### Set Variables
+# Set Variables
 export vNeuVector=5.4.2
 export vNeuVectorHelm=2.8.4
 
-### Setup Working Directory
+# Setup Working Directory
 rm -rf /opt/hauler/neuvector
 mkdir -p /opt/hauler/neuvector
 cd /opt/hauler/neuvector
 
-### Download NeuVector Images and Modify the List
-### https://github.com/neuvector/neuvector
+# Download NeuVector Images and Modify the List
+# https://github.com/neuvector/neuvector
 helm repo add neuvector https://neuvector.github.io/neuvector-helm && helm repo update
 neuvectorImages=$(helm template neuvector/core --version=${vNeuVectorHelm} | grep 'image:' | sed 's/"//g' | sed 's/docker.io\///g' | awk '{ print "    - name: " $2 }')
 
-### Create Hauler Manifest
+# Create Hauler Manifest
 cat << EOF >> /opt/hauler/neuvector/rancher-airgap-neuvector.yaml
 apiVersion: content.hauler.cattle.io/v1alpha1
 kind: Charts

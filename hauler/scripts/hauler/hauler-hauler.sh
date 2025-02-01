@@ -1,13 +1,13 @@
-### Set Variables
+# Set Variables
 export vHauler=1.1.1
 
-### Setup Working Directory
+# Setup Working Directory
 rm -rf /opt/hauler/hauler
 mkdir -p /opt/hauler/hauler
 cd /opt/hauler/hauler
 
-### Create Hauler Manifest
-### Hauler -> https://github.com/hauler-dev/hauler
+# Create Hauler Manifest
+# Hauler -> https://github.com/hauler-dev/hauler
 cat << EOF >> /opt/hauler/hauler/rancher-airgap-hauler.yaml
 apiVersion: content.hauler.cattle.io/v1alpha1
 kind: Files

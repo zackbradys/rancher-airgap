@@ -1,18 +1,18 @@
-### Set Variables
+# Set Variables
 export vK3S=1.30.9
 export vK3SSELinux=1.6
 export vK3Smodified=$(echo "$vK3S" | cut -d'.' -f1,2)
 
-### Setup Working Directory
+# Setup Working Directory
 rm -rf /opt/hauler/k3s
 mkdir -p /opt/hauler/k3s
 cd /opt/hauler/k3s
 
-### Download K3S Images and Modify the List
-### https://github.com/k3s-io/k3s
+# Download K3S Images and Modify the List
+# https://github.com/k3s-io/k3s
 k3sImages=$(curl -sSfL https://github.com/k3s-io/k3s/releases/download/v${vK3S}+k3s1/k3s-images.txt | sed -e "s/docker\.io\///g" -e "s/^/    - name: /")
 
-### Create Hauler Manifest
+# Create Hauler Manifest
 cat << EOF >> /opt/hauler/k3s/rancher-airgap-k3s.yaml
 apiVersion: content.hauler.cattle.io/v1alpha1
 kind: Files

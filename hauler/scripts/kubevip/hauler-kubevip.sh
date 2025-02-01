@@ -1,14 +1,14 @@
-### Set Variables
+# Set Variables
 export vKubeVip=$(curl -sL kube-vip.io/k3s | grep -o 'image:.*' | sed -E 's/image: .*:(v[0-9]+\.[0-9]+\.[0-9]+).*/\1/')
 
-### Setup Working Directory
+# Setup Working Directory
 rm -rf /opt/hauler/kubevip
 mkdir -p /opt/hauler/kubevip
 cd /opt/hauler/kubevip
 
 kubevipImage=$(curl -sL kube-vip.io/k3s | grep -o 'image:.*' | sed 's/image: /    - name: /')
 
-### Create Hauler Manifest
+# Create Hauler Manifest
 cat << EOF >> /opt/hauler/kubevip/rancher-airgap-kubevip.yaml
 apiVersion: content.hauler.cattle.io/v1alpha1
 kind: Images

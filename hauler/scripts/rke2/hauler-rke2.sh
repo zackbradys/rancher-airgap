@@ -1,25 +1,25 @@
-### Set Variables
+# Set Variables
 export vRKE2=1.30.9
 export vRKE2SELinux=0.18
 export vRKE2modified=$(echo "$vRKE2" | cut -d'.' -f1,2)
 
-### Setup Working Directory
+# Setup Working Directory
 rm -rf /opt/hauler/rke2
 mkdir -p /opt/hauler/rke2
 cd /opt/hauler/rke2
 
-### Download RKE2 Images and Modify the List
-### https://github.com/rancher/rke2
+# Download RKE2 Images and Modify the List
+# https://github.com/rancher/rke2
 rke2ImagesAMD64=$(curl -sSfL https://github.com/rancher/rke2/releases/download/v${vRKE2}+rke2r1/rke2-images-all.linux-amd64.txt | sed -e "s/docker\.io\///g" -e "s/^/    - name: /")
 
-### Download RKE2 Images and Modify the List
-### https://github.com/rancher/rke2
+# Download RKE2 Images and Modify the List
+# https://github.com/rancher/rke2
 rke2ImagesARM64=$(curl -sSfL https://github.com/rancher/rke2/releases/download/v${vRKE2}+rke2r1/rke2-images-all.linux-arm64.txt | sed -e "s/docker\.io\///g" -e "s/^/    - name: /")
 
-### Combine RKE2 Image Lists
+# Combine RKE2 Image Lists
 rke2Images=$(echo -e "${rke2ImagesAMD64}\n${rke2ImagesARM64}" | sort | uniq)
 
-### Create Hauler Manifest
+# Create Hauler Manifest
 cat << EOF >> /opt/hauler/rke2/rancher-airgap-rke2.yaml
 apiVersion: content.hauler.cattle.io/v1alpha1
 kind: Files

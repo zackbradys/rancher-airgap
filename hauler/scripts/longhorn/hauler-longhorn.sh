@@ -1,16 +1,16 @@
-### Set Variables
+# Set Variables
 export vLonghorn=1.7.2
 
-### Setup Working Directory
+# Setup Working Directory
 rm -rf /opt/hauler/longhorn
 mkdir -p /opt/hauler/longhorn
 cd /opt/hauler/longhorn
 
-### Download Longhorn Images and Modify the List
-### https://github.com/longhorn/longhorn
+# Download Longhorn Images and Modify the List
+# https://github.com/longhorn/longhorn
 longhornImages=$(curl -sSfL https://raw.githubusercontent.com/longhorn/longhorn/v${vLonghorn}/deploy/longhorn-images.txt | sed -e "s/^/    - name: /")
 
-### Create Hauler Manifest
+# Create Hauler Manifest
 cat << EOF >> /opt/hauler/longhorn/rancher-airgap-longhorn.yaml
 apiVersion: content.hauler.cattle.io/v1alpha1
 kind: Files
