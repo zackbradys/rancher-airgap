@@ -9,7 +9,7 @@ cd /opt/hauler/vault
 ### Download Vault Images and Modify the List
 ### https://github.com/hashicorp/vault-helm
 helm repo add hashicorp https://helm.releases.hashicorp.com && helm repo update
-vaultImages=$(helm template hashicorp/vault --version=${vGitea} | grep 'image:' | sed 's/"//g; s/.*image: //' | sed 's/^/    - name: /')
+vaultImages=$(helm template hashicorp/vault --version=${vVault} | grep 'image:' | sed 's/"//g; s/.*image: //' | sed 's/^/    - name: /')
 
 ### Create Hauler Manifest
 cat << EOF >> /opt/hauler/vault/rancher-airgap-vault.yaml
