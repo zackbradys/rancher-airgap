@@ -1,18 +1,21 @@
 apiVersion: content.hauler.cattle.io/v1alpha1
-kind: Images
+kind: Charts
 metadata:
-  name: rancher-airgap-images-kubevip
+  name: rancher-airgap-charts-kubewarden
 spec:
-  images:
-    - name: ghcr.io/kube-vip/kube-vip:v0.5.11
+  charts:
+    - name: kubewarden-controller
+      repoURL: https://charts.kubewarden.io
+      version: 4.1.0
+    - name: kubewarden-defaults
+      repoURL: https://charts.kubewarden.io
+      version: 2.8.0
 ---
 apiVersion: content.hauler.cattle.io/v1alpha1
-kind: Files
+kind: Images
 metadata:
-  name: rancher-airgap-files-kubevip
+  name: rancher-airgap-images-kubewarden
 spec:
-  files:
-    - path: https://kube-vip.io/k3s
-      name: kubevip-daemonset-manifest.yaml
-    - path: https://kube-vip.io/manifests/rbac.yaml
-      name: kubevip-rbac-manifest.yaml
+  images:
+
+
