@@ -61,4 +61,6 @@ fetch -> validate -> save -> | <airgap> | -> load -> validate -> distribute
 ```bash
 # https://github.com/hauler-dev/hauler
 curl -sfL https://get.hauler.dev | bash
+
+# date = $(date +"%m%d%Y")
 ```
