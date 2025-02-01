@@ -1,0 +1,18 @@
+apiVersion: content.hauler.cattle.io/v1alpha1
+kind: Images
+metadata:
+  name: rancher-airgap-images-kubevip
+spec:
+  images:
+    - name: ghcr.io/kube-vip/kube-vip:v0.5.11
+---
+apiVersion: content.hauler.cattle.io/v1alpha1
+kind: Files
+metadata:
+  name: rancher-airgap-files-kubevip
+spec:
+  files:
+    - path: https://kube-vip.io/k3s
+      name: kubevip-daemonset-manifest.yaml
+    - path: https://kube-vip.io/manifests/rbac.yaml
+      name: kubevip-rbac-manifest.yaml
