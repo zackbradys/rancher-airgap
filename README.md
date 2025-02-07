@@ -42,7 +42,7 @@ fetch -> validate -> save -> | <airgap> | -> load -> validate -> distribute
 ### Addons
 
 - [hauler/hauler](hauler/hauler/README.md) - provides the content manifest for Hauler
-  - currently supports: `Hauler: v1.1.1`
+  - currently supports: `Hauler: v1.2.0`
 - [hauler/helm](hauler/helm/README.md) - provides the content manifest for Helm
   - currently supports: `Helm: v3.16.4`
 - [hauler/cosign](hauler/cosign/README.md) - provides the content manifest for Cosign
