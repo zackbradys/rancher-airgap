@@ -29,18 +29,18 @@ curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/haul
 curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/helm/rancher-airgap-helm.yaml
 
 # Sync Manifests to Hauler Store
-hauler store sync --store rke2-store --platform linux/amd64 --files rancher-airgap-rke2.yaml
-hauler store sync --store rancher-store --platform linux/amd64 --files rancher-airgap-rancher.yaml
-# hauler store sync --store rancher-store --platform linux/amd64 --files rancher-airgap-rancher-minimal.yaml
-hauler store sync --store longhorn-store --platform linux/amd64 --files rancher-airgap-longhorn.yaml
-hauler store sync --store neuvector-store --platform linux/amd64 --files rancher-airgap-neuvector.yaml
-# hauler store sync --store harvester-store --platform linux/amd64 --files rancher-airgap-harvester.yaml
-# hauler store sync --store gitea-store --platform linux/amd64 --files rancher-airgap-gitea.yaml
-# hauler store sync --store vault-store --platform linux/amd64 --files rancher-airgap-vault.yaml
-hauler store sync --store kubevip-store --platform linux/amd64 --files rancher-airgap-kubevip.yaml
-hauler store sync --store extras --files rancher-airgap-hauler.yaml
-hauler store sync --store extras --files rancher-airgap-helm.yaml
-hauler store sync --store extras --files rancher-airgap-cosign.yaml
+hauler store sync --store rke2-store --platform linux/amd64 --filename rancher-airgap-rke2.yaml
+hauler store sync --store rancher-store --platform linux/amd64 --filename rancher-airgap-rancher.yaml
+# hauler store sync --store rancher-store --platform linux/amd64 --filename rancher-airgap-rancher-minimal.yaml
+hauler store sync --store longhorn-store --platform linux/amd64 --filename rancher-airgap-longhorn.yaml
+hauler store sync --store neuvector-store --platform linux/amd64 --filename rancher-airgap-neuvector.yaml
+# hauler store sync --store harvester-store --platform linux/amd64 --filename rancher-airgap-harvester.yaml
+# hauler store sync --store gitea-store --platform linux/amd64 --filename rancher-airgap-gitea.yaml
+# hauler store sync --store vault-store --platform linux/amd64 --filename rancher-airgap-vault.yaml
+hauler store sync --store kubevip-store --platform linux/amd64 --filename rancher-airgap-kubevip.yaml
+hauler store sync --store extras --filename rancher-airgap-hauler.yaml
+hauler store sync --store extras --filename rancher-airgap-helm.yaml
+hauler store sync --store extras --filename rancher-airgap-cosign.yaml
 
 # Save Hauler Tarballs
 hauler store save --store rke2-store --filename rancher-airgap-rke2.tar.zst
@@ -86,15 +86,15 @@ rm -rf LICENSE README.md
 chmod 755 hauler && mv hauler /usr/bin/hauler
 
 # Load Hauler Tarballs
-hauler store load rancher-airgap-rke2.tar.zst
-hauler store load rancher-airgap-rancher.tar.zst
-# hauler store load rancher-airgap-rancher-minimal.tar.zst
-hauler store load rancher-airgap-longhorn.tar.zst
-hauler store load rancher-airgap-neuvector.tar.zst
-# hauler store load rancher-airgap-harvester.tar.zst
-# hauler store load rancher-airgap-gitea.tar.zst
-# hauler store load rancher-airgap-kubevip.tar.zst
-hauler store load rancher-airgap-extras.tar.zst
+hauler store load --filename rancher-airgap-rke2.tar.zst
+hauler store load --filename rancher-airgap-rancher.tar.zst
+# hauler store load --filename rancher-airgap-rancher-minimal.tar.zst
+hauler store load --filename rancher-airgap-longhorn.tar.zst
+hauler store load --filename rancher-airgap-neuvector.tar.zst
+# hauler store load --filename rancher-airgap-harvester.tar.zst
+# hauler store load --filename rancher-airgap-gitea.tar.zst
+# hauler store load --filename rancher-airgap-kubevip.tar.zst
+hauler store load --filename rancher-airgap-extras.tar.zst
 
 # Verify Hauler Store Contents
 hauler store info

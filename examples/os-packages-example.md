@@ -41,7 +41,7 @@ $(cat /opt/hauler/repos/package-list.txt | sed 's/^/    - path: /')
 EOF
 
 # Sync Manifests to Hauler Store
-hauler store sync --store packages --files rancher-airgap-packages.yaml
+hauler store sync --store packages --filename rancher-airgap-packages.yaml
 
 # Compress Hauler Store Contents
 hauler store save --store packages --filename rancher-airgap-packages.tar.zst
@@ -73,7 +73,7 @@ rm -rf LICENSE README.md
 chmod 755 hauler && mv hauler /usr/bin/hauler
 
 # Load Hauler Tarballs
-hauler store load rancher-airgap-packages.tar.zst
+hauler store load --filename rancher-airgap-packages.tar.zst
 
 # Verify Hauler Store Contents
 hauler store info
