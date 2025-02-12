@@ -1,5 +1,6 @@
 # Set Variables
-export vHauler=1.1.1
+export vHauler=1.2.1
+export vHaulerHelm=2.0.1
 
 # Setup Working Directory
 rm -rf /opt/hauler/hauler
@@ -36,7 +37,7 @@ spec:
   charts:
     - name: hauler-helm
       repoURL: oci://ghcr.io/hauler-dev
-      version: ${vHauler}
+      version: ${vHaulerHelm}
 ---
 apiVersion: content.hauler.cattle.io/v1alpha1
 kind: Images
