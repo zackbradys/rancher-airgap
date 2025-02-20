@@ -14,4 +14,10 @@ metadata:
   name: rancher-airgap-images-neuvector
 spec:
   images:
-
+    - name: neuvector/enforcer:5.4.2
+    - name: neuvector/controller:5.4.2
+    - name: neuvector/controller:5.4.2
+    - name: neuvector/manager:5.4.2
+    - name: neuvector/scanner:6
+    - name: neuvector/updater:0.0.1
+    - name: neuvector/controller:5.4.2

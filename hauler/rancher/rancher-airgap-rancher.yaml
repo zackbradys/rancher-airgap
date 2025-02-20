@@ -28,7 +28,10 @@ metadata:
   name: rancher-airgap-cert-manager-images-rancher
 spec:
   images:
-
+    - name: quay.io/jetstack/cert-manager-cainjector:v1.16.3
+    - name: quay.io/jetstack/cert-manager-controller:v1.16.3
+    - name: quay.io/jetstack/cert-manager-webhook:v1.16.3
+    - name: quay.io/jetstack/cert-manager-startupapicheck:v1.16.3
 ---
 apiVersion: content.hauler.cattle.io/v1
 kind: Images
