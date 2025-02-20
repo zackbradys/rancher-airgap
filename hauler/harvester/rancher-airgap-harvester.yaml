@@ -1,39 +1,4 @@
 apiVersion: content.hauler.cattle.io/v1
-kind: Files
-metadata:
-  name: rancher-airgap-files-harvester
-spec:
-  files:
-    - path: https://releases.rancher.com/harvester/v1.4.1/harvester-v1.4.1-amd64.iso
-      name: harvester-v1.4.1-amd64.iso
-    - path: https://releases.rancher.com/harvester/v1.4.1/harvester-v1.4.1-vmlinuz-amd64
-      name: harvester-v1.4.1-vmlinuz-amd64
-    - path: https://releases.rancher.com/harvester/v1.4.1/harvester-v1.4.1-initrd-amd64
-      name: harvester-v1.4.1-initrd-amd64
-    - path: https://releases.rancher.com/harvester/v1.4.1/harvester-v1.4.1-rootfs-amd64.squashfs
-      name: harvester-v1.4.1-rootfs-amd64.squashfs
-    - path: https://releases.rancher.com/harvester/v1.4.1/harvester-v1.4.1-amd64.sha512
-      name: harvester-v1.4.1-amd64.sha512
-    - path: https://releases.rancher.com/harvester/v1.4.1/version.yaml
-      name: version.yaml
-    - path: https://releases.rancher.com/harvester/v1.4.1/harvester-v1.4.1-amd64-net-install.iso
-      name: harvester-v1.4.1-amd64-net-install.iso
-    - path: https://releases.rancher.com/harvester/v1.4.1/harvester-v1.4.1-arm64.iso
-      name: harvester-v1.4.1-arm64.iso
-    - path: https://releases.rancher.com/harvester/v1.4.1/harvester-v1.4.1-vmlinuz-arm64
-      name: harvester-v1.4.1-vmlinuz-arm64
-    - path: https://releases.rancher.com/harvester/v1.4.1/harvester-v1.4.1-initrd-arm64
-      name: harvester-v1.4.1-initrd-arm64
-    - path: https://releases.rancher.com/harvester/v1.4.1/harvester-v1.4.1-rootfs-arm64.squashfs
-      name: harvester-v1.4.1-rootfs-arm64.squashfs
-    - path: https://releases.rancher.com/harvester/v1.4.1/harvester-v1.4.1-arm64.sha512
-      name: harvester-v1.4.1-arm64.sha512
-    - path: https://releases.rancher.com/harvester/v1.4.1/version-arm64.yaml
-      name: version-arm64.yaml
-    - path: https://releases.rancher.com/harvester/v1.4.1/harvester-v1.4.1-arm64-net-install.iso
-      name: harvester-v1.4.1-arm64-net-install.iso
----
-apiVersion: content.hauler.cattle.io/v1
 kind: Images
 metadata:
   name: rancher-airgap-images-harvester
