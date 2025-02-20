@@ -13,7 +13,7 @@ vaultImages=$(helm template hashicorp/vault --version=${vVault} | grep 'image:' 
 
 # Create Hauler Manifest
 cat << EOF >> /opt/hauler/vault/rancher-airgap-vault.yaml
-apiVersion: content.hauler.cattle.io/v1alpha1
+apiVersion: content.hauler.cattle.io/v1
 kind: Charts
 metadata:
   name: rancher-airgap-charts-vault
@@ -23,7 +23,7 @@ spec:
       repoURL: https://helm.releases.hashicorp.com
       version: ${vVault}
 ---
-apiVersion: content.hauler.cattle.io/v1alpha1
+apiVersion: content.hauler.cattle.io/v1
 kind: Images
 metadata:
   name: rancher-airgap-images-vault

@@ -1,4 +1,4 @@
-apiVersion: content.hauler.cattle.io/v1alpha1
+apiVersion: content.hauler.cattle.io/v1
 kind: Charts
 metadata:
   name: rancher-airgap-charts-kubewarden
@@ -11,7 +11,7 @@ spec:
       repoURL: https://charts.kubewarden.io
       version: 2.8.0
 ---
-apiVersion: content.hauler.cattle.io/v1alpha1
+apiVersion: content.hauler.cattle.io/v1
 kind: Images
 metadata:
   name: rancher-airgap-images-kubewarden

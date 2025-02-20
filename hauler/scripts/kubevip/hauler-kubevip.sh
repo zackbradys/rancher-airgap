@@ -10,7 +10,7 @@ kubevipImage=$(curl -sL kube-vip.io/k3s | grep -o 'image:.*' | sed 's/image: /  
 
 # Create Hauler Manifest
 cat << EOF >> /opt/hauler/kubevip/rancher-airgap-kubevip.yaml
-apiVersion: content.hauler.cattle.io/v1alpha1
+apiVersion: content.hauler.cattle.io/v1
 kind: Images
 metadata:
   name: rancher-airgap-images-kubevip
@@ -18,7 +18,7 @@ spec:
   images:
 ${kubevipImage}
 ---
-apiVersion: content.hauler.cattle.io/v1alpha1
+apiVersion: content.hauler.cattle.io/v1
 kind: Files
 metadata:
   name: rancher-airgap-files-kubevip

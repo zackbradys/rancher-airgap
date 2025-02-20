@@ -31,7 +31,7 @@ find /opt/hauler/repos > /opt/hauler/repos/package-list.txt
 
 # Generate the Hauler Manifest for Packages
 cat <<EOF > rancher-airgap-packages.yaml
-apiVersion: content.hauler.cattle.io/v1alpha1
+apiVersion: content.hauler.cattle.io/v1
 kind: Files
 metadata:
   name: rancher-airgap-packages

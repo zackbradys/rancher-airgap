@@ -1,4 +1,4 @@
-apiVersion: content.hauler.cattle.io/v1alpha1
+apiVersion: content.hauler.cattle.io/v1
 kind: Charts
 metadata:
   name: rancher-airgap-charts-gitea
@@ -8,7 +8,7 @@ spec:
       repoURL: https://dl.gitea.com/charts
       version: 10.6.0
 ---
-apiVersion: content.hauler.cattle.io/v1alpha1
+apiVersion: content.hauler.cattle.io/v1
 kind: Images
 metadata:
   name: rancher-airgap-images-gitea

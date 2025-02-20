@@ -1,4 +1,4 @@
-apiVersion: content.hauler.cattle.io/v1alpha1
+apiVersion: content.hauler.cattle.io/v1
 kind: Files
 metadata:
   name: rancher-airgap-files-rancher
@@ -9,7 +9,7 @@ spec:
     - path: https://raw.githubusercontent.com/zackbradys/code-templates/main/k8s/yamls/rancher-banner-tssci.yaml
       name: rancher-banner-tssci.yaml
 ---
-apiVersion: content.hauler.cattle.io/v1alpha1
+apiVersion: content.hauler.cattle.io/v1
 kind: Charts
 metadata:
   name: rancher-airgap-charts-rancher
@@ -22,7 +22,7 @@ spec:
       repoURL: https://releases.rancher.com/server-charts/latest
       version: 2.10.1
 ---
-apiVersion: content.hauler.cattle.io/v1alpha1
+apiVersion: content.hauler.cattle.io/v1
 kind: Images
 metadata:
   name: rancher-airgap-cert-manager-images-rancher
@@ -30,7 +30,7 @@ spec:
   images:
 
 ---
-apiVersion: content.hauler.cattle.io/v1alpha1
+apiVersion: content.hauler.cattle.io/v1
 kind: Images
 metadata:
   name: rancher-airgap-rancher-images-rancher

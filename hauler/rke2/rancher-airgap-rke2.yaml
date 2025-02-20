@@ -1,4 +1,4 @@
-apiVersion: content.hauler.cattle.io/v1alpha1
+apiVersion: content.hauler.cattle.io/v1
 kind: Files
 metadata:
   name: rancher-airgap-files-rke2
@@ -47,7 +47,7 @@ spec:
     - path: https://github.com/rancher/rke2-packaging/releases/download/v1.30.9%2Brke2r1.stable.0/rke2-agent-1.30.9.rke2r1-0.el7.x86_64.rpm
       name: rke2-agent-1.30.9.rke2r1-0.el7.x86_64.rpm
 ---
-apiVersion: content.hauler.cattle.io/v1alpha1
+apiVersion: content.hauler.cattle.io/v1
 kind: Images
 metadata:
   name: rancher-airgap-images-rke2

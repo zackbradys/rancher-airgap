@@ -14,7 +14,7 @@ k3sImages=$(curl -sSfL https://github.com/k3s-io/k3s/releases/download/v${vK3S}+
 
 # Create Hauler Manifest
 cat << EOF >> /opt/hauler/k3s/rancher-airgap-k3s.yaml
-apiVersion: content.hauler.cattle.io/v1alpha1
+apiVersion: content.hauler.cattle.io/v1
 kind: Files
 metadata:
   name: rancher-airgap-files-k3s
@@ -41,7 +41,7 @@ spec:
     - path: https://github.com/k3s-io/k3s-selinux/releases/download/v${vK3SSELinux}.latest.1/k3s-selinux-${vK3SSELinux}-1.el9.noarch.rpm
       name: k3s-selinux-${vK3SSELinux}-1.el7.noarch.rpm
 ---
-apiVersion: content.hauler.cattle.io/v1alpha1
+apiVersion: content.hauler.cattle.io/v1
 kind: Images
 metadata:
   name: rancher-airgap-images-k3s

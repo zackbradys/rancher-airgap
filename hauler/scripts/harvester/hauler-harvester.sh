@@ -19,7 +19,7 @@ harvesterImages=$(echo -e "${harvesterImagesAMD64}\n${harvesterImagesARM64}" | s
 
 # Create Hauler Manifest
 cat << EOF >> /opt/hauler/harvester/rancher-airgap-harvester.yaml
-apiVersion: content.hauler.cattle.io/v1alpha1
+apiVersion: content.hauler.cattle.io/v1
 kind: Files
 metadata:
   name: rancher-airgap-files-harvester
@@ -54,7 +54,7 @@ spec:
     - path: https://releases.rancher.com/harvester/v${vHarvester}/harvester-v${vHarvester}-arm64-net-install.iso
       name: harvester-v${vHarvester}-arm64-net-install.iso
 ---
-apiVersion: content.hauler.cattle.io/v1alpha1
+apiVersion: content.hauler.cattle.io/v1
 kind: Images
 metadata:
   name: rancher-airgap-images-harvester

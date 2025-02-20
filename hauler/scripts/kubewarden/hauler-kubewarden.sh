@@ -15,7 +15,7 @@ kubewardenDefaultImages=$(helm template kubewarden/kubewarden-defaults --version
 
 # Create Hauler Manifest
 cat << EOF >> /opt/hauler/kubewarden/rancher-airgap-kubewarden.yaml
-apiVersion: content.hauler.cattle.io/v1alpha1
+apiVersion: content.hauler.cattle.io/v1
 kind: Charts
 metadata:
   name: rancher-airgap-charts-kubewarden
@@ -28,7 +28,7 @@ spec:
       repoURL: https://charts.kubewarden.io
       version: ${vKubewardenDefault}
 ---
-apiVersion: content.hauler.cattle.io/v1alpha1
+apiVersion: content.hauler.cattle.io/v1
 kind: Images
 metadata:
   name: rancher-airgap-images-kubewarden

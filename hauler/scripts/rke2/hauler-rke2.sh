@@ -21,7 +21,7 @@ rke2Images=$(echo -e "${rke2ImagesAMD64}\n${rke2ImagesARM64}" | sort | uniq)
 
 # Create Hauler Manifest
 cat << EOF >> /opt/hauler/rke2/rancher-airgap-rke2.yaml
-apiVersion: content.hauler.cattle.io/v1alpha1
+apiVersion: content.hauler.cattle.io/v1
 kind: Files
 metadata:
   name: rancher-airgap-files-rke2
@@ -70,7 +70,7 @@ spec:
     - path: https://github.com/rancher/rke2-packaging/releases/download/v${vRKE2}%2Brke2r1.stable.0/rke2-agent-${vRKE2}.rke2r1-0.el7.x86_64.rpm
       name: rke2-agent-${vRKE2}.rke2r1-0.el7.x86_64.rpm
 ---
-apiVersion: content.hauler.cattle.io/v1alpha1
+apiVersion: content.hauler.cattle.io/v1
 kind: Images
 metadata:
   name: rancher-airgap-images-rke2

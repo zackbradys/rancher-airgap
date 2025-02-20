@@ -10,7 +10,7 @@ cd /opt/hauler/hauler
 # Create Hauler Manifest
 # Hauler -> https://github.com/hauler-dev/hauler
 cat << EOF >> /opt/hauler/hauler/rancher-airgap-hauler.yaml
-apiVersion: content.hauler.cattle.io/v1alpha1
+apiVersion: content.hauler.cattle.io/v1
 kind: Files
 metadata:
   name: rancher-airgap-files-hauler
@@ -29,7 +29,7 @@ spec:
     - path: https://github.com/hauler-dev/hauler/releases/download/v${vHauler}/hauler_${vHauler}_windows_arm64.tar.gz
       name: hauler-windows-arm64.tar.gz
 ---
-apiVersion: content.hauler.cattle.io/v1alpha1
+apiVersion: content.hauler.cattle.io/v1
 kind: Charts
 metadata:
   name: rancher-airgap-charts-hauler
@@ -39,7 +39,7 @@ spec:
       repoURL: oci://ghcr.io/hauler-dev
       version: ${vHaulerHelm}
 ---
-apiVersion: content.hauler.cattle.io/v1alpha1
+apiVersion: content.hauler.cattle.io/v1
 kind: Images
 metadata:
   name: rancher-airgap-images-hauler

@@ -12,7 +12,7 @@ longhornImages=$(curl -sSfL https://raw.githubusercontent.com/longhorn/longhorn/
 
 # Create Hauler Manifest
 cat << EOF >> /opt/hauler/longhorn/rancher-airgap-longhorn.yaml
-apiVersion: content.hauler.cattle.io/v1alpha1
+apiVersion: content.hauler.cattle.io/v1
 kind: Files
 metadata:
   name: rancher-airgap-files-longhorn
@@ -23,7 +23,7 @@ spec:
     - path: https://raw.githubusercontent.com/zackbradys/code-templates/main/k8s/yamls/longhorn-encrypted-volume.yaml
       name: longhorn-encrypted-volume.yaml
 ---
-apiVersion: content.hauler.cattle.io/v1alpha1
+apiVersion: content.hauler.cattle.io/v1
 kind: Charts
 metadata:
   name: rancher-airgap-charts-longhorn
@@ -33,7 +33,7 @@ spec:
       repoURL: https://charts.longhorn.io
       version: ${vLonghorn}
 ---
-apiVersion: content.hauler.cattle.io/v1alpha1
+apiVersion: content.hauler.cattle.io/v1
 kind: Images
 metadata:
   name: rancher-airgap-images-longhorn

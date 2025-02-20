@@ -14,7 +14,7 @@ neuvectorImages=$(helm template neuvector/core --version=${vNeuVectorHelm} | gre
 
 # Create Hauler Manifest
 cat << EOF >> /opt/hauler/neuvector/rancher-airgap-neuvector.yaml
-apiVersion: content.hauler.cattle.io/v1alpha1
+apiVersion: content.hauler.cattle.io/v1
 kind: Charts
 metadata:
   name: rancher-airgap-charts-neuvector
@@ -24,7 +24,7 @@ spec:
       repoURL: https://neuvector.github.io/neuvector-helm
       version: ${vNeuVectorHelm}
 ---
-apiVersion: content.hauler.cattle.io/v1alpha1
+apiVersion: content.hauler.cattle.io/v1
 kind: Images
 metadata:
   name: rancher-airgap-images-neuvector

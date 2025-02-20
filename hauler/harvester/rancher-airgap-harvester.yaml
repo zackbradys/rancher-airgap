@@ -1,4 +1,4 @@
-apiVersion: content.hauler.cattle.io/v1alpha1
+apiVersion: content.hauler.cattle.io/v1
 kind: Files
 metadata:
   name: rancher-airgap-files-harvester
@@ -33,7 +33,7 @@ spec:
     - path: https://releases.rancher.com/harvester/v1.4.1/harvester-v1.4.1-arm64-net-install.iso
       name: harvester-v1.4.1-arm64-net-install.iso
 ---
-apiVersion: content.hauler.cattle.io/v1alpha1
+apiVersion: content.hauler.cattle.io/v1
 kind: Images
 metadata:
   name: rancher-airgap-images-harvester

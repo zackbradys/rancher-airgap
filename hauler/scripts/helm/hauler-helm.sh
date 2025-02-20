@@ -9,7 +9,7 @@ cd /opt/hauler/helm
 # Create Hauler Manifest
 # Helm -> https://github.com/helm/helm
 cat << EOF >> /opt/hauler/helm/rancher-airgap-helm.yaml
-apiVersion: content.hauler.cattle.io/v1alpha1
+apiVersion: content.hauler.cattle.io/v1
 kind: Files
 metadata:
   name: rancher-airgap-files-helm

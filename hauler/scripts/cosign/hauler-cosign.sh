@@ -9,7 +9,7 @@ cd /opt/hauler/cosign
 # Create Hauler Manifest
 # Cosign -> https://github.com/sigstore/cosign
 cat << EOF >> /opt/hauler/cosign/rancher-airgap-cosign.yaml
-apiVersion: content.hauler.cattle.io/v1alpha1
+apiVersion: content.hauler.cattle.io/v1
 kind: Files
 metadata:
   name: rancher-airgap-files-cosign

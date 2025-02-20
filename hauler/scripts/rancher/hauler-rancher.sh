@@ -18,7 +18,7 @@ rancherImages=$(curl -sSfL https://prime.ribs.rancher.io/rancher/v${vRancher}/ra
 
 # Create Hauler Manifest
 cat << EOF >> /opt/hauler/rancher/rancher-airgap-rancher.yaml
-apiVersion: content.hauler.cattle.io/v1alpha1
+apiVersion: content.hauler.cattle.io/v1
 kind: Files
 metadata:
   name: rancher-airgap-files-rancher
@@ -29,7 +29,7 @@ spec:
     - path: https://raw.githubusercontent.com/zackbradys/code-templates/main/k8s/yamls/rancher-banner-tssci.yaml
       name: rancher-banner-tssci.yaml
 ---
-apiVersion: content.hauler.cattle.io/v1alpha1
+apiVersion: content.hauler.cattle.io/v1
 kind: Charts
 metadata:
   name: rancher-airgap-charts-rancher
@@ -42,7 +42,7 @@ spec:
       repoURL: https://releases.rancher.com/server-charts/latest
       version: ${vRancher}
 ---
-apiVersion: content.hauler.cattle.io/v1alpha1
+apiVersion: content.hauler.cattle.io/v1
 kind: Images
 metadata:
   name: rancher-airgap-cert-manager-images-rancher
@@ -50,7 +50,7 @@ spec:
   images:
 ${certManagerImages}
 ---
-apiVersion: content.hauler.cattle.io/v1alpha1
+apiVersion: content.hauler.cattle.io/v1
 kind: Images
 metadata:
   name: rancher-airgap-rancher-images-rancher

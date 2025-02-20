@@ -13,7 +13,7 @@ giteaImages=$(helm template gitea-charts/gitea --version=${vGitea} | grep 'image
 
 # Create Hauler Manifest
 cat << EOF >> /opt/hauler/gitea/rancher-airgap-gitea.yaml
-apiVersion: content.hauler.cattle.io/v1alpha1
+apiVersion: content.hauler.cattle.io/v1
 kind: Charts
 metadata:
   name: rancher-airgap-charts-gitea
@@ -23,7 +23,7 @@ spec:
       repoURL: https://dl.gitea.com/charts
       version: ${vGitea}
 ---
-apiVersion: content.hauler.cattle.io/v1alpha1
+apiVersion: content.hauler.cattle.io/v1
 kind: Images
 metadata:
   name: rancher-airgap-images-gitea

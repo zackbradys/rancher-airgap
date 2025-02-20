@@ -30,7 +30,7 @@ rancherImagesMinimal=$(cat rancher-images-minimal.txt)
 
 # Create Hauler Manifest
 cat << EOF >> /opt/hauler/rancher-minimal/rancher-airgap-rancher-minimal.yaml
-apiVersion: content.hauler.cattle.io/v1alpha1
+apiVersion: content.hauler.cattle.io/v1
 kind: Files
 metadata:
   name: rancher-airgap-files-rancher-minimal
@@ -41,7 +41,7 @@ spec:
     - path: https://raw.githubusercontent.com/zackbradys/code-templates/main/k8s/yamls/rancher-banner-tssci.yaml
       name: rancher-banner-tssci.yaml
 ---
-apiVersion: content.hauler.cattle.io/v1alpha1
+apiVersion: content.hauler.cattle.io/v1
 kind: Charts
 metadata:
   name: rancher-airgap-charts-rancher-minimal
@@ -54,7 +54,7 @@ spec:
       repoURL: https://releases.rancher.com/server-charts/latest
       version: ${vRancher}
 ---
-apiVersion: content.hauler.cattle.io/v1alpha1
+apiVersion: content.hauler.cattle.io/v1
 kind: Images
 metadata:
   name: rancher-airgap-cert-manager-images-rancher-minimal
@@ -62,7 +62,7 @@ spec:
   images:
 ${certManagerImagesMinimal}
 ---
-apiVersion: content.hauler.cattle.io/v1alpha1
+apiVersion: content.hauler.cattle.io/v1
 kind: Images
 metadata:
   name: rancher-airgap-rancher-images-rancher-minimal
