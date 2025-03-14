@@ -37,7 +37,7 @@ fetch -> validate -> save -> | <airgap> | -> load -> validate -> distribute
 - [hauler/neuvector](hauler/neuvector/README.md) - provides the content manifest for Rancher NeuVector
   - currently supports: `NeuVector: v5.4.2`
 - [hauler/harvester](hauler/harvester/README.md) - provides the content manifest for Rancher Harvester
-  - currently supports: `Harvester: v1.4.1`
+  - currently supports: `Harvester: v1.4.2`
 
 ### Addons
 
@@ -48,7 +48,7 @@ fetch -> validate -> save -> | <airgap> | -> load -> validate -> distribute
 - [hauler/cosign](hauler/cosign/README.md) - provides the content manifest for Cosign
   - currently supports: `Cosign: v2.4.3`
 - [hauler/gitea](hauler/gitea/README.md) - provides the content manifest for Gitea
-  - currently supports: `Gitea: v1.22.3`
+  - currently supports: `Gitea: v1.23.4`
 - [hauler/vault](hauler/vault/README.md) - provides the content manifest for Vault
   - currently supports: `Vault: v1.18.1`
 - [hauler/kubevip](hauler/kubevip/README.md) - provides the content manifest for KubeVip
