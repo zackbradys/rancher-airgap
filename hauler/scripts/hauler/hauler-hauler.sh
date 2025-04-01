@@ -1,6 +1,6 @@
 # Set Variables
-export vHauler=1.2.1
-export vHaulerHelm=2.0.2
+export vHauler=1.2.2
+export vHaulerHelm=2.0.3
 
 # Setup Working Directory
 rm -rf /opt/hauler/hauler

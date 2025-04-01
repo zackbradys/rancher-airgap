@@ -25,9 +25,9 @@ fetch -> validate -> save -> | <airgap> | -> load -> validate -> distribute
 ### Core Components
 
 - [hauler/rke2](hauler/rke2/README.md) - provides the content manifest for Rancher Kubernetes (RKE2)
-  - currently supports: `RKE2: v1.30.10`
+  - currently supports: `RKE2: v1.30.11`
 - [hauler/k3s](hauler/k3s/README.md) - provides the content manifest for Rancher K3S (K3S)
-  - currently supports: `K3S: v1.30.10`
+  - currently supports: `K3S: v1.30.11`
 - [hauler/rancher](hauler/rancher/README.md) - provides the content manifest for Rancher Multi-Cluster Manager
   - currently supports: `Rancher: v2.10.3`
 - [hauler/rancher](hauler/rancher/README.md) - provides the content manifest for Cert-Manager
@@ -35,22 +35,22 @@ fetch -> validate -> save -> | <airgap> | -> load -> validate -> distribute
 - [hauler/longhorn](hauler/longhorn/README.md) - provides the content manifest for Rancher Longhorn
   - currently supports: `Longhorn: v1.7.3`
 - [hauler/neuvector](hauler/neuvector/README.md) - provides the content manifest for Rancher NeuVector
-  - currently supports: `NeuVector: v5.4.2`
+  - currently supports: `NeuVector: v5.4.3`
 - [hauler/harvester](hauler/harvester/README.md) - provides the content manifest for Rancher Harvester
   - currently supports: `Harvester: v1.4.2`
 
 ### Addons
 
 - [hauler/hauler](hauler/hauler/README.md) - provides the content manifest for Hauler
-  - currently supports: `Hauler: v1.2.1`
+  - currently supports: `Hauler: v1.2.2`
 - [hauler/helm](hauler/helm/README.md) - provides the content manifest for Helm
   - currently supports: `Helm: v3.17.1`
 - [hauler/cosign](hauler/cosign/README.md) - provides the content manifest for Cosign
   - currently supports: `Cosign: v2.4.3`
 - [hauler/gitea](hauler/gitea/README.md) - provides the content manifest for Gitea
-  - currently supports: `Gitea: v1.23.4`
+  - currently supports: `Gitea: v1.23.6`
 - [hauler/vault](hauler/vault/README.md) - provides the content manifest for Vault
-  - currently supports: `Vault: v1.18.1`
+  - currently supports: `Vault: v1.19.0`
 - [hauler/kubevip](hauler/kubevip/README.md) - provides the content manifest for KubeVip
   - currently supports: `KubeVip: v0.5.11`
 
