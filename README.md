@@ -29,7 +29,7 @@ fetch -> validate -> save -> | <airgap> | -> load -> validate -> distribute
 - [hauler/k3s](hauler/k3s/README.md) - provides the content manifest for Rancher K3S (K3S)
   - currently supports: `K3S: v1.30.11`
 - [hauler/rancher](hauler/rancher/README.md) - provides the content manifest for Rancher Multi-Cluster Manager
-  - currently supports: `Rancher: v2.10.3`
+  - currently supports: `Rancher: v2.10.4`
 - [hauler/rancher](hauler/rancher/README.md) - provides the content manifest for Cert-Manager
   - currently supports: `Cert-Manager: v1.17.1`
 - [hauler/longhorn](hauler/longhorn/README.md) - provides the content manifest for Rancher Longhorn
