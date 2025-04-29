@@ -25,15 +25,15 @@ fetch -> validate -> save -> | <airgap> | -> load -> validate -> distribute
 ### Core Components
 
 - [hauler/rke2](hauler/rke2/README.md) - provides the content manifest for Rancher Kubernetes (RKE2)
-  - currently supports: `RKE2: v1.30.11`
+  - currently supports: `RKE2: v1.31.7`
 - [hauler/k3s](hauler/k3s/README.md) - provides the content manifest for Rancher K3S (K3S)
-  - currently supports: `K3S: v1.30.11`
+  - currently supports: `K3S: v1.31.7`
 - [hauler/rancher](hauler/rancher/README.md) - provides the content manifest for Rancher Multi-Cluster Manager
-  - currently supports: `Rancher: v2.10.4`
+  - currently supports: `Rancher: v2.11.1`
 - [hauler/rancher](hauler/rancher/README.md) - provides the content manifest for Cert-Manager
-  - currently supports: `Cert-Manager: v1.17.1`
+  - currently supports: `Cert-Manager: v1.17.2`
 - [hauler/longhorn](hauler/longhorn/README.md) - provides the content manifest for Rancher Longhorn
-  - currently supports: `Longhorn: v1.7.3`
+  - currently supports: `Longhorn: v1.8.1`
 - [hauler/neuvector](hauler/neuvector/README.md) - provides the content manifest for Rancher NeuVector
   - currently supports: `NeuVector: v5.4.3`
 - [hauler/harvester](hauler/harvester/README.md) - provides the content manifest for Rancher Harvester
@@ -42,11 +42,11 @@ fetch -> validate -> save -> | <airgap> | -> load -> validate -> distribute
 ### Addons
 
 - [hauler/hauler](hauler/hauler/README.md) - provides the content manifest for Hauler
-  - currently supports: `Hauler: v1.2.2`
+  - currently supports: `Hauler: v1.2.3`
 - [hauler/helm](hauler/helm/README.md) - provides the content manifest for Helm
-  - currently supports: `Helm: v3.17.1`
+  - currently supports: `Helm: v3.17.3`
 - [hauler/cosign](hauler/cosign/README.md) - provides the content manifest for Cosign
-  - currently supports: `Cosign: v2.4.3`
+  - currently supports: `Cosign: v2.5.0`
 - [hauler/gitea](hauler/gitea/README.md) - provides the content manifest for Gitea
   - currently supports: `Gitea: v1.23.6`
 - [hauler/vault](hauler/vault/README.md) - provides the content manifest for Vault
