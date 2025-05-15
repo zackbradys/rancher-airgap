@@ -1,5 +1,5 @@
 # Set Variables
-export vK3S=1.37.7
+export vK3S=1.31.8
 export vK3SSELinux=1.6
 export vK3Smodified=$(echo "$vK3S" | cut -d'.' -f1,2)
 

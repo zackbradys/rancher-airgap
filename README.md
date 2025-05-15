@@ -4,7 +4,7 @@
 
 Rancher Airgap is a framework and guide built for collecting, packaging, and distributing the Rancher Product Stack for deployment in disconnected or airgapped environments.
 
-We utilize Project [Hauler](https://github.com/hauler-dev/hauler) by [Rancher Government Solutions](https://github.com/rancherfederal) to collect, package, and distribute the assets. `Hauler` simplifies the airgap process, by representing assets as content and collections and allows users to easily fetch, store, package, and distribute with declarative manifests or the command line. In this repositry, we generate these manifests for each of the products.
+We utilize Project [Hauler](https://github.com/hauler-dev/hauler) by [Rancher Government](https://github.com/rancherfederal) to collect, package, and distribute the assets. `Hauler` simplifies the airgap process, by representing assets as content and collections and allows users to easily fetch, store, package, and distribute with declarative manifests or the command line. In this repositry, we generate these manifests for each of the products.
 
 **Review the high level *[example use cases](examples)*!**
 
@@ -35,11 +35,11 @@ fetch -> validate -> save -> | <airgap> | -> load -> validate -> distribute
 - [hauler/longhorn](hauler/longhorn/README.md) - provides the content manifest for Rancher Longhorn
   - currently supports: `Longhorn: v1.8.1`
 - [hauler/neuvector](hauler/neuvector/README.md) - provides the content manifest for Rancher NeuVector
-  - currently supports: `NeuVector: v5.4.3`
+  - currently supports: `NeuVector: v5.4.4`
 - [hauler/harvester](hauler/harvester/README.md) - provides the content manifest for Rancher Harvester
   - currently supports: `Harvester: v1.4.2`
 
-### Addons
+### Featured Addons
 
 - [hauler/hauler](hauler/hauler/README.md) - provides the content manifest for Hauler
   - currently supports: `Hauler: v1.2.4`
@@ -53,6 +53,8 @@ fetch -> validate -> save -> | <airgap> | -> load -> validate -> distribute
   - currently supports: `Vault: v1.19.0`
 - [hauler/kubevip](hauler/kubevip/README.md) - provides the content manifest for KubeVip
   - currently supports: `KubeVip: v0.5.11`
+- [hauler/kubewarden](hauler/kubewarden/README.md) - provides the content manifest for KubeWarden
+  - currently supports: `KubeWarden: v5.2.0`
 
 **Note:** We are currently planning and working towards supporting every major version of our products. We will continue to update to the latest until we implement previous major verions.
 
