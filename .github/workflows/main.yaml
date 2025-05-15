@@ -288,7 +288,7 @@ jobs:
 
       - name: Create Release Notes
         run: |
-          echo -e "# Rancher Airgap Release 02202025\nWe are excited about this latest release of Rancher Airgap! Please review all of the releases notes below and always ensure to download the correct assets. Please utilize GitHub Issues, Forks, and Pull Requests to submit any issues, updates, or fixes! Thank you.\n\nThese Release Notes were generated automatically by [github-actions](https://github.com/apps/github-actions).\n\n## Upgrade Steps\n* No upgrade steps for this release.\n\n## Breaking Changes\n* No breaking changes for this release.\n\n## Features and Improvements\n* No features or improvements for this release.\n\n## Bug Fixes and Additional Notes\n* No bug fixes or additional notes for this release." > RELEASE-NOTES.MD
+          echo -e "# Rancher Airgap Release $(date +%m%d%Y)\nWe are excited about this latest release of Rancher Airgap! Please review all of the releases notes below and always ensure to download the correct assets. Please utilize GitHub Issues, Forks, and Pull Requests to submit any issues, updates, or fixes! Thank you.\n\nThese Release Notes were generated automatically by [github-actions](https://github.com/apps/github-actions).\n\n## Upgrade Steps\n* No upgrade steps for this release.\n\n## Breaking Changes\n* No breaking changes for this release.\n\n## Features and Improvements\n* No features or improvements for this release.\n\n## Bug Fixes and Additional Notes\n* No bug fixes or additional notes for this release." > RELEASE-NOTES.MD
           echo "Previewing Release Notes"
           cat RELEASE-NOTES.MD
 
@@ -297,6 +297,7 @@ jobs:
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ github.ref_name }}
           release_name: Release ${{ github.ref_name }}
@@ -312,6 +313,7 @@ jobs:
       - name: Upload Image List to Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           gh release upload "${{ github.ref_name }}" rancher-airgap-image-list.txt
 
