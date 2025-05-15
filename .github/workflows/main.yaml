@@ -304,6 +304,17 @@ jobs:
           prerelease: false
           body_path: RELEASE-NOTES.MD
 
+      - name: Generate Image List
+        run: |
+          find . -name '*.yaml' -exec yq -N -r 'select(.kind == "Images") | .spec.images[]?.name' {} + 2>/dev/null | sort -u > rancher-airgap-image-list.txt
+          cat rancher-airgap-image-list.txt
+
+      - name: Upload Image List to Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release upload "${{ github.ref_name }}" rancher-airgap-image-list.txt
+
   # rancher-airgap-portal:
   #   name: Rancher Airgap - Portal Job
   #   runs-on: [self-hosted, linux, X64]
