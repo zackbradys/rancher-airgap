@@ -756,15 +756,8 @@ jobs:
         if: always()
         run: |
           mkdir -p hauler/carbide && cd hauler/carbide && source ~/.bashrc
-          echo -e "apiVersion: content.hauler.cattle.io/v1\nkind: Images\nmetadata:\n  name: carbide-images\nspec:\n  images:\n$(curl -sfL https://raw.githubusercontent.com/rancherfederal/carbide-releases/main/carbide-images.txt | sed 's/^/    - name: /')" > carbide-images.yaml
-          echo -e "apiVersion: content.hauler.cattle.io/v1\nkind: Images\nmetadata:\n  name: carbide-provisioning-images\nspec:\n  images:\n    - name: rgcrprod.azurecr.us/rancher/machine:v0.15.0-rancher124-carbide-1\n    - name: rgcrprod.azurecr.us/rancher/rancher:v2.10.1-carbide-1\n    - name: rgcrprod.azurecr.us/rancher/rancher-agent:v2.10.1-carbide-1\n    - name: rgcrprod.azurecr.us/carbide/carbide-docs:0.1.7-carbide-1\n---\napiVersion: content.hauler.cattle.io/v1\nkind: Charts\nmetadata:\n  name: carbide-provisioning-charts\nspec:\n  charts:\n    - name: rancher\n      repoURL: https://rancherfederal.github.io/carbide-charts\n      version: 2.10.1" > carbide-provisioning.yaml
-          echo -e "apiVersion: content.hauler.cattle.io/v1\nkind: Charts\nmetadata:\n  name: carbide-charts\nspec:\n  charts:\n    - name: rancher\n      repoURL: https://rancherfederal.github.io/carbide-charts\n      version: 2.10.1\n    - name: airgapped-docs\n      repoURL: https://rancherfederal.github.io/carbide-charts\n      version: 0.1.54\n    - name: stigatron\n      repoURL: https://rancherfederal.github.io/carbide-charts\n      version: 0.3.0\n    - name: stigatron-ui\n      repoURL: https://rancherfederal.github.io/carbide-charts\n      version: 0.3.0\n---\napiVersion: content.hauler.cattle.io/v1\nkind: Charts\nmetadata:\n  name: carbide-dependency-charts\nspec:\n  charts:\n    - name: heimdall2\n      repoURL: https://rancherfederal.github.io/carbide-charts\n      version: 0.1.41\n    - name: nats\n      repoURL: https://nats-io.github.io/k8s/helm/charts\n      version: 1.1.5" > carbide-charts.yaml
-          time hauler store sync --store amd64 --platform linux/amd64 --filename carbide-images.yaml
-          time hauler store sync --store arm64 --platform linux/arm64 --filename carbide-images.yaml
-          time hauler store sync --store amd64 --platform linux/amd64 --filename carbide-provisioning.yaml
-          time hauler store sync --store arm64 --platform linux/arm64 --filename carbide-provisioning.yaml
-          time hauler store sync --store amd64 --platform linux/amd64 --filename carbide-charts.yaml
-          time hauler store sync --store arm64 --platform linux/arm64 --filename carbide-charts.yaml
+          time hauler store sync --store amd64 --platform linux/amd64 --filename https://raw.githubusercontent.com/rancherfederal/carbide-releases/refs/heads/updates/carbide-images.yaml
+          time hauler store sync --store arm64 --platform linux/arm64 --filename https://raw.githubusercontent.com/rancherfederal/carbide-releases/refs/heads/updates/carbide-images.yaml
           time hauler store save --store amd64 --platform linux/amd64 --filename carbide-carbide-${{ github.ref_name }}-amd64.tar.zst
           time hauler store save --store arm64 --platform linux/arm64 --filename carbide-carbide-${{ github.ref_name }}-arm64.tar.zst
           hauler store info --store amd64
