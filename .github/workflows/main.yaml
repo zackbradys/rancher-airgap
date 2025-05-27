@@ -756,8 +756,8 @@ jobs:
         if: always()
         run: |
           mkdir -p hauler/carbide && cd hauler/carbide && source ~/.bashrc
-          time hauler store sync --store amd64 --platform linux/amd64 --filename https://raw.githubusercontent.com/rancherfederal/carbide-releases/refs/heads/updates/carbide-images.yaml
-          time hauler store sync --store arm64 --platform linux/arm64 --filename https://raw.githubusercontent.com/rancherfederal/carbide-releases/refs/heads/updates/carbide-images.yaml
+          time hauler store sync --store amd64 --platform linux/amd64 --filename https://raw.githubusercontent.com/rancherfederal/carbide-releases/refs/heads/main/carbide-images.yaml
+          time hauler store sync --store arm64 --platform linux/arm64 --filename https://raw.githubusercontent.com/rancherfederal/carbide-releases/refs/heads/main/carbide-images.yaml
           time hauler store save --store amd64 --platform linux/amd64 --filename carbide-carbide-${{ github.ref_name }}-amd64.tar.zst
           time hauler store save --store arm64 --platform linux/arm64 --filename carbide-carbide-${{ github.ref_name }}-arm64.tar.zst
           hauler store info --store amd64
