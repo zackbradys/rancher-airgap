@@ -1,7 +1,7 @@
 # Set Variables
-export vKubewarden=5.2.0
-export vKubewardenDefault=3.2.0
-export vKubewardenCRDs=1.16.0
+export vKubewarden=5.3.0
+export vKubewardenDefault=3.3.0
+export vKubewardenCRDs=1.17.0
 
 # Setup Working Directory
 rm -rf /opt/hauler/kubewarden

@@ -16,46 +16,61 @@ curl -sfL https://get.hauler.dev | bash
 # Fetch Rancher Airgap Manifests
 # Optional Assets/Artifacts are Commented Out
 curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/rke2/rancher-airgap-rke2.yaml
+curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/k3s/rancher-airgap-k3s.yaml
 curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/rancher/rancher-airgap-rancher.yaml
 # curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/rancher/rancher-airgap-rancher-minimal.yaml
 curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/longhorn/rancher-airgap-longhorn.yaml
 curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/neuvector/rancher-airgap-neuvector.yaml
-# curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/harvester/rancher-airgap-harvester.yaml
+curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/harvester/rancher-airgap-harvester.yaml
+curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/harvester/rancher-airgap-harvester-isos.yaml
 # curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/gitea/rancher-airgap-gitea.yaml
 # curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/vault/rancher-airgap-vault.yaml
 curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/kubevip/rancher-airgap-kubevip.yaml
-curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/cosign/rancher-airgap-cosign.yaml
+# curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/cosign/rancher-airgap-cosign.yaml
 curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/hauler/rancher-airgap-hauler.yaml
 curl -sfOL https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/helm/rancher-airgap-helm.yaml
 
 # Sync Manifests to Hauler Store
-hauler store sync --store rke2-store --platform linux/amd64 --filename rancher-airgap-rke2.yaml
-hauler store sync --store rancher-store --platform linux/amd64 --filename rancher-airgap-rancher.yaml
-# hauler store sync --store rancher-store --platform linux/amd64 --filename rancher-airgap-rancher-minimal.yaml
-hauler store sync --store longhorn-store --platform linux/amd64 --filename rancher-airgap-longhorn.yaml
-hauler store sync --store neuvector-store --platform linux/amd64 --filename rancher-airgap-neuvector.yaml
-# hauler store sync --store harvester-store --platform linux/amd64 --filename rancher-airgap-harvester.yaml
-# hauler store sync --store gitea-store --platform linux/amd64 --filename rancher-airgap-gitea.yaml
-# hauler store sync --store vault-store --platform linux/amd64 --filename rancher-airgap-vault.yaml
-hauler store sync --store kubevip-store --platform linux/amd64 --filename rancher-airgap-kubevip.yaml
-hauler store sync --store extras --filename rancher-airgap-hauler.yaml
-hauler store sync --store extras --filename rancher-airgap-helm.yaml
-hauler store sync --store extras --filename rancher-airgap-cosign.yaml
+# Optional Assets/Artifacts are Commented Out
+hauler store sync --store rke2-store --platform linux/amd64 --filename hauler/rke2/rancher-airgap-rke2.yaml
+# hauler store sync --store k3s-store --platform linux/amd64 --filename hauler/k3s/rancher-airgap-k3s.yaml
+hauler store sync --store rancher-store --platform linux/amd64 --filename hauler/rancher/rancher-airgap-rancher.yaml
+# hauler store sync --store rancher-store --platform linux/amd64 --filename hauler/rancher/rancher-airgap-rancher-minimal.yaml
+hauler store sync --store longhorn-store --platform linux/amd64 --filename hauler/longhorn/rancher-airgap-longhorn.yaml
+hauler store sync --store neuvector-store --platform linux/amd64 --filename hauler/neuvector/rancher-airgap-neuvector.yaml
+hauler store sync --store harvester-store --platform linux/amd64 --filename hauler/harvester/rancher-airgap-harvester.yaml
+hauler store sync --store harvester-store --platform linux/amd64 --filename hauler/harvester/rancher-airgap-harvester-isos.yaml
+# hauler store sync --store gitea-store --platform linux/amd64 --filename hauler/gitea/rancher-airgap-gitea.yaml
+# hauler store sync --store vault-store --platform linux/amd64 --filename hauler/vault/rancher-airgap-vault.yaml
+hauler store sync --store kubevip-store --platform linux/amd64 --filename hauler/kubevip/rancher-airgap-kubevip.yaml
+# hauler store sync --store cosign-store --filename hauler/cosign/rancher-airgap-cosign.yaml
+hauler store sync --store hauler-store --filename hauler/hauler/rancher-airgap-hauler.yaml
+hauler store sync --store helm-store --filename hauler/helm/rancher-airgap-helm.yaml
 
 # Save Hauler Tarballs
+# Optional Assets/Artifacts are Commented Out
 hauler store save --store rke2-store --filename rancher-airgap-rke2.tar.zst
+# hauler store save --store rke2-store --filename rancher-airgap-rke2.tar.zst
 hauler store save --store rancher-store --filename rancher-airgap-rancher.tar.zst
 # hauler store save --store rancher-store --filename rancher-airgap-rancher-minimal.tar.zst
 hauler store save --store longhorn-store --filename rancher-airgap-longhorn.tar.zst
 hauler store save --store neuvector-store --filename rancher-airgap-neuvector.tar.zst
-# hauler store save --store harvester-store --filename rancher-airgap-harvester.tar.zst
+hauler store save --store harvester-store --filename rancher-airgap-harvester.tar.zst
+hauler store save --store harvester-store --filename rancher-airgap-harvester-isos.tar.zst
 # hauler store save --store gitea-store --filename rancher-airgap-gitea.tar.zst
 # hauler store save --store vault-store --filename rancher-airgap-vault.tar.zst
 hauler store save --store kubevip-store --filename rancher-airgap-kubevip.tar.zst
-hauler store save --store extras --filename rancher-airgap-extras.tar.zst
+# hauler store save --store cosign-store --filename rancher-airgap-cosign.tar.zst
+hauler store save --store hauler-store --filename rancher-airgap-hauler.tar.zst
+hauler store save --store hauler-helm --filename rancher-airgap-helm.tar.zst
 
 # Fetch Hauler Binary
-curl -sfOL https://github.com/hauler-dev/hauler/releases/download/v1.1.1/hauler_1.1.1_linux_amd64.tar.gz
+curl -sfOL https://github.com/hauler-dev/hauler/releases/download/v1.2.4/hauler_1.2.4_linux_amd64.tar.gz
+# curl -sfOL https://github.com/hauler-dev/hauler/releases/download/v1.2.4/hauler_1.2.4_linux_arm64.tar.gz
+# curl -sfOL https://github.com/hauler-dev/hauler/releases/download/v1.2.4/hauler_1.2.4_darwin_amd64.tar.gz
+# curl -sfOL https://github.com/hauler-dev/hauler/releases/download/v1.2.4/hauler_1.2.4_darwin_arm64.tar.gz
+# curl -sfOL https://github.com/hauler-dev/hauler/releases/download/v1.2.4/hauler_1.2.4_windows_amd64.tar.gz
+# curl -sfOL https://github.com/hauler-dev/hauler/releases/download/v1.2.4/hauler_1.2.4_windows_arm64.tar.gz
 ```
 
 ---
@@ -91,10 +106,13 @@ hauler store load --filename rancher-airgap-rancher.tar.zst
 # hauler store load --filename rancher-airgap-rancher-minimal.tar.zst
 hauler store load --filename rancher-airgap-longhorn.tar.zst
 hauler store load --filename rancher-airgap-neuvector.tar.zst
-# hauler store load --filename rancher-airgap-harvester.tar.zst
+hauler store load --filename rancher-airgap-harvester.tar.zst
+hauler store load --filename rancher-airgap-harvester-isos.tar.zst
 # hauler store load --filename rancher-airgap-gitea.tar.zst
 # hauler store load --filename rancher-airgap-kubevip.tar.zst
-hauler store load --filename rancher-airgap-extras.tar.zst
+# hauler store load --filename rancher-airgap-cosign.tar.zst
+hauler store load --filename rancher-airgap-hauler.tar.zst
+hauler store load --filename rancher-airgap-helm.tar.zst
 
 # Verify Hauler Store Contents
 hauler store info
@@ -172,7 +190,7 @@ sysctl -p > /dev/null 2>&1
 
 # Install Packages
 yum install -y iptables container-selinux libnetfilter_conntrack libnfnetlink libnftnl policycoreutils-python-utils cryptsetup
-yum install -y nfs-utils iscsi-initiator-utils; yum install -y zip zstd tree jq
+yum install -y nfs-utils iscsi-initiator-utils zip zstd tree jq
 
 # Modify Settings
 echo "InitiatorName=$(/sbin/iscsi-iname)" > /etc/iscsi/initiatorname.iscsi && systemctl enable --now iscsid
@@ -347,7 +365,7 @@ sudo su
 
 # Set Variables
 export DOMAIN=<example.com>
-export vCertManager=1.17.2
+export vCertManager=1.18.1
 export registry=<FQDN or IP>:5000
 export fileserver=<FQDN or IP>:8080
 
@@ -417,7 +435,7 @@ spec:
 EOF
 
 # Install via Helm
-helm upgrade -i rancher oci://${registry}/hauler/rancher:${vRancher} -n cattle-system --set bootstrapPassword=Pa22word --set replicas=1 --set ingress.tls.source=secret --set ingress.tls.secretName=tls-certs --set useBundledSystemChart=true --set systemDefaultRegistry=$registry --set rancherImage=$registry/rancher/rancher --set hostname=rancher.$DOMAIN
+helm upgrade -i rancher oci://${registry}/hauler/rancher:${vRancher} -n cattle-system --set bootstrapPassword=Pa22word --set ingress.tls.source=secret --set ingress.tls.secretName=tls-certs --set useBundledSystemChart=true --set systemDefaultRegistry=$registry --set rancherImage=$registry/rancher/rancher --set hostname=rancher.$DOMAIN
 
 # Create Classification Banners
 kubectl apply -f http://${fileserver}/rancher-banner-ufouo.yaml
