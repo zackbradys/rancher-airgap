@@ -788,22 +788,12 @@ jobs:
           time tar --zstd -cvf hauler-binaries-v${vHauler}.tar.zst ./*_checksums.txt */
           time aws s3 cp --no-progress hauler-binaries-v${vHauler}.tar.zst s3://carbide/${{ github.ref_name }}/
 
-          time 7z a -v999m hauler-binaries-v${vHauler}.tar hauler-binaries-v${vHauler}.tar.zst
-          time for file in hauler-binaries-v${vHauler}.tar.0*; do
-            aws s3 cp --no-progress "$file" s3://carbide/${{ github.ref_name }}/spilts/
-          done
-
           for dir in */; do
             zip -r "${dir%/}.zip" "$dir"
           done
 
           zip -j "hauler-binaries-v${vHauler}.zip" ./*_checksums.txt *.zip
           aws s3 cp --no-progress "hauler-binaries-v${vHauler}.zip" s3://carbide/${{ github.ref_name }}/
-
-          time 7z a -v999m hauler-binaries-v${vHauler}.zip.7z hauler-binaries-v${vHauler}.zip
-          time for file in hauler-binaries-v${vHauler}.zip.7z.*; do
-            aws s3 cp --no-progress "$file" s3://carbide/${{ github.ref_name }}/splits/
-          done
 
       - name: Upload Hauler
         if: always()
