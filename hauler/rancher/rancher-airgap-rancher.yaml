@@ -17,7 +17,7 @@ spec:
   charts:
     - name: cert-manager
       repoURL: https://charts.jetstack.io
-      version: v1.17.2
+      version: v1.18.1
     - name: rancher
       repoURL: https://releases.rancher.com/server-charts/latest
       version: 2.11.2
@@ -28,10 +28,10 @@ metadata:
   name: rancher-airgap-cert-manager-images-rancher
 spec:
   images:
-    - name: quay.io/jetstack/cert-manager-cainjector:v1.17.2
-    - name: quay.io/jetstack/cert-manager-controller:v1.17.2
-    - name: quay.io/jetstack/cert-manager-webhook:v1.17.2
-    - name: quay.io/jetstack/cert-manager-startupapicheck:v1.17.2
+    - name: quay.io/jetstack/cert-manager-cainjector:v1.18.1
+    - name: quay.io/jetstack/cert-manager-controller:v1.18.1
+    - name: quay.io/jetstack/cert-manager-webhook:v1.18.1
+    - name: quay.io/jetstack/cert-manager-startupapicheck:v1.18.1
 ---
 apiVersion: content.hauler.cattle.io/v1
 kind: Images
