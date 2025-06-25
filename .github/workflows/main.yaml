@@ -692,16 +692,19 @@ jobs:
           source <(grep "export vHarvesterGovt=" ../scripts/harvester/hauler-harvester.sh)
           sed -e "s#quay.io/##g" -e "s#ghcr.io/##g" -e "s#registry.k8s.io/##g" -e "s#registry.suse.com/##g" rancher-airgap-harvester.yaml > rancher-airgap-harvester-amd64.yaml
           sed -e "s#quay.io/##g" -e "s#ghcr.io/##g" -e "s#registry.k8s.io/##g" -e "s#registry.suse.com/##g" rancher-airgap-harvester.yaml > rancher-airgap-harvester-arm64.yaml
+          time hauler store sync --store isos --filename rancher-airgap-harvester-isos.yaml
           echo -e "apiVersion: content.hauler.cattle.io/v1\nkind: Images\nmetadata:\n  name: rancher-airgap-images-harvester-govt\nspec:\n  images:\n    - name: ${Registry}/carbide/harvester/harvester-v${vHarvester}-${vHarvesterGovt}-amd64.iso:v${vHarvester}-${vHarvesterGovt}\n    - name: ${Registry}/carbide/harvester/harvester-v${vHarvester}-${vHarvesterGovt}-amd64-net-install.iso:v${vHarvester}-${vHarvesterGovt}\n    - name: ${Registry}/carbide/harvester/harvester-v${vHarvester}-${vHarvesterGovt}-vmlinuz-amd64:v${vHarvester}-${vHarvesterGovt}\n    - name: ${Registry}/carbide/harvester/harvester-v${vHarvester}-${vHarvesterGovt}-initrd-amd64:v${vHarvester}-${vHarvesterGovt}\n    - name: ${Registry}/carbide/harvester/harvester-v${vHarvester}-${vHarvesterGovt}-rootfs-amd64.squashfs:v${vHarvester}-${vHarvesterGovt}\n    - name: ${Registry}/carbide/harvester/harvester-v${vHarvester}-${vHarvesterGovt}-amd64.sha512:v${vHarvester}-${vHarvesterGovt}" > rancher-airgap-harvester-isos.yaml
           time hauler store sync --store amd64 --platform linux/amd64 --registry ${Registry} --filename rancher-airgap-harvester-amd64.yaml
           time hauler store sync --store arm64 --platform linux/arm64 --registry ${Registry} --filename rancher-airgap-harvester-arm64.yaml
-          time hauler store sync --store isos --filename rancher-airgap-harvester-isos.yaml
+          time hauler store sync --store isos-private --filename rancher-airgap-harvester-isos.yaml
           time hauler store save --store amd64 --platform linux/amd64 --filename harvester-carbide-v${vHarvester}-amd64.tar.zst
           time hauler store save --store arm64 --platform linux/arm64 --filename harvester-carbide-v${vHarvester}-arm64.tar.zst
           time hauler store save --store isos --filename harvester-carbide-v${vHarvester}-isos.tar.zst
+          time hauler store save --store isos-private --filename harvester-carbide-v${vHarvester}-isos-private.tar.zst
           hauler store info --store amd64
           hauler store info --store arm64
           hauler store info --store isos
+          hauler store info --store isos-private
 
       - name: Fetch/Build Kubewarden
         if: always()
@@ -788,6 +791,18 @@ jobs:
           time 7z a -v999m hauler-binaries-v${vHauler}.tar hauler-binaries-v${vHauler}.tar.zst
           time for file in hauler-binaries-v${vHauler}.tar.0*; do
             aws s3 cp --no-progress "$file" s3://carbide/${{ github.ref_name }}/spilts/
+          done
+
+          for dir in */; do
+            zip -r "${dir%/}.zip" "$dir"
+          done
+
+          zip -j "hauler-binaries-v${vHauler}.zip" ./*_checksums.txt *.zip
+          aws s3 cp --no-progress "hauler-binaries-v${vHauler}.zip" s3://carbide/${{ github.ref_name }}/
+
+          time 7z a -v999m hauler-binaries-v${vHauler}.zip.7z hauler-binaries-v${vHauler}.zip
+          time for file in hauler-binaries-v${vHauler}.zip.7z.*; do
+            aws s3 cp --no-progress "$file" s3://carbide/${{ github.ref_name }}/splits/
           done
 
       - name: Upload Hauler
@@ -922,6 +937,7 @@ jobs:
           time aws s3 cp --no-progress harvester-carbide-v${vHarvester}-amd64.tar.zst s3://carbide/${{ github.ref_name }}/
           time aws s3 cp --no-progress harvester-carbide-v${vHarvester}-arm64.tar.zst s3://carbide/${{ github.ref_name }}/
           time aws s3 cp --no-progress harvester-carbide-v${vHarvester}-isos.tar.zst s3://carbide/${{ github.ref_name }}/
+          time aws s3 cp --no-progress harvester-carbide-v${vHarvester}-isos-private.tar.zst s3://carbide/${{ github.ref_name }}/
 
           time 7z a -v999m harvester-carbide-v${vHarvester}-amd64.tar harvester-carbide-v${vHarvester}-amd64.tar.zst
           time for file in harvester-carbide-v${vHarvester}-amd64.tar.0*; do
@@ -933,6 +949,10 @@ jobs:
           done
           time 7z a -v999m harvester-carbide-v${vHarvester}-isos.tar harvester-carbide-v${vHarvester}-isos.tar.zst
           time for file in harvester-carbide-v${vHarvester}-isos.tar.0*; do
+            aws s3 cp --no-progress "$file" s3://carbide/${{ github.ref_name }}/spilts/
+          done
+          time 7z a -v999m harvester-carbide-v${vHarvester}-isos-private.tar harvester-carbide-v${vHarvester}-isos-private.tar.zst
+          time for file in harvester-carbide-v${vHarvester}-isos-private.tar.0*; do
             aws s3 cp --no-progress "$file" s3://carbide/${{ github.ref_name }}/spilts/
           done
 
