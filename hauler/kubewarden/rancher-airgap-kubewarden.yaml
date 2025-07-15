@@ -6,13 +6,13 @@ spec:
   charts:
     - name: kubewarden-controller
       repoURL: https://charts.kubewarden.io
-      version: 5.3.0
+      version: 5.4.0
     - name: kubewarden-defaults
       repoURL: https://charts.kubewarden.io
-      version: 3.3.0
+      version: 3.4.0
     - name: kubewarden-crds
       repoURL: https://charts.kubewarden.io
-      version: 1.17.0
+      version: 1.18.0
 ---
 apiVersion: content.hauler.cattle.io/v1
 kind: Images
@@ -20,7 +20,7 @@ metadata:
   name: rancher-airgap-images-kubewarden
 spec:
   images:
-    - name: ghcr.io/kubewarden/kubewarden-controller:v1.25.0
-    - name: ghcr.io/kubewarden/audit-scanner:v1.25.0
-    - name: ghcr.io/kubewarden/kubectl:v1.31.0
-    - name: ghcr.io/kubewarden/policy-server:v1.25.0
+    - name: ghcr.io/kubewarden/kubewarden-controller:v1.26.0
+    - name: ghcr.io/kubewarden/audit-scanner:v1.26.0
+    - name: ghcr.io/rancher/kuberlr-kubectl:v5.0.0
+    - name: ghcr.io/kubewarden/policy-server:v1.26.0

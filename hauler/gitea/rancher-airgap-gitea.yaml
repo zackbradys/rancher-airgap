@@ -6,7 +6,7 @@ spec:
   charts:
     - name: gitea
       repoURL: https://dl.gitea.com/charts
-      version: 12.1.0
+      version: 12.1.1
 ---
 apiVersion: content.hauler.cattle.io/v1
 kind: Images
@@ -15,10 +15,10 @@ metadata:
 spec:
   images:
     - name: docker.io/bitnami/pgpool:4.6.2-debian-12-r1
-    - name: docker.gitea.com/gitea:1.24.0-rootless
-    - name: docker.gitea.com/gitea:1.24.0-rootless
-    - name: docker.gitea.com/gitea:1.24.0-rootless
-    - name: docker.gitea.com/gitea:1.24.0-rootless
+    - name: docker.gitea.com/gitea:1.24.2-rootless
+    - name: docker.gitea.com/gitea:1.24.2-rootless
+    - name: docker.gitea.com/gitea:1.24.2-rootless
+    - name: docker.gitea.com/gitea:1.24.2-rootless
     - name: docker.io/bitnami/postgresql-repmgr:17.5.0-debian-12-r10
     - name: docker.io/bitnami/valkey-cluster:8.1.2-debian-12-r0
     - name: busybox:latest

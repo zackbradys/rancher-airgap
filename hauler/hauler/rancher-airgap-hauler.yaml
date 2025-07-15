@@ -4,17 +4,17 @@ metadata:
   name: rancher-airgap-files-hauler
 spec:
   files:
-    - path: https://github.com/hauler-dev/hauler/releases/download/v1.2.4/hauler_1.2.4_linux_amd64.tar.gz
+    - path: https://github.com/hauler-dev/hauler/releases/download/v1.2.5/hauler_1.2.5_linux_amd64.tar.gz
       name: hauler-linux-amd64.tar.gz
-    - path: https://github.com/hauler-dev/hauler/releases/download/v1.2.4/hauler_1.2.4_linux_arm64.tar.gz
+    - path: https://github.com/hauler-dev/hauler/releases/download/v1.2.5/hauler_1.2.5_linux_arm64.tar.gz
       name: hauler-linux-arm64.tar.gz
-    - path: https://github.com/hauler-dev/hauler/releases/download/v1.2.4/hauler_1.2.4_darwin_amd64.tar.gz
+    - path: https://github.com/hauler-dev/hauler/releases/download/v1.2.5/hauler_1.2.5_darwin_amd64.tar.gz
       name: hauler-darwin-amd64.tar.gz
-    - path: https://github.com/hauler-dev/hauler/releases/download/v1.2.4/hauler_1.2.4_darwin_arm64.tar.gz
+    - path: https://github.com/hauler-dev/hauler/releases/download/v1.2.5/hauler_1.2.5_darwin_arm64.tar.gz
       name: hauler-darwin-arm64.tar.gz
-    - path: https://github.com/hauler-dev/hauler/releases/download/v1.2.4/hauler_1.2.4_windows_amd64.tar.gz
+    - path: https://github.com/hauler-dev/hauler/releases/download/v1.2.5/hauler_1.2.5_windows_amd64.tar.gz
       name: hauler-windows-amd64.tar.gz
-    - path: https://github.com/hauler-dev/hauler/releases/download/v1.2.4/hauler_1.2.4_windows_arm64.tar.gz
+    - path: https://github.com/hauler-dev/hauler/releases/download/v1.2.5/hauler_1.2.5_windows_arm64.tar.gz
       name: hauler-windows-arm64.tar.gz
 ---
 apiVersion: content.hauler.cattle.io/v1
@@ -25,7 +25,7 @@ spec:
   charts:
     - name: hauler-helm
       repoURL: oci://ghcr.io/hauler-dev
-      version: 2.0.6
+      version: 2.0.7
 ---
 apiVersion: content.hauler.cattle.io/v1
 kind: Images
@@ -33,5 +33,5 @@ metadata:
   name: rancher-airgap-images-hauler
 spec:
   images:
-    - name: ghcr.io/hauler-dev/hauler:1.2.4
-    - name: ghcr.io/hauler-dev/hauler-debug:1.2.4
+    - name: ghcr.io/hauler-dev/hauler:1.2.5
+    - name: ghcr.io/hauler-dev/hauler-debug:1.2.5
