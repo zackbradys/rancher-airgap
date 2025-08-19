@@ -17,7 +17,7 @@ spec:
   charts:
     - name: longhorn
       repoURL: https://charts.longhorn.io
-      version: 1.8.2
+      version: 1.9.1
 ---
 apiVersion: content.hauler.cattle.io/v1
 kind: Images
@@ -25,17 +25,17 @@ metadata:
   name: rancher-airgap-images-longhorn
 spec:
   images:
-    - name: longhornio/csi-attacher:v4.9.0
-    - name: longhornio/csi-provisioner:v5.3.0
-    - name: longhornio/csi-resizer:v1.13.2
-    - name: longhornio/csi-snapshotter:v8.2.0
-    - name: longhornio/csi-node-driver-registrar:v2.14.0
-    - name: longhornio/livenessprobe:v2.16.0
-    - name: longhornio/backing-image-manager:v1.8.2
-    - name: longhornio/longhorn-engine:v1.8.2
-    - name: longhornio/longhorn-instance-manager:v1.8.2
-    - name: longhornio/longhorn-manager:v1.8.2
-    - name: longhornio/longhorn-share-manager:v1.8.2
-    - name: longhornio/longhorn-ui:v1.8.2
-    - name: longhornio/longhorn-cli:v1.8.2
-    - name: longhornio/support-bundle-kit:v0.0.56
+    - name: longhornio/backing-image-manager:v1.9.1
+    - name: longhornio/longhorn-engine:v1.9.1
+    - name: longhornio/longhorn-instance-manager:v1.9.1
+    - name: longhornio/longhorn-manager:v1.9.1
+    - name: longhornio/longhorn-share-manager:v1.9.1
+    - name: longhornio/longhorn-ui:v1.9.1
+    - name: longhornio/longhorn-cli:v1.9.1
+    - name: longhornio/csi-attacher:v4.9.0-20250709
+    - name: longhornio/csi-provisioner:v5.3.0-20250709
+    - name: longhornio/csi-resizer:v1.14.0-20250709
+    - name: longhornio/csi-snapshotter:v8.3.0-20250709
+    - name: longhornio/csi-node-driver-registrar:v2.14.0-20250709
+    - name: longhornio/livenessprobe:v2.16.0-20250709
+    - name: longhornio/support-bundle-kit:v0.0.61
