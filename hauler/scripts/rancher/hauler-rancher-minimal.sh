@@ -1,5 +1,5 @@
 # Set Variables
-export vRancher=2.11.3
+export vRancher=2.12.1
 export vCertManager=1.18.2
 
 # Setup Working Directory

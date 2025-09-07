@@ -1,5 +1,5 @@
 # Set Variables
-export vGitea=12.1.3
+export vGitea=12.2.0
 
 # Setup Working Directory
 rm -rf /opt/hauler/gitea

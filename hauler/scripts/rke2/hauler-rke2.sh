@@ -1,6 +1,6 @@
 # Set Variables
-export vRKE2=1.32.7
-export vRKE2SELinux=0.18
+export vRKE2=1.32.8
+export vRKE2SELinux=0.21
 export vRKE2modified=$(echo "$vRKE2" | cut -d'.' -f1,2)
 
 # Setup Working Directory
