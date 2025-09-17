@@ -1,6 +1,6 @@
 # Set Variables
 export vKubewarden=5.6.0
-export vKubewardenDefault=3.6.0
+export vKubewardenDefault=3.6.1
 export vKubewardenCRDs=1.20.0
 
 # Setup Working Directory

@@ -44,17 +44,17 @@ fetch -> validate -> save -> | <airgap> | -> load -> validate -> distribute
 - [hauler/hauler](hauler/hauler/README.md) - provides the content manifest for Hauler
   - currently supports: `Hauler: v1.2.5`
 - [hauler/helm](hauler/helm/README.md) - provides the content manifest for Helm
-  - currently supports: `Helm: v3.18.6`
+  - currently supports: `Helm: v3.19.0`
 - [hauler/cosign](hauler/cosign/README.md) - provides the content manifest for Cosign
-  - currently supports: `Cosign: v2.5.3`
+  - currently supports: `Cosign: v2.6.0`
 - [hauler/gitea](hauler/gitea/README.md) - provides the content manifest for Gitea
-  - currently supports: `Gitea: v1.24.5`
+  - currently supports: `Gitea: v1.24.6`
 - [hauler/vault](hauler/vault/README.md) - provides the content manifest for Vault
   - currently supports: `Vault: v1.20.1`
 - [hauler/kubevip](hauler/kubevip/README.md) - provides the content manifest for KubeVip
   - currently supports: `KubeVip: v0.5.11`
 - [hauler/kubewarden](hauler/kubewarden/README.md) - provides the content manifest for KubeWarden
-  - currently supports: `KubeWarden: v1.27.0`
+  - currently supports: `KubeWarden: v1.28.0`
 
 **Note:** We are currently planning and working towards supporting every major version of our products. We will continue to update to the latest until we implement previous major verions.
 
