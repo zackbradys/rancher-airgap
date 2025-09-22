@@ -20,39 +20,39 @@ spec:
     - name: longhornio/longhorn-share-manager:v1.8.2
     - name: longhornio/longhorn-ui:v1.8.2
     - name: longhornio/support-bundle-kit:v0.0.56
-    - name: rancher/fleet-agent:v0.12.3
-    - name: rancher/fleet:v0.12.3
+    - name: rancher/fleet-agent:v0.12.4
+    - name: rancher/fleet:v0.12.4
     - name: rancher/gitjob:v0.9.8
-    - name: rancher/hardened-addon-resizer:1.8.22-build20250110
-    - name: rancher/hardened-calico:v3.29.3-build20250408
-    - name: rancher/hardened-cluster-autoscaler:v1.9.0-build20241203
-    - name: rancher/hardened-cni-plugins:v1.6.2-build20250306
-    - name: rancher/hardened-coredns:v1.12.1-build20250401
-    - name: rancher/hardened-dns-node-cache:1.25.0-build20250127
-    - name: rancher/hardened-etcd:v3.5.21-k3s1-build20250411
-    - name: rancher/hardened-flannel:v0.26.6-build20250414
-    - name: rancher/hardened-k8s-metrics-server:v0.7.2-build20250110
-    - name: rancher/hardened-kubernetes:v1.32.4-rke2r1-build20250423
-    - name: rancher/hardened-multus-cni:v4.2.0-build20250326
-    - name: rancher/harvester-cluster-repo:v1.5.1
+    - name: rancher/hardened-addon-resizer:1.8.23-build20250612
+    - name: rancher/hardened-calico:v3.30.2-build20250711
+    - name: rancher/hardened-cluster-autoscaler:v1.10.2-build20250611
+    - name: rancher/hardened-cni-plugins:v1.7.1-build20250611
+    - name: rancher/hardened-coredns:v1.12.2-build20250611
+    - name: rancher/hardened-dns-node-cache:1.26.0-build20250611
+    - name: rancher/hardened-etcd:v3.5.21-k3s1-build20250612
+    - name: rancher/hardened-flannel:v0.27.1-build20250710
+    - name: rancher/hardened-k8s-metrics-server:v0.8.0-build20250704
+    - name: rancher/hardened-kubernetes:v1.32.7-rke2r1-build20250716
+    - name: rancher/hardened-multus-cni:v4.2.1-build20250627
+    - name: rancher/harvester-cluster-repo:v1.5.2
     - name: rancher/harvester-eventrouter:v1.5.1
-    - name: rancher/harvester-load-balancer:v1.5.1
-    - name: rancher/harvester-load-balancer-webhook:v1.5.1
-    - name: rancher/harvester-network-controller:v1.5.1
-    - name: rancher/harvester-networkfs-manager:v1.5.1
-    - name: rancher/harvester-network-helper:v1.5.1
-    - name: rancher/harvester-network-webhook:v1.5.1
-    - name: rancher/harvester-node-disk-manager:v1.5.1
-    - name: rancher/harvester-node-disk-manager-webhook:v1.5.1
-    - name: rancher/harvester-node-manager:v1.5.1
-    - name: rancher/harvester-node-manager-webhook:v1.5.1
-    - name: rancher/harvester-pcidevices:v1.5.1
-    - name: rancher/harvester-seeder:v1.5.1
-    - name: rancher/harvester-upgrade:v1.5.1
-    - name: rancher/harvester:v1.5.1
-    - name: rancher/harvester-vm-import-controller:v1.5.1
-    - name: rancher/harvester-webhook:v1.5.1
-    - name: rancher/klipper-helm:v0.9.5-build20250306
+    - name: rancher/harvester-load-balancer:v1.5.2
+    - name: rancher/harvester-load-balancer-webhook:v1.5.2
+    - name: rancher/harvester-network-controller:v1.5.2
+    - name: rancher/harvester-networkfs-manager:v1.5.2
+    - name: rancher/harvester-network-helper:v1.5.2
+    - name: rancher/harvester-network-webhook:v1.5.2
+    - name: rancher/harvester-node-disk-manager:v1.5.2
+    - name: rancher/harvester-node-disk-manager-webhook:v1.5.2
+    - name: rancher/harvester-node-manager:v1.5.2
+    - name: rancher/harvester-node-manager-webhook:v1.5.2
+    - name: rancher/harvester-pcidevices:v1.5.2
+    - name: rancher/harvester-seeder:v1.5.2
+    - name: rancher/harvester-upgrade:v1.5.2
+    - name: rancher/harvester:v1.5.2
+    - name: rancher/harvester-vm-import-controller:v1.5.2
+    - name: rancher/harvester-webhook:v1.5.2
+    - name: rancher/klipper-helm:v0.9.8-build20250709
     - name: rancher/klipper-lb:v0.4.13
     - name: rancher/kubectl:v1.29.2
     - name: rancher/kubectl:v1.32.2
@@ -61,7 +61,7 @@ spec:
     - name: rancher/mirrored-fluent-fluent-bit:3.1.8
     - name: rancher/mirrored-grafana-grafana:11.1.0
     - name: rancher/mirrored-ingress-nginx-kube-webhook-certgen:v1.4.3
-    - name: rancher/mirrored-ingress-nginx-kube-webhook-certgen:v1.5.2
+    - name: rancher/mirrored-ingress-nginx-kube-webhook-certgen:v1.6.0
     - name: rancher/mirrored-kiwigrid-k8s-sidecar:1.27.4
     - name: rancher/mirrored-kube-logging-config-reloader:v0.0.6
     - name: rancher/mirrored-kube-logging-fluentd:v1.16-4.10-full
@@ -78,21 +78,21 @@ spec:
     - name: rancher/mirrored-prometheus-operator-prometheus-operator:v0.75.1
     - name: rancher/mirrored-prometheus-prometheus:v2.53.1
     - name: rancher/mirrored-sig-storage-snapshot-controller:v8.2.0
-    - name: rancher/nginx-ingress-controller:v1.12.1-hardened3
-    - name: rancher/rancher-agent:v2.11.2
-    - name: rancher/rancher:v2.11.2
-    - name: rancher/rancher-webhook:v0.7.2
-    - name: rancher/rke2-cloud-provider:v1.32.0-rc3.0.20241220224140-68fbd1a6b543-build20250101
-    - name: rancher/rke2-runtime:v1.32.4-rke2r1
+    - name: rancher/nginx-ingress-controller:v1.12.4-hardened2
+    - name: rancher/rancher-agent:v2.11.3
+    - name: rancher/rancher:v2.11.3
+    - name: rancher/rancher-webhook:v0.7.3
+    - name: rancher/rke2-cloud-provider:v1.32.5-rc1.0.20250516182639-8e8f2a4726fd-build20250612
+    - name: rancher/rke2-runtime:v1.32.7-rke2r1
     - name: rancher/shell:v0.3.0
     - name: rancher/shell:v0.4.1
-    - name: rancher/support-bundle-kit:v0.0.46
-    - name: rancher/system-agent-installer-rancher:v2.11.2
-    - name: rancher/system-agent-installer-rke2:v1.32.4-rke2r1
+    - name: rancher/support-bundle-kit:v0.0.65
+    - name: rancher/system-agent-installer-rancher:v2.11.3
+    - name: rancher/system-agent-installer-rke2:v1.32.7-rke2r1
     - name: rancher/system-agent:v0.3.12-suc
     - name: rancher/system-upgrade-controller:v0.15.2
-    - name: registry.k8s.io/sig-storage/snapshot-controller:v6.3.3
-    - name: registry.k8s.io/sig-storage/snapshot-validation-webhook:v6.3.3
+    - name: registry.k8s.io/sig-storage/snapshot-controller:v6.3.4
+    - name: registry.k8s.io/sig-storage/snapshot-validation-webhook:v6.3.4
     - name: registry.suse.com/bci/bci-base:15.6
     - name: registry.suse.com/suse/sles/15.6/cdi-apiserver:1.61.0-150600.3.12.1
     - name: registry.suse.com/suse/sles/15.6/cdi-cloner:1.61.0-150600.3.12.1
@@ -101,10 +101,10 @@ spec:
     - name: registry.suse.com/suse/sles/15.6/cdi-operator:1.61.0-150600.3.12.1
     - name: registry.suse.com/suse/sles/15.6/cdi-uploadproxy:1.61.0-150600.3.12.1
     - name: registry.suse.com/suse/sles/15.6/cdi-uploadserver:1.61.0-150600.3.12.1
-    - name: registry.suse.com/suse/sles/15.6/libguestfs-tools:1.4.0-150600.5.15.1
-    - name: registry.suse.com/suse/sles/15.6/virt-api:1.4.0-150600.5.15.1
-    - name: registry.suse.com/suse/sles/15.6/virt-controller:1.4.0-150600.5.15.1
-    - name: registry.suse.com/suse/sles/15.6/virt-handler:1.4.0-150600.5.15.1
-    - name: registry.suse.com/suse/sles/15.6/virt-launcher:1.4.0-150600.5.15.1
-    - name: registry.suse.com/suse/sles/15.6/virt-operator:1.4.0-150600.5.15.1
+    - name: registry.suse.com/suse/sles/15.6/libguestfs-tools:1.4.1-150600.5.21.2
+    - name: registry.suse.com/suse/sles/15.6/virt-api:1.4.1-150600.5.21.2
+    - name: registry.suse.com/suse/sles/15.6/virt-controller:1.4.1-150600.5.21.2
+    - name: registry.suse.com/suse/sles/15.6/virt-handler:1.4.1-150600.5.21.2
+    - name: registry.suse.com/suse/sles/15.6/virt-launcher:1.4.1-150600.5.21.2
+    - name: registry.suse.com/suse/sles/15.6/virt-operator:1.4.1-150600.5.21.2
     - name: registry.suse.com/suse/vmdp/vmdp:2.5.4.2
