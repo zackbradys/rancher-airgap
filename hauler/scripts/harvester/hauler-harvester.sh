@@ -1,5 +1,5 @@
 # Set Variables
-export vHarvester=1.5.1
+export vHarvester=1.5.2
 export vHarvesterGovt="govt.1"
 
 # Setup Working Directory
