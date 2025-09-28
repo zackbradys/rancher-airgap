@@ -470,11 +470,11 @@ jobs:
           source <(grep "export vRKE2=" ../scripts/rke2/hauler-rke2.sh)
           time aws s3 cp --no-progress rke2-carbide-v${vRKE2}-amd64.tar.zst s3://carbide/${{ github.ref_name }}/
           time aws s3 cp --no-progress rke2-carbide-v${vRKE2}-arm64.tar.zst s3://carbide/${{ github.ref_name }}/
-          time 7z a -v999m rke2-carbide-v${vRKE2}-amd64.tar rke2-carbide-v${vRKE2}-amd64.tar.zst
+          time 7z a -v900m rke2-carbide-v${vRKE2}-amd64.tar rke2-carbide-v${vRKE2}-amd64.tar.zst
           time for file in rke2-carbide-v${vRKE2}-amd64.tar.0*; do
             aws s3 cp --no-progress "$file" s3://carbide/${{ github.ref_name }}/spilts/
           done
-          time 7z a -v999m rke2-carbide-v${vRKE2}-arm64.tar rke2-carbide-v${vRKE2}-arm64.tar.zst
+          time 7z a -v900m rke2-carbide-v${vRKE2}-arm64.tar rke2-carbide-v${vRKE2}-arm64.tar.zst
           time for file in rke2-carbide-v${vRKE2}-arm64.tar.0*; do
             aws s3 cp --no-progress "$file" s3://carbide/${{ github.ref_name }}/spilts/
           done
@@ -486,11 +486,11 @@ jobs:
           source <(grep "export vK3S=" ../scripts/k3s/hauler-k3s.sh)
           time aws s3 cp --no-progress k3s-carbide-v${vK3S}-amd64.tar.zst s3://carbide/${{ github.ref_name }}/
           time aws s3 cp --no-progress k3s-carbide-v${vK3S}-arm64.tar.zst s3://carbide/${{ github.ref_name }}/
-          time 7z a -v999m k3s-carbide-v${vK3S}-amd64.tar k3s-carbide-v${vK3S}-amd64.tar.zst
+          time 7z a -v900m k3s-carbide-v${vK3S}-amd64.tar k3s-carbide-v${vK3S}-amd64.tar.zst
           time for file in k3s-carbide-v${vK3S}-amd64.tar.0*; do
             aws s3 cp --no-progress "$file" s3://carbide/${{ github.ref_name }}/spilts/
           done
-          time 7z a -v999m k3s-carbide-v${vK3S}-arm64.tar k3s-carbide-v${vK3S}-arm64.tar.zst
+          time 7z a -v900m k3s-carbide-v${vK3S}-arm64.tar k3s-carbide-v${vK3S}-arm64.tar.zst
           time for file in k3s-carbide-v${vK3S}-arm64.tar.0*; do
             aws s3 cp --no-progress "$file" s3://carbide/${{ github.ref_name }}/spilts/
           done
@@ -503,11 +503,11 @@ jobs:
           time aws s3 cp --no-progress rancher-carbide-v${vRancher}-amd64.tar.zst s3://carbide/${{ github.ref_name }}/
           time aws s3 cp --no-progress rancher-carbide-v${vRancher}-arm64.tar.zst s3://carbide/${{ github.ref_name }}/
 
-          time 7z a -v999m rancher-carbide-v${vRancher}-amd64.tar rancher-carbide-v${vRancher}-amd64.tar.zst
+          time 7z a -v900m rancher-carbide-v${vRancher}-amd64.tar rancher-carbide-v${vRancher}-amd64.tar.zst
           time for file in rancher-carbide-v${vRancher}-amd64.tar.0*; do
             aws s3 cp --no-progress "$file" s3://carbide/${{ github.ref_name }}/spilts/
           done
-          time 7z a -v999m rancher-carbide-v${vRancher}-arm64.tar rancher-carbide-v${vRancher}-arm64.tar.zst
+          time 7z a -v900m rancher-carbide-v${vRancher}-arm64.tar rancher-carbide-v${vRancher}-arm64.tar.zst
           time for file in rancher-carbide-v${vRancher}-arm64.tar.0*; do
             aws s3 cp --no-progress "$file" s3://carbide/${{ github.ref_name }}/spilts/
           done
@@ -520,11 +520,11 @@ jobs:
           time aws s3 cp --no-progress rancher-minimal-carbide-v${vRancher}-amd64.tar.zst s3://carbide/${{ github.ref_name }}/
           time aws s3 cp --no-progress rancher-minimal-carbide-v${vRancher}-arm64.tar.zst s3://carbide/${{ github.ref_name }}/
 
-          time 7z a -v999m rancher-minimal-carbide-v${vRancher}-amd64.tar rancher-minimal-carbide-v${vRancher}-amd64.tar.zst
+          time 7z a -v900m rancher-minimal-carbide-v${vRancher}-amd64.tar rancher-minimal-carbide-v${vRancher}-amd64.tar.zst
           time for file in rancher-minimal-carbide-v${vRancher}-amd64.tar.0*; do
             aws s3 cp --no-progress "$file" s3://carbide/${{ github.ref_name }}/spilts/
           done
-          time 7z a -v999m rancher-minimal-carbide-v${vRancher}-arm64.tar rancher-minimal-carbide-v${vRancher}-arm64.tar.zst
+          time 7z a -v900m rancher-minimal-carbide-v${vRancher}-arm64.tar rancher-minimal-carbide-v${vRancher}-arm64.tar.zst
           time for file in rancher-minimal-carbide-v${vRancher}-arm64.tar.0*; do
             aws s3 cp --no-progress "$file" s3://carbide/${{ github.ref_name }}/spilts/
           done
@@ -537,11 +537,11 @@ jobs:
           time aws s3 cp --no-progress longhorn-carbide-v${vLonghorn}-amd64.tar.zst s3://carbide/${{ github.ref_name }}/
           time aws s3 cp --no-progress longhorn-carbide-v${vLonghorn}-arm64.tar.zst s3://carbide/${{ github.ref_name }}/
 
-          time 7z a -v999m longhorn-carbide-v${vLonghorn}-amd64.tar longhorn-carbide-v${vLonghorn}-amd64.tar.zst
+          time 7z a -v900m longhorn-carbide-v${vLonghorn}-amd64.tar longhorn-carbide-v${vLonghorn}-amd64.tar.zst
           time for file in longhorn-carbide-v${vLonghorn}-amd64.tar.0*; do
             aws s3 cp --no-progress "$file" s3://carbide/${{ github.ref_name }}/spilts/
           done
-          time 7z a -v999m longhorn-carbide-v${vLonghorn}-arm64.tar longhorn-carbide-v${vLonghorn}-arm64.tar.zst
+          time 7z a -v900m longhorn-carbide-v${vLonghorn}-arm64.tar longhorn-carbide-v${vLonghorn}-arm64.tar.zst
           time for file in longhorn-carbide-v${vLonghorn}-arm64.tar.0*; do
             aws s3 cp --no-progress "$file" s3://carbide/${{ github.ref_name }}/spilts/
           done
@@ -554,11 +554,11 @@ jobs:
           time aws s3 cp --no-progress neuvector-carbide-v${vNeuVector}-amd64.tar.zst s3://carbide/${{ github.ref_name }}/
           time aws s3 cp --no-progress neuvector-carbide-v${vNeuVector}-arm64.tar.zst s3://carbide/${{ github.ref_name }}/
 
-          time 7z a -v999m neuvector-carbide-v${vNeuVector}-amd64.tar neuvector-carbide-v${vNeuVector}-amd64.tar.zst
+          time 7z a -v900m neuvector-carbide-v${vNeuVector}-amd64.tar neuvector-carbide-v${vNeuVector}-amd64.tar.zst
           time for file in neuvector-carbide-v${vNeuVector}-amd64.tar.0*; do
             aws s3 cp --no-progress "$file" s3://carbide/${{ github.ref_name }}/spilts/
           done
-          time 7z a -v999m neuvector-carbide-v${vNeuVector}-arm64.tar neuvector-carbide-v${vNeuVector}-arm64.tar.zst
+          time 7z a -v900m neuvector-carbide-v${vNeuVector}-arm64.tar neuvector-carbide-v${vNeuVector}-arm64.tar.zst
           time for file in neuvector-carbide-v${vNeuVector}-arm64.tar.0*; do
             aws s3 cp --no-progress "$file" s3://carbide/${{ github.ref_name }}/spilts/
           done
@@ -573,23 +573,36 @@ jobs:
           time aws s3 cp --no-progress harvester-carbide-v${vHarvester}-isos.tar.zst s3://carbide/${{ github.ref_name }}/
           time aws s3 cp --no-progress harvester-carbide-v${vHarvester}-isos-private.tar.zst s3://carbide/${{ github.ref_name }}/
 
-          time 7z a -v999m harvester-carbide-v${vHarvester}-amd64.tar harvester-carbide-v${vHarvester}-amd64.tar.zst
+          time 7z a -v900m harvester-carbide-v${vHarvester}-amd64.tar harvester-carbide-v${vHarvester}-amd64.tar.zst
           time for file in harvester-carbide-v${vHarvester}-amd64.tar.0*; do
             aws s3 cp --no-progress "$file" s3://carbide/${{ github.ref_name }}/spilts/
           done
-          time 7z a -v999m harvester-carbide-v${vHarvester}-arm64.tar harvester-carbide-v${vHarvester}-arm64.tar.zst
+          time 7z a -v900m harvester-carbide-v${vHarvester}-arm64.tar harvester-carbide-v${vHarvester}-arm64.tar.zst
           time for file in harvester-carbide-v${vHarvester}-arm64.tar.0*; do
             aws s3 cp --no-progress "$file" s3://carbide/${{ github.ref_name }}/spilts/
           done
-          time 7z a -v999m harvester-carbide-v${vHarvester}-isos.tar harvester-carbide-v${vHarvester}-isos.tar.zst
+          time 7z a -v900m harvester-carbide-v${vHarvester}-isos.tar harvester-carbide-v${vHarvester}-isos.tar.zst
           time for file in harvester-carbide-v${vHarvester}-isos.tar.0*; do
             aws s3 cp --no-progress "$file" s3://carbide/${{ github.ref_name }}/spilts/
           done
-          time 7z a -v999m harvester-carbide-v${vHarvester}-isos-private.tar harvester-carbide-v${vHarvester}-isos-private.tar.zst
+          time 7z a -v900m harvester-carbide-v${vHarvester}-isos-private.tar harvester-carbide-v${vHarvester}-isos-private.tar.zst
           time for file in harvester-carbide-v${vHarvester}-isos-private.tar.0*; do
             aws s3 cp --no-progress "$file" s3://carbide/${{ github.ref_name }}/spilts/
           done
 
+      - name: Upload Harvester Appliance
+        if: always()
+        run: |
+
+          source <(grep "export vHarvesterAppliance=" ../scripts/harvester/hauler-harvester.sh)
+          git clone --mirror git@github.com:rancherfederal/harvester-appliance.git
+          tar czf harvester-appliance-main-v${vHarvesterAppliance}.tar.gz harvester-appliance.git
+          aws s3 cp harvester-appliance-main-v${vHarvesterAppliance}.tar.gz s3://carbide/
+
+          time 7z a -v900m harvester-appliance-v${vHarvesterAppliance}.iso harvester-appliance-v${vHarvesterAppliance}.iso
+          time for file in harvester-appliance-v${vHarvesterAppliance}.iso.tar*; do
+            aws s3 cp "$file" s3://carbide/tests/
+          done
       - name: Upload Kubewarden
         if: always()
         run: |
@@ -630,11 +643,11 @@ jobs:
           time aws s3 cp --no-progress carbide-carbide-${{ github.ref_name }}-amd64.tar.zst s3://carbide/${{ github.ref_name }}/
           time aws s3 cp --no-progress carbide-carbide-${{ github.ref_name }}-arm64.tar.zst s3://carbide/${{ github.ref_name }}/
 
-          time 7z a -v999m carbide-carbide-${{ github.ref_name }}-amd64.tar carbide-carbide-${{ github.ref_name }}-amd64.tar.zst
+          time 7z a -v900m carbide-carbide-${{ github.ref_name }}-amd64.tar carbide-carbide-${{ github.ref_name }}-amd64.tar.zst
           time for file in carbide-carbide-${{ github.ref_name }}-amd64.tar.0*; do
             aws s3 cp --no-progress "$file" s3://carbide/${{ github.ref_name }}/spilts/
           done
-          time 7z a -v999m carbide-carbide-${{ github.ref_name }}-arm64.tar carbide-carbide-${{ github.ref_name }}-arm64.tar.zst
+          time 7z a -v900m carbide-carbide-${{ github.ref_name }}-arm64.tar carbide-carbide-${{ github.ref_name }}-arm64.tar.zst
           time for file in carbide-carbide-${{ github.ref_name }}-arm64.tar.0*; do
             aws s3 cp --no-progress "$file" s3://carbide/${{ github.ref_name }}/spilts/
           done
