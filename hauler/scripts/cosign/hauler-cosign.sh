@@ -1,5 +1,5 @@
 # Set Variables
-export vCosign=2.6.0
+export vCosign=2.6.1
 
 # Setup Working Directory
 rm -rf /opt/hauler/cosign

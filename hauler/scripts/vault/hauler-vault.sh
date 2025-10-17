@@ -1,5 +1,5 @@
 # Set Variables
-export vVault=0.30.1
+export vVault=0.31.0
 
 # Setup Working Directory
 rm -rf /opt/hauler/vault
