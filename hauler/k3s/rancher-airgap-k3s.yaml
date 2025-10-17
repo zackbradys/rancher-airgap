@@ -4,19 +4,19 @@ metadata:
   name: rancher-airgap-files-k3s
 spec:
   files:
-    - path: https://raw.githubusercontent.com/k3s-io/k3s/refs/heads/release-1.32/install.sh
+    - path: https://raw.githubusercontent.com/k3s-io/k3s/refs/heads/release-1.33/install.sh
       name: install.sh
-    - path: https://github.com/k3s-io/k3s/releases/download/v1.32.9%2Bk3s1/k3s
+    - path: https://github.com/k3s-io/k3s/releases/download/v1.33.5%2Bk3s1/k3s
       name: k3s
-    - path: https://github.com/k3s-io/k3s/releases/download/v1.32.9%2Bk3s1/k3s-airgap-images-amd64.tar.zst
+    - path: https://github.com/k3s-io/k3s/releases/download/v1.33.5%2Bk3s1/k3s-airgap-images-amd64.tar.zst
       name: k3s-airgap-images-amd64.tar.zst
-    - path: https://github.com/k3s-io/k3s/releases/download/v1.32.9%2Bk3s1/sha256sum-amd64.txt
+    - path: https://github.com/k3s-io/k3s/releases/download/v1.33.5%2Bk3s1/sha256sum-amd64.txt
       name: sha256sum-amd64.txt
-    - path: https://github.com/k3s-io/k3s/releases/download/v1.32.9%2Bk3s1/k3s-airgap-images-arm64.tar.zst
+    - path: https://github.com/k3s-io/k3s/releases/download/v1.33.5%2Bk3s1/k3s-airgap-images-arm64.tar.zst
       name: k3s-airgap-images-arm64.tar.zst
-    - path: https://github.com/k3s-io/k3s/releases/download/v1.32.9%2Bk3s1/sha256sum-arm64.txt
+    - path: https://github.com/k3s-io/k3s/releases/download/v1.33.5%2Bk3s1/sha256sum-arm64.txt
       name: sha256sum-arm64.txt
-    - path: https://github.com/k3s-io/k3s/releases/download/v1.32.9%2Bk3s1/k3s-arm64
+    - path: https://github.com/k3s-io/k3s/releases/download/v1.33.5%2Bk3s1/k3s-arm64
       name: k3s-arm64
     - path: https://github.com/k3s-io/k3s-selinux/releases/download/v1.6.latest.1/k3s-selinux-1.6-1.el9.noarch.rpm
       name: k3s-selinux-1.6-1.el9.noarch.rpm
@@ -31,4 +31,11 @@ metadata:
   name: rancher-airgap-images-k3s
 spec:
   images:
-
+    - name: rancher/klipper-helm:v0.9.8-build20250709
+    - name: rancher/klipper-lb:v0.4.13
+    - name: rancher/local-path-provisioner:v0.0.31
+    - name: rancher/mirrored-coredns-coredns:1.12.3
+    - name: rancher/mirrored-library-busybox:1.36.1
+    - name: rancher/mirrored-library-traefik:3.3.6
+    - name: rancher/mirrored-metrics-server:v0.8.0
+    - name: rancher/mirrored-pause:3.6
