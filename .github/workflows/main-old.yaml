@@ -12,7 +12,7 @@
 #     continue-on-error: true
 #     steps:
 #       - name: Checkout Repository
-#         uses: actions/checkout@v4
+#         uses: actions/checkout@v6.0.1
 #         with:
 #           ref: main
 #           token: ${{ secrets.GITHUB_TOKEN }}
@@ -140,7 +140,7 @@
 #     needs: [rancher-airgap-build]
 #     steps:
 #       - name: Checkout Repository
-#         uses: actions/checkout@v4
+#         uses: actions/checkout@v6.0.1
 #         with:
 #           ref: main
 #           token: ${{ secrets.GITHUB_TOKEN }}
@@ -275,7 +275,7 @@
 #     needs: [rancher-airgap-build]
 #     steps:
 #       - name: Checkout Repository
-#         uses: actions/checkout@v4
+#         uses: actions/checkout@v6.0.1
 #         with:
 #           ref: main
 #           token: ${{ secrets.GITHUB_TOKEN }}
@@ -323,7 +323,7 @@
 #     continue-on-error: true
 #     steps:
 #       - name: Checkout Repository
-#         uses: actions/checkout@v4
+#         uses: actions/checkout@v6.0.1
 #         with:
 #           ref: main
 #           token: ${{ secrets.GITHUB_TOKEN }}
@@ -544,7 +544,7 @@
 #     needs: [rancher-airgap-build]
 #     steps:
 #       - name: Checkout Repository
-#         uses: actions/checkout@v4
+#         uses: actions/checkout@v6.0.1
 #         with:
 #           ref: main
 #           token: ${{ secrets.GITHUB_TOKEN }}
