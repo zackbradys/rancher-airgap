@@ -1,5 +1,5 @@
 # Set Variables
-export vRKE2=1.33.5
+export vRKE2=1.34.4
 export vRKE2SELinux=0.21
 export vRKE2modified=$(echo "$vRKE2" | cut -d'.' -f1,2)
 
