@@ -4,3 +4,4 @@
 # The files are ignored in the repository and not pushed to source control.
 
 **/.DS_Store
+build/

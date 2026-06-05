@@ -1,5 +1,5 @@
 # Set Variables
-export vHauler=1.3.0
+export vHauler=1.4.3
 export vHaulerHelm=2.1.0
 
 # Setup Working Directory
