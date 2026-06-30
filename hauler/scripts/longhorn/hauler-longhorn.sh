@@ -1,5 +1,5 @@
 # Set Variables
-export vLonghorn=1.10.2
+export vLonghorn=1.11.2
 
 # Setup Working Directory
 rm -rf /opt/hauler/longhorn
