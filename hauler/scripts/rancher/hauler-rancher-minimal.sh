@@ -36,9 +36,9 @@ metadata:
   name: rancher-airgap-files-rancher-minimal
 spec:
   files:
-    - path: https://raw.githubusercontent.com/zackbradys/code-templates/main/k8s/yamls/rancher-banner-ufouo.yaml
+    - path: https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/rancher/rancher-banner-ufouo.yaml
       name: rancher-banner-ufouo.yaml
-    - path: https://raw.githubusercontent.com/zackbradys/code-templates/main/k8s/yamls/rancher-banner-tssci.yaml
+    - path: https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/rancher/rancher-banner-tssci.yaml
       name: rancher-banner-tssci.yaml
 ---
 apiVersion: content.hauler.cattle.io/v1

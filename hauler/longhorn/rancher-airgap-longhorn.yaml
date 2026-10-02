@@ -4,9 +4,9 @@ metadata:
   name: rancher-airgap-files-longhorn
 spec:
   files:
-    - path: https://raw.githubusercontent.com/zackbradys/code-templates/main/k8s/yamls/longhorn-encrypted-sc.yaml
+    - path: https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/longhorn/longhorn-encrypted-sc.yaml
       name: longhorn-encrypted-sc.yaml
-    - path: https://raw.githubusercontent.com/zackbradys/code-templates/main/k8s/yamls/longhorn-encrypted-volume.yaml
+    - path: https://raw.githubusercontent.com/zackbradys/rancher-airgap/main/hauler/longhorn/longhorn-encrypted-volume.yaml
       name: longhorn-encrypted-volume.yaml
 ---
 apiVersion: content.hauler.cattle.io/v1
